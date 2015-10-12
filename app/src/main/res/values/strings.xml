@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">LoopingLouieExtreme</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="btn_server">host game</string>
+    <string name="btn_client">connect</string>
+</resources>
