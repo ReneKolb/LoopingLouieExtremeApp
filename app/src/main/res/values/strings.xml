@@ -5,4 +5,9 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="btn_server">host game</string>
     <string name="btn_client">connect</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_title_host_game">Host a game</string>
+    <string name="tv_title_connect">Connect to a game</string>
 </resources>

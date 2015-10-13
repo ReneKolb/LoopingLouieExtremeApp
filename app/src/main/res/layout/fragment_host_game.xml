@@ -1,0 +1,60 @@
+<gamofu.de.loopinglouieextreme.RelativeLayoutAnimate
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="gamofu.de.loopinglouieextreme.HostGameFragment"
+    android:background="#0099cc">
+
+    <TextView
+        android:id="@+id/tv_host_game_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/tv_title_host_game"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_host_game_description1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_below="@+id/tv_host_game_title"
+        android:text="1.) connect to the board"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="80dp"
+        android:layout_marginStart="80dp"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_host_game_description2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_host_game_description1"
+        android:text="2.) listen for other players"
+        android:layout_marginTop="5dp"
+        android:layout_alignLeft="@+id/tv_host_game_description1"
+        android:layout_alignStart="@+id/tv_host_game_description1"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_host_game_description3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_host_game_description2"
+        android:text="3.) setting up the game"
+        android:layout_marginTop="5dp"
+        android:layout_alignLeft="@+id/tv_host_game_description2"
+        android:layout_alignStart="@+id/tv_host_game_description2"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
+
+
+</gamofu.de.loopinglouieextreme.RelativeLayoutAnimate>
