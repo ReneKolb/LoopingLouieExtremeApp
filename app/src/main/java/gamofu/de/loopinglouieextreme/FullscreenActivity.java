@@ -53,6 +53,12 @@ public class FullscreenActivity extends AppCompatActivity implements OnFragmentI
             ft.addToBackStack(null);
             ft.replace(R.id.main_fragment, ConnectFragment.newInstance("",""));
             ft.commit();
+        }else if(msg.equals(MainMenuFragment.SETTINGS_BUTTON)){
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+            ft.addToBackStack(null);
+            ft.replace(R.id.main_fragment, SettingsFragment.newInstance("",""));
+            ft.commit();
         }
     }
 

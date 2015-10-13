@@ -10,4 +10,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_title_host_game">Host a game</string>
     <string name="tv_title_connect">Connect to a game</string>
+    <string name="btn_settings">settings</string>
+    <string name="tv_title_settings">Settings</string>
 </resources>

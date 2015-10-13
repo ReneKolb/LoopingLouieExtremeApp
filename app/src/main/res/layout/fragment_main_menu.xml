@@ -1,4 +1,4 @@
-<FrameLayout
+<gamofu.de.loopinglouieextreme.FrameLayoutAnimate
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -18,37 +18,52 @@
         android:gravity="center"
         android:text="@string/dummy_content" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:layout_gravity="right|top"
         android:baselineAligned="false"
         android:clickable="false">
 
-    <Button
-        android:id="@+id/btn_server"
-        style="@style/btnStyleOrange"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|top"
-        android:layout_marginBottom="0dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="80dp"
-        android:text="@string/btn_server" />
+        <Button
+            android:id="@+id/btn_server"
+            style="@style/btnStyleOrange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginTop="80dp"
+            android:text="@string/btn_server" />
 
-    <Button
-        android:id="@+id/btn_client"
-        style="@style/btnStyleSeagull"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|top"
-        android:layout_marginBottom="33dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/btn_client" />
-    </LinearLayout>
+        <Button
+            android:id="@+id/btn_client"
+            style="@style/btnStyleSeagull"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_server"
+            android:layout_alignRight="@+id/btn_server"
+            android:layout_alignEnd="@+id/btn_server"
+            android:layout_marginTop="20dp"
+            android:text="@string/btn_client" />
 
-</FrameLayout>
+        <ImageButton
+            android:id="@+id/btn_settings"
+            style="@style/btnStyleSeagull"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignRight="@+id/btn_server"
+            android:layout_alignEnd="@+id/btn_server"
+            android:layout_marginBottom="15dp"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_settings_white"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            />
+
+    </RelativeLayout>
+
+</gamofu.de.loopinglouieextreme.FrameLayoutAnimate>

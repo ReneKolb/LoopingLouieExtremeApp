@@ -1,16 +1,12 @@
 package gamofu.de.loopinglouieextreme;
 
 import android.app.Activity;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 
 /**
@@ -18,23 +14,14 @@ import android.widget.Toast;
  * Activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link MainMenuFragment#newInstance} factory method to
+ * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MainMenuFragment extends Fragment {
+public class SettingsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    public static final String SERVER_BUTTON = "Server Button";
-    public static final String CLIENT_BUTTON = "Client Button";
-    public static final String SETTINGS_BUTTON = "Settigns Button";
-
-
-    private Button btnServer;
-    private Button btnClient;
-    private ImageButton btnSettings;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -48,11 +35,11 @@ public class MainMenuFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MainMenuFragment.
+     * @return A new instance of fragment SettingsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MainMenuFragment newInstance(String param1, String param2) {
-        MainMenuFragment fragment = new MainMenuFragment();
+    public static SettingsFragment newInstance(String param1, String param2) {
+        SettingsFragment fragment = new SettingsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -60,7 +47,7 @@ public class MainMenuFragment extends Fragment {
         return fragment;
     }
 
-    public MainMenuFragment() {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
@@ -77,37 +64,10 @@ public class MainMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
-
-        btnServer = (Button)view.findViewById(R.id.btn_server);
-        btnClient = (Button)view.findViewById(R.id.btn_client);
-        btnSettings = (ImageButton)view.findViewById(R.id.btn_settings);
-
-
-        btnServer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onButtonPressed(SERVER_BUTTON);
-            }
-        });
-
-        btnClient.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                onButtonPressed(CLIENT_BUTTON);
-            }
-        });
-
-        btnSettings.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                onButtonPressed(SETTINGS_BUTTON);
-            }
-        });
-
-        return view;
+        return inflater.inflate(R.layout.fragment_settings, container, false);
     }
 
+    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(String msg) {
         if (mListener != null) {
             mListener.onFragmentInteraction(msg);
@@ -116,9 +76,7 @@ public class MainMenuFragment extends Fragment {
 
     @Override
     public void onAttach(Activity activity) {
-//    public void onAttach(Context context) {
         super.onAttach(activity);
-//        super.onAttach(context);
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
