@@ -1,7 +1,6 @@
-package gamofu.de.loopinglouieextreme;
+package de.renekolb.loopinglouieextreme;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;

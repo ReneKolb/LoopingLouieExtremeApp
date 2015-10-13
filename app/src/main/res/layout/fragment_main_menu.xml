@@ -1,11 +1,11 @@
-<gamofu.de.loopinglouieextreme.FrameLayoutAnimate
+<de.renekolb.loopinglouieextreme.FrameLayoutAnimate
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099cc"
-    tools:context="gamofu.de.loopinglouieextreme.MainMenuFragment">
+    tools:context="de.renekolb.loopinglouieextreme.MainMenuFragment">
 
     <TextView
         android:id="@+id/fullscreen_content"
@@ -66,4 +66,4 @@
 
     </RelativeLayout>
 
-</gamofu.de.loopinglouieextreme.FrameLayoutAnimate>
+</de.renekolb.loopinglouieextreme.FrameLayoutAnimate>

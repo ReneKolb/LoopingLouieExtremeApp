@@ -1,4 +1,4 @@
-package gamofu.de.loopinglouieextreme;
+package de.renekolb.loopinglouieextreme;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -1,4 +1,4 @@
-package gamofu.de.loopinglouieextreme;
+package de.renekolb.loopinglouieextreme;
 
 import org.junit.Test;
 

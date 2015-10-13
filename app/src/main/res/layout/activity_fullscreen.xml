@@ -16,7 +16,7 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="gamofu.de.loopinglouieextreme.MainMenuFragment"
+        android:name="de.renekolb.loopinglouieextreme.MainMenuFragment"
         android:id="@+id/main_fragment"
         android:layout_gravity="center"
         tools:layout="@layout/fragment_main_menu" />
