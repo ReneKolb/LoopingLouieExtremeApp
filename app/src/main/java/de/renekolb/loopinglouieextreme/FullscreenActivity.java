@@ -1,19 +1,21 @@
 package de.renekolb.loopinglouieextreme;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class FullscreenActivity extends AppCompatActivity implements OnFragmentInteractionListener {
-
+public class FullscreenActivity extends Activity implements OnFragmentInteractionListener {
+//vorher: AppCompatActivity. Aber es wird keine Action bar benötigt!!
 
     private View mContentView;
 
@@ -38,6 +40,18 @@ public class FullscreenActivity extends AppCompatActivity implements OnFragmentI
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+    }
+
+
+    @Override
     public void onFragmentInteraction(String msg){
         if(msg.equals(MainMenuFragment.SERVER_BUTTON)){
             FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -57,15 +71,44 @@ public class FullscreenActivity extends AppCompatActivity implements OnFragmentI
             ft.addToBackStack(null);
             ft.replace(R.id.main_fragment, SettingsFragment.newInstance("",""));
             ft.commit();
+        }else if(msg.equals(HostGameFragment.TEST_BUTTON)){
+
+            WindowManager.LayoutParams params = getWindow().getAttributes();
+            params.screenBrightness = 0;
+            getWindow().setAttributes(params);
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.replace(R.id.main_fragment, BlackFragment.newInstance());
+            ft.addToBackStack("BLACK");
+            ft.commit();
+
+            //TEST:
+            Handler h = new Handler();
+            h.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    //      wl.release();
+                    try {
+                        getFragmentManager().popBackStack("BLACK", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    }catch(Exception e){
+                        //fixes bug, when the game is closed and the timer is not executed
+                        //so ignore this Exception
+                    }
+                    Toast.makeText(FullscreenActivity.this, "On", Toast.LENGTH_SHORT).show();
+                    WindowManager.LayoutParams params2 = getWindow().getAttributes();
+                    params2.screenBrightness = -1;
+                    getWindow().setAttributes(params2);
+                }
+            }, 5000);
+
         }
     }
 
     private void hide() {
         // Hide UI first
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
+        //ActionBar actionBar = getSupportActionBar();
+        //if (actionBar != null) {
+//            actionBar.hide();
+//        }
 
         // Schedule a runnable to remove the status and navigation bar after a delay
         mHideHandler.removeCallbacks(mShowPart2Runnable);
@@ -105,10 +148,10 @@ public class FullscreenActivity extends AppCompatActivity implements OnFragmentI
         @Override
         public void run() {
             // Delayed display of UI elements
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.show();
-            }
+            //ActionBar actionBar = getSupportActionBar();
+            //if (actionBar != null) {
+//                actionBar.show();
+//            }
         }
     };
 

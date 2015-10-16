@@ -1,15 +1,26 @@
 <resources>
     <string name="app_name">LoopingLouieExtreme</string>
 
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <!--  MainMenuFragment -->
     <string name="btn_server">host game</string>
     <string name="btn_client">connect</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--  HostGameFragment -->
     <string name="tv_title_host_game">Host a game</string>
+
+    <!--  ConnectFragment -->
     <string name="tv_title_connect">Connect to a game</string>
-    <string name="btn_settings">settings</string>
+
+    <!--  SettingsFragment -->
     <string name="tv_title_settings">Settings</string>
+
+    <!--  DeviceListActivity -->
+    <string name="none_paired">No devices have been paired</string>
+    <string name="scanning">scanning for devices…</string>
+    <string name="none_found">No devices found</string>
+    <string name="select_device">select device</string>
+    <string name="paired_devices">Paired Devices</string>
+    <string name="other_devices">Other Devices</string>
+    <string name="btn_scan">Scan</string>
+
 </resources>

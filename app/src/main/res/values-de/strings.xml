@@ -1,0 +1,27 @@
+<resources>
+
+    <string name="app_name">LoopingLouieExtreme</string>
+
+    <!--  MainMenuFragment -->
+    <string name="btn_server">Spiel leiten</string>
+    <string name="btn_client">Verbinden</string>
+
+    <!--  HostGameFragment -->
+    <string name="tv_title_host_game">Ein Spiel leiten</string>
+
+    <!--  ConnectFragment -->
+    <string name="tv_title_connect">Einem Spiel beitreten</string>
+
+    <!--  SettingsFragment -->
+    <string name="tv_title_settings">Einstellungen</string>
+
+    <!--  DeviceListActivity -->
+    <string name="none_paired">Keine gekoppelten Geräte</string>
+    <string name="scanning">Suche nach Geräten…</string>
+    <string name="none_found">Keine Geräte gefunden</string>
+    <string name="select_device">Wähle Gerät</string>
+    <string name="paired_devices">Gekoppelte Geräte</string>
+    <string name="other_devices">Andere Geräte</string>
+    <string name="btn_scan">Suchen</string>
+
+</resources>

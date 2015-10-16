@@ -1,11 +1,20 @@
 package de.renekolb.loopinglouieextreme;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.PowerManager;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 /**
@@ -17,6 +26,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class HostGameFragment extends Fragment {
+
+    public static final String TEST_BUTTON = "TEST BUTTON";
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -25,6 +37,8 @@ public class HostGameFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Handler h;
 
     private OnFragmentInteractionListener mListener;
 
@@ -63,7 +77,23 @@ public class HostGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_host_game, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_host_game, container, false);
+        Button btnWakeLock = (Button)view.findViewById(R.id.btn_wake_lock);
+
+
+        btnWakeLock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //PowerManager pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
+                //final PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK/*PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK*/, "Your Tag");
+                //wl.acquire();
+                onButtonPressed(TEST_BUTTON);
+            }
+        });
+
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

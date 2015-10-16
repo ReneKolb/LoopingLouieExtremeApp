@@ -1,11 +1,16 @@
 package de.renekolb.loopinglouieextreme;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.PowerManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 /**
@@ -17,6 +22,14 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ConnectFragment extends Fragment {
+
+
+    // Intent request codes
+    private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
+    private static final int REQUEST_ENABLE_BT = 3;
+
+    private BluetoothAdapter mBluetoothAdapter = null;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -57,16 +70,47 @@ public class ConnectFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        // If the adapter is null, then Bluetooth is not supported
+        if (mBluetoothAdapter == null) {
+            Activity activity = getActivity();
+            Toast.makeText(activity, "Bluetooth is not available", Toast.LENGTH_LONG).show();
+            activity.finish();
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_connect, container, false);
+        View view =inflater.inflate(R.layout.fragment_connect, container, false);
+        Button btnConnect = (Button)view.findViewById(R.id.btn_connect);
+        btnConnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
+                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
+            }
+        });
+        return  view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    @Override
+    public void onStart() {
+        super.onStart();
+        // If BT is not on, request that it be enabled.
+        // setupChat() will then be called during onActivityResult
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+            // Otherwise, setup the chat session
+        }else{
+            bluetoothOn();
+        }
+    }
+
+
     public void onButtonPressed(String msg) {
         if (mListener != null) {
             mListener.onFragmentInteraction(msg);
@@ -88,6 +132,33 @@ public class ConnectFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CONNECT_DEVICE_SECURE:
+                // When DeviceListActivity returns with a device to connect
+                if (resultCode == Activity.RESULT_OK) {
+             //       connectDevice(data, true);
+                    Toast.makeText(getActivity(), "Selected a Device to connect!", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case REQUEST_ENABLE_BT:
+                if (resultCode == Activity.RESULT_OK) {
+                    // Bluetooth is now enabled, so set up a chat session
+                    bluetoothOn();
+                } else {
+                    // User did not enable Bluetooth or an error occurred
+                    Toast.makeText(getActivity(), "Bluetooth is not enabled. Leaving the game",
+                            Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
+                }
+                break;
+        }
+    }
+
+    private void bluetoothOn(){
+        //sdsdsd
     }
 
 }

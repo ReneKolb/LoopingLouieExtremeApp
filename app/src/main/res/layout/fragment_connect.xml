@@ -1,10 +1,11 @@
-<de.renekolb.loopinglouieextreme.RelativeLayoutAnimate
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="de.renekolb.loopinglouieextreme.ConnectFragment"
-    android:background="#0099cc">
+    android:background="#FFFACD"
+    android:clickable="true">
 
     <TextView
         android:id="@+id/tv_connect_title"
@@ -12,9 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:text="@string/tv_title_connect"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -29,7 +30,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="80dp"
         android:layout_marginStart="80dp"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="15sp" />
 
     <TextView
@@ -41,7 +42,34 @@
         android:layout_marginTop="5dp"
         android:layout_alignLeft="@+id/tv_connect_description1"
         android:layout_alignStart="@+id/tv_connect_description1"
-        android:textColor="#FFFFFF"
+        android:textColor="#000000"
         android:textSize="15sp" />
 
-</de.renekolb.loopinglouieextreme.RelativeLayoutAnimate>
+    <de.renekolb.loopinglouieextreme.CustomViews.MagicTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_connect_description2"
+        android:layout_marginTop="5dp"
+        android:layout_alignLeft="@+id/tv_connect_description2"
+        android:layout_alignStart="@+id/tv_connect_description2"
+        android:text="Test Text"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:textSize="78sp"
+        app:strokeColor="#000000"
+        app:strokeJoinStyle="miter"
+        app:strokeWidth="5dp"/>
+
+
+    <Button
+        android:id="@+id/btn_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        style="@style/btnStyleYellow"
+        android:text="connect"
+        />
+
+</de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>
