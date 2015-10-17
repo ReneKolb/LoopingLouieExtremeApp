@@ -42,9 +42,9 @@ public class BlackFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(String msg) {
+    public void onButtonPressed(int button) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(msg);
+            mListener.onFragmentInteraction(button);
         }
     }
 

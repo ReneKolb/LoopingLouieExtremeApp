@@ -24,11 +24,6 @@ public class MainMenuFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    public static final String SERVER_BUTTON = "Server Button";
-    public static final String CLIENT_BUTTON = "Client Button";
-    public static final String SETTINGS_BUTTON = "Settigns Button";
-
-
     private Button btnServer;
     private Button btnClient;
     private ImageButton btnSettings;
@@ -84,30 +79,30 @@ public class MainMenuFragment extends Fragment {
         btnServer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onButtonPressed(SERVER_BUTTON);
+                onButtonPressed(Constants.BUTTON_HOST_GAME);
             }
         });
 
         btnClient.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                onButtonPressed(CLIENT_BUTTON);
+                onButtonPressed(Constants.BUTTON_CONNECT);
             }
         });
 
         btnSettings.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                onButtonPressed(SETTINGS_BUTTON);
+                onButtonPressed(Constants.BUTTON_SETTINGS);
             }
         });
 
         return view;
     }
 
-    public void onButtonPressed(String msg) {
+    public void onButtonPressed(int button) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(msg);
+            mListener.onFragmentInteraction(button);
         }
     }
 

@@ -4,8 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -19,6 +24,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     private View mContentView;
 
+    public BTServerService btServer;
+    public BTClientService btClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +38,12 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.main_fragment, MainMenuFragment.newInstance("", ""));
         ft.commit();
+
+        if(getResources().getBoolean(R.bool.is_tablet)){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }else{
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     @Override
@@ -50,57 +64,115 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
 
+    @Override
+    public void onDestroy(){
+        if(btServer != null){
+            btServer.stop();
+            btServer = null;
+        }
+        if(btClient != null){
+            btClient.stop();
+            btClient = null;
+        }
+
+        super.onDestroy();
+    }
+
 
     @Override
-    public void onFragmentInteraction(String msg){
-        if(msg.equals(MainMenuFragment.SERVER_BUTTON)){
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-            ft.addToBackStack(null);
-            ft.replace(R.id.main_fragment, HostGameFragment.newInstance("",""));
-            ft.commit();
-        }else if(msg.equals(MainMenuFragment.CLIENT_BUTTON)){
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-            ft.addToBackStack(null);
-            ft.replace(R.id.main_fragment, ConnectFragment.newInstance("",""));
-            ft.commit();
-        }else if(msg.equals(MainMenuFragment.SETTINGS_BUTTON)){
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-            ft.addToBackStack(null);
-            ft.replace(R.id.main_fragment, SettingsFragment.newInstance("",""));
-            ft.commit();
-        }else if(msg.equals(HostGameFragment.TEST_BUTTON)){
-
-            WindowManager.LayoutParams params = getWindow().getAttributes();
-            params.screenBrightness = 0;
-            getWindow().setAttributes(params);
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.replace(R.id.main_fragment, BlackFragment.newInstance());
-            ft.addToBackStack("BLACK");
-            ft.commit();
-
-            //TEST:
-            Handler h = new Handler();
-            h.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    //      wl.release();
-                    try {
-                        getFragmentManager().popBackStack("BLACK", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    }catch(Exception e){
-                        //fixes bug, when the game is closed and the timer is not executed
-                        //so ignore this Exception
-                    }
-                    Toast.makeText(FullscreenActivity.this, "On", Toast.LENGTH_SHORT).show();
-                    WindowManager.LayoutParams params2 = getWindow().getAttributes();
-                    params2.screenBrightness = -1;
-                    getWindow().setAttributes(params2);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case Constants.REQUEST_CONNECT_DEVICE_SECURE:
+                Toast.makeText(this, "connect...", Toast.LENGTH_SHORT).show();
+                // When DeviceListActivity returns with a device to connect
+                if (resultCode == Activity.RESULT_OK) {
+                    //       connectDevice(data, true);
+                    String address = data.getExtras()
+                            .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+                    // Get the BluetoothDevice object
+                    BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
+                    connect(device);
                 }
-            }, 5000);
-
+                break;
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(int button){
+        FragmentTransaction ft;
+        switch(button){
+            case Constants.BUTTON_HOST_GAME:
+                ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, HostGameFragment.newInstance("",""));
+                ft.commit();
+                startBTServer();
+                break;
+            case Constants.BUTTON_CONNECT:
+                ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, ConnectFragment.newInstance());
+                ft.commit();
+                break;
+            case Constants.BUTTON_SETTINGS:
+                ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, SettingsFragment.newInstance("",""));
+                ft.commit();
+                break;
+
+            case Constants.BUTTON_TEST_BLACK:
+                WindowManager.LayoutParams params = getWindow().getAttributes();
+                params.screenBrightness = 0;
+                getWindow().setAttributes(params);
+                ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.main_fragment, BlackFragment.newInstance());
+                ft.addToBackStack("BLACK");
+                ft.commit();
+
+                //TEST:
+                Handler h = new Handler();
+                h.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //      wl.release();
+                        try {
+                            getFragmentManager().popBackStack("BLACK", FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        }catch(Exception e){
+                            //fixes bug, when the game is closed and the timer is not executed
+                            //so ignore this Exception
+                        }
+                        Toast.makeText(FullscreenActivity.this, "On", Toast.LENGTH_SHORT).show();
+                        WindowManager.LayoutParams params2 = getWindow().getAttributes();
+                        params2.screenBrightness = -1;
+                        getWindow().setAttributes(params2);
+                    }
+                }, 5000);
+                break;
+            case Constants.BUTTON_TEST_SERVER_MESSAGE:
+                if(btServer!=null) {
+                    btServer.sendMessageToAll("Test Msg from Server");
+                }
+                break;
+            case Constants.BUTTON_TEST_CLIENT_MESSAGE:
+                if(btClient!=null) {
+                    btClient.sendMessage("test Msg from Client");
+                }
+                break;
+        }
+    }
+
+    private void startBTServer(){
+        this.btServer = new BTServerService(this, ServiceMessageHandler);
+        btServer.start();
+    }
+
+    public void connect(BluetoothDevice remoteDevice){
+        this.btClient = new BTClientService(this, ServiceMessageHandler);
+        btClient.connect(remoteDevice);
     }
 
     private void hide() {
@@ -160,6 +232,40 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         @Override
         public void run() {
             hide();
+        }
+    };
+
+
+    /**
+     * The Handler that gets information back from the BluetoothChatService
+     */
+    private final Handler ServiceMessageHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                /*case Constants.MESSAGE_WRITE:
+                    byte[] writeBuf = (byte[]) msg.obj;
+                    // construct a string from the buffer
+                    String writeMessage = new String(writeBuf);
+                    mConversationArrayAdapter.add("Me:  " + writeMessage);
+                    break;*/
+                case Constants.MESSAGE_READ:
+                    byte[] readBuf = (byte[]) msg.obj;
+                    // construct a string from the valid bytes in the buffer
+                    String readMessage = new String(readBuf, 0, msg.arg1);
+                    Toast.makeText(FullscreenActivity.this, "Read: "+readMessage, Toast.LENGTH_SHORT).show();
+                    //mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
+                    break;
+                case Constants.MESSAGE_DEVICE_NAME:
+                    // save the connected device's name
+                    String devName = msg.getData().getString(Constants.DEVICE_NAME);
+                    Toast.makeText(FullscreenActivity.this, "new Device: "+devName, Toast.LENGTH_SHORT).show();
+                    break;
+                case Constants.MESSAGE_TOAST:
+                        Toast.makeText(FullscreenActivity.this, msg.getData().getString(Constants.TOAST),
+                                Toast.LENGTH_SHORT).show();
+                    break;
+            }
         }
     };
 

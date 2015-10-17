@@ -27,8 +27,6 @@ import android.widget.Toast;
  */
 public class HostGameFragment extends Fragment {
 
-    public static final String TEST_BUTTON = "TEST BUTTON";
-
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -88,7 +86,15 @@ public class HostGameFragment extends Fragment {
                 //PowerManager pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
                 //final PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK/*PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK*/, "Your Tag");
                 //wl.acquire();
-                onButtonPressed(TEST_BUTTON);
+                onButtonPressed(Constants.BUTTON_TEST_BLACK);
+            }
+        });
+
+        Button btnTestMessage = (Button)view.findViewById(R.id.btn_test_server_msg);
+        btnTestMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(Constants.BUTTON_TEST_SERVER_MESSAGE);
             }
         });
 
@@ -97,9 +103,9 @@ public class HostGameFragment extends Fragment {
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(String msg) {
+    public void onButtonPressed(int button) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(msg);
+            mListener.onFragmentInteraction(button);
         }
     }
 

@@ -39,11 +39,12 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginLeft="200dp"
+                android:layout_marginStart="200dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginEnd="60dp"
                 android:text="@string/btn_server"
+                android:textSize="30sp"
                  />
 
             <Button
@@ -52,11 +53,12 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginRight="200dp"
+                android:layout_marginEnd="200dp"
                 android:text="@string/btn_client"
+                android:textSize="30sp"
                 />
 
         </LinearLayout>
@@ -64,17 +66,17 @@
         <ImageButton
             android:id="@+id/btn_settings"
             style="@style/btnStyleSeagull"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/ic_settings_white"
             android:scaleType="fitCenter"
-            android:padding="3dp"
+            android:padding="5dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
              />
 
         <RelativeLayout
@@ -91,7 +93,7 @@
                 android:adjustViewBounds="true"
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
-                android:maxWidth="300dp"
+                android:maxWidth="400dp"
                 android:src="@drawable/title_looping_louie"/>
 
 
@@ -103,7 +105,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:layout_below="@id/iv_looping_louie"
-                android:maxWidth="180dp"
+                android:maxWidth="250dp"
                 android:src="@drawable/logo"/>
 
             <ImageView
@@ -114,7 +116,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:layout_below="@id/imageView"
-                android:maxWidth="300dp"
+                android:maxWidth="400dp"
                 android:src="@drawable/title_extreme"/>
 
         </RelativeLayout>

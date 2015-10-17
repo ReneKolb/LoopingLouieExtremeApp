@@ -2,6 +2,7 @@ package de.renekolb.loopinglouieextreme;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -13,6 +14,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
+import de.renekolb.loopinglouieextreme.Constants;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -22,11 +25,6 @@ import android.widget.Toast;
  * create an instance of this fragment.
  */
 public class ConnectFragment extends Fragment {
-
-
-    // Intent request codes
-    private static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
-    private static final int REQUEST_ENABLE_BT = 3;
 
     private BluetoothAdapter mBluetoothAdapter = null;
 
@@ -45,22 +43,24 @@ public class ConnectFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ConnectFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ConnectFragment newInstance(String param1, String param2) {
+    public static ConnectFragment newInstance() {
         ConnectFragment fragment = new ConnectFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
 
     public ConnectFragment() {
         // Required empty public constructor
+    }
+
+    public FullscreenActivity getFSActivity(){
+        return (FullscreenActivity)this.getActivity();
     }
 
     @Override
@@ -90,7 +90,15 @@ public class ConnectFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
-                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
+                startActivityForResult(serverIntent, Constants.REQUEST_CONNECT_DEVICE_SECURE);
+            }
+        });
+
+        Button btnTestMessage = (Button)view.findViewById(R.id.btn_test_client_msg);
+        btnTestMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(Constants.BUTTON_TEST_CLIENT_MESSAGE);
             }
         });
         return  view;
@@ -103,7 +111,7 @@ public class ConnectFragment extends Fragment {
         // setupChat() will then be called during onActivityResult
         if (!mBluetoothAdapter.isEnabled()) {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableIntent, REQUEST_ENABLE_BT);
+            startActivityForResult(enableIntent, Constants.REQUEST_ENABLE_BT);
             // Otherwise, setup the chat session
         }else{
             bluetoothOn();
@@ -111,9 +119,9 @@ public class ConnectFragment extends Fragment {
     }
 
 
-    public void onButtonPressed(String msg) {
+    public void onButtonPressed(int button) {
         if (mListener != null) {
-            mListener.onFragmentInteraction(msg);
+            mListener.onFragmentInteraction(button);
         }
     }
 
@@ -136,14 +144,19 @@ public class ConnectFragment extends Fragment {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case REQUEST_CONNECT_DEVICE_SECURE:
+            case Constants.REQUEST_CONNECT_DEVICE_SECURE:
                 // When DeviceListActivity returns with a device to connect
                 if (resultCode == Activity.RESULT_OK) {
              //       connectDevice(data, true);
+                    String address = data.getExtras()
+                            .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
+                    // Get the BluetoothDevice object
+                    BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+                    getFSActivity().connect(device);
                     Toast.makeText(getActivity(), "Selected a Device to connect!", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case REQUEST_ENABLE_BT:
+            case Constants.REQUEST_ENABLE_BT:
                 if (resultCode == Activity.RESULT_OK) {
                     // Bluetooth is now enabled, so set up a chat session
                     bluetoothOn();
