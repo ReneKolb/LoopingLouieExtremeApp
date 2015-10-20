@@ -39,7 +39,7 @@ public class BluetoothService {
     //UUID for multi connection:
     //UUID.fromString("00001101-0000-1000-8000-"+ device.getAddress().replace(":", ""))
 
-    private static final UUID MY_UUID_BOARD =  UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private static final UUID MY_UUID_BOARD = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     // Member fields
     private final BluetoothAdapter mAdapter;
@@ -66,6 +66,8 @@ public class BluetoothService {
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         mState = STATE_NONE;
         mHandler = handler;
+
+        //ensureBluetoothOn();
     }
 
     /**
@@ -74,7 +76,7 @@ public class BluetoothService {
      * @param state An integer defining the current connection state
      */
     private synchronized void setState(int state) {
-       // Log.d(TAG, "setState() " + mState + " -> " + state);
+        // Log.d(TAG, "setState() " + mState + " -> " + state);
         mState = state;
 
         // Give the new state to the Handler so the UI Activity can update

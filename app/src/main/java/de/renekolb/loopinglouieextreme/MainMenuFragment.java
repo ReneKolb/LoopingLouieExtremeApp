@@ -1,8 +1,8 @@
 package de.renekolb.loopinglouieextreme;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,9 +71,9 @@ public class MainMenuFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
-        btnServer = (Button)view.findViewById(R.id.btn_server);
-        btnClient = (Button)view.findViewById(R.id.btn_client);
-        btnSettings = (ImageButton)view.findViewById(R.id.btn_settings);
+        btnServer = (Button) view.findViewById(R.id.btn_server);
+        btnClient = (Button) view.findViewById(R.id.btn_client);
+        btnSettings = (ImageButton) view.findViewById(R.id.btn_settings);
 
 
         btnServer.setOnClickListener(new View.OnClickListener() {
@@ -83,14 +83,14 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
-        btnClient.setOnClickListener(new View.OnClickListener(){
+        btnClient.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 onButtonPressed(Constants.BUTTON_CONNECT);
             }
         });
 
-        btnSettings.setOnClickListener(new View.OnClickListener(){
+        btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onButtonPressed(Constants.BUTTON_SETTINGS);

@@ -6,11 +6,8 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 
 import java.io.IOException;
-
-import de.renekolb.loopinglouieextreme.BTServerService;
 
 /**
  * Created by Admi on 17.10.2015.
@@ -25,18 +22,18 @@ public class BTClientService {
     private ConnectThread connectingThread;
     private BTConnectedThread connectedThread;
 
-    public BTClientService(FullscreenActivity activity, Handler handler){
+    public BTClientService(FullscreenActivity activity, Handler handler) {
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         this.mHandler = handler;
         this.activity = activity;
     }
 
-    public void connect(BluetoothDevice remoteDevice){
+    public void connect(BluetoothDevice remoteDevice) {
         this.connectingThread = new ConnectThread(remoteDevice);
         this.connectingThread.start();
     }
 
-    private void manageConnectedSocket(BluetoothSocket socket){
+    private void manageConnectedSocket(BluetoothSocket socket) {
         this.connectedThread = new BTConnectedThread(socket, mHandler);
         this.connectedThread.start();
 
@@ -50,17 +47,17 @@ public class BTClientService {
         //Toast.makeText(activity, "connected to Server", Toast.LENGTH_SHORT).show();
     }
 
-    public void sendMessage(String msg){
+    public void sendMessage(String msg) {
         this.connectedThread.write(msg.getBytes());
     }
 
-    public void stop(){
-        if(connectedThread != null){
+    public void stop() {
+        if (connectedThread != null) {
             connectedThread.cancel();
             connectedThread = null;
         }
 
-        if(connectingThread != null){
+        if (connectingThread != null) {
             connectingThread.cancel();
             connectingThread = null;
         }
@@ -89,7 +86,8 @@ public class BTClientService {
             try {
                 // MY_UUID is the app's UUID string, also used by the server code
                 tmp = device.createRfcommSocketToServiceRecord(BTServerService.commUuid);
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
             mmSocket = tmp;
         }
 
@@ -116,11 +114,14 @@ public class BTClientService {
             manageConnectedSocket(mmSocket);
         }
 
-        /** Will cancel an in-progress connection, and close the socket */
+        /**
+         * Will cancel an in-progress connection, and close the socket
+         */
         public void cancel() {
             try {
                 mmSocket.close();
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
         }
     }
 }

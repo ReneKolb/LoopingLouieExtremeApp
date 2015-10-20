@@ -39,9 +39,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         ft.replace(R.id.main_fragment, MainMenuFragment.newInstance("", ""));
         ft.commit();
 
-        if(getResources().getBoolean(R.bool.is_tablet)){
+        if (getResources().getBoolean(R.bool.is_tablet)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }else{
+        } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
@@ -54,7 +54,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -65,12 +65,12 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     }
 
     @Override
-    public void onDestroy(){
-        if(btServer != null){
+    public void onDestroy() {
+        if (btServer != null) {
             btServer.stop();
             btServer = null;
         }
-        if(btClient != null){
+        if (btClient != null) {
             btClient.stop();
             btClient = null;
         }
@@ -98,14 +98,14 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     }
 
     @Override
-    public void onFragmentInteraction(int button){
+    public void onFragmentInteraction(int button) {
         FragmentTransaction ft;
-        switch(button){
+        switch (button) {
             case Constants.BUTTON_HOST_GAME:
                 ft = getFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, HostGameFragment.newInstance("",""));
+                ft.replace(R.id.main_fragment, HostGameFragment.newInstance("", ""));
                 ft.commit();
                 startBTServer();
                 break;
@@ -120,7 +120,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft = getFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, SettingsFragment.newInstance("",""));
+                ft.replace(R.id.main_fragment, SettingsFragment.newInstance("", ""));
                 ft.commit();
                 break;
 
@@ -141,7 +141,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         //      wl.release();
                         try {
                             getFragmentManager().popBackStack("BLACK", FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                        }catch(Exception e){
+                        } catch (Exception e) {
                             //fixes bug, when the game is closed and the timer is not executed
                             //so ignore this Exception
                         }
@@ -153,24 +153,24 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 }, 5000);
                 break;
             case Constants.BUTTON_TEST_SERVER_MESSAGE:
-                if(btServer!=null) {
+                if (btServer != null) {
                     btServer.sendMessageToAll("Test Msg from Server");
                 }
                 break;
             case Constants.BUTTON_TEST_CLIENT_MESSAGE:
-                if(btClient!=null) {
+                if (btClient != null) {
                     btClient.sendMessage("test Msg from Client");
                 }
                 break;
         }
     }
 
-    private void startBTServer(){
+    private void startBTServer() {
         this.btServer = new BTServerService(this, ServiceMessageHandler);
         btServer.start();
     }
 
-    public void connect(BluetoothDevice remoteDevice){
+    public void connect(BluetoothDevice remoteDevice) {
         this.btClient = new BTClientService(this, ServiceMessageHandler);
         btClient.connect(remoteDevice);
     }
@@ -253,17 +253,17 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    Toast.makeText(FullscreenActivity.this, "Read: "+readMessage, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FullscreenActivity.this, "Read: " + readMessage, Toast.LENGTH_SHORT).show();
                     //mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
                     String devName = msg.getData().getString(Constants.DEVICE_NAME);
-                    Toast.makeText(FullscreenActivity.this, "new Device: "+devName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FullscreenActivity.this, "new Device: " + devName, Toast.LENGTH_SHORT).show();
                     break;
                 case Constants.MESSAGE_TOAST:
-                        Toast.makeText(FullscreenActivity.this, msg.getData().getString(Constants.TOAST),
-                                Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FullscreenActivity.this, msg.getData().getString(Constants.TOAST),
+                            Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -280,9 +280,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     @Override
     public void onBackPressed() {
-        if(getFragmentManager().getBackStackEntryCount()>0) {
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
             getFragmentManager().popBackStack();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }

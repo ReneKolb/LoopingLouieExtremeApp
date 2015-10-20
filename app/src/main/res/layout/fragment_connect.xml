@@ -58,7 +58,7 @@
         android:textSize="78sp"
         app:strokeColor="#000000"
         app:strokeJoinStyle="miter"
-        app:strokeWidth="5dp"/>
+        app:strokeWidth="5dp" />
 
 
     <Button
@@ -69,8 +69,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         style="@style/btnStyleYellow"
-        android:text="connect"
-        />
+        android:text="connect" />
 
     <Button
         android:id="@+id/btn_test_client_msg"
@@ -78,6 +77,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/btn_connect"
-        android:text="send Msg"/>
+        android:text="send Msg" />
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

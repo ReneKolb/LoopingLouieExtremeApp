@@ -36,7 +36,7 @@ public class BTConnectedThread extends Thread {
         mmOutStream = tmpOut;
     }
 
-    public BluetoothSocket getSocket(){
+    public BluetoothSocket getSocket() {
         return this.mmSocket;
     }
 
@@ -75,7 +75,7 @@ public class BTConnectedThread extends Thread {
         }
     }
 
-    private void connectionLost(){
+    private void connectionLost() {
         Message msg = mMessageHandler.obtainMessage(Constants.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TOAST, "Device connection was lost");

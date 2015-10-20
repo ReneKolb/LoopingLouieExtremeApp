@@ -1,20 +1,16 @@
 package de.renekolb.loopinglouieextreme;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.os.PowerManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
-
-import de.renekolb.loopinglouieextreme.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,8 +55,8 @@ public class ConnectFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public FullscreenActivity getFSActivity(){
-        return (FullscreenActivity)this.getActivity();
+    public FullscreenActivity getFSActivity() {
+        return (FullscreenActivity) this.getActivity();
     }
 
     @Override
@@ -84,8 +80,8 @@ public class ConnectFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.fragment_connect, container, false);
-        Button btnConnect = (Button)view.findViewById(R.id.btn_connect);
+        View view = inflater.inflate(R.layout.fragment_connect, container, false);
+        Button btnConnect = (Button) view.findViewById(R.id.btn_connect);
         btnConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,14 +90,14 @@ public class ConnectFragment extends Fragment {
             }
         });
 
-        Button btnTestMessage = (Button)view.findViewById(R.id.btn_test_client_msg);
+        Button btnTestMessage = (Button) view.findViewById(R.id.btn_test_client_msg);
         btnTestMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onButtonPressed(Constants.BUTTON_TEST_CLIENT_MESSAGE);
             }
         });
-        return  view;
+        return view;
     }
 
     @Override
@@ -113,7 +109,7 @@ public class ConnectFragment extends Fragment {
             Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableIntent, Constants.REQUEST_ENABLE_BT);
             // Otherwise, setup the chat session
-        }else{
+        } else {
             bluetoothOn();
         }
     }
@@ -147,7 +143,7 @@ public class ConnectFragment extends Fragment {
             case Constants.REQUEST_CONNECT_DEVICE_SECURE:
                 // When DeviceListActivity returns with a device to connect
                 if (resultCode == Activity.RESULT_OK) {
-             //       connectDevice(data, true);
+                    //       connectDevice(data, true);
                     String address = data.getExtras()
                             .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
                     // Get the BluetoothDevice object
@@ -170,7 +166,7 @@ public class ConnectFragment extends Fragment {
         }
     }
 
-    private void bluetoothOn(){
+    private void bluetoothOn() {
         //sdsdsd
     }
 

@@ -21,7 +21,7 @@
     </style>
 
     <style name="btnStyleGreen" parent="Widget.AppCompat.Button">
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:gravity">center</item>
@@ -34,7 +34,7 @@
     </style>
 
     <style name="btnStyleYellow" parent="Widget.AppCompat.Button">
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#555555</item>
         <item name="android:gravity">center</item>
@@ -47,7 +47,7 @@
     </style>
 
     <style name="btnStyleOrange" parent="Widget.AppCompat.Button">
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:gravity">center</item>
@@ -60,7 +60,7 @@
     </style>
 
     <style name="btnStyleSeagull" parent="@android:style/Widget.Button">
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">#626954</item>
         <item name="android:gravity">center</item>

@@ -1,18 +1,14 @@
 package de.renekolb.loopinglouieextreme;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
+import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PowerManager;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -37,6 +33,8 @@ public class HostGameFragment extends Fragment {
     private String mParam2;
 
     private Handler h;
+
+    private BluetoothAdapter mBluetoothAdapter = null;
 
     private OnFragmentInteractionListener mListener;
 
@@ -69,6 +67,15 @@ public class HostGameFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        // If the adapter is null, then Bluetooth is not supported
+        if (mBluetoothAdapter == null) {
+            Activity activity = getActivity();
+            Toast.makeText(activity, "Bluetooth is not available", Toast.LENGTH_LONG).show();
+            activity.finish();
+        }
     }
 
     @Override
@@ -77,7 +84,7 @@ public class HostGameFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_host_game, container, false);
-        Button btnWakeLock = (Button)view.findViewById(R.id.btn_wake_lock);
+        Button btnWakeLock = (Button) view.findViewById(R.id.btn_wake_lock);
 
 
         btnWakeLock.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +97,7 @@ public class HostGameFragment extends Fragment {
             }
         });
 
-        Button btnTestMessage = (Button)view.findViewById(R.id.btn_test_server_msg);
+        Button btnTestMessage = (Button) view.findViewById(R.id.btn_test_server_msg);
         btnTestMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,6 +107,24 @@ public class HostGameFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // If BT is not on, request that it be enabled.
+        // setupChat() will then be called during onActivityResult
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableIntent, Constants.REQUEST_ENABLE_BT);
+            // Otherwise, setup the chat session
+        } else {
+            bluetoothOn();
+        }
+    }
+
+    private void bluetoothOn() {
+        //asdasd
     }
 
     // TODO: Rename method, update argument and hook method into UI event

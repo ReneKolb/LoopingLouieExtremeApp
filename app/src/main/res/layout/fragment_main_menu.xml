@@ -1,6 +1,5 @@
 <de.renekolb.loopinglouieextreme.CustomViews.FrameLayoutAnimate xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,8 +15,7 @@
         android:textColor="#33b5e5"
         android:textStyle="bold"
         android:textSize="50sp"
-        android:gravity="center"
-        />
+        android:gravity="center" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -43,8 +41,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="@string/btn_server"
-                 />
+                android:text="@string/btn_server" />
 
             <Button
                 android:id="@+id/btn_client"
@@ -56,8 +53,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginEnd="30dp"
-                android:text="@string/btn_client"
-                />
+                android:text="@string/btn_client" />
 
         </LinearLayout>
 
@@ -74,15 +70,14 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-             />
+            android:layout_marginRight="15dp" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:paddingBottom="60dp" >
+            android:paddingBottom="60dp">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -92,7 +87,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
                 android:maxWidth="300dp"
-                android:src="@drawable/title_looping_louie"/>
+                android:src="@drawable/title_looping_louie" />
 
 
             <ImageView
@@ -104,7 +99,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_below="@id/iv_looping_louie"
                 android:maxWidth="180dp"
-                android:src="@drawable/logo"/>
+                android:src="@drawable/logo" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -115,7 +110,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_below="@id/imageView"
                 android:maxWidth="300dp"
-                android:src="@drawable/title_extreme"/>
+                android:src="@drawable/title_extreme" />
 
         </RelativeLayout>
 

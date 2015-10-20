@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,12 +28,12 @@ public class BTServerService {
 
     private FullscreenActivity activity;
 
-    public BTServerService(FullscreenActivity activity, Handler handler){
+    public BTServerService(FullscreenActivity activity, Handler handler) {
         this.activity = activity;
         this.mHandler = handler;
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         clientCommThread = new ArrayList<BTConnectedThread>(3);
-        for(int i=0;i<3;i++){
+        for (int i = 0; i < 3; i++) {
             clientCommThread.add(null);
         }
     }
@@ -51,59 +50,59 @@ public class BTServerService {
         }
     }
 
-    public synchronized void start(){
+    public synchronized void start() {
         ensureDiscoverable(); // TODO: nur nötig für koppeln? nur sichtbar wenn User will bzw neue Spieler.
 //wenn gerät schon gekoppelt, nur MAC-addresse nötig (die ist ja bekannt)
 
-        if(acceptThread==null){
+        if (acceptThread == null) {
             acceptThread = new AcceptThread();
             acceptThread.start();
         }
     }
 
-    public synchronized  void stop(){
-        if(acceptThread != null){
+    public synchronized void stop() {
+        if (acceptThread != null) {
             acceptThread.cancel();
             acceptThread = null;
         }
 
-        for(int i=0;i<clientCommThread.size();i++){
-            if(clientCommThread.get(i) != null){
+        for (int i = 0; i < clientCommThread.size(); i++) {
+            if (clientCommThread.get(i) != null) {
                 clientCommThread.get(i).cancel();
-                clientCommThread.set(i,null);
+                clientCommThread.set(i, null);
             }
         }
     }
 
-    private int getConnectedDevices(){
-        int cnt=0;
-        for(int i=0;i<3;i++){
-            if(clientCommThread.get(i)!=null){
+    private int getConnectedDevices() {
+        int cnt = 0;
+        for (int i = 0; i < 3; i++) {
+            if (clientCommThread.get(i) != null) {
                 cnt++;
             }
         }
         return cnt;
     }
 
-    private int getIndex(BluetoothDevice dev){
-        for(int i=0;i<3;i++){
-            if(clientCommThread.get(i)!=null && clientCommThread.get(i).getSocket().getRemoteDevice().getAddress().equalsIgnoreCase(dev.getAddress())){
+    private int getIndex(BluetoothDevice dev) {
+        for (int i = 0; i < 3; i++) {
+            if (clientCommThread.get(i) != null && clientCommThread.get(i).getSocket().getRemoteDevice().getAddress().equalsIgnoreCase(dev.getAddress())) {
                 return i;
             }
         }
         return -1;
     }
 
-    public void sendMessageToAll(String msg){
-        for(int i=0;i<3;i++){
-            if(clientCommThread.get(i)!=null){
+    public void sendMessageToAll(String msg) {
+        for (int i = 0; i < 3; i++) {
+            if (clientCommThread.get(i) != null) {
                 clientCommThread.get(i).write(msg.getBytes());
             }
         }
     }
 
-    private int getIndexForNewCon(BluetoothDevice dev){
-        if(getIndex(dev) == -1) {
+    private int getIndexForNewCon(BluetoothDevice dev) {
+        if (getIndex(dev) == -1) {
             for (int i = 0; i < 3; i++) {
                 if (clientCommThread.get(i) == null)
                     return i;
@@ -119,7 +118,7 @@ public class BTServerService {
         mConnectedThread.start();
         // Add each connected thread to an array
         int index = getIndexForNewCon(socket.getRemoteDevice());
-        if(index == -1){
+        if (index == -1) {
             //Error no free slot available
             return;
         }
@@ -136,7 +135,6 @@ public class BTServerService {
     }
 
 
-
     private class AcceptThread extends Thread {
         private final BluetoothServerSocket mmServerSocket;
 
@@ -147,7 +145,8 @@ public class BTServerService {
             try {
                 // MY_UUID is the app's UUID string, also used by the client code
                 tmp = mAdapter.listenUsingRfcommWithServiceRecord(NAME, commUuid);
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
             mmServerSocket = tmp;
         }
 
@@ -168,18 +167,21 @@ public class BTServerService {
                     //break;
                 }
 
-                if(getConnectedDevices()>=3){
+                if (getConnectedDevices() >= 3) {
                     cancel();
                     break;
                 }
             }
         }
 
-        /** Will cancel the listening socket, and cause the thread to finish */
+        /**
+         * Will cancel the listening socket, and cause the thread to finish
+         */
         public void cancel() {
             try {
                 mmServerSocket.close();
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
         }
     }
 

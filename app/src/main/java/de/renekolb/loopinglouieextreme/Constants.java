@@ -27,7 +27,6 @@ public class Constants {
     public static final int BUTTON_TEST_CLIENT_MESSAGE = 6;
 
 
-
     // Key names received from the BluetoothChatService Handler
     public static final String DEVICE_NAME = "device_name";
     public static final String TOAST = "toast";
