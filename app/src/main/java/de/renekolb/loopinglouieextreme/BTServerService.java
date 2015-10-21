@@ -128,7 +128,7 @@ public class BTServerService {
         clientCommThread.remove(address);
 
         //restart accept thread?
-        if (getConnectedDevices() < 3) {
+        if (getConnectedDevices() < 3 && !acceptThread.isAlive()) {
             acceptThread.start();
         }
     }

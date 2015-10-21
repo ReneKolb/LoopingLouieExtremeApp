@@ -291,7 +291,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         }
                     }
                 case Constants.MESSAGE_TOAST:
-                    Toast.makeText(FullscreenActivity.this, msg.getData().getString(Constants.TOAST),
+                    Toast.makeText(FullscreenActivity.this, "t:"+msg.getData().getString(Constants.TOAST),
                             Toast.LENGTH_SHORT).show();
                     break;
             }
