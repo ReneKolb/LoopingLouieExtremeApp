@@ -1,6 +1,4 @@
 <resources>
-    <string name="app_name">LoopingLouieExtreme</string>
-
     <!--  MainMenuFragment -->
     <string name="btn_server">host game</string>
     <string name="btn_client">connect</string>

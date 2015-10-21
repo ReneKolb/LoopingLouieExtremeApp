@@ -17,23 +17,27 @@ public class BTConnectedThread extends Thread {
     private final BluetoothSocket mmSocket;
     private final InputStream mmInStream;
     private final OutputStream mmOutStream;
+    private String remoteAddress;
 
     public BTConnectedThread(BluetoothSocket socket, Handler messageHandler) {
         mmSocket = socket;
         this.mMessageHandler = messageHandler;
         InputStream tmpIn = null;
         OutputStream tmpOut = null;
+        String tmpRemoteAddr = null;
 
         // Get the input and output streams, using temp objects because
         // member streams are final
         try {
             tmpIn = socket.getInputStream();
             tmpOut = socket.getOutputStream();
+            tmpRemoteAddr = socket.getRemoteDevice().getAddress();
         } catch (IOException e) {
         }
 
         mmInStream = tmpIn;
         mmOutStream = tmpOut;
+        remoteAddress = tmpRemoteAddr;
     }
 
     public BluetoothSocket getSocket() {
@@ -76,11 +80,19 @@ public class BTConnectedThread extends Thread {
     }
 
     private void connectionLost() {
+        Message msg = mMessageHandler.obtainMessage(Constants.MESSAGE_CONNECTION_LOST);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.DEVICE_ADDRESS,remoteAddress);
+        msg.setData(bundle);
+        mMessageHandler.sendMessage(msg);
+        remoteAddress = null;
+        /*
         Message msg = mMessageHandler.obtainMessage(Constants.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TOAST, "Device connection was lost");
         msg.setData(bundle);
         mMessageHandler.sendMessage(msg);
+        */
     }
 }
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LoopingLouieExtreme</string>
+    <string name="app_name">LoopingLouie Extreme</string>
 
     <!--  MainMenuFragment -->
     <string name="btn_server">host game</string>

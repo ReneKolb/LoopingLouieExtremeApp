@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
@@ -26,6 +28,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     public BTServerService btServer;
     public BTClientService btClient;
+
+    private HostGameFragment hostGameFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +109,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft = getFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, HostGameFragment.newInstance("", ""));
+                ft.replace(R.id.main_fragment, this.hostGameFragment = HostGameFragment.newInstance("", ""));
                 ft.commit();
                 startBTServer();
                 break;
@@ -259,8 +263,33 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 case Constants.MESSAGE_DEVICE_NAME:
                     // save the connected device's name
                     String devName = msg.getData().getString(Constants.DEVICE_NAME);
-                    Toast.makeText(FullscreenActivity.this, "new Device: " + devName, Toast.LENGTH_SHORT).show();
+                    String devAddr = msg.getData().getString(Constants.DEVICE_ADDRESS);
+                    //only relevant when hosting a game!
+                    if(hostGameFragment!=null) {
+                        hostGameFragment.connectedPlayerAdapter.add(new ConnectedPlayerListItem(devAddr, devName));
+                    }
+                    //Toast.makeText(FullscreenActivity.this, "new Device: " + devName, Toast.LENGTH_SHORT).show();
                     break;
+                case Constants.MESSAGE_CONNECTION_LOST:
+                    String addr = msg.getData().getString(Constants.DEVICE_ADDRESS);
+                    //only relevant when hosting a game
+                    if(btServer!=null) {
+                        btServer.disconnectClient(addr); //cleanup internal connectedThread List
+                        ConnectedPlayerListItem item = null;
+                        for (int i = 0; i < hostGameFragment.connectedPlayerAdapter.getCount(); i++) {
+                            if (hostGameFragment.connectedPlayerAdapter.getItem(i).getAddress().equals(addr)) {
+                                item = hostGameFragment.connectedPlayerAdapter.getItem(i);
+                                break;
+                            }
+                        }
+                        if (item != null) {
+                            hostGameFragment.connectedPlayerAdapter.remove(item);
+
+                        } else {
+                            //ERROR
+                            Toast.makeText(FullscreenActivity.this, "ERROR unknown address", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 case Constants.MESSAGE_TOAST:
                     Toast.makeText(FullscreenActivity.this, msg.getData().getString(Constants.TOAST),
                             Toast.LENGTH_SHORT).show();

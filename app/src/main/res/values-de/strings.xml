@@ -1,7 +1,4 @@
 <resources>
-
-    <string name="app_name">LoopingLouieExtreme</string>
-
     <!--  MainMenuFragment -->
     <string name="btn_server">Spiel leiten</string>
     <string name="btn_client">Verbinden</string>

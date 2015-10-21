@@ -11,6 +11,7 @@ import android.os.Message;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 public class BTServerService {
@@ -22,7 +23,9 @@ public class BTServerService {
 
     private AcceptThread acceptThread;
 
-    private ArrayList<BTConnectedThread> clientCommThread;
+    //private ArrayList<BTConnectedThread> clientCommThread;
+
+    private HashMap<String, BTConnectedThread> clientCommThread;
 
     private BluetoothAdapter mAdapter;
 
@@ -32,11 +35,15 @@ public class BTServerService {
         this.activity = activity;
         this.mHandler = handler;
         mAdapter = BluetoothAdapter.getDefaultAdapter();
-        clientCommThread = new ArrayList<BTConnectedThread>(3);
-        for (int i = 0; i < 3; i++) {
-            clientCommThread.add(null);
-        }
+        clientCommThread = new HashMap<String,BTConnectedThread>();
+        //clientCommThread = new ArrayList<BTConnectedThread>(3);
+        //for (int i = 0; i < 3; i++) {
+//            clientCommThread.add(null);
+//        }
     }
+
+    //TODO: -Cleanup Array when connection is lost for make room for a new Connection!!
+    //TODO: -Display connected Clients
 
     /**
      * Makes this device discoverable.
@@ -66,24 +73,29 @@ public class BTServerService {
             acceptThread = null;
         }
 
-        for (int i = 0; i < clientCommThread.size(); i++) {
+        for(BTConnectedThread b : clientCommThread.values()){
+            b.cancel();
+        }
+        clientCommThread.clear();
+        /*for (int i = 0; i < clientCommThread.size(); i++) {
             if (clientCommThread.get(i) != null) {
                 clientCommThread.get(i).cancel();
                 clientCommThread.set(i, null);
             }
-        }
+        }*/
     }
 
     private int getConnectedDevices() {
-        int cnt = 0;
+        return clientCommThread.size();
+        /*int cnt = 0;
         for (int i = 0; i < 3; i++) {
             if (clientCommThread.get(i) != null) {
                 cnt++;
             }
         }
-        return cnt;
+        return cnt;*/
     }
-
+/*
     private int getIndex(BluetoothDevice dev) {
         for (int i = 0; i < 3; i++) {
             if (clientCommThread.get(i) != null && clientCommThread.get(i).getSocket().getRemoteDevice().getAddress().equalsIgnoreCase(dev.getAddress())) {
@@ -91,17 +103,37 @@ public class BTServerService {
             }
         }
         return -1;
-    }
+    }*/
 
     public void sendMessageToAll(String msg) {
-        for (int i = 0; i < 3; i++) {
+        for(BTConnectedThread b : clientCommThread.values()){
+            b.write(msg.getBytes());
+        }
+        /*for (int i = 0; i < 3; i++) {
             if (clientCommThread.get(i) != null) {
                 clientCommThread.get(i).write(msg.getBytes());
             }
+        }*/
+    }
+
+    public void sendMessage(String address, String msg){
+        clientCommThread.get(address).write(msg.getBytes());
+        /*if(clientCommThread.get(index) != null){
+            clientCommThread.get(index).write(msg.getBytes());
+        }*/
+    }
+
+    public void disconnectClient(String address) {
+        clientCommThread.get(address).cancel(); //cancel if it is not cancelled yet
+        clientCommThread.remove(address);
+
+        //restart accept thread?
+        if (getConnectedDevices() < 3) {
+            acceptThread.start();
         }
     }
 
-    private int getIndexForNewCon(BluetoothDevice dev) {
+    /*private int getIndexForNewCon(BluetoothDevice dev) {
         if (getIndex(dev) == -1) {
             for (int i = 0; i < 3; i++) {
                 if (clientCommThread.get(i) == null)
@@ -109,7 +141,7 @@ public class BTServerService {
             }
         }
         return -1;
-    }
+    }*/
 
     public synchronized void manageConnectedSocket(BluetoothSocket socket) {
 
@@ -117,12 +149,14 @@ public class BTServerService {
         BTConnectedThread mConnectedThread = new BTConnectedThread(socket, mHandler);
         mConnectedThread.start();
         // Add each connected thread to an array
-        int index = getIndexForNewCon(socket.getRemoteDevice());
-        if (index == -1) {
+        if(getConnectedDevices()>=3)
+        /*int index = getIndexForNewCon(socket.getRemoteDevice());
+        if (index == -1) {*/
             //Error no free slot available
             return;
-        }
-        clientCommThread.set(index, mConnectedThread);
+        //}
+        clientCommThread.put(socket.getRemoteDevice().getAddress(),mConnectedThread);
+        //clientCommThread.set(index, mConnectedThread);
         //Toast.makeText(activity, "new Client connected", Toast.LENGTH_SHORT).show();
 
         // Send the name of the connected device back to the UI Activity
@@ -130,6 +164,7 @@ public class BTServerService {
                 .obtainMessage(Constants.MESSAGE_DEVICE_NAME);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.DEVICE_NAME, socket.getRemoteDevice().getName());
+        bundle.putString(Constants.DEVICE_ADDRESS, socket.getRemoteDevice().getAddress());
         msg.setData(bundle);
         mHandler.sendMessage(msg);
     }

@@ -9,8 +9,13 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
 
 
 /**
@@ -36,7 +41,11 @@ public class HostGameFragment extends Fragment {
 
     private BluetoothAdapter mBluetoothAdapter = null;
 
+    public ArrayAdapter<ConnectedPlayerListItem> connectedPlayerAdapter;
+
     private OnFragmentInteractionListener mListener;
+
+    private FullscreenActivity fa;
 
     /**
      * Use this factory method to create a new instance of
@@ -105,6 +114,11 @@ public class HostGameFragment extends Fragment {
             }
         });
 
+        connectedPlayerAdapter = new ArrayAdapter<ConnectedPlayerListItem>(getActivity(), R.layout.listitem_player);
+
+        ListView players = (ListView) view.findViewById(R.id.lv_clients);
+        players.setAdapter(connectedPlayerAdapter);
+        players.setOnItemClickListener(mConnectedPlayerClickListener);
 
         return view;
     }
@@ -139,6 +153,7 @@ public class HostGameFragment extends Fragment {
         super.onAttach(activity);
         try {
             mListener = (OnFragmentInteractionListener) activity;
+            fa = (FullscreenActivity)activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -150,4 +165,11 @@ public class HostGameFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    private AdapterView.OnItemClickListener mConnectedPlayerClickListener
+            = new AdapterView.OnItemClickListener() {
+        public void onItemClick(AdapterView<?> av, View v, int position, long id) {
+            fa.btServer.sendMessage(connectedPlayerAdapter.getItem(position).getAddress(),"Msg from Server");
+        }
+    };
 }

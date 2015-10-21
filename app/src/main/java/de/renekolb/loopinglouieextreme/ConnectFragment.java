@@ -33,6 +33,8 @@ public class ConnectFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private FullscreenActivity fa;
+
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -101,6 +103,12 @@ public class ConnectFragment extends Fragment {
     }
 
     @Override
+    public void onDestroyView(){
+        fa.btClient.stop();
+        super.onDestroyView();
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         // If BT is not on, request that it be enabled.
@@ -126,6 +134,7 @@ public class ConnectFragment extends Fragment {
         super.onAttach(activity);
         try {
             mListener = (OnFragmentInteractionListener) activity;
+            fa = (FullscreenActivity)activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
