@@ -290,9 +290,10 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                             Toast.makeText(FullscreenActivity.this, "ERROR unknown address", Toast.LENGTH_SHORT).show();
                         }
                     }
+                    break;
                 case Constants.MESSAGE_TOAST:
-                    Toast.makeText(FullscreenActivity.this, "t:"+msg.getData().getString(Constants.TOAST),
-                            Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FullscreenActivity.this, "t:" + msg.getData().getString(Constants.TOAST),
+                                Toast.LENGTH_SHORT).show();
                     break;
             }
         }
