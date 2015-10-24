@@ -3,9 +3,19 @@ package de.renekolb.loopinglouieextreme;
 import android.app.Activity;
 import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCallback;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
+import android.bluetooth.BluetoothGattService;
+import android.bluetooth.BluetoothProfile;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +24,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.UUID;
 
 import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
 
@@ -27,6 +39,11 @@ import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
  * create an instance of this fragment.
  */
 public class HostGameFragment extends Fragment {
+
+    private static final String TAG = "TEST BLAA";
+
+    private static final UUID SERVICE_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private static final UUID CHARACTERISTIC = UUID.fromString("0000FFE1-0000-1000-8000-00805F9B34FB");
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,6 +61,8 @@ public class HostGameFragment extends Fragment {
     public ArrayAdapter<ConnectedPlayerListItem> connectedPlayerAdapter;
 
     private OnFragmentInteractionListener mListener;
+
+    private BluetoothGatt mBluetoothGatt;
 
     private FullscreenActivity fa;
 
@@ -120,6 +139,20 @@ public class HostGameFragment extends Fragment {
         players.setAdapter(connectedPlayerAdapter);
         players.setOnItemClickListener(mConnectedPlayerClickListener);
 
+        Button btnLeScan =(Button)view.findViewById(R.id.btn_le_scan);
+        btnLeScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBluetoothAdapter.getBluetoothLeScanner().startScan(new ScanCallback() {
+                    @Override
+                    public void onScanResult(int callbackType, ScanResult result) {
+                        mBluetoothGatt = result.getDevice().connectGatt(fa, false, bluetoothGattCallback);
+
+                    }
+                });
+            }
+        });
+
         return view;
     }
 
@@ -170,6 +203,70 @@ public class HostGameFragment extends Fragment {
             = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int position, long id) {
             fa.btServer.sendMessage(connectedPlayerAdapter.getItem(position).getAddress(),"Msg from Server");
+        }
+    };
+
+    private BluetoothGattCallback bluetoothGattCallback = new BluetoothGattCallback() {
+        @Override
+        public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
+            if(newState == BluetoothProfile.STATE_CONNECTED){
+                Log.i(TAG,"connected");
+                mBluetoothGatt.discoverServices();
+            }else if(newState == BluetoothProfile.STATE_DISCONNECTED){
+                Log.i(TAG, "disconnected");
+            }
+        }
+
+        @Override
+        public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+            if(status == BluetoothGatt.GATT_SUCCESS){
+                Log.i(TAG, "Service Discovered");
+                ///BluetoothGattDescriptor descriptor =
+                BluetoothGattService service = mBluetoothGatt.getService(SERVICE_UUID);
+                if(service == null){
+                    Log.e(TAG,"Service not found");
+                    return;
+                }
+                BluetoothGattCharacteristic chara = service.getCharacteristic(CHARACTERISTIC);
+                if(chara == null){
+                    Log.e(TAG,"Characteristic not found");
+                }
+
+                mBluetoothGatt.setCharacteristicNotification(chara, true);
+
+
+                chara.setValue("BT Connected"); //max 30bytes
+                mBluetoothGatt.writeCharacteristic(chara);
+//                mBluetoothGatt.writeDescriptor(descriptor);
+            }
+        }
+
+        @Override
+        public void onCharacteristicRead(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+            if (status == BluetoothGatt.GATT_SUCCESS){
+                Log.i(TAG, "Char Read");
+                final byte[] data = characteristic.getValue();
+                if (data != null && data.length > 0) {
+                    final StringBuilder stringBuilder = new StringBuilder(data.length);
+                    for(byte byteChar : data)
+                        stringBuilder.append(String.format("%02X ", byteChar));
+
+                    Log.i(TAG, new String(data) + "\n" + stringBuilder.toString());
+                }
+
+            }
+        }
+
+        @Override
+        public void onCharacteristicChanged(BluetoothGatt gatt,
+                                            BluetoothGattCharacteristic characteristic) {
+            //on MEssage Read
+            String msg = new String(characteristic.getValue());
+            Log.i(TAG, "received: "+msg);
+
+            //echo Message
+            characteristic.setValue(msg);
+            gatt.writeCharacteristic(characteristic);
         }
     };
 }

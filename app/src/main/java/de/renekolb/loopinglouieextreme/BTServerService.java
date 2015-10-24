@@ -19,6 +19,8 @@ public class BTServerService {
     public static final String NAME = "Looping Louie BT";
     public static final UUID commUuid = UUID.fromString("883fd50d-9980-4035-9f2e-eea84e2d1a95");
 
+    public static final UUID btAdapterCommUUID = UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb");
+
     private Handler mHandler;
 
     private AcceptThread acceptThread;

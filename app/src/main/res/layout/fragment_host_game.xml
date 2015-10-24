@@ -72,6 +72,14 @@
         android:layout_above="@id/btn_wake_lock"
         android:text="Send Test Msg" />
 
+    <Button
+        android:id="@+id/btn_le_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/btn_test_server_msg"
+        android:text="LeScan"/>
+
     <TextView
         android:id="@+id/tv_title_connected_devices"
         android:layout_width="wrap_content"
@@ -93,7 +101,6 @@
         android:layout_alignLeft="@id/tv_title_connected_devices"
         android:layout_alignStart="@id/tv_title_connected_devices"
         android:layout_marginTop="10dp">
-
     </ListView>
 
 
