@@ -104,7 +104,9 @@ public class ConnectFragment extends Fragment {
 
     @Override
     public void onDestroyView(){
-        fa.btClient.stop();
+        if(fa.btClient!=null) {
+            fa.btClient.stop();
+        }
         super.onDestroyView();
     }
 

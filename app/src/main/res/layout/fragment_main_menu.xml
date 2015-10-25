@@ -34,6 +34,7 @@
             <Button
                 android:id="@+id/btn_server"
                 style="@style/btnStyleGreen"
+                android:enabled="@bool/is_post_api_18"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

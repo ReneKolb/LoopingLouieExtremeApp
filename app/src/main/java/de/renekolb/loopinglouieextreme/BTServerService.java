@@ -1,7 +1,6 @@
 package de.renekolb.loopinglouieextreme;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
@@ -10,7 +9,6 @@ import android.os.Handler;
 import android.os.Message;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -60,7 +58,7 @@ public class BTServerService {
     }
 
     public synchronized void start() {
-        ensureDiscoverable(); // TODO: nur nötig für koppeln? nur sichtbar wenn User will bzw neue Spieler.
+        //ensureDiscoverable(); // TODO: nur nötig für koppeln? nur sichtbar wenn User will bzw neue Spieler.
 //wenn gerät schon gekoppelt, nur MAC-addresse nötig (die ist ja bekannt)
 
         if (acceptThread == null) {

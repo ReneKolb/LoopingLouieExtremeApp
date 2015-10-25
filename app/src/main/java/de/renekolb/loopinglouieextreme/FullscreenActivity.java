@@ -29,6 +29,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     public BTServerService btServer;
     public BTClientService btClient;
 
+    public BluetoothLEService btLEService;
+
     private HostGameFragment hostGameFragment;
 
     @Override
@@ -109,9 +111,10 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft = getFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, this.hostGameFragment = HostGameFragment.newInstance("", ""));
+                ft.replace(R.id.main_fragment, this.hostGameFragment = HostGameFragment.newInstance(this.ServiceMessageHandler));
                 ft.commit();
                 startBTServer();
+                startBTLEService();
                 break;
             case Constants.BUTTON_CONNECT:
                 ft = getFragmentManager().beginTransaction();
@@ -167,6 +170,11 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 }
                 break;
         }
+    }
+
+
+    private void startBTLEService(){
+        this.btLEService = new BluetoothLEService(this,ServiceMessageHandler);
     }
 
     private void startBTServer() {
@@ -247,12 +255,6 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                /*case Constants.MESSAGE_WRITE:
-                    byte[] writeBuf = (byte[]) msg.obj;
-                    // construct a string from the buffer
-                    String writeMessage = new String(writeBuf);
-                    mConversationArrayAdapter.add("Me:  " + writeMessage);
-                    break;*/
                 case Constants.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
@@ -291,8 +293,32 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         }
                     }
                     break;
+
+                case Constants.MESSAGE_START_DISCOVERING_BLE_DEVICES:
+                    hostGameFragment.scanningBoardProgress.setVisibility(View.VISIBLE);
+                    break;
+                case Constants.MESSAGE_STOP_DISCOVERING_BLE_DEVICES:
+                    hostGameFragment.scanningBoardProgress.setVisibility(View.INVISIBLE);
+                    break;
+                case Constants.MESSAGE_DISCOVERED_BLE_DEVICE:
+                    String bleAddr = msg.getData().getString(Constants.DEVICE_ADDRESS);
+                    String bleName = msg.getData().getString(Constants.DEVICE_NAME);
+                    if(hostGameFragment!=null){
+                        boolean contains = false;
+                        for(int i=0;i<hostGameFragment.availableBoardAdapter.getCount();i++) {
+                            if(hostGameFragment.availableBoardAdapter.getItem(i).getAddress().equals(bleAddr)){
+                                contains = true;
+                                break;
+                            }
+                        }
+                        if(!contains) {
+                            hostGameFragment.availableBoardAdapter.add(new ConnectedPlayerListItem(bleAddr, bleName));
+                        }
+                    }
+
+                    break;
                 case Constants.MESSAGE_TOAST:
-                        Toast.makeText(FullscreenActivity.this, "t:" + msg.getData().getString(Constants.TOAST),
+                        Toast.makeText(FullscreenActivity.this, msg.getData().getString(Constants.TOAST),
                                 Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -306,6 +332,19 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    public void connectToBoard(String remoteAddress){
+        btLEService.connect(remoteAddress, new ReceiveCallback() {
+            @Override
+            public void onReceiveMessage(String message) {
+                Message msg = ServiceMessageHandler.obtainMessage(Constants.MESSAGE_TOAST);
+                Bundle b = new Bundle();
+                b.putString(Constants.TOAST,"Read: "+message);
+                msg.setData(b);
+                ServiceMessageHandler.sendMessage(msg);
+            }
+        });
     }
 
     @Override

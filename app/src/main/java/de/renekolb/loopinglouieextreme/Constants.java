@@ -12,6 +12,9 @@ public class Constants {
     public static final int MESSAGE_DEVICE_NAME = 4;
     public static final int MESSAGE_TOAST = 5;
     public static final int MESSAGE_CONNECTION_LOST = 6;
+    public static final int MESSAGE_DISCOVERED_BLE_DEVICE = 7;
+    public static final int MESSAGE_START_DISCOVERING_BLE_DEVICES = 8;
+    public static final int MESSAGE_STOP_DISCOVERING_BLE_DEVICES = 9;
 
     // Intent request codes
     public static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
