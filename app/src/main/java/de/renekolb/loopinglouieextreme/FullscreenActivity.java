@@ -55,19 +55,19 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
-        hide();
+        //hide();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        /*
         mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);*/
     }
 
     @Override
@@ -187,7 +187,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         btClient.connect(remoteDevice);
     }
 
-    private void hide() {
+  /*  private void hide() {
         // Hide UI first
         //ActionBar actionBar = getSupportActionBar();
         //if (actionBar != null) {
@@ -197,9 +197,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         // Schedule a runnable to remove the status and navigation bar after a delay
         mHideHandler.removeCallbacks(mShowPart2Runnable);
         mHideHandler.postDelayed(mHidePart2Runnable, 200);
-    }
+    }*/
 
-    private final Runnable mHidePart2Runnable = new Runnable() {
+  /*  private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
         public void run() {
@@ -215,9 +215,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                     | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
         }
-    };
+    };*/
 
-    @SuppressLint("InlinedApi")
+    /*@SuppressLint("InlinedApi")
     private void show() {
         // Show the system bar
         mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -226,9 +226,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         // Schedule a runnable to display UI elements after a delay
         mHideHandler.removeCallbacks(mHidePart2Runnable);
         mHideHandler.postDelayed(mShowPart2Runnable, 200);
-    }
+    }*/
 
-    private final Runnable mShowPart2Runnable = new Runnable() {
+    /*private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
             // Delayed display of UI elements
@@ -237,15 +237,15 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 //                actionBar.show();
 //            }
         }
-    };
+    };*/
 
-    private final Handler mHideHandler = new Handler();
+    /*private final Handler mHideHandler = new Handler();
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
             hide();
         }
-    };
+    };*/
 
 
     /**
@@ -276,7 +276,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     String addr = msg.getData().getString(Constants.DEVICE_ADDRESS);
                     //only relevant when hosting a game
                     if(btServer!=null) {
-                        btServer.disconnectClient(addr); //cleanup internal connectedThread List
+                        btServer.disconnectClient(addr, true); //cleanup internal connectedThread List
                         ConnectedPlayerListItem item = null;
                         for (int i = 0; i < hostGameFragment.connectedPlayerAdapter.getCount(); i++) {
                             if (hostGameFragment.connectedPlayerAdapter.getItem(i).getAddress().equals(addr)) {
@@ -329,22 +329,13 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
      * Schedules a call to hide() in [delay] milliseconds, canceling any
      * previously scheduled calls.
      */
-    private void delayedHide(int delayMillis) {
+    /*private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
-    }
+    }*/
 
     public void connectToBoard(String remoteAddress){
-        btLEService.connect(remoteAddress, new ReceiveCallback() {
-            @Override
-            public void onReceiveMessage(String message) {
-                Message msg = ServiceMessageHandler.obtainMessage(Constants.MESSAGE_TOAST);
-                Bundle b = new Bundle();
-                b.putString(Constants.TOAST,"Read: "+message);
-                msg.setData(b);
-                ServiceMessageHandler.sendMessage(msg);
-            }
-        });
+        btLEService.connect(remoteAddress, onBoardMessageRead);
     }
 
     @Override
@@ -355,4 +346,21 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
             super.onBackPressed();
         }
     }
+
+    private ReceiveCallback onBoardMessageRead =  new ReceiveCallback() {
+        @Override
+        public void onReceiveMessage(String message) {
+            Message msg = ServiceMessageHandler.obtainMessage(Constants.MESSAGE_TOAST);
+            Bundle b = new Bundle();
+            b.putString(Constants.TOAST,"Read: "+message);
+            msg.setData(b);
+            ServiceMessageHandler.sendMessage(msg);
+
+            //DEBUG: echo to all clients
+            if(btServer!=null) {
+                //should always be true
+                btServer.sendMessageToAll("board:"+message);
+            }
+        }
+    };
 }

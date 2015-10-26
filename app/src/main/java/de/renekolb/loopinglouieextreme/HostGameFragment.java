@@ -154,11 +154,17 @@ public class HostGameFragment extends Fragment {
 
     @Override
     public void onDestroyView(){
-        Log.i("asdfasdasdasdasdsadasd","Destroy view");
+        //disconnect from board
         if(fa.btLEService!=null){
             fa.btLEService.stopScanning();
             fa.btLEService.disconnect();
         }
+
+        if(fa.btServer != null){
+            fa.btServer.stop();
+            fa.btServer.disconnectClients();
+        }
+
         super.onDestroyView();
     }
 

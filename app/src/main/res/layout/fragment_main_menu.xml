@@ -7,16 +7,6 @@
     tools:context="de.renekolb.loopinglouieextreme.MainMenuFragment"
     android:clickable="true">
 
-    <TextView
-        android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:keepScreenOn="true"
-        android:textColor="#33b5e5"
-        android:textStyle="bold"
-        android:textSize="50sp"
-        android:gravity="center" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

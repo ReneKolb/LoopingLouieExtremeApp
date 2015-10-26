@@ -123,13 +123,26 @@ public class BTServerService {
         }*/
     }
 
-    public void disconnectClient(String address) {
-        clientCommThread.get(address).cancel(); //cancel if it is not cancelled yet
-        clientCommThread.remove(address);
+    public void disconnectClient(String address, boolean restartListening) {
+        if(clientCommThread.get(address)!=null) {
+            clientCommThread.get(address).cancel(); //cancel if it is not cancelled yet
+            clientCommThread.remove(address);
 
-        //restart accept thread?
-        if (getConnectedDevices() < 3 && !acceptThread.isAlive()) {
-            acceptThread.start();
+            //restart accept thread?
+            if (restartListening && getConnectedDevices() < 3 && !acceptThread.isAlive()) {
+                acceptThread.start();
+            }
+        }
+    }
+
+    public void disconnectClients(){
+        for(BTConnectedThread t:clientCommThread.values()){
+            t.cancel();
+        }
+        clientCommThread.clear();
+
+        if(acceptThread != null && acceptThread.isAlive()) {
+            acceptThread.cancel();
         }
     }
 
