@@ -62,6 +62,14 @@ public class BluetoothLEService {
         mBluetoothAdapter.getBluetoothLeScanner().stopScan(scanCallback);
     }
 
+    public void disconnect(){
+        if(btGatt!=null) {
+            btGatt.disconnect();
+            btGatt = null;
+        }
+        characteristic = null;
+    }
+
     private ScanCallback scanCallback = new ScanCallback() {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
@@ -90,6 +98,12 @@ public class BluetoothLEService {
                     gatt.discoverServices();
                 } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                     //Log.i(TAG, "disconnected");
+                    Message m = h.obtainMessage(Constants.MESSAGE_TOAST);
+                    Bundle b = new Bundle();
+                    b.putString(Constants.TOAST,"disconnected");
+                    m.setData(b);
+                    h.sendMessage(m);
+                    
                     characteristic = null;
                 }
             }

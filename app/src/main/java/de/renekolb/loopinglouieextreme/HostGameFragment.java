@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -149,6 +150,16 @@ public class HostGameFragment extends Fragment {
         scanningBoardProgress = (ProgressBar) view.findViewById(R.id.pb_scanning_board);
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView(){
+        Log.i("asdfasdasdasdasdsadasd","Destroy view");
+        if(fa.btLEService!=null){
+            fa.btLEService.stopScanning();
+            fa.btLEService.disconnect();
+        }
+        super.onDestroyView();
     }
 
     @Override
