@@ -1,6 +1,5 @@
 package de.renekolb.loopinglouieextreme;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -24,7 +23,9 @@ import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
 public class FullscreenActivity extends Activity implements OnFragmentInteractionListener {
 //vorher: AppCompatActivity. Aber es wird keine Action bar benötigt!!
 
-    private View mContentView;
+    public static boolean BLE_SUPPORT;
+
+    //private View mContentView;
 
     public BTServerService btServer;
     public BTClientService btClient;
@@ -39,7 +40,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
         setContentView(R.layout.activity_fullscreen);
 
-        mContentView = findViewById(R.id.fullscreen_content);
+        //mContentView = findViewById(R.id.fullscreen_content);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.main_fragment, MainMenuFragment.newInstance("", ""));

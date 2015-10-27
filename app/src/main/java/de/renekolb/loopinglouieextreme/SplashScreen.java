@@ -1,19 +1,35 @@
 package de.renekolb.loopinglouieextreme;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 
 public class SplashScreen extends Activity {
 
     private static final int SPLASH_TIME_OUT = 2000;
 
+    @SuppressLint("NewApi")
+    private void loadSettings(){
+        FullscreenActivity.BLE_SUPPORT = (Build.VERSION.SDK_INT >= 18) && getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        if (getResources().getBoolean(R.bool.is_tablet)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
+        loadSettings();
 
         new Handler().postDelayed(new Runnable() {
 

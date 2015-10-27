@@ -8,8 +8,6 @@ import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
-import android.bluetooth.le.ScanCallback;
-import android.bluetooth.le.ScanResult;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -45,6 +43,7 @@ public class BluetoothLEService {
         }
     }
 
+    @SuppressWarnings("Deprecation")
     public void startDiscoverDevices(){
         //Stop scanning after 10 seconds
         h.postDelayed(new Runnable() {
@@ -54,12 +53,18 @@ public class BluetoothLEService {
             }
         }, SCAN_PERIODE);
         h.sendMessage(h.obtainMessage(Constants.MESSAGE_START_DISCOVERING_BLE_DEVICES));
-        mBluetoothAdapter.getBluetoothLeScanner().startScan(scanCallback);
+        //only available in API 21 or higher!!
+        //mBluetoothAdapter.getBluetoothLeScanner().startScan(scanCallback);
+
+        //used in older APIs
+        mBluetoothAdapter.startLeScan(scanCallback);
     }
 
+    @SuppressWarnings("Deprecation")
     public void stopScanning(){
         h.sendMessage(h.obtainMessage(Constants.MESSAGE_STOP_DISCOVERING_BLE_DEVICES));
-        mBluetoothAdapter.getBluetoothLeScanner().stopScan(scanCallback);
+        //mBluetoothAdapter.getBluetoothLeScanner().stopScan(scanCallback);
+        mBluetoothAdapter.stopLeScan(scanCallback);
     }
 
     public void disconnect(){
@@ -70,8 +75,19 @@ public class BluetoothLEService {
         characteristic = null;
     }
 
-    private ScanCallback scanCallback = new ScanCallback() {
+    private BluetoothAdapter.LeScanCallback scanCallback = new BluetoothAdapter.LeScanCallback() {
+    //private ScanCallback scanCallback = new ScanCallback() {
         @Override
+        public void onLeScan(final BluetoothDevice device,
+                        final int rssi, final byte[] scanRecord){
+            Message m = h.obtainMessage(Constants.MESSAGE_DISCOVERED_BLE_DEVICE);
+            Bundle b = new Bundle();
+            b.putString(Constants.DEVICE_NAME, device.getName());
+            b.putString(Constants.DEVICE_ADDRESS, device.getAddress());
+            m.setData(b);
+            h.sendMessage(m);
+        }
+        /*@Override
         public void onScanResult(int callbackType, ScanResult result) {
             Message m = h.obtainMessage(Constants.MESSAGE_DISCOVERED_BLE_DEVICE);
             Bundle b = new Bundle();
@@ -79,7 +95,7 @@ public class BluetoothLEService {
             b.putString(Constants.DEVICE_ADDRESS, result.getDevice().getAddress());
             m.setData(b);
             h.sendMessage(m);
-        }
+        }*/
     };
 
     public void connect(String remoteAddress, final ReceiveCallback onReceiveCallback){

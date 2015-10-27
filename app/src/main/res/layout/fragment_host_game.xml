@@ -37,7 +37,9 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/tv_title_board_connection"
         android:layout_toRightOf="@id/tv_title_board_connection"
+        android:layout_toEndOf="@id/tv_title_board_connection"
         android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         style="@android:style/Widget.ProgressBar.Small"
         android:visibility="invisible"/>
 
@@ -46,7 +48,8 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_below="@id/tv_title_board_connection"
-        android:layout_marginLeft="80dp"/>
+        android:layout_marginLeft="80dp"
+        android:layout_marginStart="80dp"/>
 
 
 

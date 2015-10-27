@@ -98,7 +98,7 @@ public class DeviceListActivity extends Activity {
     }
 
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
@@ -107,7 +107,7 @@ public class DeviceListActivity extends Activity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-    }
+    }*/
 
     @Override
     protected void onDestroy() {

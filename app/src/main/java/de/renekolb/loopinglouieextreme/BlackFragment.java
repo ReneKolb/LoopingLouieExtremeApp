@@ -21,8 +21,9 @@ public class BlackFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     public static BlackFragment newInstance() {
-        BlackFragment fragment = new BlackFragment();
-        return fragment;
+        //BlackFragment fragment = new BlackFragment();
+        //return fragment;
+        return new BlackFragment();
     }
 
     public BlackFragment() {

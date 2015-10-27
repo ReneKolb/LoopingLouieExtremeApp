@@ -9,9 +9,6 @@ import android.os.Message;
 
 import java.io.IOException;
 
-/**
- * Created by Admi on 17.10.2015.
- */
 public class BTClientService {
 
     private FullscreenActivity activity;
