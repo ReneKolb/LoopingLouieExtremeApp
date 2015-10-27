@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 public class SplashScreen extends Activity {
 
@@ -23,31 +24,34 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        if (getResources().getBoolean(R.bool.is_tablet)) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+        if(savedInstanceState == null) {
+            //only load once
+            if (getResources().getBoolean(R.bool.is_tablet)) {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            } else {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            }
 
-        loadSettings();
+            loadSettings();
 
-        new Handler().postDelayed(new Runnable() {
+            new Handler().postDelayed(new Runnable() {
 
             /*
              * Showing splash screen with a timer. This will be useful when you
              * want to show case your app logo / company
              */
 
-            @Override
-            public void run() {
-                // This method will be executed once the timer is over
-                // Start your app main activity
-                Intent i = new Intent(SplashScreen.this, FullscreenActivity.class);
-                startActivity(i);
+                @Override
+                public void run() {
+                    // This method will be executed once the timer is over
+                    // Start your app main activity
+                    Intent i = new Intent(SplashScreen.this, FullscreenActivity.class);
+                    startActivity(i);
 
-                // close this activity
-                finish();
-            }
-        }, SPLASH_TIME_OUT);
+                    // close this activity
+                    finish();
+                }
+            }, SPLASH_TIME_OUT);
+        }
     }
 }
