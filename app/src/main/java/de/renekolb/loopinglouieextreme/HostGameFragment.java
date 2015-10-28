@@ -132,11 +132,21 @@ public class HostGameFragment extends Fragment {
         players.setAdapter(connectedPlayerAdapter);
         players.setOnItemClickListener(mConnectedPlayerClickListener);
 
+        //loadConnectedPlayers();
+        if(FullscreenActivity.reference.btServer.getConnectedDevices()>0) {
+            connectedPlayerAdapter.addAll(FullscreenActivity.reference.btServer.getConnectedPlayers());
+        }
+
         availableBoardAdapter = new ArrayAdapter<ConnectedPlayerListItem>(getActivity(),R.layout.listitem_player);
 
         ListView boards = (ListView) view.findViewById(R.id.lv_host_game_board_devices);
         boards.setAdapter(availableBoardAdapter);
         boards.setOnItemClickListener(mConnectBoardClickListener);
+
+        //loadConnectedBoard();
+        if(FullscreenActivity.reference.btLEService.isConnected()) {
+            availableBoardAdapter.add(FullscreenActivity.reference.btLEService.getBoard());
+        }
 
         Button btnLeScan =(Button)view.findViewById(R.id.btn_le_scan);
         btnLeScan.setOnClickListener(new View.OnClickListener() {
@@ -148,12 +158,20 @@ public class HostGameFragment extends Fragment {
 
         scanningBoardProgress = (ProgressBar) view.findViewById(R.id.pb_scanning_board);
 
+        Button btnGameSettings = (Button)view.findViewById(R.id.btn_game_settings);
+        btnGameSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             onButtonPressed(Constants.BUTTON_GAME_SETTINGS);
+            }
+        });
+
         return view;
     }
 
     @Override
     public void onDestroyView(){
-        //disconnect from board
+        /*//disconnect from board
         if(fa.btLEService!=null){
             fa.btLEService.stopScanning();
             fa.btLEService.disconnect();
@@ -162,7 +180,7 @@ public class HostGameFragment extends Fragment {
         if(fa.btServer != null){
             fa.btServer.stop();
             fa.btServer.disconnectClients();
-        }
+        }*/
 
         super.onDestroyView();
     }

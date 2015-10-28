@@ -11,9 +11,15 @@ import android.bluetooth.BluetoothProfile;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.UUID;
+
+import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
 
 @SuppressLint("NewApi")
 public class BluetoothLEService {
@@ -27,16 +33,22 @@ public class BluetoothLEService {
     private FullscreenActivity fa;
     private Handler h;
 
+    private  boolean connected;
+
     private BluetoothGatt btGatt;
     private BluetoothGattCharacteristic characteristic;
 
     private BluetoothAdapter mBluetoothAdapter = null;
 
+    LinkedList<byte[]> sendingQueue;
+
     public BluetoothLEService(FullscreenActivity fa, Handler h){
+        this.connected = false;
         this.h = h;
         this.fa = fa;
         characteristic = null;
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        sendingQueue = new LinkedList<>();
         if (mBluetoothAdapter == null) {
             Toast.makeText(fa, "Bluetooth is not available", Toast.LENGTH_LONG).show();
             fa.finish();
@@ -73,6 +85,7 @@ public class BluetoothLEService {
             btGatt = null;
         }
         characteristic = null;
+        connected = false;
     }
 
     private BluetoothAdapter.LeScanCallback scanCallback = new BluetoothAdapter.LeScanCallback() {
@@ -119,6 +132,7 @@ public class BluetoothLEService {
                     b.putString(Constants.TOAST,"disconnected");
                     m.setData(b);
                     h.sendMessage(m);
+                    connected = false;
                     
                     characteristic = null;
                 }
@@ -147,8 +161,9 @@ public class BluetoothLEService {
                     m.setData(b);
                     h.sendMessage(m);
 
-                    characteristic.setValue("BT Connected"); //max 30bytes
-                    gatt.writeCharacteristic(characteristic); // Send message to client
+                    //characteristic.setValue("BT Connected"); //max 30bytes
+                    //gatt.writeCharacteristic(characteristic); // Send message to client
+                    connected = true;
 //                mBluetoothGatt.writeDescriptor(descriptor);
                 }
             }
@@ -165,13 +180,75 @@ public class BluetoothLEService {
                 //characteristic.setValue(msg);
                 //gatt.writeCharacteristic(characteristic);
             }
+
+            @Override
+            public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status){
+                sendingQueue.removeFirst();
+                if(sendingQueue.size()>0){
+                    //still messages to send, so send next one
+                    sendMessage(sendingQueue.getFirst());
+                }
+            }
         });
     }
 
-    public void sendMessage(String message){
+    public void addSendMessage(byte[]message){
+        if(message.length>20){
+         Log.e("TAG TAG", "you cannot send messaged larger than 20 bytes");
+        }else {
+            sendingQueue.add(message);
+            if (sendingQueue.size() == 1) {
+                sendMessage(message);
+            }
+        }
+    }
+
+    private void sendMessage(byte[] message){
+        Log.i("MESSAGE TAG", "Send: " + new String(message));
         if(characteristic != null){
             characteristic.setValue(message);
             btGatt.writeCharacteristic(characteristic);
         }
+    }
+
+    public boolean isConnected(){
+        return this.connected;
+    }
+
+    public ConnectedPlayerListItem getBoard(){
+        if(!connected)
+            return null;
+
+        return new ConnectedPlayerListItem(btGatt.getDevice().getAddress(),btGatt.getDevice().getName());
+    }
+
+    private String boolToString(boolean b){
+        return b?"1":"0";
+    }
+
+ //   private void sendCommand(/*Command, value*/String  cmd){
+//    }
+
+    public void sendGameSettings(GameSettings settings){
+        //addSendMessage(settings.getSendArray());
+
+        addSendMessage((BTCommands.SET_RANDOM_SPEED + boolToString(settings.getRandomSpeed()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_START_SPEED + String.valueOf(settings.getStartSpeed()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_SPEED_MIN_DELAY + String.valueOf(settings.getSpeedMinDelay()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_SPEED_MAX_DELAY + String.valueOf(settings.getSpeedMaxDelay()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_SPEED_MIN_STEP_SIZE + String.valueOf(settings.getSpeedMinStepSize()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_SPEED_MAX_STEP_SIZE + String.valueOf(settings.getSpeedMaxStepSize()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_ENABLE_REVERSE + boolToString(settings.getEnableReverse()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_CHEF_MODE + boolToString(settings.getChefMode()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_CHEF_ROULETTE + boolToString(settings.getChefRoulette()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_CHEF_CHANGE_DELAY + String.valueOf(settings.getChefChangeDelay()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_CHEF_HAS_SHORTER_COOLDOWN + boolToString(settings.getChefHasShorterCooldown()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_ENABLE_ITEMS + boolToString(settings.getEnableItems()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_ENABLE_EVENTS + boolToString(settings.getEnableEvents()) + ".").getBytes());
+        
+    }
+
+    public void sendGameStart(){
+        addSendMessage((BTCommands.START_GAME + ".").getBytes());
     }
 }

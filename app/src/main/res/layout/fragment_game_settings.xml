@@ -1,0 +1,536 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFACD"
+    android:padding="15dp"
+    tools:context="de.renekolb.loopinglouieextreme.GameSettingsFragment">
+
+    <TextView
+        android:id="@+id/tv_game_settings_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/tv_title_game_settings"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/tv_game_settings_title"
+        android:layout_above="@+id/btn_game_settings_start"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
+        android:scrollbars="none">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:isScrollContainer="true">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                >
+
+                <TextView
+                    android:id="@+id/tv_game_settings_speed_settings"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Speed Settings"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:layout_column="0"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_game_settings_random_speed"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Random Speed"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:layout_column="0"/>
+
+                <Switch
+                    android:theme="@android:style/Theme.Holo"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="end"
+                    android:id="@+id/sw_game_settings_random_speed"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:checked="true"
+                    android:layout_column="1"/>
+
+                <!-- DUMMY-->
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_weight="1"
+                    android:layout_column="2"/>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_game_settings_start_speed"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Start Speed"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:layout_column="0"/>
+
+                <SeekBar
+                    android:id="@+id/sb_game_settings_start_speed"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_column="1"
+                    android:layout_gravity="center_vertical"
+                    android:progress="50"/>
+
+                <TextView
+                    android:id="@+id/tv_game_settings_start_speed_cnt"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="right"
+                    android:textColor="#000000"
+                    android:text="64"/>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_game_settings_speed_min_delay"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Speed Min Delay"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:layout_column="0"/>
+
+                <SeekBar
+                    android:id="@+id/sb_game_settings_speed_min_delay"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:layout_column="1"
+                    android:progress="50"/>
+
+                <TextView
+                    android:id="@+id/tv_game_settings_speed_min_delay_cnt"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="right"
+                    android:textColor="#000000"
+                    android:text="3000"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_game_settings_speed_max_delay"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Speed Max Delay"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:layout_column="0"/>
+
+                <SeekBar
+                    android:id="@+id/sb_game_settings_speed_max_delay"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:layout_column="1"
+                    android:progress="50"/>
+
+                <TextView
+                    android:id="@+id/tv_game_settings_speed_max_delay_cnt"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="right"
+                    android:textColor="#000000"
+                    android:text="5000"/>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_game_settings_speed_min_step_size"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Speed Min Step Size"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:layout_column="0"/>
+
+                <SeekBar
+                    android:id="@+id/sb_game_settings_speed_min_step_size"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:layout_column="1"
+                    android:progress="50"/>
+
+                <TextView
+                    android:id="@+id/tv_game_settings_speed_min_step_size_cnt"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="right"
+                    android:textColor="#000000"
+                    android:text="20"/>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_game_settings_speed_max_step_size"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Speed Max Step Size"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:layout_column="0"/>
+
+                <SeekBar
+                    android:id="@+id/sb_game_settings_speed_max_step_size"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:layout_column="1"
+                    android:progress="50"/>
+
+                <TextView
+                    android:id="@+id/tv_game_settings_speed_max_step_size_cnt"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="right"
+                    android:textColor="#000000"
+                    android:text="30"/>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_game_settings_enable_reverse"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Enable Reverse"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:layout_column="0"/>
+
+                <Switch
+                    android:theme="@android:style/Theme.Holo"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="end"
+                    android:id="@+id/sw_game_settings_enable_reverse"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:checked="true"
+                    android:layout_column="1"/>
+
+                <!-- DUMMY-->
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_weight="1"
+                    android:layout_column="2"/>
+
+            </TableRow>
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_game_settings_chef_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Chef Mode"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:layout_column="0"/>
+
+                <Switch
+                    android:theme="@android:style/Theme.Holo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/sw_game_settings_chef_mode"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:checked="true"
+                    android:layout_column="1"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_game_settings_chef_roulette"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_game_settings_chef_roulette"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Chef Roulette"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_column="0"/>
+
+                <Switch
+                    android:theme="@android:style/Theme.Holo"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:id="@+id/sw_game_settings_chef_roulette"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:checked="true"
+                    android:layout_column="1"/>
+
+
+                <!-- DUMMY-->
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_weight="1"
+                    android:layout_column="2"/>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_game_settings_change_chef_delay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_game_settings_change_chef_delay"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="3"
+                    android:text="Change Chef Delay"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:layout_column="0"/>
+
+                <SeekBar
+                    android:id="@+id/sb_game_settings_change_chef_delay"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:layout_column="1"
+                    android:progress="50"/>
+
+                <TextView
+                    android:id="@+id/tv_game_settings_change_chef_delay_cnt"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="right"
+                    android:textColor="#000000"
+                    android:text="5000"/>
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_game_settings_chef_cooldown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_game_settings_chef_cooldown"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Chef Shorter Cooldown"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_column="0"/>
+
+                <Switch
+                    android:theme="@android:style/Theme.Holo"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:id="@+id/sw_game_settings_chef_cooldown"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:checked="true"
+                    android:layout_column="1"/>
+
+                <!-- DUMMY-->
+                <TextView
+                    android:layout_width="0px"
+                    android:layout_weight="1"
+                    android:layout_column="2"/>
+            </TableRow>
+
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_game_settings_enable_items"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Enable Items"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_vertical"
+                    android:layout_column="0"/>
+
+                <Switch
+                    android:theme="@android:style/Theme.Holo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:id="@+id/sw_game_settings_enable_items"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:checked="true"
+                    android:layout_column="1"/>
+            </TableRow>
+        </TableLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_game_settings_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="18sp"
+        android:text="Start"/>
+
+
+
+
+</RelativeLayout>

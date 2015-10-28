@@ -28,6 +28,8 @@ public class MainMenuFragment extends Fragment {
     private Button btnClient;
     private ImageButton btnSettings;
 
+    //private FullscreenActivity fa;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -38,17 +40,12 @@ public class MainMenuFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment MainMenuFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MainMenuFragment newInstance(String param1, String param2) {
+    public static MainMenuFragment newInstance() {
         MainMenuFragment fragment = new MainMenuFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+        //fragment.fa = fa;
         return fragment;
     }
 
@@ -99,7 +96,28 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+
+
         return view;
+    }
+
+    @Override
+    public void onResume(){
+        //disconnect from board
+        if(FullscreenActivity.reference.btLEService!=null){
+            FullscreenActivity.reference.btLEService.stopScanning();
+            FullscreenActivity.reference.btLEService.disconnect();
+        }
+
+        if(FullscreenActivity.reference.btServer != null){
+            FullscreenActivity.reference.btServer.stop();
+            FullscreenActivity.reference.btServer.disconnectClients();
+        }
+
+        if(FullscreenActivity.reference.btClient!=null) {
+            FullscreenActivity.reference.btClient.stop();
+        }
+        super.onResume();
     }
 
     public void onButtonPressed(int button) {

@@ -9,8 +9,11 @@ import android.os.Handler;
 import android.os.Message;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
+
+import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
 
 public class BTServerService {
 
@@ -85,7 +88,7 @@ public class BTServerService {
         }*/
     }
 
-    private int getConnectedDevices() {
+    public int getConnectedDevices() {
         return clientCommThread.size();
         /*int cnt = 0;
         for (int i = 0; i < 3; i++) {
@@ -135,6 +138,14 @@ public class BTServerService {
         }
     }
 
+    public ArrayList<ConnectedPlayerListItem> getConnectedPlayers(){
+        ArrayList<ConnectedPlayerListItem> result = new ArrayList<>();
+        for(BTConnectedThread b : this.clientCommThread.values()){
+            result.add(new ConnectedPlayerListItem(b.getSocket().getRemoteDevice().getAddress(),b.getSocket().getRemoteDevice().getName()));
+        }
+        return result;
+    }
+
     public void disconnectClients(){
         for(BTConnectedThread t:clientCommThread.values()){
             t.cancel();
@@ -155,6 +166,7 @@ public class BTServerService {
         }
         return -1;
     }*/
+
 
     public synchronized void manageConnectedSocket(BluetoothSocket socket) {
 

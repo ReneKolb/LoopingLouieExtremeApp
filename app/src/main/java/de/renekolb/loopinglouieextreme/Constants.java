@@ -29,6 +29,9 @@ public class Constants {
     public static final int BUTTON_TEST_BLACK = 4;
     public static final int BUTTON_TEST_SERVER_MESSAGE = 5;
     public static final int BUTTON_TEST_CLIENT_MESSAGE = 6;
+    public static final int BUTTON_GAME_SETTINGS = 7;
+
+    public static final int BUTTON_GAME_SETTINGS_START = 8;
 
 
     // Key names received from the BluetoothChatService Handler
