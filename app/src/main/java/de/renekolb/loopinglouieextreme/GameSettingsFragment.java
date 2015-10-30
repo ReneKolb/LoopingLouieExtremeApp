@@ -4,18 +4,12 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.SeekBar;
-import android.widget.Switch;
-import android.widget.TableRow;
-import android.widget.TextView;
-
-import java.awt.font.TextAttribute;
+import android.widget.ImageButton;
+import android.widget.NumberPicker;
 
 
 /**
@@ -28,17 +22,28 @@ import java.awt.font.TextAttribute;
  */
 public class GameSettingsFragment extends Fragment {
 
+    private static final String ARG_GAME_MODE = "GAME MODE";
+    private static final String ARG_ROUNDS = "ROUNDS";
+
+    private int mGameMode;
+    private int mRounds;
+
     private OnFragmentInteractionListener mListener;
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
      * @return A new instance of fragment GameSettingsFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static GameSettingsFragment newInstance() {
+    public static GameSettingsFragment newInstance(int gameMode, int rounds) {
         GameSettingsFragment fragment = new GameSettingsFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_GAME_MODE, gameMode);
+        args.putInt(ARG_ROUNDS, rounds);
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -49,6 +54,10 @@ public class GameSettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mGameMode = getArguments().getInt(ARG_GAME_MODE);
+            mRounds = getArguments().getInt(ARG_ROUNDS);
+        }
     }
 
     @Override
@@ -56,92 +65,97 @@ public class GameSettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game_settings, container, false);
-
-        Switch swRandomSpeed = (Switch) view.findViewById(R.id.sw_game_settings_random_speed);
-        swRandomSpeed.setChecked(FullscreenActivity.gameSettings.getRandomSpeed());
-        swRandomSpeed.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        NumberPicker np = (NumberPicker) view.findViewById(R.id.np_game_settings_rounds);
+        np.setMinValue(1);
+        np.setMaxValue(10);
+        np.setValue(mRounds);
+        np.setWrapSelectorWheel(false); //click plus when max value is reached, don't go to 1.
+        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                FullscreenActivity.gameSettings.setRandomSpeed(isChecked);
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                mRounds = newVal;
             }
         });
 
+        final Button btnClassic = (Button) view.findViewById(R.id.btn_game_settings_classic);
+        final Button btnAction = (Button) view.findViewById(R.id.btn_game_settings_action);
+        final Button btnCustom = (Button) view.findViewById(R.id.btn_game_settings_custom);
+        final ImageButton btnCustomSettings = (ImageButton) view.findViewById(R.id.btn_game_settings_custom_settings);
+        final Button btnStartGame = (Button) view.findViewById(R.id.btn_game_settings_start_game);
 
-        final TextView tvStartSpeedCnt = (TextView) view.findViewById(R.id.tv_game_settings_start_speed_cnt);
-        tvStartSpeedCnt.setText(String.valueOf(FullscreenActivity.gameSettings.getStartSpeed()));
+        btnCustomSettings.setVisibility(mGameMode == 2 ? View.VISIBLE : View.INVISIBLE);
 
-        SeekBar sbStartSpeed = (SeekBar) view.findViewById(R.id.sb_game_settings_start_speed);
-        sbStartSpeed.setMax(170 - 49);
-        sbStartSpeed.setProgress(FullscreenActivity.gameSettings.getStartSpeed() - 49);
-        sbStartSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tvStartSpeedCnt.setText(String.valueOf(49 + progress));
-                FullscreenActivity.gameSettings.setStartSpeed((byte)(49 + progress));
-            }
+        switch(mGameMode){
+            case 0:
+                btnClassic.setEnabled(false);
+                break;
+            case 1:
+                btnAction.setEnabled(false);
+                break;
+            case 2:
+                btnCustom.setEnabled(false);
+                break;
+        }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-            }
-        });
-
-        final TextView tvSpeedMinDelayCnt = (TextView) view.findViewById(R.id.tv_game_settings_speed_min_delay_cnt);
-        tvSpeedMinDelayCnt.setText(String.valueOf(FullscreenActivity.gameSettings.getSpeedMinDelay()));
-
-        SeekBar sbSpeedMinDelay = (SeekBar) view.findViewById(R.id.sb_game_settings_speed_min_delay);
-        sbSpeedMinDelay.setMax(15000);
-        sbSpeedMinDelay.setProgress(FullscreenActivity.gameSettings.getSpeedMinDelay());
-        sbSpeedMinDelay.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                tvSpeedMinDelayCnt.setText(String.valueOf(progress));
-                FullscreenActivity.gameSettings.setSpeedMinDelay((short)progress);
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
-
-
-        final TableRow trChefRoulette = (TableRow) view.findViewById(R.id.tr_game_settings_chef_roulette);
-        final TableRow trChefDelay = (TableRow) view.findViewById(R.id.tr_game_settings_change_chef_delay);
-        final TableRow trChefCooldown = (TableRow) view.findViewById(R.id.tr_game_settings_chef_cooldown);
-
-        Switch swChefMode = (Switch) view.findViewById(R.id.sw_game_settings_chef_mode);
-        swChefMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    trChefRoulette.setVisibility(View.VISIBLE);
-                    trChefDelay.setVisibility(View.VISIBLE);
-                    trChefCooldown.setVisibility(View.VISIBLE);
-                }else{
-                    trChefRoulette.setVisibility(View.GONE);
-                    trChefDelay.setVisibility(View.GONE);
-                    trChefCooldown.setVisibility(View.GONE);
-                }
-            }
-        });
-
-        Button btnStart = (Button) view.findViewById(R.id.btn_game_settings_start);
-        btnStart.setOnClickListener(new View.OnClickListener() {
+        btnClassic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onButtonPressed(Constants.BUTTON_GAME_SETTINGS_START);
+                btnClassic.setEnabled(false);
+                btnAction.setEnabled(true);
+                btnCustom.setEnabled(true);
+                btnCustomSettings.setVisibility(View.INVISIBLE);
+                mGameMode = 0;
             }
         });
+
+        btnAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnClassic.setEnabled(true);
+                btnAction.setEnabled(false);
+                btnCustom.setEnabled(true);
+                btnCustomSettings.setVisibility(View.INVISIBLE);
+                mGameMode = 1;
+            }
+        });
+
+        btnCustom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnClassic.setEnabled(true);
+                btnAction.setEnabled(true);
+                btnCustom.setEnabled(false);
+                btnCustomSettings.setVisibility(View.VISIBLE);
+                mGameMode = 2;
+            }
+        });
+
+        btnCustomSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(Constants.BUTTON_GAME_SETTINGS_CUSTOM_SETTINGS);
+            }
+        });
+
+        btnStartGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(Constants.BUTTON_GAME_SETTINGS_START_GAME);
+            }
+        });
+
+        Button btnTestWheel = (Button) view.findViewById(R.id.btn_game_settings_test_wheel);
+        btnTestWheel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(Constants.BUTTON_GAME_SETTINGS_TEST_WHEEL);
+            }
+        });
+
+
 
         return view;
     }
-
-
 
     public void onButtonPressed(int button) {
         if (mListener != null) {

@@ -31,7 +31,9 @@ public class Constants {
     public static final int BUTTON_TEST_CLIENT_MESSAGE = 6;
     public static final int BUTTON_GAME_SETTINGS = 7;
 
-    public static final int BUTTON_GAME_SETTINGS_START = 8;
+    public static final int BUTTON_GAME_SETTINGS_CUSTOM_SETTINGS = 8;
+    public static final int BUTTON_GAME_SETTINGS_START_GAME = 9;
+    public static final int BUTTON_GAME_SETTINGS_TEST_WHEEL = 10;
 
 
     // Key names received from the BluetoothChatService Handler

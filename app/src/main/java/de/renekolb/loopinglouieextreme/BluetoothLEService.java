@@ -14,8 +14,6 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.UUID;
 
@@ -80,6 +78,7 @@ public class BluetoothLEService {
     }
 
     public void disconnect(){
+        Log.i("","disconnect BLE!");
         if(btGatt!=null) {
             btGatt.disconnect();
             btGatt = null;
@@ -126,7 +125,7 @@ public class BluetoothLEService {
                 if (newState == BluetoothProfile.STATE_CONNECTED) {
                     gatt.discoverServices();
                 } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                    //Log.i(TAG, "disconnected");
+                    Log.i("", "BLE disconnected");
                     Message m = h.obtainMessage(Constants.MESSAGE_TOAST);
                     Bundle b = new Bundle();
                     b.putString(Constants.TOAST,"disconnected");
@@ -229,7 +228,7 @@ public class BluetoothLEService {
  //   private void sendCommand(/*Command, value*/String  cmd){
 //    }
 
-    public void sendGameSettings(GameSettings settings){
+    public void sendGameSettings(CustomGameSettings settings){
         //addSendMessage(settings.getSendArray());
 
         addSendMessage((BTCommands.SET_RANDOM_SPEED + boolToString(settings.getRandomSpeed()) + ".").getBytes());

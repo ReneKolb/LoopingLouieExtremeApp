@@ -3,7 +3,7 @@ package de.renekolb.loopinglouieextreme;
 /**
  * Created by Admi on 28.10.2015.
  */
-public class GameSettings {
+public class CustomGameSettings {
 
     //7boolean = ~1Byte
     //3 byte   =  3Byte
@@ -27,7 +27,7 @@ public class GameSettings {
     private boolean enableItems;
     private boolean enableEvents;
 
-    public GameSettings(){
+    public CustomGameSettings(){
         this.randomSpeed = true;
         this.startSpeed = 64;
         this.speedMinDelay = 5000;

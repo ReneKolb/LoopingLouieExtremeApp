@@ -10,7 +10,6 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -37,7 +36,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     public static FullscreenActivity reference;
 
-    public static  GameSettings gameSettings;
+    public static CustomGameSettings customGameSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +119,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft.addToBackStack(null);
                 ft.replace(R.id.main_fragment, this.hostGameFragment = HostGameFragment.newInstance(this.ServiceMessageHandler));
                 ft.commit();
-                gameSettings = new GameSettings(); // initialize & set defaults
+                customGameSettings = new CustomGameSettings(); // initialize & set defaults
                 startBTServer();
                 startBTLEService();
                 break;
@@ -179,17 +178,39 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 break;
             case Constants.BUTTON_GAME_SETTINGS:
                 //the host must be connected to the board and at least one player has to be connected
-                if(true || btLEService.isConnected() && btServer.getConnectedDevices()>=1) {
+                /*if(true || btLEService.isConnected() && btServer.getConnectedDevices()>=1) {
                     ft = getFragmentManager().beginTransaction();
                     ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                     ft.addToBackStack(null);
-                    ft.replace(R.id.main_fragment, GameSettingsFragment.newInstance());
+                    ft.replace(R.id.main_fragment, CustomGameSettingsFragment.newInstance());
                     ft.commit();
-                }
+                }*/
+
+                ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, GameSettingsFragment.newInstance(0, 3)); // DEFAULT VALUES
+                ft.commit();
+
                 break;
-            case Constants.BUTTON_GAME_SETTINGS_START:
-                btLEService.sendGameSettings(gameSettings);
+            case Constants.BUTTON_GAME_SETTINGS_CUSTOM_SETTINGS:
+                ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, CustomGameSettingsFragment.newInstance());
+                ft.commit();
+                break;
+            case Constants.BUTTON_GAME_SETTINGS_START_GAME:
+                btLEService.sendGameSettings(customGameSettings);
                 btLEService.sendGameStart();
+                break;
+
+            case Constants.BUTTON_GAME_SETTINGS_TEST_WHEEL:
+                ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, WheelOfFortune.newInstance());
+                ft.commit();
                 break;
         }
     }
