@@ -14,14 +14,6 @@
         android:layout_centerInParent="true"
         android:src="@drawable/wheel_of_fortune"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Spin"
-        android:id="@+id/btn_wheel_of_fortune_spin"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"/>
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -5,7 +5,11 @@ import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Handler;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -66,14 +70,18 @@ public class WheelOfFortune extends Fragment {
 
         mWheel = (ImageView) view.findViewById(R.id.iv_wheel_of_fortune);
 
-        Button btnSpin = (Button) view.findViewById(R.id.btn_wheel_of_fortune_spin);
-        btnSpin.setOnClickListener(new View.OnClickListener() {
+        currentRotation = 0;
+
+        final GestureDetector gdt = new GestureDetector(FullscreenActivity.reference,new GestureListener(),new Handler());
+
+        mWheel.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
-                TEST_ROTATE();
+            public boolean onTouch(final View view, final MotionEvent event) {
+                gdt.onTouchEvent(event);
+                return true;
             }
         });
-        currentRotation = 0;
+
 
         return view;
     }
@@ -102,12 +110,14 @@ public class WheelOfFortune extends Fragment {
     }
 
 
-    private void TEST_ROTATE(){
+    private void TEST_ROTATE(int direction){
+        //direction 1 -> clockwise
+        //         -1 -> counter clockwise
 
         float dRot = 720 + random.nextInt(720); //2-4 Umdrehungen
 
-        RotateAnimation anim = new RotateAnimation(currentRotation, currentRotation+dRot, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
-        currentRotation = (currentRotation+dRot)%360;
+        RotateAnimation anim = new RotateAnimation(currentRotation, currentRotation+direction*dRot, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+        currentRotation = (currentRotation+direction*dRot)%360;
 
 
         anim.setInterpolator(new Interpolator() {
@@ -121,22 +131,67 @@ public class WheelOfFortune extends Fragment {
         anim.setFillEnabled(true);
         anim.setFillAfter(true);
         mWheel.startAnimation(anim);
-        /*Matrix matrix = new Matrix();*/
-        //mWheel = view.finfViewByID(R.id.);
-        //mWheel.setScaleType(ImageView.ScaleType.MATRIX); //required
-        //mWheel.setPivotX(mWheel.getDrawable().getBounds().width() / 2);
-        //mWheel.setPivotY(mWheel.getDrawable().getBounds().height() / 2);
-        //mWheel.setRotation(72);//0..360
 
-        //vllt als RelativeView???
-/*
-        float pivotX = mWheel.getDrawable().getBounds().width()/2;
-        float pivotY = mWheel.getDrawable().getBounds().height()/2;
-
-        float angle = 72;
-
-        matrix.postRotate((float) angle, pivotX, pivotY);
-        mWheel.setImageMatrix(matrix);*/
     }
+
+
+
+
+    private static final int SWIPE_MIN_DISTANCE = 120;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if(velocityX*velocityX + velocityY*velocityY<SWIPE_THRESHOLD_VELOCITY*SWIPE_THRESHOLD_VELOCITY){
+                return false; //swipe speed is too slow
+            }
+
+            int direction = 0; //-1 gegen UZ, +1 im UZ, 0 Fehler
+            //long duration; //4000 normal
+
+            Log.i("TAG","x: "+e1.getX()+" y: "+e1.getY()+" w: "+mWheel.getWidth()+" h: "+mWheel.getHeight());
+            if(e1.getX()>=mWheel.getWidth()/2 &&e1.getY()<=mWheel.getHeight()/2){
+                //oben rechst
+                Log.i("TAG", "oben rechts");
+                if(velocityX>=0 && velocityY>=0){
+                    direction = 1;
+                }else if(velocityX<=0&&velocityY<=0){
+                    direction = -1;
+                }
+
+            }else if(e1.getX()>=mWheel.getWidth()/2 &&e1.getY()>mWheel.getHeight()/2){
+                //unten rechts
+                Log.i("TAG", "unten rechts");
+                if(velocityX<=0 && velocityY>=0){
+                    direction = 1;
+                }else if(velocityX>=0&&velocityY<=0){
+                    direction = -1;
+                }
+            }else if(e1.getX()<mWheel.getWidth()/2&&e1.getY()<=mWheel.getHeight()/2){
+                //oben links
+                Log.i("TAG", "oben links");
+                if(velocityX>=0 && velocityY<=0){
+                    direction = 1;
+                }else if(velocityX<=0&&velocityY>=0){
+                    direction = -1;
+                }
+            }else{
+                //unten rechts
+                Log.i("TAG", "unten links");
+                if(velocityX<=0 && velocityY<=0){
+                    direction = 1;
+                }else if(velocityX>=0&&velocityY>=0){
+                    direction = -1;
+                }
+            }
+
+            if(direction != 0){
+                TEST_ROTATE(direction);
+            }
+            return true;
+        }
+    }
+
 
 }

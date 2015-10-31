@@ -54,4 +54,10 @@ public class SplashScreen extends Activity {
             }, SPLASH_TIME_OUT);
         }
     }
+
+    @Override
+    public void onBackPressed(){
+        //cannot close the app with pressing back!
+        //super.onBackPressed();
+    }
 }
