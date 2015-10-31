@@ -17,6 +17,7 @@ import android.view.animation.Interpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.Random;
 
@@ -31,9 +32,13 @@ import java.util.Random;
  */
 public class WheelOfFortune extends Fragment {
 
-    private ImageView mWheel;
+    private ImageView mIVWheel;
+    private TextView mTVResult;
+
     private Random random;
     private float currentRotation;
+
+    private Handler animationWaitHandler;
 
     private OnFragmentInteractionListener mListener;
 
@@ -60,6 +65,7 @@ public class WheelOfFortune extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         random = new Random();
+        animationWaitHandler = new Handler();
     }
 
     @Override
@@ -68,13 +74,14 @@ public class WheelOfFortune extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_wheel_of_fortune, container, false);
 
-        mWheel = (ImageView) view.findViewById(R.id.iv_wheel_of_fortune);
+        mIVWheel = (ImageView) view.findViewById(R.id.iv_wheel_of_fortune);
+        mTVResult = (TextView) view.findViewById(R.id.tv_wheel_of_fortune_result);
 
         currentRotation = 0;
 
         final GestureDetector gdt = new GestureDetector(FullscreenActivity.reference,new GestureListener(),new Handler());
 
-        mWheel.setOnTouchListener(new View.OnTouchListener() {
+        mIVWheel.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(final View view, final MotionEvent event) {
                 gdt.onTouchEvent(event);
@@ -113,8 +120,9 @@ public class WheelOfFortune extends Fragment {
     private void TEST_ROTATE(int direction){
         //direction 1 -> clockwise
         //         -1 -> counter clockwise
+        mTVResult.setText("dum di dum ...");
 
-        float dRot = 720 + random.nextInt(720); //2-4 Umdrehungen
+        float dRot = 1080 + random.nextInt(1080); //3-6 Umdrehungen
 
         RotateAnimation anim = new RotateAnimation(currentRotation, currentRotation+direction*dRot, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
         currentRotation = (currentRotation+direction*dRot)%360;
@@ -127,14 +135,43 @@ public class WheelOfFortune extends Fragment {
                 return (3 * x) - (3 * x * x) + (x * x * x);
             }
         });
-        anim.setDuration(4000);
+        anim.setDuration((int) (3.7 * dRot)); // keep rotating time constant
         anim.setFillEnabled(true);
         anim.setFillAfter(true);
-        mWheel.startAnimation(anim);
+
+        animationWaitHandler.postDelayed(onAnimationFinish, anim.getDuration());
+
+        mIVWheel.startAnimation(anim);
 
     }
 
 
+    private Runnable onAnimationFinish = new Runnable() {
+        @Override
+        public void run() {
+            int index = (int)((360-currentRotation) / 60);
+            switch(index){
+                case 0:
+                    mTVResult.setText("Trinke 2");
+                    break;
+                case 1:
+                    mTVResult.setText("Glück gehabt");
+                    break;
+                case 2:
+                    mTVResult.setText("Trinke 1");
+                    break;
+                case 3:
+                    mTVResult.setText("Dreh nochmal");
+                    break;
+                case 4:
+                    mTVResult.setText("Trinke 3");
+                    break;
+                case 5:
+                    mTVResult.setText("Trinke mit einem Partner");
+                    break;
+            }
+        }
+    } ;
 
 
     private static final int SWIPE_MIN_DISTANCE = 120;
@@ -150,8 +187,8 @@ public class WheelOfFortune extends Fragment {
             int direction = 0; //-1 gegen UZ, +1 im UZ, 0 Fehler
             //long duration; //4000 normal
 
-            Log.i("TAG","x: "+e1.getX()+" y: "+e1.getY()+" w: "+mWheel.getWidth()+" h: "+mWheel.getHeight());
-            if(e1.getX()>=mWheel.getWidth()/2 &&e1.getY()<=mWheel.getHeight()/2){
+            Log.i("TAG","x: "+e1.getX()+" y: "+e1.getY()+" w: "+mIVWheel.getWidth()+" h: "+mIVWheel.getHeight());
+            if(e1.getX()>=mIVWheel.getWidth()/2 &&e1.getY()<=mIVWheel.getHeight()/2){
                 //oben rechst
                 Log.i("TAG", "oben rechts");
                 if(velocityX>=0 && velocityY>=0){
@@ -160,7 +197,7 @@ public class WheelOfFortune extends Fragment {
                     direction = -1;
                 }
 
-            }else if(e1.getX()>=mWheel.getWidth()/2 &&e1.getY()>mWheel.getHeight()/2){
+            }else if(e1.getX()>=mIVWheel.getWidth()/2 &&e1.getY()>mIVWheel.getHeight()/2){
                 //unten rechts
                 Log.i("TAG", "unten rechts");
                 if(velocityX<=0 && velocityY>=0){
@@ -168,7 +205,7 @@ public class WheelOfFortune extends Fragment {
                 }else if(velocityX>=0&&velocityY<=0){
                     direction = -1;
                 }
-            }else if(e1.getX()<mWheel.getWidth()/2&&e1.getY()<=mWheel.getHeight()/2){
+            }else if(e1.getX()<mIVWheel.getWidth()/2&&e1.getY()<=mIVWheel.getHeight()/2){
                 //oben links
                 Log.i("TAG", "oben links");
                 if(velocityX>=0 && velocityY<=0){
