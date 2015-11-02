@@ -28,12 +28,16 @@ public class CustomGameSettings {
     private boolean enableEvents;
 
     public CustomGameSettings(){
+        loadDefaults();
+    }
+
+    public void loadDefaults(){
         this.randomSpeed = true;
         this.startSpeed = 64;
         this.speedMinDelay = 5000;
         this.speedMaxDelay = 12000;
-        this.speedMinStepSize = 7;
-        this.speedMaxStepSize = 30;
+        this.speedMinStepSize = 5;
+        this.speedMaxStepSize = 15;
         this.enableReverse = true;
 
         //Chef Mode
@@ -46,6 +50,35 @@ public class CustomGameSettings {
         this.enableEvents= true;
     }
 
+    public void loadClassic(){
+        this.startSpeed = 64;
+        this.randomSpeed = false;
+
+        this.chefMode = false;
+
+        this.enableItems = false;
+        this.enableEvents =  false;
+    }
+
+
+    public void loadAction(){
+        this.randomSpeed = true;
+        this.startSpeed = 64;
+        this.speedMinDelay = 5000;
+        this.speedMaxDelay = 12000;
+        this.speedMinStepSize = 5;
+        this.speedMaxStepSize = 15;
+        this.enableReverse = true;
+
+        //Chef Mode
+        this.chefMode = false;
+        this.chefRoulette = true;
+        this.chefChangeDelay = 7000;
+        this.chefHasShorterCooldown = true;
+
+        this.enableItems = true;
+        this.enableEvents= true;
+    }
 
     public void setRandomSpeed(boolean randomSpeed){
         this.randomSpeed = randomSpeed;

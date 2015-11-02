@@ -50,6 +50,8 @@ public class HostGameFragment extends Fragment {
 
     public ProgressBar scanningBoardProgress;
 
+    private Button btnGameSettings;
+
     private BluetoothAdapter mBluetoothAdapter = null;
 
     public ArrayAdapter<ConnectedPlayerListItem> connectedPlayerAdapter;
@@ -158,13 +160,14 @@ public class HostGameFragment extends Fragment {
 
         scanningBoardProgress = (ProgressBar) view.findViewById(R.id.pb_scanning_board);
 
-        Button btnGameSettings = (Button)view.findViewById(R.id.btn_game_settings);
+        btnGameSettings = (Button)view.findViewById(R.id.btn_game_settings);
         btnGameSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
              onButtonPressed(Constants.BUTTON_GAME_SETTINGS);
             }
         });
+        btnGameSettings.setEnabled(fa.settings.isDebugEnabled() || FullscreenActivity.reference.btLEService.isConnected());
 
         return view;
     }
@@ -201,6 +204,11 @@ public class HostGameFragment extends Fragment {
 
     private void bluetoothOn() {
         //asdasd
+    }
+
+    public void boardConnectionChanged(boolean connectedToBoard){
+        btnGameSettings.setEnabled(connectedToBoard);
+        //TODO: update visual effect ??? ein haken oder so
     }
 
     // TODO: Rename method, update argument and hook method into UI event

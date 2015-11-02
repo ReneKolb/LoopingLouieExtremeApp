@@ -38,6 +38,8 @@ public class WheelOfFortune extends Fragment {
     private Random random;
     private float currentRotation;
 
+    private boolean isSpinning;
+
     private Handler animationWaitHandler;
 
     private OnFragmentInteractionListener mListener;
@@ -78,6 +80,7 @@ public class WheelOfFortune extends Fragment {
         mTVResult = (TextView) view.findViewById(R.id.tv_wheel_of_fortune_result);
 
         currentRotation = 0;
+        isSpinning = false;
 
         final GestureDetector gdt = new GestureDetector(FullscreenActivity.reference,new GestureListener(),new Handler());
 
@@ -126,6 +129,7 @@ public class WheelOfFortune extends Fragment {
 
         RotateAnimation anim = new RotateAnimation(currentRotation, currentRotation+direction*dRot, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
         currentRotation = (currentRotation+direction*dRot)%360;
+        isSpinning= true;
 
 
         anim.setInterpolator(new Interpolator() {
@@ -149,6 +153,7 @@ public class WheelOfFortune extends Fragment {
     private Runnable onAnimationFinish = new Runnable() {
         @Override
         public void run() {
+            isSpinning = false;
             int index = (int)((360-currentRotation) / 60);
             switch(index){
                 case 0:
@@ -180,6 +185,10 @@ public class WheelOfFortune extends Fragment {
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if(isSpinning){
+                return false;
+            }
+
             if(velocityX*velocityX + velocityY*velocityY<SWIPE_THRESHOLD_VELOCITY*SWIPE_THRESHOLD_VELOCITY){
                 return false; //swipe speed is too slow
             }
@@ -223,7 +232,7 @@ public class WheelOfFortune extends Fragment {
                 }
             }
 
-            if(direction != 0){
+            if(direction != 0 ){
                 TEST_ROTATE(direction);
             }
             return true;

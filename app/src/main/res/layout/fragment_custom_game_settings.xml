@@ -23,7 +23,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/tv_custom_game_settings_title"
-        android:layout_above="@+id/btn_custom_game_settings_start"
+        android:layout_above="@+id/btn_custom_game_settings_ok"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="40dp"
         android:scrollbars="none">
@@ -52,6 +52,49 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
                     android:layout_column="0"/>
+            </TableRow>
+
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_custom_game_settings_start_speed"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="Start Speed"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:layout_column="0"/>
+
+                <SeekBar
+                    android:id="@+id/sb_custom_game_settings_start_speed"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:layout_column="1"
+                    android:layout_gravity="center_vertical"
+                    android:progress="50"/>
+
+                <TextView
+                    android:id="@+id/tv_custom_game_settings_start_speed_cnt"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="right"
+                    android:textColor="#000000"
+                    android:text="14"/>
+
             </TableRow>
 
             <TableRow
@@ -94,47 +137,7 @@
             </TableRow>
 
             <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/tv_custom_game_settings_start_speed"
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="Start Speed"
-                    android:textColor="#000000"
-                    android:textSize="17sp"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="start"
-                    android:layout_column="0"/>
-
-                <SeekBar
-                    android:id="@+id/sb_custom_game_settings_start_speed"
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:layout_column="1"
-                    android:layout_gravity="center_vertical"
-                    android:progress="50"/>
-
-                <TextView
-                    android:id="@+id/tv_custom_game_settings_start_speed_cnt"
-                    android:layout_width="0px"
-                    android:layout_height="wrap_content"
-                    android:layout_column="2"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="right"
-                    android:textColor="#000000"
-                    android:text="64"/>
-
-            </TableRow>
-
-            <TableRow
+                android:id="@+id/tr_custom_game_settings_speed_min_delay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -175,6 +178,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tr_custom_game_settings_speed_max_delay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -215,6 +219,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tr_custom_game_settings_speed_min_step_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -256,6 +261,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tr_custom_game_settings_speed_max_step_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
@@ -297,6 +303,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tr_custom_game_settings_enable_reverse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"

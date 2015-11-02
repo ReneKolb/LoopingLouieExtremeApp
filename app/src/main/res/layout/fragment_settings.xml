@@ -7,7 +7,7 @@
     android:clickable="true">
 
     <TextView
-        android:id="@+id/tv_host_game_title"
+        android:id="@+id/tv_settings_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -18,13 +18,13 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_host_game_description1"
+    <CheckBox
+        android:id="@+id/cb_settings_debug"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
-        android:layout_below="@+id/tv_host_game_title"
-        android:text="Here will appear some settings... maybe"
+        android:layout_below="@+id/tv_settings_title"
+        android:text="Enable Debug"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="80dp"

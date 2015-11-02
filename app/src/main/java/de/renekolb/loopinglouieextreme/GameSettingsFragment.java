@@ -88,9 +88,11 @@ public class GameSettingsFragment extends Fragment {
         switch(mGameMode){
             case 0:
                 btnClassic.setEnabled(false);
+                FullscreenActivity.customGameSettings.loadClassic();
                 break;
             case 1:
                 btnAction.setEnabled(false);
+                FullscreenActivity.customGameSettings.loadAction();
                 break;
             case 2:
                 btnCustom.setEnabled(false);
@@ -104,6 +106,7 @@ public class GameSettingsFragment extends Fragment {
                 btnAction.setEnabled(true);
                 btnCustom.setEnabled(true);
                 btnCustomSettings.setVisibility(View.INVISIBLE);
+                FullscreenActivity.customGameSettings.loadClassic();
                 mGameMode = 0;
             }
         });
@@ -115,6 +118,7 @@ public class GameSettingsFragment extends Fragment {
                 btnAction.setEnabled(false);
                 btnCustom.setEnabled(true);
                 btnCustomSettings.setVisibility(View.INVISIBLE);
+                FullscreenActivity.customGameSettings.loadAction();
                 mGameMode = 1;
             }
         });

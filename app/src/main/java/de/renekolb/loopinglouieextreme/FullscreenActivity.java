@@ -5,11 +5,15 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -38,12 +42,18 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     public static CustomGameSettings customGameSettings;
 
+    private Runnable actionBTon;
+
+    public Settings settings;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
 
         reference = this; //TODO: sehr unsauber!!!
+
+        settings = new Settings(this);
 
         //mContentView = findViewById(R.id.fullscreen_content);
 
@@ -56,6 +66,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+
+        IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+        registerReceiver(mReceiver, filter);
     }
 
     @Override
@@ -88,6 +101,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         }
 
         super.onDestroy();
+
+        unregisterReceiver(mReceiver);
     }
 
 
@@ -114,27 +129,53 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         FragmentTransaction ft;
         switch (button) {
             case Constants.BUTTON_HOST_GAME:
-                ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, this.hostGameFragment = HostGameFragment.newInstance(this.ServiceMessageHandler));
-                ft.commit();
-                customGameSettings = new CustomGameSettings(); // initialize & set defaults
-                startBTServer();
-                startBTLEService();
+                actionBTon = new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                        ft.addToBackStack(null);
+                        ft.replace(R.id.main_fragment, FullscreenActivity.this.hostGameFragment = HostGameFragment.newInstance(FullscreenActivity.this.ServiceMessageHandler));
+                        ft.commit();
+                        customGameSettings = new CustomGameSettings(); // initialize & set defaults
+                        startBTServer();
+                        startBTLEService();
+                    }
+                };
+
+                if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableIntent, Constants.REQUEST_ENABLE_BT);
+                } else {
+                    actionBTon.run();
+                }
+
                 break;
             case Constants.BUTTON_CONNECT:
-                ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, ConnectFragment.newInstance());
-                ft.commit();
+                actionBTon = new Runnable() {
+                    @Override
+                    public void run() {
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                        ft.addToBackStack(null);
+                        ft.replace(R.id.main_fragment, ConnectFragment.newInstance());
+                        ft.commit();
+                    }
+                };
+
+                if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
+                    Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableIntent, Constants.REQUEST_ENABLE_BT);
+                } else {
+                    actionBTon.run();
+                }
+
                 break;
             case Constants.BUTTON_SETTINGS:
                 ft = getFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, SettingsFragment.newInstance("", ""));
+                ft.replace(R.id.main_fragment, SettingsFragment.newInstance());
                 ft.commit();
                 break;
 
@@ -229,6 +270,26 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         this.btClient = new BTClientService(this, ServiceMessageHandler);
         btClient.connect(remoteDevice);
     }
+
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+
+            if(action.equals(BluetoothAdapter.ACTION_STATE_CHANGED)){
+                final int state =  intent.getIntExtra(BluetoothAdapter.EXTRA_STATE, BluetoothAdapter.ERROR);
+
+                switch(state){
+                    case BluetoothAdapter.STATE_ON:
+                        if(actionBTon != null){
+                            //actionBTon.run(); ERROR
+                            actionBTon = null;
+                        }
+                        break;
+                }
+            }
+        }
+    };
 
   /*  private void hide() {
         // Hide UI first
@@ -360,6 +421,15 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     }
 
                     break;
+                case Constants.MESSAGE_BLE_CONNECTION_STATE_CHANGED:
+                    boolean connected = msg.getData().getBoolean(Constants.CONNECTED_TO_BOARD);
+                    hostGameFragment.boardConnectionChanged(connected);
+                    Toast.makeText(FullscreenActivity.this, "connected", Toast.LENGTH_SHORT).show();
+                    break;
+                case Constants.MESSAGE_TOO_FEW_PLAYERS_CHIPS:
+                    int amount = msg.getData().getInt(Constants.PLAYER_AMOUNT);
+                    Toast.makeText(FullscreenActivity.this,"Too few players with chips ("+amount+")",Toast.LENGTH_SHORT).show();
+                    break;
                 case Constants.MESSAGE_TOAST:
                         Toast.makeText(FullscreenActivity.this, msg.getData().getString(Constants.TOAST),
                                 Toast.LENGTH_SHORT).show();
@@ -393,17 +463,79 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     private ReceiveCallback onBoardMessageRead =  new ReceiveCallback() {
         @Override
         public void onReceiveMessage(String message) {
-            Message msg = ServiceMessageHandler.obtainMessage(Constants.MESSAGE_TOAST);
+            Log.i("ReceivedMSG","received: "+message);
+            String[] split = message.split("\\.");
+            char cmdType;
+            for(String command : split){
+                if(command.length()==0){
+                    continue;
+                }
+                cmdType = command.charAt(0);
+                Message msg;
+                Bundle b;
+
+                switch(cmdType){
+                    case 'a':
+                        //Game End Results
+                        //Form: a[1st]:[2nd]:[3rd]:[4th]. 1st=winner (liste ist von hinten gefüllt!! d.h. bei 3 Spielern ist [1st] = 255)
+                        String[] scoreSplit = command.substring(1).split("\\:");
+                        if(scoreSplit.length!=4){
+                            //ERROR wrong length
+                            Log.e("ReceivedMSG","Wrong Split length in Game End Results");
+                            return;
+                        }
+
+                        int[] ranking = new int[4];
+                        int tmp;
+                        int startIndex=-1;
+                        for(int i=0;i<4;i++){
+                            tmp = Integer.parseInt(scoreSplit[i]);
+                            if(tmp <= 3) {
+                                if (startIndex == -1) {
+                                    startIndex = i;
+                                }
+                                ranking[i-startIndex] = tmp;
+                            }
+                        }
+                        for(int i=4-startIndex;i<4;i++) {
+                            ranking[i]=-1;
+                        }
+
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                        //ft.addToBackStack(null);
+                        ft.replace(R.id.main_fragment, GameResultFragment.newInstance(ranking[0],ranking[1],ranking[2],ranking[3])); // DEFAULT VALUES
+                        ft.commit();
+
+                        break;
+
+                    case 'b':
+                        //Cannot start the game: too few Players have plugged chips in
+                        //Form: b[anzahl].
+                        int amount = Integer.parseInt(command.substring(1));
+                        msg = ServiceMessageHandler.obtainMessage(Constants.MESSAGE_TOO_FEW_PLAYERS_CHIPS);
+                        b = new Bundle();
+                        b.putInt(Constants.PLAYER_AMOUNT, amount);
+                        msg.setData(b);
+                        ServiceMessageHandler.sendMessage(msg);
+                        break;
+                    case 'c':
+                        //Countdown started
+                        break;
+                    default:
+                        msg = ServiceMessageHandler.obtainMessage(Constants.MESSAGE_TOAST);
+                        b = new Bundle();
+                        b.putString(Constants.TOAST,"Read: "+message);
+                        msg.setData(b);
+                        ServiceMessageHandler.sendMessage(msg);
+                }
+            }
+
+/*            Message msg = ServiceMessageHandler.obtainMessage(Constants.MESSAGE_TOAST);
             Bundle b = new Bundle();
             b.putString(Constants.TOAST,"Read: "+message);
             msg.setData(b);
-            ServiceMessageHandler.sendMessage(msg);
-
-            //DEBUG: echo to all clients
-            if(btServer!=null) {
-                //should always be true
-                btServer.sendMessageToAll("board:"+message);
-            }
+            ServiceMessageHandler.sendMessage(msg);*/
         }
     };
 }

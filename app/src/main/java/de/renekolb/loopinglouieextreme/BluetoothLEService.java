@@ -78,7 +78,7 @@ public class BluetoothLEService {
     }
 
     public void disconnect(){
-        Log.i("","disconnect BLE!");
+        Log.i("", "disconnect BLE!");
         if(btGatt!=null) {
             btGatt.disconnect();
             btGatt = null;
@@ -126,13 +126,12 @@ public class BluetoothLEService {
                     gatt.discoverServices();
                 } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                     Log.i("", "BLE disconnected");
-                    Message m = h.obtainMessage(Constants.MESSAGE_TOAST);
+                    Message m = h.obtainMessage(Constants.MESSAGE_BLE_CONNECTION_STATE_CHANGED);
                     Bundle b = new Bundle();
-                    b.putString(Constants.TOAST,"disconnected");
+                    b.putBoolean(Constants.CONNECTED_TO_BOARD, false);
                     m.setData(b);
                     h.sendMessage(m);
                     connected = false;
-                    
                     characteristic = null;
                 }
             }
@@ -154,9 +153,9 @@ public class BluetoothLEService {
                     gatt.setCharacteristicNotification(characteristic, true); // setup onRead Event
 
 
-                    Message m = h.obtainMessage(Constants.MESSAGE_TOAST);
+                    Message m = h.obtainMessage(Constants.MESSAGE_BLE_CONNECTION_STATE_CHANGED);
                     Bundle b = new Bundle();
-                    b.putString(Constants.TOAST, "connected to Board");
+                    b.putBoolean(Constants.CONNECTED_TO_BOARD, true);
                     m.setData(b);
                     h.sendMessage(m);
 
@@ -182,10 +181,12 @@ public class BluetoothLEService {
 
             @Override
             public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status){
-                sendingQueue.removeFirst();
-                if(sendingQueue.size()>0){
-                    //still messages to send, so send next one
-                    sendMessage(sendingQueue.getFirst());
+                if(!sendingQueue.isEmpty()) {
+                    sendingQueue.removeFirst();
+                    if (sendingQueue.size() > 0) {
+                        //still messages to send, so send next one
+                        sendMessage(sendingQueue.getFirst());
+                    }
                 }
             }
         });

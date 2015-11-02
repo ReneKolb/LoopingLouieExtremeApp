@@ -16,6 +16,12 @@ public class Constants {
     public static final int MESSAGE_START_DISCOVERING_BLE_DEVICES = 8;
     public static final int MESSAGE_STOP_DISCOVERING_BLE_DEVICES = 9;
 
+    public static final int MESSAGE_BLE_CONNECTION_STATE_CHANGED = 10;
+    public static final String CONNECTED_TO_BOARD = "connected_to_board";
+
+    public static final int MESSAGE_TOO_FEW_PLAYERS_CHIPS = 11;
+    public static final String PLAYER_AMOUNT = "player_amount";
+
     // Intent request codes
     public static final int REQUEST_CONNECT_DEVICE_SECURE = 1;
     public static final int REQUEST_ENABLE_BT = 3;
