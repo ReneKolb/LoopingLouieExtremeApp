@@ -1,4 +1,4 @@
-package de.renekolb.loopinglouieextreme;
+package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import de.renekolb.loopinglouieextreme.R;
 
 
 /**

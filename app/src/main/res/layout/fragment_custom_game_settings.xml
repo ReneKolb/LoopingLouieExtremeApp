@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="#FFFACD"
     android:padding="15dp"
-    tools:context="de.renekolb.loopinglouieextreme.CustomGameSettingsFragment">
+    tools:context="de.renekolb.loopinglouieextreme.ui.CustomGameSettingsFragment">
 
     <TextView
         android:id="@+id/tv_custom_game_settings_title"

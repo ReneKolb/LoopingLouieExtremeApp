@@ -34,5 +34,6 @@
     <string name="wof_loser_4">Spin again!</string>
     <string name="wof_loser_5">Drink 3!</string>
     <string name="wof_loser_6">Drink with a partner!</string>
+    <string name="tv_player_settings_title">Player Settings</string>
 
 </resources>

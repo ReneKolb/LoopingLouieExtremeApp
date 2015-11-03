@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import de.renekolb.loopinglouieextreme.ui.Constants;
+
 
 public class BTConnectedThread extends Thread {
     private Handler mMessageHandler;

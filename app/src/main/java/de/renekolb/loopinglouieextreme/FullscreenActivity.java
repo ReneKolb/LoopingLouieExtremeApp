@@ -19,6 +19,18 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
+import de.renekolb.loopinglouieextreme.ui.BlackFragment;
+import de.renekolb.loopinglouieextreme.ui.ConnectFragment;
+import de.renekolb.loopinglouieextreme.ui.Constants;
+import de.renekolb.loopinglouieextreme.ui.CustomGameSettingsFragment;
+import de.renekolb.loopinglouieextreme.ui.GameResultFragment;
+import de.renekolb.loopinglouieextreme.ui.GameSettingsFragment;
+import de.renekolb.loopinglouieextreme.ui.HostGameFragment;
+import de.renekolb.loopinglouieextreme.ui.MainMenuFragment;
+import de.renekolb.loopinglouieextreme.ui.OnFragmentInteractionListener;
+import de.renekolb.loopinglouieextreme.ui.PlayerSettingsFragment;
+import de.renekolb.loopinglouieextreme.ui.SettingsFragment;
+import de.renekolb.loopinglouieextreme.ui.WheelOfFortuneFragment;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -251,6 +263,14 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
                 ft.replace(R.id.main_fragment, WheelOfFortuneFragment.newInstance());
+                ft.commit();
+                break;
+
+            case Constants.BUTTON_HOST_GAME_PLAYER_SETTINGS:
+                ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, PlayerSettingsFragment.newInstance());
                 ft.commit();
                 break;
         }
@@ -504,7 +524,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                         ft.addToBackStack(null);
-                        ft.replace(R.id.main_fragment, GameResultFragment.newInstance(ranking[0],ranking[1],ranking[2],ranking[3])); // DEFAULT VALUES
+                        ft.replace(R.id.main_fragment, GameResultFragment.newInstance(ranking[0], ranking[1], ranking[2], ranking[3])); // DEFAULT VALUES
                         ft.commit();
 
                         break;

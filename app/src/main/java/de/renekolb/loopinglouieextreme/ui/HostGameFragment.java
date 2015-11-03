@@ -1,4 +1,4 @@
-package de.renekolb.loopinglouieextreme;
+package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -19,6 +19,8 @@ import android.widget.Toast;
 import java.util.UUID;
 
 import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
+import de.renekolb.loopinglouieextreme.FullscreenActivity;
+import de.renekolb.loopinglouieextreme.R;
 
 
 /**
@@ -164,10 +166,18 @@ public class HostGameFragment extends Fragment {
         btnGameSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             onButtonPressed(Constants.BUTTON_GAME_SETTINGS);
+                onButtonPressed(Constants.BUTTON_GAME_SETTINGS);
             }
         });
         btnGameSettings.setEnabled(fa.settings.isDebugEnabled() || FullscreenActivity.reference.btLEService.isConnected());
+
+        Button btnPlayerSettigns = (Button)view.findViewById(R.id.btn_host_game_player_settings);
+        btnPlayerSettigns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(Constants.BUTTON_HOST_GAME_PLAYER_SETTINGS);
+            }
+        });
 
         return view;
     }

@@ -1,4 +1,4 @@
-package de.renekolb.loopinglouieextreme;
+package de.renekolb.loopinglouieextreme.ui;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -8,7 +8,9 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+
+import de.renekolb.loopinglouieextreme.FullscreenActivity;
+import de.renekolb.loopinglouieextreme.R;
 
 public class SplashScreen extends Activity {
 

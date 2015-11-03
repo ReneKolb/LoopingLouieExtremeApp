@@ -18,6 +18,7 @@ import java.util.LinkedList;
 import java.util.UUID;
 
 import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
+import de.renekolb.loopinglouieextreme.ui.Constants;
 
 @SuppressLint("NewApi")
 public class BluetoothLEService {

@@ -4,7 +4,7 @@
              android:layout_height="match_parent"
              android:background="#FFFACD"
              android:padding="15dp"
-             tools:context="de.renekolb.loopinglouieextreme.GameResultFragment">
+             tools:context="de.renekolb.loopinglouieextreme.ui.GameResultFragment">
 
 
     <TextView

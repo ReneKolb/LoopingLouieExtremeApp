@@ -1,4 +1,4 @@
-package de.renekolb.loopinglouieextreme;
+package de.renekolb.loopinglouieextreme.ui;
 
 public interface OnFragmentInteractionListener {
 

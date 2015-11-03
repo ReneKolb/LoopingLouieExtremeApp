@@ -16,7 +16,7 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="de.renekolb.loopinglouieextreme.MainMenuFragment"
+        android:name="de.renekolb.loopinglouieextreme.ui.MainMenuFragment"
         android:id="@+id/main_fragment"
         android:layout_gravity="center"
         tools:layout="@layout/fragment_main_menu" />

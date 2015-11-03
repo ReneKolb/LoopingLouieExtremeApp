@@ -1,4 +1,4 @@
-package de.renekolb.loopinglouieextreme;
+package de.renekolb.loopinglouieextreme.ui;
 
 /**
  * Created by Admi on 16.10.2015.
@@ -40,6 +40,8 @@ public class Constants {
     public static final int BUTTON_GAME_SETTINGS_CUSTOM_SETTINGS = 8;
     public static final int BUTTON_GAME_SETTINGS_START_GAME = 9;
     public static final int BUTTON_GAME_SETTINGS_TEST_WHEEL = 10;
+
+    public static final int BUTTON_HOST_GAME_PLAYER_SETTINGS = 11;
 
 
     // Key names received from the BluetoothChatService Handler

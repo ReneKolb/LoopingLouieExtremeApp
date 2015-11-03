@@ -1,4 +1,4 @@
-package de.renekolb.loopinglouieextreme;
+package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -14,6 +14,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
+
+import de.renekolb.loopinglouieextreme.FullscreenActivity;
+import de.renekolb.loopinglouieextreme.R;
 
 
 /**

@@ -1,4 +1,4 @@
-package de.renekolb.loopinglouieextreme;
+package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -17,6 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Random;
+
+import de.renekolb.loopinglouieextreme.FullscreenActivity;
+import de.renekolb.loopinglouieextreme.R;
+import de.renekolb.loopinglouieextreme.WheelOfFortuneSettings;
 
 
 /**

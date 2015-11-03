@@ -9,6 +9,8 @@ import android.os.Message;
 
 import java.io.IOException;
 
+import de.renekolb.loopinglouieextreme.ui.Constants;
+
 public class BTClientService {
 
     private FullscreenActivity activity;
