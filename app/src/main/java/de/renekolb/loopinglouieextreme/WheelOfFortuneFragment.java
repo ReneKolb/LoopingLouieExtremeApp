@@ -1,8 +1,6 @@
 package de.renekolb.loopinglouieextreme;
 
 import android.app.Activity;
-import android.graphics.Matrix;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
@@ -27,13 +25,14 @@ import java.util.Random;
  * Activities that contain this fragment must implement the
  * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link WheelOfFortune#newInstance} factory method to
+ * Use the {@link WheelOfFortuneFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WheelOfFortune extends Fragment {
+public class WheelOfFortuneFragment extends Fragment {
 
     private ImageView mIVWheel;
     private TextView mTVResult;
+    private Button mBTNMode;
 
     private Random random;
     private float currentRotation;
@@ -44,22 +43,23 @@ public class WheelOfFortune extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    private boolean winnerWheel = true;
+    private WheelOfFortuneSettings wofSettings = WheelOfFortuneSettings.WINNER_WHEEL;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment WheelOfFortune.
+     * @return A new instance of fragment WheelOfFortuneFragment.
      */
 
-    public static WheelOfFortune newInstance() {
-        WheelOfFortune fragment = new WheelOfFortune();
+    public static WheelOfFortuneFragment newInstance() {
+        WheelOfFortuneFragment fragment = new WheelOfFortuneFragment();
 
         return fragment;
     }
 
-    public WheelOfFortune() {
+    public WheelOfFortuneFragment() {
         // Required empty public constructor
     }
 
@@ -78,6 +78,7 @@ public class WheelOfFortune extends Fragment {
 
         mIVWheel = (ImageView) view.findViewById(R.id.iv_wheel_of_fortune);
         mTVResult = (TextView) view.findViewById(R.id.tv_wheel_of_fortune_result);
+        mBTNMode = (Button) view.findViewById(R.id.btn_wheel_of_fortune_mode);
 
         currentRotation = 0;
         isSpinning = false;
@@ -89,6 +90,30 @@ public class WheelOfFortune extends Fragment {
             public boolean onTouch(final View view, final MotionEvent event) {
                 gdt.onTouchEvent(event);
                 return true;
+            }
+        });
+
+        if(winnerWheel) {
+            mBTNMode.setText("set Loser");
+        }else{
+            mBTNMode.setText("set Winner");
+        }
+        mIVWheel.setImageResource(wofSettings.getResourceID());
+
+        mBTNMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!isSpinning){
+                    winnerWheel = !winnerWheel;
+                    if(winnerWheel) {
+                        wofSettings = WheelOfFortuneSettings.WINNER_WHEEL;
+                        mBTNMode.setText("set Loser");
+                    }else{
+                        wofSettings = WheelOfFortuneSettings.LOSER_WHEEL;
+                         mBTNMode.setText("set Winner");
+                    }
+                    mIVWheel.setImageResource(wofSettings.getResourceID());
+                }
             }
         });
 
@@ -154,7 +179,11 @@ public class WheelOfFortune extends Fragment {
         @Override
         public void run() {
             isSpinning = false;
-            int index = (int)((360-currentRotation) / 60);
+
+            int index = (int)((360-currentRotation) / (360/wofSettings.getFieldAmount()));
+
+            mTVResult.setText(wofSettings.getDisplayTextResourceID(index));
+/*
             switch(index){
                 case 0:
                     mTVResult.setText("Trinke 2");
@@ -174,7 +203,7 @@ public class WheelOfFortune extends Fragment {
                 case 5:
                     mTVResult.setText("Trinke mit einem Partner");
                     break;
-            }
+            }*/
         }
     } ;
 

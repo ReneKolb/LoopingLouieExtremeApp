@@ -21,4 +21,18 @@
     <string name="other_devices">Other Devices</string>
     <string name="btn_scan">Scan</string>
 
+    <!-- Wheel Of Fortune Texts -->
+    <string name="wof_winner_1">The player to your right must drink!</string>
+    <string name="wof_winner_2">All except you must drink!</string>
+    <string name="wof_winner_3">Determine 1 drinker!</string>
+    <string name="wof_winner_4">Spin again!</string>
+    <string name="wof_winner_5">Hard luck!</string>
+    <string name="wof_winner_6">Determine 2 drinker!</string>
+    <string name="wof_loser_1">Drink 2!</string>
+    <string name="wof_loser_2">Lucky you!</string>
+    <string name="wof_loser_3">Drink 1!</string>
+    <string name="wof_loser_4">Spin again!</string>
+    <string name="wof_loser_5">Drink 3!</string>
+    <string name="wof_loser_6">Drink with a partner!</string>
+
 </resources>

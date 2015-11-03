@@ -250,7 +250,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft = getFragmentManager().beginTransaction();
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, WheelOfFortune.newInstance());
+                ft.replace(R.id.main_fragment, WheelOfFortuneFragment.newInstance());
                 ft.commit();
                 break;
         }
@@ -503,7 +503,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                        //ft.addToBackStack(null);
+                        ft.addToBackStack(null);
                         ft.replace(R.id.main_fragment, GameResultFragment.newInstance(ranking[0],ranking[1],ranking[2],ranking[3])); // DEFAULT VALUES
                         ft.commit();
 

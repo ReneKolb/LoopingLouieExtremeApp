@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="de.renekolb.loopinglouieextreme.WheelOfFortune"
+             tools:context="de.renekolb.loopinglouieextreme.WheelOfFortuneFragment"
              android:background="#FFFACD"
              android:clickable="true">
 
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/iv_wheel_of_fortune"
         android:layout_centerInParent="true"
-        android:src="@drawable/wheel_of_fortune"/>
+        android:src="@drawable/wheel_of_fortune_winner"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -34,5 +34,14 @@
         android:textSize="19sp"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/btn_wheel_of_fortune_mode"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"/>
 
 </RelativeLayout>

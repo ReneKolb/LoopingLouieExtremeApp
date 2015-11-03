@@ -21,4 +21,18 @@
     <string name="other_devices">Andere Geräte</string>
     <string name="btn_scan">Suchen</string>
 
+    <!-- Wheel Of Fortune Texts -->
+    <string name="wof_winner_1">Der Spieler rechts neben dir muss trinken!</string>
+    <string name="wof_winner_2">Alle außer dir müssen trinken!</string>
+    <string name="wof_winner_3">Bestimme 1 Trinker!</string>
+    <string name="wof_winner_4">Dreh nochmal!</string>
+    <string name="wof_winner_5">Pech gehabt!</string>
+    <string name="wof_winner_6">Bestimme 2 Tinker!</string>
+    <string name="wof_loser_1">Trinke 2!</string>
+    <string name="wof_loser_2">Glück gehabt!</string>
+    <string name="wof_loser_3">Trinke 1!</string>
+    <string name="wof_loser_4">Dreh nochmal!</string>
+    <string name="wof_loser_5">Trinke 3!</string>
+    <string name="wof_loser_6">Trinke mit einem Partner!</string>
+
 </resources>
