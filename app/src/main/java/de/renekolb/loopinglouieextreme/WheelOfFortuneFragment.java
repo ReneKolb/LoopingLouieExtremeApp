@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -145,7 +144,7 @@ public class WheelOfFortuneFragment extends Fragment {
     }
 
 
-    private void TEST_ROTATE(int direction){
+    private void spinWheel(int direction){
         //direction 1 -> clockwise
         //         -1 -> counter clockwise
         mTVResult.setText("dum di dum ...");
@@ -208,7 +207,7 @@ public class WheelOfFortuneFragment extends Fragment {
     } ;
 
 
-    private static final int SWIPE_MIN_DISTANCE = 120;
+    //private static final int SWIPE_MIN_DISTANCE = 120;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
@@ -225,10 +224,10 @@ public class WheelOfFortuneFragment extends Fragment {
             int direction = 0; //-1 gegen UZ, +1 im UZ, 0 Fehler
             //long duration; //4000 normal
 
-            Log.i("TAG","x: "+e1.getX()+" y: "+e1.getY()+" w: "+mIVWheel.getWidth()+" h: "+mIVWheel.getHeight());
+            //Log.i("TAG","x: "+e1.getX()+" y: "+e1.getY()+" w: "+mIVWheel.getWidth()+" h: "+mIVWheel.getHeight());
             if(e1.getX()>=mIVWheel.getWidth()/2 &&e1.getY()<=mIVWheel.getHeight()/2){
                 //oben rechst
-                Log.i("TAG", "oben rechts");
+//                Log.i("TAG", "oben rechts");
                 if(velocityX>=0 && velocityY>=0){
                     direction = 1;
                 }else if(velocityX<=0&&velocityY<=0){
@@ -237,7 +236,7 @@ public class WheelOfFortuneFragment extends Fragment {
 
             }else if(e1.getX()>=mIVWheel.getWidth()/2 &&e1.getY()>mIVWheel.getHeight()/2){
                 //unten rechts
-                Log.i("TAG", "unten rechts");
+  //              Log.i("TAG", "unten rechts");
                 if(velocityX<=0 && velocityY>=0){
                     direction = 1;
                 }else if(velocityX>=0&&velocityY<=0){
@@ -245,7 +244,7 @@ public class WheelOfFortuneFragment extends Fragment {
                 }
             }else if(e1.getX()<mIVWheel.getWidth()/2&&e1.getY()<=mIVWheel.getHeight()/2){
                 //oben links
-                Log.i("TAG", "oben links");
+    //            Log.i("TAG", "oben links");
                 if(velocityX>=0 && velocityY<=0){
                     direction = 1;
                 }else if(velocityX<=0&&velocityY>=0){
@@ -253,7 +252,7 @@ public class WheelOfFortuneFragment extends Fragment {
                 }
             }else{
                 //unten rechts
-                Log.i("TAG", "unten links");
+      //          Log.i("TAG", "unten links");
                 if(velocityX<=0 && velocityY<=0){
                     direction = 1;
                 }else if(velocityX>=0&&velocityY>=0){
@@ -262,7 +261,7 @@ public class WheelOfFortuneFragment extends Fragment {
             }
 
             if(direction != 0 ){
-                TEST_ROTATE(direction);
+                spinWheel(direction);
             }
             return true;
         }

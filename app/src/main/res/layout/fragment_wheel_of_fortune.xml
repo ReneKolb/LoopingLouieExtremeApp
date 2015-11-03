@@ -8,11 +8,13 @@
 
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/iv_wheel_of_fortune"
         android:layout_centerInParent="true"
-        android:src="@drawable/wheel_of_fortune_winner"/>
+        android:src="@drawable/wheel_of_fortune_winner"
+        android:layout_margin="10dp"
+        android:scaleType="fitCenter"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -20,7 +22,7 @@
         android:id="@+id/iv_wheel_of_fortune_pointer"
         android:src="@drawable/pointer"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-30dp"
+        android:layout_marginBottom="-50dp"
         android:layout_above="@id/iv_wheel_of_fortune"/>
 
     <TextView
