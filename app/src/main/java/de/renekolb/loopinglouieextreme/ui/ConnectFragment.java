@@ -61,9 +61,6 @@ public class ConnectFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public FullscreenActivity getFSActivity() {
-        return (FullscreenActivity) this.getActivity();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,7 +88,7 @@ public class ConnectFragment extends Fragment {
         btnConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
+                Intent serverIntent = new Intent(fa, DeviceListActivity.class);
                 startActivityForResult(serverIntent, Constants.REQUEST_CONNECT_DEVICE_SECURE);
             }
         });
@@ -153,6 +150,7 @@ public class ConnectFragment extends Fragment {
         fa = null;
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case Constants.REQUEST_CONNECT_DEVICE_SECURE:
@@ -163,8 +161,8 @@ public class ConnectFragment extends Fragment {
                             .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
                     // Get the BluetoothDevice object
                     BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-                    getFSActivity().connect(device);
                     Toast.makeText(getActivity(), "Selected a Device to connect!", Toast.LENGTH_SHORT).show();
+                    fa.connect(device);
                 }
                 break;
             case Constants.REQUEST_ENABLE_BT:

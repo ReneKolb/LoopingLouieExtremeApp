@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,6 +35,7 @@ public class BTConnectedThread extends Thread {
             tmpIn = socket.getInputStream();
             tmpOut = socket.getOutputStream();
             tmpRemoteAddr = socket.getRemoteDevice().getAddress();
+            Log.i("BT Connected: ", "opened comm Thread");
         } catch (IOException e) {
         }
 

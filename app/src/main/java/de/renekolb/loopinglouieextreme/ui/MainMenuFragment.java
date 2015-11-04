@@ -107,6 +107,8 @@ public class MainMenuFragment extends Fragment {
 
     @Override
     public void onResume(){
+        //?????????????? TODO: Macht das überhaupt sinn, die Services über onResume zu steuern -> wohl nicht
+
         //disconnect from board
         if(fa.btLEService!=null){
             fa.btLEService.stopScanning();
@@ -118,7 +120,7 @@ public class MainMenuFragment extends Fragment {
             fa.btServer.disconnectClients();
         }
 
-        if(fa.btClient!=null) {
+        if(fa.btClient!=null && !fa.btClient.isConnecting()) {
             fa.btClient.stop();
         }
         super.onResume();

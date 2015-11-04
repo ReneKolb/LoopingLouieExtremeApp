@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,6 +68,8 @@ public class BTServerService {
 
         if (acceptThread == null) {
             acceptThread = new AcceptThread();
+        }
+        if(!acceptThread.isAlive()){
             acceptThread.start();
         }
     }
@@ -206,6 +209,7 @@ public class BTServerService {
             try {
                 // MY_UUID is the app's UUID string, also used by the client code
                 tmp = mAdapter.listenUsingRfcommWithServiceRecord(NAME, commUuid);
+                Log.i("BT Server Service: ","listening...");
             } catch (IOException e) {
             }
             mmServerSocket = tmp;
@@ -217,6 +221,7 @@ public class BTServerService {
             while (true) {
                 try {
                     socket = mmServerSocket.accept();
+                    Log.i("BT Server Service: ","accept connection");
                 } catch (IOException e) {
                     break;
                 }

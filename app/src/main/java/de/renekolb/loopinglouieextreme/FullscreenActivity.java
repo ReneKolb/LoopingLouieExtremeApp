@@ -125,7 +125,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     }
 
 
-    @Override
+ /*   @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case Constants.REQUEST_CONNECT_DEVICE_SECURE:
@@ -141,7 +141,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 }
                 break;
         }
-    }
+    }*/
 
     @Override
     public void onFragmentInteraction(int button) {
@@ -318,6 +318,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     }
 
     public void connect(BluetoothDevice remoteDevice) {
+        Log.i("FA connect", "remote Device: "+remoteDevice);
         this.btClient = new BTClientService(this, ServiceMessageHandler);
         btClient.connect(remoteDevice);
     }
@@ -342,70 +343,6 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         }
     };
 
-  /*  private void hide() {
-        // Hide UI first
-        //ActionBar actionBar = getSupportActionBar();
-        //if (actionBar != null) {
-//            actionBar.hide();
-//        }
-
-        // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, 200);
-    }*/
-
-  /*  private final Runnable mHidePart2Runnable = new Runnable() {
-        @SuppressLint("InlinedApi")
-        @Override
-        public void run() {
-            // Delayed removal of status and navigation bar
-
-            // Note that some of these constants are new as of API 16 (Jelly Bean)
-            // and API 19 (KitKat). It is safe to use them, as they are inlined
-            // at compile-time and do nothing on earlier devices.
-            mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
-        }
-    };*/
-
-    /*@SuppressLint("InlinedApi")
-    private void show() {
-        // Show the system bar
-        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-
-        // Schedule a runnable to display UI elements after a delay
-        mHideHandler.removeCallbacks(mHidePart2Runnable);
-        mHideHandler.postDelayed(mShowPart2Runnable, 200);
-    }*/
-
-    /*private final Runnable mShowPart2Runnable = new Runnable() {
-        @Override
-        public void run() {
-            // Delayed display of UI elements
-            //ActionBar actionBar = getSupportActionBar();
-            //if (actionBar != null) {
-//                actionBar.show();
-//            }
-        }
-    };*/
-
-    /*private final Handler mHideHandler = new Handler();
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
-        }
-    };*/
-
-
-    /**
-     * The Handler that gets information back from the BluetoothChatService
-     */
     private final Handler ServiceMessageHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

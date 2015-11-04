@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothSocket;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 import java.io.IOException;
 
@@ -16,6 +17,8 @@ public class BTClientService {
     private FullscreenActivity activity;
     private Handler mHandler;
 
+    private boolean isConnecting;
+
     private BluetoothAdapter mAdapter;
 
     private ConnectThread connectingThread;
@@ -25,6 +28,7 @@ public class BTClientService {
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         this.mHandler = handler;
         this.activity = activity;
+        this.isConnecting = false;
     }
 
     public void connect(BluetoothDevice remoteDevice) {
@@ -62,9 +66,14 @@ public class BTClientService {
         }
     }
 
+    public boolean isConnecting(){
+        return  this.isConnecting;
+    }
+
     private void connectionFailed() {
         // Send a failure message back to the Activity
         mHandler.sendEmptyMessage(Constants.messages.BT_CONNECTION_FAILED);
+        isConnecting = false;
         /*Message msg = mHandler.obtainMessage(Constants.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TOAST, "Unable to connect device");
@@ -84,9 +93,11 @@ public class BTClientService {
 
             // Get a BluetoothSocket to connect with the given BluetoothDevice
             try {
-                // MY_UUID is the app's UUID string, also used by the server code
                 tmp = device.createRfcommSocketToServiceRecord(BTServerService.commUuid);
+                isConnecting = true;
+                Log.i("BT Client Service: ", "connecting...");
             } catch (IOException e) {
+                isConnecting = false;
             }
             mmSocket = tmp;
         }
@@ -99,22 +110,21 @@ public class BTClientService {
                 // Connect the device through the socket. This will block
                 // until it succeeds or throws an exception
                 mmSocket.connect();
+                Log.i("BT Client Service: ", "connected");
             } catch (IOException connectException) {
+                isConnecting = false;
                 // Unable to connect; close the socket and get out
                 //send FAIL msg
+                Log.e("BT Client Service","Cannot connect",connectException);
                 try {
+                    Log.i("BT Client Service: ", "connecting failed");
                     mmSocket.close();
-                    Message msg = mHandler.obtainMessage(Constants.messages.BT_CONNECTION_FAILED);
-                    Bundle b= new Bundle();
-                    b.putString(Constants.KEY_DEVICE_ADDRESS, mmDevice.getAddress());
-                    msg.setData(b);
-                    mHandler.sendMessage(msg);
-                } catch (IOException closeException) {
                     connectionFailed();
+                } catch (IOException closeException) {
                 }
                 return;
             }
-
+            isConnecting = false;
             // Do work to manage the connection (in a separate thread)
             manageConnectedSocket(mmSocket);
         }
@@ -123,6 +133,7 @@ public class BTClientService {
          * Will cancel an in-progress connection, and close the socket
          */
         public void cancel() {
+            isConnecting = false;
             try {
                 mmSocket.close();
             } catch (IOException e) {
