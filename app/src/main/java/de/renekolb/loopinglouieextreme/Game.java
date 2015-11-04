@@ -6,13 +6,19 @@ public class Game {
 
     private int maxRounds;
     private int currentRound;
-    private ArrayList<GamePlayer> gamePlayers ;
+    private ArrayList<GamePlayer> gamePlayers;
     private CustomGameSettings settings;
 
     public Game(){
         this.maxRounds = 1;
         this.currentRound = 0;
         this.gamePlayers = new ArrayList<>(4);
+
+        this.gamePlayers.add(new GamePlayer("Player 1",PlayerColor.RED));
+        this.gamePlayers.add(new GamePlayer("Player 2",PlayerColor.PURPLE));
+        this.gamePlayers.add(new GamePlayer("Player 3",PlayerColor.YELLOW));
+        this.gamePlayers.add(new GamePlayer("Player 4",PlayerColor.GREEN));
+
         this.settings = new CustomGameSettings();
     }
 
@@ -41,12 +47,19 @@ public class Game {
         return this.gamePlayers.get(index);
     }
 
-    public void addGamePlayer(GamePlayer player){
-        this.gamePlayers.add(player);
-    }
+    /*
+    public void setGamePlayer(int index, GamePlayer player){
+        this.gamePlayers.set(index, player);
+    }*/
 
     public CustomGameSettings getGameSettings(){
         return this.settings;
+    }
+
+    public String getDefaultItemsSendData(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(getGamePlayer(0).getDefaultItemType().getItemID()).append(getGamePlayer(1).getDefaultItemType().getItemID()).append(getGamePlayer(2).getDefaultItemType().getItemID()).append(getGamePlayer(3).getDefaultItemType().getItemID());
+        return sb.toString();
     }
 
 }

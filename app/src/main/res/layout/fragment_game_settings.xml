@@ -86,23 +86,14 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start"
-        android:id="@+id/btn_game_settings_start_game"
+        android:text="Player Settings"
+        android:id="@+id/btn_game_settings_player_settings"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Test Wheel"
-        android:id="@+id/btn_game_settings_test_wheel"
-        android:layout_alignTop="@+id/btn_game_settings_start_game"
-        android:layout_toRightOf="@+id/btn_game_settings_start_game"
-        android:layout_toEndOf="@+id/btn_game_settings_start_game"/>
 
 
 </RelativeLayout>

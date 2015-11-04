@@ -77,6 +77,7 @@ public class GameSettingsFragment extends Fragment {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 mRounds = newVal;
+                fa.getGame().setMaxRounds(mRounds);
             }
         });
 
@@ -84,7 +85,7 @@ public class GameSettingsFragment extends Fragment {
         final Button btnAction = (Button) view.findViewById(R.id.btn_game_settings_action);
         final Button btnCustom = (Button) view.findViewById(R.id.btn_game_settings_custom);
         final ImageButton btnCustomSettings = (ImageButton) view.findViewById(R.id.btn_game_settings_custom_settings);
-        final Button btnStartGame = (Button) view.findViewById(R.id.btn_game_settings_start_game);
+        final Button btnPlayerSettings = (Button) view.findViewById(R.id.btn_game_settings_player_settings);
 
         btnCustomSettings.setVisibility(mGameMode == 2 ? View.VISIBLE : View.INVISIBLE);
 
@@ -144,22 +145,12 @@ public class GameSettingsFragment extends Fragment {
             }
         });
 
-        btnStartGame.setOnClickListener(new View.OnClickListener() {
+        btnPlayerSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onButtonPressed(Constants.buttons.GAME_SETTINGS_START_GAME);
+                onButtonPressed(Constants.buttons.GAME_SETTINGS_PLAYER_SETTINGS);
             }
         });
-
-        Button btnTestWheel = (Button) view.findViewById(R.id.btn_game_settings_test_wheel);
-        btnTestWheel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onButtonPressed(Constants.buttons.GAME_SETTINGS_TEST_WHEEL);
-            }
-        });
-
-
 
         return view;
     }

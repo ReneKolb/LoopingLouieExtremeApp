@@ -17,6 +17,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
+import de.renekolb.loopinglouieextreme.ItemType;
 import de.renekolb.loopinglouieextreme.R;
 
 
@@ -53,7 +54,7 @@ public class PlayerSettingsFragment extends Fragment {
         }
 
         if(savedInstanceState == null){
-            this.playerSettingsListAdapter = new PlayerSettingsListAdapter(fa);
+            this.playerSettingsListAdapter = new PlayerSettingsListAdapter(fa,fa.getGame());
         }
     }
 
@@ -62,27 +63,6 @@ public class PlayerSettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_player_settings, container, false);
-
-        mSelectedItem = -1;
-
-        final ListView lvPlayers = (ListView) view.findViewById(R.id.lv_player_settings_players);
-        lvPlayers.setAdapter(this.playerSettingsListAdapter);
-        lvPlayers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-           //     for (int a = 0; a < parent.getChildCount(); a++) {
-            //        parent.getChildAt(a).setBackgroundColor(Color.TRANSPARENT);
-             //   }
-                if (mSelectedItem == -1 || mSelectedItem != position) {
-             //       view.setBackgroundColor(0xAAAAAA);
-                    mSelectedItem = position;
-                } else if (mSelectedItem == position) {
-                    mSelectedItem = -1;
-                }
-            }
-        });
-
-        this.playerSettingsListAdapter.updateName(0, "Test Player");
 
         final Button btnTurbo = (Button)view.findViewById(R.id.btn_player_settings_turbo);
         final Button btnSlow = (Button)view.findViewById(R.id.btn_player_settings_slow);
@@ -97,7 +77,8 @@ public class PlayerSettingsFragment extends Fragment {
                   btnSlow.setEnabled(true);
                   btnReverse.setEnabled(true);
                   btnBlackout.setEnabled(true);
-                  playerSettingsListAdapter.updateBooster(mSelectedItem,"Turbo");
+                  fa.getGame().getGamePlayer(mSelectedItem).setDefaultItemType(ItemType.TURBO);
+                  playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
               }
             }
         });
@@ -110,7 +91,9 @@ public class PlayerSettingsFragment extends Fragment {
                     btnSlow.setEnabled(false);
                     btnReverse.setEnabled(true);
                     btnBlackout.setEnabled(true);
-                    playerSettingsListAdapter.updateBooster(mSelectedItem,"Slow");
+                    fa.getGame().getGamePlayer(mSelectedItem).setDefaultItemType(ItemType.SLOW);
+                    playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
+                    //playerSettingsListAdapter.updateBooster(mSelectedItem,"Slow");
                 }
             }
         });
@@ -123,7 +106,9 @@ public class PlayerSettingsFragment extends Fragment {
                     btnSlow.setEnabled(true);
                     btnReverse.setEnabled(false);
                     btnBlackout.setEnabled(true);
-                    playerSettingsListAdapter.updateBooster(mSelectedItem,"Reverse");
+                    fa.getGame().getGamePlayer(mSelectedItem).setDefaultItemType(ItemType.REVERSE);
+                    playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
+                    //playerSettingsListAdapter.updateBooster(mSelectedItem,"Reverse");
                 }
             }
         });
@@ -136,8 +121,45 @@ public class PlayerSettingsFragment extends Fragment {
                     btnSlow.setEnabled(true);
                     btnReverse.setEnabled(true);
                     btnBlackout.setEnabled(false);
-                    playerSettingsListAdapter.updateBooster(mSelectedItem,"Blackout");
+                    fa.getGame().getGamePlayer(mSelectedItem).setDefaultItemType(ItemType.BLACKOUT);
+                    playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
+                    //playerSettingsListAdapter.updateBooster(mSelectedItem,"Blackout");
                 }
+            }
+        });
+
+        mSelectedItem = -1;
+
+        final ListView lvPlayers = (ListView) view.findViewById(R.id.lv_player_settings_players);
+        lvPlayers.setAdapter(this.playerSettingsListAdapter);
+        lvPlayers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //     for (int a = 0; a < parent.getChildCount(); a++) {
+                //        parent.getChildAt(a).setBackgroundColor(Color.TRANSPARENT);
+                //   }
+                if (mSelectedItem == -1 || mSelectedItem != position) {
+                    //       view.setBackgroundColor(0xAAAAAA);
+                    mSelectedItem = position;
+
+                    PlayerSettingsListAdapter p = (PlayerSettingsListAdapter) parent.getAdapter();
+
+                    btnTurbo.setEnabled(!p.getItem(position).getBooster().equals("Turbo"));
+                    btnSlow.setEnabled(!p.getItem(position).getBooster().equals("Slow"));
+                    btnReverse.setEnabled(!p.getItem(position).getBooster().equals("Reverse"));
+                    btnBlackout.setEnabled(!p.getItem(position).getBooster().equals("Blackout"));
+
+                } else if (mSelectedItem == position) {
+                    mSelectedItem = -1;
+                }
+            }
+        });
+
+        Button btnStart = (Button)view.findViewById(R.id.btn_player_settings_start);
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(Constants.buttons.PLAYER_SETTINGS_START_GAME);
             }
         });
 

@@ -54,31 +54,6 @@
         android:layout_marginStart="80dp"/>
 
 
-
-    <Button
-        android:id="@+id/btn_wake_lock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Test Wake Lock" />
-
-    <Button
-        android:id="@+id/btn_test_server_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/btn_wake_lock"
-        android:text="Send Test Msg" />
-
-    <Button
-        android:id="@+id/btn_le_scan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/btn_test_server_msg"
-        android:text="LeScan"/>
-
     <TextView
         android:id="@+id/tv_title_connected_devices"
         android:layout_width="wrap_content"
@@ -102,22 +77,25 @@
         android:layout_marginTop="10dp">
     </ListView>
 
+
     <Button
-        android:id="@+id/btn_game_settings"
+        android:id="@+id/btn_host_game_game_settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Game Settings"
-        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>
 
     <Button
-        android:id="@+id/btn_host_game_player_settings"
+        android:id="@+id/btn_le_scan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/btn_game_settings"
-        android:layout_alignParentRight="true"
-        android:textColor="#000000"
-        android:text="Player Settings"/>
+        android:layout_centerHorizontal="true"
+        android:layout_above="@id/btn_host_game_game_settings"
+        android:text="Scan for board"/>
+
+
+
 
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

@@ -17,6 +17,12 @@ public class PlayerSettingsListItem {
         this.booster  = booster;
     }
 
+    public PlayerSettingsListItem(GamePlayer player){
+        this.playerName = player.getDisplayName();
+        this.color = player.getPlayerColor().getColor();
+        this.booster = player.getDefaultItemType()==null?"None":player.getDefaultItemType().getDisplayName();
+    }
+
     public void update(GamePlayer player){
         this.playerName = player.getDisplayName();
         this.color = player.getPlayerColor().getColor();

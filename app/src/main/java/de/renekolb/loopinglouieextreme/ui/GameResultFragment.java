@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
@@ -100,18 +101,32 @@ public class GameResultFragment extends Fragment {
         final TextView tvThird = (TextView) view.findViewById(R.id.tv_game_results_third_player);
         final TextView tvFourth = (TextView) view.findViewById(R.id.tv_game_results_fourth_player);
 
-        tvFirst.setText("1. "+getPlayerNameFromIndex(mFirstPlayer)+"er Spieler");
-        tvSecond.setText("2. "+getPlayerNameFromIndex(mSecondPlayer)+"er Spieler");
+
+
+        tvFirst.setText("1. "+fa.getGame().getGamePlayer(mFirstPlayer).getDisplayName());
+        tvFirst.setBackgroundColor(fa.getGame().getGamePlayer(mFirstPlayer).getPlayerColor().getColor());
+        tvSecond.setText("2. " + fa.getGame().getGamePlayer(mSecondPlayer).getDisplayName());
+        tvSecond.setBackgroundColor(fa.getGame().getGamePlayer(mSecondPlayer).getPlayerColor().getColor());
         if(mThirdPlayer != -1) {
-            tvThird.setText("3. " + getPlayerNameFromIndex(mThirdPlayer) + "er Spieler");
+            tvThird.setText("3. " +fa.getGame().getGamePlayer(mThirdPlayer).getDisplayName());
+            tvThird.setBackgroundColor(fa.getGame().getGamePlayer(mThirdPlayer).getPlayerColor().getColor());
         }else{
             tvThird.setVisibility(View.GONE);
         }
         if(mFourthPlayer != -1) {
-            tvFourth.setText("4. " + getPlayerNameFromIndex(mFourthPlayer) + "er Spieler");
+            tvFourth.setText("4. " + fa.getGame().getGamePlayer(mFourthPlayer).getDisplayName());
+            tvFourth.setBackgroundColor(fa.getGame().getGamePlayer(mFourthPlayer).getPlayerColor().getColor());
         }else{
             tvFourth.setVisibility(View.GONE);
         }
+
+        Button btnWheelOfFortune = (Button)view.findViewById(R.id.btn_game_results_wheel_of_fortune);
+        btnWheelOfFortune.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(Constants.buttons.GAME_RESULTS_WHEEL_OF_FORTUNE);
+            }
+        });
 
         return view;
     }

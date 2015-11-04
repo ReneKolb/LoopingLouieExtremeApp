@@ -115,7 +115,6 @@ public class BTClientService {
                 isConnecting = false;
                 // Unable to connect; close the socket and get out
                 //send FAIL msg
-                Log.e("BT Client Service","Cannot connect",connectException);
                 try {
                     Log.i("BT Client Service: ", "connecting failed");
                     mmSocket.close();

@@ -109,26 +109,6 @@ public class HostGameFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_host_game, container, false);
-        Button btnWakeLock = (Button) view.findViewById(R.id.btn_wake_lock);
-
-
-        btnWakeLock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //PowerManager pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
-                //final PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK/*PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK*/, "Your Tag");
-                //wl.acquire();
-                onButtonPressed(Constants.buttons.HOST_GAME_TEST_BLACK);
-            }
-        });
-
-        Button btnTestMessage = (Button) view.findViewById(R.id.btn_test_server_msg);
-        btnTestMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onButtonPressed(Constants.buttons.HOST_GAME_TEST_SERVER_MESSAGE);
-            }
-        });
 
         connectedPlayerAdapter = new ArrayAdapter<ConnectedPlayerListItem>(getActivity(), R.layout.listitem_player);
 
@@ -162,7 +142,7 @@ public class HostGameFragment extends Fragment {
 
         scanningBoardProgress = (ProgressBar) view.findViewById(R.id.pb_scanning_board);
 
-        btnGameSettings = (Button)view.findViewById(R.id.btn_game_settings);
+        btnGameSettings = (Button)view.findViewById(R.id.btn_host_game_game_settings);
         btnGameSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,14 +150,6 @@ public class HostGameFragment extends Fragment {
             }
         });
         btnGameSettings.setEnabled(fa.appSettings.isDebugEnabled() || fa.btLEService.isConnected());
-
-        Button btnPlayerSettigns = (Button)view.findViewById(R.id.btn_host_game_player_settings);
-        btnPlayerSettigns.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onButtonPressed(Constants.buttons.HOST_GAME_PLAYER_SETTINGS);
-            }
-        });
 
         return view;
     }

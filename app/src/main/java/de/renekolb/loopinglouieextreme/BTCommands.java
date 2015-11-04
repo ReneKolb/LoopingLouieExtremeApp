@@ -15,7 +15,7 @@ public class BTCommands {
     public static final char SET_CHEF_CHANGE_DELAY = 'j';
     public static final char SET_CHEF_HAS_SHORTER_COOLDOWN = 'k';
     public static final char SET_ENABLE_ITEMS = 'l';
-    //public static final char SET_ITEM_TYPES = 'm';
+    public static final char SET_ITEM_TYPES = 'm';
     public static final char SET_ENABLE_EVENTS = 'n';
     //public static final char SET_ITEM_AUTO_REFILL_DELAY = 'o';
     //public static final char SET_ITEM_COOLDOWN_DELAY = 'p';

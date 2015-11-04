@@ -7,6 +7,28 @@
              android:clickable="true">
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The Wheel of Fortune"
+        android:id="@+id/tv_wheel_of_fortune_title"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Player XY"
+        android:id="@+id/tv_wheel_of_fortune_player_name"
+        android:layout_alignTop="@+id/iv_wheel_of_fortune_pointer"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textColor="#000000"/>
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,10 +62,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/btn_wheel_of_fortune_mode"
+        android:text="Next Round"
+        android:id="@+id/btn_wheel_of_fortune_next_round"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"/>
+
 
 </RelativeLayout>

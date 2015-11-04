@@ -36,7 +36,10 @@ public class WheelOfFortuneFragment extends Fragment {
 
     private ImageView mIVWheel;
     private TextView mTVResult;
-    private Button mBTNMode;
+    private Button mBTNnext;
+    private TextView mTVplayerName;
+
+    private boolean canSpin;
 
     private Random random;
     private float currentRotation;
@@ -81,9 +84,14 @@ public class WheelOfFortuneFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_wheel_of_fortune, container, false);
 
+        canSpin = true;
+
         mIVWheel = (ImageView) view.findViewById(R.id.iv_wheel_of_fortune);
         mTVResult = (TextView) view.findViewById(R.id.tv_wheel_of_fortune_result);
-        mBTNMode = (Button) view.findViewById(R.id.btn_wheel_of_fortune_mode);
+        mBTNnext = (Button) view.findViewById(R.id.btn_wheel_of_fortune_next_round);
+        mTVplayerName = (TextView) view.findViewById(R.id.tv_wheel_of_fortune_player_name);
+
+        mBTNnext.setVisibility(View.INVISIBLE);
 
         currentRotation = 0;
         isSpinning = false;
@@ -98,14 +106,14 @@ public class WheelOfFortuneFragment extends Fragment {
             }
         });
 
-        if(winnerWheel) {
+    /*    if(winnerWheel) {
             mBTNMode.setText("set Loser");
         }else{
             mBTNMode.setText("set Winner");
-        }
+        }*/
         mIVWheel.setImageResource(wofSettings.getResourceID());
 
-        mBTNMode.setOnClickListener(new View.OnClickListener() {
+        /*mBTNMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!isSpinning){
@@ -119,6 +127,13 @@ public class WheelOfFortuneFragment extends Fragment {
                     }
                     mIVWheel.setImageResource(wofSettings.getResourceID());
                 }
+            }
+        });*/
+
+        mBTNnext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(Constants.buttons.WHEEL_OF_FORTUNE_NEXT_ROUND);
             }
         });
 
@@ -184,10 +199,16 @@ public class WheelOfFortuneFragment extends Fragment {
         @Override
         public void run() {
             isSpinning = false;
-
+            canSpin = false;
             int index = (int)((360-currentRotation) / (360/wofSettings.getFieldAmount()));
 
             mTVResult.setText(wofSettings.getDisplayTextResourceID(index));
+
+            //TODO: handle Spin again
+
+            if(!canSpin){
+                mBTNnext.setVisibility(View.VISIBLE);
+            }
 /*
             switch(index){
                 case 0:
@@ -219,6 +240,10 @@ public class WheelOfFortuneFragment extends Fragment {
     private class GestureListener extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            if(!canSpin){
+                return false;
+            }
+
             if(isSpinning){
                 return false;
             }

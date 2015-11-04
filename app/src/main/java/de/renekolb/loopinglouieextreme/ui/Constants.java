@@ -21,6 +21,13 @@ public final class Constants {
 
         public static final int GAME_TOO_FEW_PLAYERS_CHIPS = 11;
         public static final String KEY_PLAYER_AMOUNT = "player_amount";
+
+        public static final int BLE_GAME_RESULTS = 12;
+        public static final String KEY_GAME_RESULTS_FIRST = "game_results_first";
+        public static final String KEY_GAME_RESULTS_SECOND = "game_results_second";
+        public static final String KEY_GAME_RESULTS_THIRD = "game_results_third";
+        public static final String KEY_GAME_RESULTS_FOURTH = "game_results_fourth";
+
     }
 
     // Intent request codes
@@ -40,10 +47,16 @@ public final class Constants {
         public static final int HOST_GAME_GAME_SETTINGS = 7;
 
         public static final int GAME_SETTINGS_CUSTOM_SETTINGS = 8;
-        public static final int GAME_SETTINGS_START_GAME = 9;
+        public static final int GAME_SETTINGS_PLAYER_SETTINGS = 9;
         public static final int GAME_SETTINGS_TEST_WHEEL = 10;
 
-        public static final int HOST_GAME_PLAYER_SETTINGS = 11;
+        public static final int PLAYER_SETTINGS_START_GAME = 11;
+
+        public static final int GAME_RESULTS_WHEEL_OF_FORTUNE = 13;
+
+        public static final int WHEEL_OF_FORTUNE_NEXT_ROUND = 14;
+
+        public static final int HOST_GAME_PLAYER_SETTINGS = 12;
     }
 
 

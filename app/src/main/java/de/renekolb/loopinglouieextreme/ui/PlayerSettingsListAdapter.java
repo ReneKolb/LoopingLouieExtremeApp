@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import de.renekolb.loopinglouieextreme.Game;
+import de.renekolb.loopinglouieextreme.GamePlayer;
 import de.renekolb.loopinglouieextreme.PlayerColor;
 import de.renekolb.loopinglouieextreme.R;
 
@@ -19,17 +21,21 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
     ArrayList<PlayerSettingsListItem> list;
     LayoutInflater layoutInflater;
 
-    public PlayerSettingsListAdapter(Context context){
+    public PlayerSettingsListAdapter(Context context, Game game){
         layoutInflater = LayoutInflater.from(context);
 
         list = new ArrayList<>();
-        list.add(new PlayerSettingsListItem("Player 1", PlayerColor.RED,"None"));
-        list.add(new PlayerSettingsListItem("Player 2", PlayerColor.PURPLE,"None"));
-        list.add(new PlayerSettingsListItem("Player 3", PlayerColor.YELLOW,"None"));
-        list.add(new PlayerSettingsListItem("Player 4", PlayerColor.GREEN,"None"));
+        for(int i=0;i<4;i++){
+            list.add(new PlayerSettingsListItem(game.getGamePlayer(i)));
+        }
     }
 
-    public void updateName(int index, String newName){
+    public void update(int index, GamePlayer player){
+        list.get(index).update(player);
+        this.notifyDataSetChanged();
+    }
+
+/*    public void updateName(int index, String newName){
         list.get(index).setPlayerName(newName);
         this.notifyDataSetChanged();
     }
@@ -37,7 +43,7 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
     public void updateBooster(int index, String newBooster){
         list.get(index).setBooster(newBooster);
         this.notifyDataSetChanged();
-    }
+    }*/
 
     @Override
     public int getCount() {

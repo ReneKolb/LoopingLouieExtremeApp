@@ -230,22 +230,24 @@ public class BluetoothLEService {
  //   private void sendCommand(/*Command, value*/String  cmd){
 //    }
 
-    public void sendGameSettings(CustomGameSettings settings){
+    public void sendGameSettings(Game game){
         //addSendMessage(appSettings.getSendArray());
 
-        addSendMessage((BTCommands.SET_RANDOM_SPEED + boolToString(settings.getRandomSpeed()) + ".").getBytes());
-        addSendMessage((BTCommands.SET_START_SPEED + String.valueOf(settings.getStartSpeed()) + ".").getBytes());
-        addSendMessage((BTCommands.SET_SPEED_MIN_DELAY + String.valueOf(settings.getSpeedMinDelay()) + ".").getBytes());
-        addSendMessage((BTCommands.SET_SPEED_MAX_DELAY + String.valueOf(settings.getSpeedMaxDelay()) + ".").getBytes());
-        addSendMessage((BTCommands.SET_SPEED_MIN_STEP_SIZE + String.valueOf(settings.getSpeedMinStepSize()) + ".").getBytes());
-        addSendMessage((BTCommands.SET_SPEED_MAX_STEP_SIZE + String.valueOf(settings.getSpeedMaxStepSize()) + ".").getBytes());
-        addSendMessage((BTCommands.SET_ENABLE_REVERSE + boolToString(settings.getEnableReverse()) + ".").getBytes());
-        addSendMessage((BTCommands.SET_CHEF_MODE + boolToString(settings.getChefMode()) + ".").getBytes());
-        addSendMessage((BTCommands.SET_CHEF_ROULETTE + boolToString(settings.getChefRoulette()) + ".").getBytes());
-        addSendMessage((BTCommands.SET_CHEF_CHANGE_DELAY + String.valueOf(settings.getChefChangeDelay()) + ".").getBytes());
-        addSendMessage((BTCommands.SET_CHEF_HAS_SHORTER_COOLDOWN + boolToString(settings.getChefHasShorterCooldown()) + ".").getBytes());
-        addSendMessage((BTCommands.SET_ENABLE_ITEMS + boolToString(settings.getEnableItems()) + ".").getBytes());
-        addSendMessage((BTCommands.SET_ENABLE_EVENTS + boolToString(settings.getEnableEvents()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_RANDOM_SPEED + boolToString(game.getGameSettings().getRandomSpeed()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_START_SPEED + String.valueOf(game.getGameSettings().getStartSpeed()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_SPEED_MIN_DELAY + String.valueOf(game.getGameSettings().getSpeedMinDelay()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_SPEED_MAX_DELAY + String.valueOf(game.getGameSettings().getSpeedMaxDelay()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_SPEED_MIN_STEP_SIZE + String.valueOf(game.getGameSettings().getSpeedMinStepSize()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_SPEED_MAX_STEP_SIZE + String.valueOf(game.getGameSettings().getSpeedMaxStepSize()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_ENABLE_REVERSE + boolToString(game.getGameSettings().getEnableReverse()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_CHEF_MODE + boolToString(game.getGameSettings().getChefMode()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_CHEF_ROULETTE + boolToString(game.getGameSettings().getChefRoulette()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_CHEF_CHANGE_DELAY + String.valueOf(game.getGameSettings().getChefChangeDelay()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_CHEF_HAS_SHORTER_COOLDOWN + boolToString(game.getGameSettings().getChefHasShorterCooldown()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_ENABLE_ITEMS + boolToString(game.getGameSettings().getEnableItems()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_ENABLE_EVENTS + boolToString(game.getGameSettings().getEnableEvents()) + ".").getBytes());
+
+        addSendMessage((BTCommands.SET_ITEM_TYPES + game.getDefaultItemsSendData() + ".").getBytes());
         
     }
 

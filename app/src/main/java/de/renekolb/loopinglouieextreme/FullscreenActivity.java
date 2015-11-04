@@ -49,6 +49,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     private GameSettingsFragment gameSettingsFragment;
     private CustomGameSettingsFragment customGameSettingsFragment;
     private PlayerSettingsFragment playerSettingsFragment;
+    private GameFragment gameFragment;
     private GameResultFragment gameResultsFragment;
     private WheelOfFortuneFragment wheelOfFortuneFragment;
 
@@ -278,8 +279,27 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft.replace(R.id.main_fragment, customGameSettingsFragment);
                 ft.commit();
                 break;
-            case Constants.buttons.GAME_SETTINGS_START_GAME:
-                btLEService.sendGameSettings(game.getGameSettings());
+            case Constants.buttons.GAME_SETTINGS_PLAYER_SETTINGS:
+                ft = getFragmentManager().beginTransaction();
+                if(playerSettingsFragment == null){
+                    playerSettingsFragment = PlayerSettingsFragment.newInstance();
+                }
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, playerSettingsFragment);
+                ft.commit();
+                break;
+            case Constants.buttons.PLAYER_SETTINGS_START_GAME:
+                ft = getFragmentManager().beginTransaction();
+                if(gameFragment == null){
+                    gameFragment = gameFragment.newInstance();
+                }
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, gameFragment);
+                ft.commit();
+
+                btLEService.sendGameSettings(game);
                 btLEService.sendGameStart();
                 break;
 
@@ -293,8 +313,24 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
                 ft.commit();
                 break;
+            case Constants.buttons.GAME_RESULTS_WHEEL_OF_FORTUNE:
+                //TODO: Handle all Wheels correctly
+                        ft = getFragmentManager().beginTransaction();
+                if(wheelOfFortuneFragment == null){
+                    wheelOfFortuneFragment = WheelOfFortuneFragment.newInstance();
+                }
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
+                ft.commit();
+                break;
 
-            case Constants.buttons.HOST_GAME_PLAYER_SETTINGS:
+            case Constants.buttons.WHEEL_OF_FORTUNE_NEXT_ROUND:
+                //TODO: handle wheel correct (next Wheel or next Round)
+                Toast.makeText(FullscreenActivity.this, "Hier gehts noch nicht weiter", Toast.LENGTH_SHORT).show();
+                break;
+
+/*            case Constants.buttons.HOST_GAME_PLAYER_SETTINGS:
                 ft = getFragmentManager().beginTransaction();
                 if(playerSettingsFragment == null){
                     playerSettingsFragment = PlayerSettingsFragment.newInstance();
@@ -303,7 +339,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft.addToBackStack(null);
                 ft.replace(R.id.main_fragment, playerSettingsFragment);
                 ft.commit();
-                break;
+                break;*/
         }
     }
 
@@ -421,6 +457,23 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     int amount = msg.getData().getInt(Constants.messages.KEY_PLAYER_AMOUNT);
                     Toast.makeText(FullscreenActivity.this,"Too few players with chips ("+amount+")",Toast.LENGTH_SHORT).show();
                     break;
+                case Constants.messages.BLE_GAME_RESULTS:
+                    int first = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_FIRST);
+                    int second = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_SECOND);
+                    int third = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_THIRD);
+                    int fourth = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_FOURTH);
+
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    if(gameResultsFragment == null){
+                        gameResultsFragment = GameResultFragment.newInstance(first, second, third, fourth);
+                    }else {
+                        gameResultsFragment.setPlayers(first, second, third, fourth);
+                    }
+                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                    ft.addToBackStack(null);
+                    ft.replace(R.id.main_fragment, gameResultsFragment); // DEFAULT VALUES
+                    ft.commit();
+                    break;
 //                case Constants.MESSAGE_TOAST:
 //                        Toast.makeText(FullscreenActivity.this, msg.getData().getString(Constants.TOAST),
 //                                Toast.LENGTH_SHORT).show();
@@ -496,7 +549,17 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                             ranking[i]=-1;
                         }
 
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        msg = ServiceMessageHandler.obtainMessage(Constants.messages.BLE_GAME_RESULTS);
+                        b = new Bundle();
+                        b.putInt(Constants.messages.KEY_GAME_RESULTS_FIRST,ranking[0]);
+                        b.putInt(Constants.messages.KEY_GAME_RESULTS_SECOND,ranking[1]);
+                        b.putInt(Constants.messages.KEY_GAME_RESULTS_THIRD,ranking[2]);
+                        b.putInt(Constants.messages.KEY_GAME_RESULTS_FOURTH,ranking[3]);
+                        msg.setData(b);
+                        ServiceMessageHandler.sendMessage(msg);
+
+
+                    /*    FragmentTransaction ft = getFragmentManager().beginTransaction();
                         if(gameResultsFragment == null){
                             gameResultsFragment = GameResultFragment.newInstance(ranking[0], ranking[1], ranking[2], ranking[3]);
                         }else {
@@ -505,8 +568,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                         ft.addToBackStack(null);
                         ft.replace(R.id.main_fragment, gameResultsFragment); // DEFAULT VALUES
-                        ft.commit();
-
+                        ft.commit();*/
                         break;
 
                     case 'b':
