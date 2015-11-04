@@ -30,10 +30,10 @@ import de.renekolb.loopinglouieextreme.R;
  */
 public class PlayerSettingsFragment extends Fragment {
 
-    private OnFragmentInteractionListener mListener;
+    //private OnFragmentInteractionListener mListener;
     private FullscreenActivity fa;
 
-   int mSelectedItem;
+    int mSelectedItem;
 
     private PlayerSettingsListAdapter playerSettingsListAdapter;
 
@@ -145,8 +145,8 @@ public class PlayerSettingsFragment extends Fragment {
     }
 
     public void onButtonPressed(int button) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(button);
+        if (fa != null) {
+            fa.onFragmentInteraction(button);
         }
     }
 
@@ -154,7 +154,7 @@ public class PlayerSettingsFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            //mListener = (OnFragmentInteractionListener) activity;
             fa = (FullscreenActivity)activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
@@ -165,7 +165,7 @@ public class PlayerSettingsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        fa = null;
     }
 
 }

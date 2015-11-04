@@ -48,7 +48,7 @@ public class HostGameFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private Handler h;
+    private Handler h; //TODO: ??????
 
     public ProgressBar scanningBoardProgress;
 
@@ -60,7 +60,7 @@ public class HostGameFragment extends Fragment {
 
     public ArrayAdapter<ConnectedPlayerListItem> availableBoardAdapter; //TODO: Change Type in future
 
-    private OnFragmentInteractionListener mListener;
+    //private OnFragmentInteractionListener mListener;
 
     private FullscreenActivity fa;
 
@@ -118,7 +118,7 @@ public class HostGameFragment extends Fragment {
                 //PowerManager pm = (PowerManager) getActivity().getSystemService(Context.POWER_SERVICE);
                 //final PowerManager.WakeLock wl = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK/*PowerManager.PROXIMITY_SCREEN_OFF_WAKE_LOCK*/, "Your Tag");
                 //wl.acquire();
-                onButtonPressed(Constants.BUTTON_TEST_BLACK);
+                onButtonPressed(Constants.buttons.HOST_GAME_TEST_BLACK);
             }
         });
 
@@ -126,7 +126,7 @@ public class HostGameFragment extends Fragment {
         btnTestMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onButtonPressed(Constants.BUTTON_TEST_SERVER_MESSAGE);
+                onButtonPressed(Constants.buttons.HOST_GAME_TEST_SERVER_MESSAGE);
             }
         });
 
@@ -137,8 +137,8 @@ public class HostGameFragment extends Fragment {
         players.setOnItemClickListener(mConnectedPlayerClickListener);
 
         //loadConnectedPlayers();
-        if(FullscreenActivity.reference.btServer.getConnectedDevices()>0) {
-            connectedPlayerAdapter.addAll(FullscreenActivity.reference.btServer.getConnectedPlayers());
+        if(fa.btServer.getConnectedDevices()>0) {
+            connectedPlayerAdapter.addAll(fa.btServer.getConnectedPlayers());
         }
 
         availableBoardAdapter = new ArrayAdapter<ConnectedPlayerListItem>(getActivity(),R.layout.listitem_player);
@@ -148,8 +148,8 @@ public class HostGameFragment extends Fragment {
         boards.setOnItemClickListener(mConnectBoardClickListener);
 
         //loadConnectedBoard();
-        if(FullscreenActivity.reference.btLEService.isConnected()) {
-            availableBoardAdapter.add(FullscreenActivity.reference.btLEService.getBoard());
+        if(fa.btLEService.isConnected()) {
+            availableBoardAdapter.add(fa.btLEService.getBoard());
         }
 
         Button btnLeScan =(Button)view.findViewById(R.id.btn_le_scan);
@@ -166,16 +166,16 @@ public class HostGameFragment extends Fragment {
         btnGameSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onButtonPressed(Constants.BUTTON_GAME_SETTINGS);
+                onButtonPressed(Constants.buttons.HOST_GAME_GAME_SETTINGS);
             }
         });
-        btnGameSettings.setEnabled(fa.settings.isDebugEnabled() || FullscreenActivity.reference.btLEService.isConnected());
+        btnGameSettings.setEnabled(fa.appSettings.isDebugEnabled() || fa.btLEService.isConnected());
 
         Button btnPlayerSettigns = (Button)view.findViewById(R.id.btn_host_game_player_settings);
         btnPlayerSettigns.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onButtonPressed(Constants.BUTTON_HOST_GAME_PLAYER_SETTINGS);
+                onButtonPressed(Constants.buttons.HOST_GAME_PLAYER_SETTINGS);
             }
         });
 
@@ -223,8 +223,8 @@ public class HostGameFragment extends Fragment {
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(int button) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(button);
+        if (fa != null) {
+            fa.onFragmentInteraction(button);
         }
     }
 
@@ -232,7 +232,7 @@ public class HostGameFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            //mListener = (OnFragmentInteractionListener) activity;
             fa = (FullscreenActivity)activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
@@ -243,7 +243,7 @@ public class HostGameFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        fa = null;
     }
 
     private AdapterView.OnItemClickListener mConnectedPlayerClickListener

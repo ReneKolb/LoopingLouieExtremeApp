@@ -5,12 +5,14 @@ public class GamePlayer {
     private String displayName;
     private PlayerColor playerColor;
     private int points;
+    private ItemType defaultItemType;
     private ItemStack itemStack;
 
     public GamePlayer(String displayName, PlayerColor playerColor){
         this.displayName = displayName;
         this.playerColor = playerColor;
         this.itemStack = new ItemStack();
+        this.defaultItemType = null;
     }
 
     public String getDisplayName(){
@@ -35,6 +37,14 @@ public class GamePlayer {
 
     public int getItemsAmount(){
         return this.itemStack.getItemsAmount();
+    }
+
+    public ItemType getDefaultItemType(){
+        return this.defaultItemType;
+    }
+
+    public void setDefaultItemType(ItemType itemType){
+        this.defaultItemType = itemType;
     }
 
     public void addItem(ItemType itemType){

@@ -2,7 +2,7 @@ package de.renekolb.loopinglouieextreme;
 
 public class BTCommands {
 
-    //Settings commands send to the Board
+    //AppSettings commands send to the Board
     public static final char SET_RANDOM_SPEED = 'a';
     public static final char SET_START_SPEED = 'b';
     public static final char SET_SPEED_MIN_DELAY = 'c';

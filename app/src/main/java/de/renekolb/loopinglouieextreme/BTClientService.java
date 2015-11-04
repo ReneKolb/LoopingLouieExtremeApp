@@ -38,9 +38,9 @@ public class BTClientService {
 
         // Send the name of the connected device back to the UI Activity
         Message msg = mHandler
-                .obtainMessage(Constants.MESSAGE_DEVICE_NAME);
+                .obtainMessage(Constants.messages.BT_DEVICE_NAME);
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.DEVICE_NAME, socket.getRemoteDevice().getName());
+        bundle.putString(Constants.KEY_DEVICE_NAME, socket.getRemoteDevice().getName());
         msg.setData(bundle);
         mHandler.sendMessage(msg);
         //Toast.makeText(activity, "connected to Server", Toast.LENGTH_SHORT).show();
@@ -64,11 +64,12 @@ public class BTClientService {
 
     private void connectionFailed() {
         // Send a failure message back to the Activity
-        Message msg = mHandler.obtainMessage(Constants.MESSAGE_TOAST);
+        mHandler.sendEmptyMessage(Constants.messages.BT_CONNECTION_FAILED);
+        /*Message msg = mHandler.obtainMessage(Constants.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TOAST, "Unable to connect device");
         msg.setData(bundle);
-        mHandler.sendMessage(msg);
+        mHandler.sendMessage(msg);*/
     }
 
     private class ConnectThread extends Thread {
@@ -103,6 +104,11 @@ public class BTClientService {
                 //send FAIL msg
                 try {
                     mmSocket.close();
+                    Message msg = mHandler.obtainMessage(Constants.messages.BT_CONNECTION_FAILED);
+                    Bundle b= new Bundle();
+                    b.putString(Constants.KEY_DEVICE_ADDRESS, mmDevice.getAddress());
+                    msg.setData(b);
+                    mHandler.sendMessage(msg);
                 } catch (IOException closeException) {
                     connectionFailed();
                 }

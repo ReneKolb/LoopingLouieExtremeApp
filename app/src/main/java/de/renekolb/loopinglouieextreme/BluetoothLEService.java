@@ -63,7 +63,7 @@ public class BluetoothLEService {
                 stopScanning();
             }
         }, SCAN_PERIODE);
-        h.sendMessage(h.obtainMessage(Constants.MESSAGE_START_DISCOVERING_BLE_DEVICES));
+        h.sendMessage(h.obtainMessage(Constants.messages.BLE_START_DISCOVERING));
         //only available in API 21 or higher!!
         //mBluetoothAdapter.getBluetoothLeScanner().startScan(scanCallback);
 
@@ -73,7 +73,7 @@ public class BluetoothLEService {
 
     @SuppressWarnings("Deprecation")
     public void stopScanning(){
-        h.sendMessage(h.obtainMessage(Constants.MESSAGE_STOP_DISCOVERING_BLE_DEVICES));
+        h.sendMessage(h.obtainMessage(Constants.messages.BLE_STOP_DISCOVERING));
         //mBluetoothAdapter.getBluetoothLeScanner().stopScan(scanCallback);
         mBluetoothAdapter.stopLeScan(scanCallback);
     }
@@ -93,10 +93,10 @@ public class BluetoothLEService {
         @Override
         public void onLeScan(final BluetoothDevice device,
                         final int rssi, final byte[] scanRecord){
-            Message m = h.obtainMessage(Constants.MESSAGE_DISCOVERED_BLE_DEVICE);
+            Message m = h.obtainMessage(Constants.messages.BLE_DISCOVERED_DEVICE);
             Bundle b = new Bundle();
-            b.putString(Constants.DEVICE_NAME, device.getName());
-            b.putString(Constants.DEVICE_ADDRESS, device.getAddress());
+            b.putString(Constants.KEY_DEVICE_NAME, device.getName());
+            b.putString(Constants.KEY_DEVICE_ADDRESS, device.getAddress());
             m.setData(b);
             h.sendMessage(m);
         }
@@ -127,9 +127,9 @@ public class BluetoothLEService {
                     gatt.discoverServices();
                 } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                     Log.i("", "BLE disconnected");
-                    Message m = h.obtainMessage(Constants.MESSAGE_BLE_CONNECTION_STATE_CHANGED);
+                    Message m = h.obtainMessage(Constants.messages.BLE_CONNECTION_STATE_CHANGED);
                     Bundle b = new Bundle();
-                    b.putBoolean(Constants.CONNECTED_TO_BOARD, false);
+                    b.putBoolean(Constants.messages.KEY_CONNECTED_TO_BOARD, false);
                     m.setData(b);
                     h.sendMessage(m);
                     connected = false;
@@ -154,9 +154,9 @@ public class BluetoothLEService {
                     gatt.setCharacteristicNotification(characteristic, true); // setup onRead Event
 
 
-                    Message m = h.obtainMessage(Constants.MESSAGE_BLE_CONNECTION_STATE_CHANGED);
+                    Message m = h.obtainMessage(Constants.messages.BLE_CONNECTION_STATE_CHANGED);
                     Bundle b = new Bundle();
-                    b.putBoolean(Constants.CONNECTED_TO_BOARD, true);
+                    b.putBoolean(Constants.messages.KEY_CONNECTED_TO_BOARD, true);
                     m.setData(b);
                     h.sendMessage(m);
 
@@ -231,7 +231,7 @@ public class BluetoothLEService {
 //    }
 
     public void sendGameSettings(CustomGameSettings settings){
-        //addSendMessage(settings.getSendArray());
+        //addSendMessage(appSettings.getSendArray());
 
         addSendMessage((BTCommands.SET_RANDOM_SPEED + boolToString(settings.getRandomSpeed()) + ".").getBytes());
         addSendMessage((BTCommands.SET_START_SPEED + String.valueOf(settings.getStartSpeed()) + ".").getBytes());

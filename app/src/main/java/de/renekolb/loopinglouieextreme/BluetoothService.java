@@ -82,7 +82,7 @@ public class BluetoothService {
         mState = state;
 
         // Give the new state to the Handler so the UI Activity can update
-        mHandler.obtainMessage(Constants.MESSAGE_STATE_CHANGE, state, -1).sendToTarget();
+        mHandler.obtainMessage(Constants.messages.BT_STATE_CHANGE, state, -1).sendToTarget();
     }
 
     /**
@@ -190,9 +190,9 @@ public class BluetoothService {
         mConnectedThread.start();
 
         // Send the name of the connected device back to the UI Activity
-        Message msg = mHandler.obtainMessage(Constants.MESSAGE_DEVICE_NAME);
+        Message msg = mHandler.obtainMessage(Constants.messages.BT_DEVICE_NAME);
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.DEVICE_NAME, device.getName());
+        bundle.putString(Constants.KEY_DEVICE_NAME, device.getName());
         msg.setData(bundle);
         mHandler.sendMessage(msg);
 
@@ -249,12 +249,13 @@ public class BluetoothService {
      * Indicate that the connection attempt failed and notify the UI Activity.
      */
     private void connectionFailed() {
+        mHandler.sendEmptyMessage(Constants.messages.BT_CONNECTION_FAILED);
         // Send a failure message back to the Activity
-        Message msg = mHandler.obtainMessage(Constants.MESSAGE_TOAST);
+        /*Message msg = mHandler.obtainMessage(Constants.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TOAST, "Unable to connect device");
         msg.setData(bundle);
-        mHandler.sendMessage(msg);
+        mHandler.sendMessage(msg);*/
 
         // Start the service over to restart listening mode
         BluetoothService.this.start();
@@ -263,13 +264,19 @@ public class BluetoothService {
     /**
      * Indicate that the connection was lost and notify the UI Activity.
      */
-    private void connectionLost() {
-        // Send a failure message back to the Activity
+    private void connectionLost(String remoteAddress) {
+        Message msg = mHandler.obtainMessage(Constants.messages.BT_CONNECTION_LOST);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.KEY_DEVICE_ADDRESS, remoteAddress);
+        msg.setData(bundle);
+        mHandler.sendMessage(msg);
+
+/*        // Send a failure message back to the Activity
         Message msg = mHandler.obtainMessage(Constants.MESSAGE_TOAST);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.TOAST, "Device connection was lost");
         msg.setData(bundle);
-        mHandler.sendMessage(msg);
+        mHandler.sendMessage(msg);*/
 
         // Start the service over to restart listening mode
         BluetoothService.this.start();
@@ -472,13 +479,13 @@ public class BluetoothService {
                     bytes = mmInStream.read(buffer);
 
                     // Send the obtained bytes to the UI Activity
-                    mHandler.obtainMessage(Constants.MESSAGE_READ, bytes, -1, buffer)
+                    mHandler.obtainMessage(Constants.messages.BT_READ, bytes, -1, buffer)
                             .sendToTarget();
                 } catch (IOException e) {
                     //Log.e(TAG, "disconnected", e);
-                    connectionLost();
+                    connectionLost(mmSocket.getRemoteDevice().getAddress());
                     // Start the service over to restart listening mode
-                    BluetoothService.this.start();
+                    //BluetoothService.this.start();
                     break;
                 }
             }
@@ -494,8 +501,8 @@ public class BluetoothService {
                 mmOutStream.write(buffer);
 
                 // Share the sent message back to the UI Activity
-                mHandler.obtainMessage(Constants.MESSAGE_WRITE, -1, -1, buffer)
-                        .sendToTarget();
+                //mHandler.obtainMessage(Constants.MESSAGE_WRITE, -1, -1, buffer)
+//                        .sendToTarget();
             } catch (IOException e) {
                 //Log.e(TAG, "Exception during write", e);
             }

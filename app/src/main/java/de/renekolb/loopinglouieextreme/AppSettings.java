@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class Settings {
+public class AppSettings {
 
     public static final String PREFS_NAME = "LoopingLouieSharedPrefences";
 
@@ -14,7 +14,7 @@ public class Settings {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    public Settings(Activity activity){
+    public AppSettings(Activity activity){
         this.activity = activity;
         this.sharedPreferences = activity.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         this.editor = sharedPreferences.edit();

@@ -37,7 +37,8 @@ public class MainMenuFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    //private OnFragmentInteractionListener mListener;
+    private FullscreenActivity fa;
 
     /**
      * Use this factory method to create a new instance of
@@ -81,21 +82,21 @@ public class MainMenuFragment extends Fragment {
         btnServer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onButtonPressed(Constants.BUTTON_HOST_GAME);
+                onButtonPressed(Constants.buttons.MAIN_MENU_HOST_GAME);
             }
         });
 
         btnClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onButtonPressed(Constants.BUTTON_CONNECT);
+                onButtonPressed(Constants.buttons.MAIN_MENU_CONNECT);
             }
         });
 
         btnSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onButtonPressed(Constants.BUTTON_SETTINGS);
+                onButtonPressed(Constants.buttons.MAIN_MENU_SETTINGS);
             }
         });
 
@@ -107,25 +108,25 @@ public class MainMenuFragment extends Fragment {
     @Override
     public void onResume(){
         //disconnect from board
-        if(FullscreenActivity.reference.btLEService!=null){
-            FullscreenActivity.reference.btLEService.stopScanning();
-            FullscreenActivity.reference.btLEService.disconnect();
+        if(fa.btLEService!=null){
+            fa.btLEService.stopScanning();
+            fa.btLEService.disconnect();
         }
 
-        if(FullscreenActivity.reference.btServer != null){
-            FullscreenActivity.reference.btServer.stop();
-            FullscreenActivity.reference.btServer.disconnectClients();
+        if(fa.btServer != null){
+            fa.btServer.stop();
+            fa.btServer.disconnectClients();
         }
 
-        if(FullscreenActivity.reference.btClient!=null) {
-            FullscreenActivity.reference.btClient.stop();
+        if(fa.btClient!=null) {
+            fa.btClient.stop();
         }
         super.onResume();
     }
 
     public void onButtonPressed(int button) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(button);
+        if (fa != null) {
+            fa.onFragmentInteraction(button);
         }
     }
 
@@ -135,7 +136,7 @@ public class MainMenuFragment extends Fragment {
         super.onAttach(activity);
 //        super.onAttach(context);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            fa = (FullscreenActivity) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -145,7 +146,7 @@ public class MainMenuFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        fa = null;
     }
 
 }

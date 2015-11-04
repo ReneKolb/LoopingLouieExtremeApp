@@ -39,7 +39,7 @@ public class ConnectFragment extends Fragment {
 
     private FullscreenActivity fa;
 
-    private OnFragmentInteractionListener mListener;
+    //private OnFragmentInteractionListener mListener;
 
     /**
      * Use this factory method to create a new instance of
@@ -100,7 +100,7 @@ public class ConnectFragment extends Fragment {
         btnTestMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onButtonPressed(Constants.BUTTON_TEST_CLIENT_MESSAGE);
+                onButtonPressed(Constants.buttons.CONNECT_GAME_TEST_CLIENT_MESSAGE);
             }
         });
         return view;
@@ -130,8 +130,8 @@ public class ConnectFragment extends Fragment {
 
 
     public void onButtonPressed(int button) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(button);
+        if (fa != null) {
+            fa.onFragmentInteraction(button);
         }
     }
 
@@ -139,7 +139,7 @@ public class ConnectFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            //mListener = (OnFragmentInteractionListener) activity;
             fa = (FullscreenActivity)activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
@@ -150,7 +150,7 @@ public class ConnectFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        fa = null;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

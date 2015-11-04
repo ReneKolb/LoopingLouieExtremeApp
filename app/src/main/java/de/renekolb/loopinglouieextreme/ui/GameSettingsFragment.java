@@ -30,7 +30,8 @@ public class GameSettingsFragment extends Fragment {
     private int mGameMode;
     private int mRounds;
 
-    private OnFragmentInteractionListener mListener;
+    //private OnFragmentInteractionListener mListener;
+    private FullscreenActivity fa;
 
     /**
      * Use this factory method to create a new instance of
@@ -90,11 +91,11 @@ public class GameSettingsFragment extends Fragment {
         switch(mGameMode){
             case 0:
                 btnClassic.setEnabled(false);
-                FullscreenActivity.customGameSettings.loadClassic();
+                fa.getGame().getGameSettings().loadClassic();
                 break;
             case 1:
                 btnAction.setEnabled(false);
-                FullscreenActivity.customGameSettings.loadAction();
+                fa.getGame().getGameSettings().loadAction();
                 break;
             case 2:
                 btnCustom.setEnabled(false);
@@ -108,7 +109,7 @@ public class GameSettingsFragment extends Fragment {
                 btnAction.setEnabled(true);
                 btnCustom.setEnabled(true);
                 btnCustomSettings.setVisibility(View.INVISIBLE);
-                FullscreenActivity.customGameSettings.loadClassic();
+                fa.getGame().getGameSettings().loadClassic();
                 mGameMode = 0;
             }
         });
@@ -120,7 +121,7 @@ public class GameSettingsFragment extends Fragment {
                 btnAction.setEnabled(false);
                 btnCustom.setEnabled(true);
                 btnCustomSettings.setVisibility(View.INVISIBLE);
-                FullscreenActivity.customGameSettings.loadAction();
+                fa.getGame().getGameSettings().loadAction();
                 mGameMode = 1;
             }
         });
@@ -139,14 +140,14 @@ public class GameSettingsFragment extends Fragment {
         btnCustomSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onButtonPressed(Constants.BUTTON_GAME_SETTINGS_CUSTOM_SETTINGS);
+                onButtonPressed(Constants.buttons.GAME_SETTINGS_CUSTOM_SETTINGS);
             }
         });
 
         btnStartGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onButtonPressed(Constants.BUTTON_GAME_SETTINGS_START_GAME);
+                onButtonPressed(Constants.buttons.GAME_SETTINGS_START_GAME);
             }
         });
 
@@ -154,7 +155,7 @@ public class GameSettingsFragment extends Fragment {
         btnTestWheel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onButtonPressed(Constants.BUTTON_GAME_SETTINGS_TEST_WHEEL);
+                onButtonPressed(Constants.buttons.GAME_SETTINGS_TEST_WHEEL);
             }
         });
 
@@ -164,8 +165,8 @@ public class GameSettingsFragment extends Fragment {
     }
 
     public void onButtonPressed(int button) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(button);
+        if (fa != null) {
+            fa.onFragmentInteraction(button);
         }
     }
 
@@ -173,7 +174,7 @@ public class GameSettingsFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            fa = (FullscreenActivity) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -183,7 +184,7 @@ public class GameSettingsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        fa = null;
     }
 
 }

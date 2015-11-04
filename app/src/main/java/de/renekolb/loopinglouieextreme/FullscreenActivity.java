@@ -32,45 +32,52 @@ import de.renekolb.loopinglouieextreme.ui.PlayerSettingsFragment;
 import de.renekolb.loopinglouieextreme.ui.SettingsFragment;
 import de.renekolb.loopinglouieextreme.ui.WheelOfFortuneFragment;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 public class FullscreenActivity extends Activity implements OnFragmentInteractionListener {
 //vorher: AppCompatActivity. Aber es wird keine Action bar benötigt!!
 
     public static boolean BLE_SUPPORT;
-
-    //private View mContentView;
 
     public BTServerService btServer;
     public BTClientService btClient;
 
     public BluetoothLEService btLEService;
 
+    private MainMenuFragment mainMenuFragment;
+    private SettingsFragment settingsFragment;
     private HostGameFragment hostGameFragment;
+    private ConnectFragment connectFragment;
+    private GameSettingsFragment gameSettingsFragment;
+    private CustomGameSettingsFragment customGameSettingsFragment;
+    private PlayerSettingsFragment playerSettingsFragment;
+    private GameResultFragment gameResultsFragment;
+    private WheelOfFortuneFragment wheelOfFortuneFragment;
 
-    public static FullscreenActivity reference;
+    private Game game;
 
-    public static CustomGameSettings customGameSettings;
+    //public static FullscreenActivity reference;
+
+    //public static CustomGameSettings customGameSettings;
 
     private Runnable actionBTon;
 
-    public Settings settings;
+    public AppSettings appSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
 
-        reference = this; //TODO: sehr unsauber!!!
+        //reference = this; //TODO: sehr unsauber!!!
 
-        settings = new Settings(this);
+        appSettings = new AppSettings(this);
 
         //mContentView = findViewById(R.id.fullscreen_content);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.main_fragment, MainMenuFragment.newInstance());
+        if(mainMenuFragment==null){
+            mainMenuFragment = MainMenuFragment.newInstance();
+        }
+        ft.replace(R.id.main_fragment, mainMenuFragment);
         ft.commit();
 
         if (getResources().getBoolean(R.bool.is_tablet)) {
@@ -140,16 +147,20 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     public void onFragmentInteraction(int button) {
         FragmentTransaction ft;
         switch (button) {
-            case Constants.BUTTON_HOST_GAME:
+            case Constants.buttons.MAIN_MENU_HOST_GAME:
                 actionBTon = new Runnable() {
                     @Override
                     public void run() {
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        if(hostGameFragment==null){
+                            hostGameFragment = HostGameFragment.newInstance(ServiceMessageHandler);
+                        }
                         ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                         ft.addToBackStack(null);
-                        ft.replace(R.id.main_fragment, FullscreenActivity.this.hostGameFragment = HostGameFragment.newInstance(FullscreenActivity.this.ServiceMessageHandler));
+                        ft.replace(R.id.main_fragment, hostGameFragment);
                         ft.commit();
-                        customGameSettings = new CustomGameSettings(); // initialize & set defaults
+                        //customGameSettings = new CustomGameSettings(); // initialize & set defaults
+                        game = new Game();
                         startBTServer();
                         startBTLEService();
                     }
@@ -163,15 +174,20 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 }
 
                 break;
-            case Constants.BUTTON_CONNECT:
+            case Constants.buttons.MAIN_MENU_CONNECT:
                 actionBTon = new Runnable() {
                     @Override
                     public void run() {
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        if(connectFragment == null){
+                            connectFragment = ConnectFragment.newInstance();
+                        }
                         ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                         ft.addToBackStack(null);
-                        ft.replace(R.id.main_fragment, ConnectFragment.newInstance());
+                        ft.replace(R.id.main_fragment, connectFragment);
                         ft.commit();
+
+                        game = new Game();
                     }
                 };
 
@@ -183,15 +199,18 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 }
 
                 break;
-            case Constants.BUTTON_SETTINGS:
+            case Constants.buttons.MAIN_MENU_SETTINGS:
                 ft = getFragmentManager().beginTransaction();
+                if(settingsFragment == null){
+                    settingsFragment = SettingsFragment.newInstance();
+                }
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, SettingsFragment.newInstance());
+                ft.replace(R.id.main_fragment, settingsFragment);
                 ft.commit();
                 break;
 
-            case Constants.BUTTON_TEST_BLACK:
+            case Constants.buttons.HOST_GAME_TEST_BLACK:
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.screenBrightness = 0;
                 getWindow().setAttributes(params);
@@ -219,17 +238,17 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     }
                 }, 5000);
                 break;
-            case Constants.BUTTON_TEST_SERVER_MESSAGE:
+            case Constants.buttons.HOST_GAME_TEST_SERVER_MESSAGE:
                 if (btServer != null) {
                     btServer.sendMessageToAll("Test Msg from Server");
                 }
                 break;
-            case Constants.BUTTON_TEST_CLIENT_MESSAGE:
+            case Constants.buttons.CONNECT_GAME_TEST_CLIENT_MESSAGE:
                 if (btClient != null) {
                     btClient.sendMessage("test Msg from Client");
                 }
                 break;
-            case Constants.BUTTON_GAME_SETTINGS:
+            case Constants.buttons.HOST_GAME_GAME_SETTINGS:
                 //the host must be connected to the board and at least one player has to be connected
                 /*if(true || btLEService.isConnected() && btServer.getConnectedDevices()>=1) {
                     ft = getFragmentManager().beginTransaction();
@@ -240,37 +259,49 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 }*/
 
                 ft = getFragmentManager().beginTransaction();
+                if(gameSettingsFragment == null){
+                    gameSettingsFragment = GameSettingsFragment.newInstance(0,3); // DEFAULT VALUES
+                }
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, GameSettingsFragment.newInstance(0, 3)); // DEFAULT VALUES
+                ft.replace(R.id.main_fragment, gameSettingsFragment);
                 ft.commit();
 
                 break;
-            case Constants.BUTTON_GAME_SETTINGS_CUSTOM_SETTINGS:
+            case Constants.buttons.GAME_SETTINGS_CUSTOM_SETTINGS:
                 ft = getFragmentManager().beginTransaction();
+                if(customGameSettingsFragment == null){
+                    customGameSettingsFragment = CustomGameSettingsFragment.newInstance();
+                }
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, CustomGameSettingsFragment.newInstance());
+                ft.replace(R.id.main_fragment, customGameSettingsFragment);
                 ft.commit();
                 break;
-            case Constants.BUTTON_GAME_SETTINGS_START_GAME:
-                btLEService.sendGameSettings(customGameSettings);
+            case Constants.buttons.GAME_SETTINGS_START_GAME:
+                btLEService.sendGameSettings(game.getGameSettings());
                 btLEService.sendGameStart();
                 break;
 
-            case Constants.BUTTON_GAME_SETTINGS_TEST_WHEEL:
+            case Constants.buttons.GAME_SETTINGS_TEST_WHEEL:
                 ft = getFragmentManager().beginTransaction();
+                if(wheelOfFortuneFragment == null){
+                    wheelOfFortuneFragment = WheelOfFortuneFragment.newInstance();
+                }
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, WheelOfFortuneFragment.newInstance());
+                ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
                 ft.commit();
                 break;
 
-            case Constants.BUTTON_HOST_GAME_PLAYER_SETTINGS:
+            case Constants.buttons.HOST_GAME_PLAYER_SETTINGS:
                 ft = getFragmentManager().beginTransaction();
+                if(playerSettingsFragment == null){
+                    playerSettingsFragment = PlayerSettingsFragment.newInstance();
+                }
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, PlayerSettingsFragment.newInstance());
+                ft.replace(R.id.main_fragment, playerSettingsFragment);
                 ft.commit();
                 break;
         }
@@ -379,25 +410,28 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case Constants.MESSAGE_READ:
+                case Constants.messages.BT_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     Toast.makeText(FullscreenActivity.this, "Read: " + readMessage, Toast.LENGTH_SHORT).show();
                     //mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
                     break;
-                case Constants.MESSAGE_DEVICE_NAME:
+                case Constants.messages.BT_DEVICE_NAME:
                     // save the connected device's name
-                    String devName = msg.getData().getString(Constants.DEVICE_NAME);
-                    String devAddr = msg.getData().getString(Constants.DEVICE_ADDRESS);
+                    String devName = msg.getData().getString(Constants.KEY_DEVICE_NAME);
+                    String devAddr = msg.getData().getString(Constants.KEY_DEVICE_ADDRESS);
                     //only relevant when hosting a game!
                     if(hostGameFragment!=null) {
                         hostGameFragment.connectedPlayerAdapter.add(new ConnectedPlayerListItem(devAddr, devName));
                     }
                     //Toast.makeText(FullscreenActivity.this, "new Device: " + devName, Toast.LENGTH_SHORT).show();
                     break;
-                case Constants.MESSAGE_CONNECTION_LOST:
-                    String addr = msg.getData().getString(Constants.DEVICE_ADDRESS);
+                case Constants.messages.BT_CONNECTION_FAILED:
+                    Toast.makeText(FullscreenActivity.this, "Connection Failed!", Toast.LENGTH_SHORT).show();
+                    break;
+                case Constants.messages.BT_CONNECTION_LOST:
+                    String addr = msg.getData().getString(Constants.KEY_DEVICE_ADDRESS);
                     //only relevant when hosting a game
                     if(btServer!=null) {
                         btServer.disconnectClient(addr, true); //cleanup internal connectedThread List
@@ -418,15 +452,15 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     }
                     break;
 
-                case Constants.MESSAGE_START_DISCOVERING_BLE_DEVICES:
+                case Constants.messages.BLE_START_DISCOVERING:
                     hostGameFragment.scanningBoardProgress.setVisibility(View.VISIBLE);
                     break;
-                case Constants.MESSAGE_STOP_DISCOVERING_BLE_DEVICES:
+                case Constants.messages.BLE_STOP_DISCOVERING:
                     hostGameFragment.scanningBoardProgress.setVisibility(View.INVISIBLE);
                     break;
-                case Constants.MESSAGE_DISCOVERED_BLE_DEVICE:
-                    String bleAddr = msg.getData().getString(Constants.DEVICE_ADDRESS);
-                    String bleName = msg.getData().getString(Constants.DEVICE_NAME);
+                case Constants.messages.BLE_DISCOVERED_DEVICE:
+                    String bleAddr = msg.getData().getString(Constants.KEY_DEVICE_ADDRESS);
+                    String bleName = msg.getData().getString(Constants.KEY_DEVICE_NAME);
                     if(hostGameFragment!=null){
                         boolean contains = false;
                         for(int i=0;i<hostGameFragment.availableBoardAdapter.getCount();i++) {
@@ -441,19 +475,19 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     }
 
                     break;
-                case Constants.MESSAGE_BLE_CONNECTION_STATE_CHANGED:
-                    boolean connected = msg.getData().getBoolean(Constants.CONNECTED_TO_BOARD);
+                case Constants.messages.BLE_CONNECTION_STATE_CHANGED:
+                    boolean connected = msg.getData().getBoolean(Constants.messages.KEY_CONNECTED_TO_BOARD);
                     hostGameFragment.boardConnectionChanged(connected);
                     Toast.makeText(FullscreenActivity.this, "connected", Toast.LENGTH_SHORT).show();
                     break;
-                case Constants.MESSAGE_TOO_FEW_PLAYERS_CHIPS:
-                    int amount = msg.getData().getInt(Constants.PLAYER_AMOUNT);
+                case Constants.messages.GAME_TOO_FEW_PLAYERS_CHIPS:
+                    int amount = msg.getData().getInt(Constants.messages.KEY_PLAYER_AMOUNT);
                     Toast.makeText(FullscreenActivity.this,"Too few players with chips ("+amount+")",Toast.LENGTH_SHORT).show();
                     break;
-                case Constants.MESSAGE_TOAST:
-                        Toast.makeText(FullscreenActivity.this, msg.getData().getString(Constants.TOAST),
-                                Toast.LENGTH_SHORT).show();
-                    break;
+//                case Constants.MESSAGE_TOAST:
+//                        Toast.makeText(FullscreenActivity.this, msg.getData().getString(Constants.TOAST),
+//                                Toast.LENGTH_SHORT).show();
+//                    break;
             }
         }
     };
@@ -478,6 +512,10 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         } else {
             super.onBackPressed();
         }
+    }
+
+    public Game getGame() {
+        return this.game;
     }
 
     private ReceiveCallback onBoardMessageRead =  new ReceiveCallback() {
@@ -522,9 +560,14 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         }
 
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        if(gameResultsFragment == null){
+                            gameResultsFragment = GameResultFragment.newInstance(ranking[0], ranking[1], ranking[2], ranking[3]);
+                        }else {
+                            gameResultsFragment.setPlayers(ranking[0], ranking[1], ranking[2], ranking[3]);
+                        }
                         ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                         ft.addToBackStack(null);
-                        ft.replace(R.id.main_fragment, GameResultFragment.newInstance(ranking[0], ranking[1], ranking[2], ranking[3])); // DEFAULT VALUES
+                        ft.replace(R.id.main_fragment, gameResultsFragment); // DEFAULT VALUES
                         ft.commit();
 
                         break;
@@ -533,9 +576,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         //Cannot start the game: too few Players have plugged chips in
                         //Form: b[anzahl].
                         int amount = Integer.parseInt(command.substring(1));
-                        msg = ServiceMessageHandler.obtainMessage(Constants.MESSAGE_TOO_FEW_PLAYERS_CHIPS);
+                        msg = ServiceMessageHandler.obtainMessage(Constants.messages.GAME_TOO_FEW_PLAYERS_CHIPS);
                         b = new Bundle();
-                        b.putInt(Constants.PLAYER_AMOUNT, amount);
+                        b.putInt(Constants.messages.KEY_PLAYER_AMOUNT, amount);
                         msg.setData(b);
                         ServiceMessageHandler.sendMessage(msg);
                         break;
@@ -543,11 +586,12 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         //Countdown started
                         break;
                     default:
-                        msg = ServiceMessageHandler.obtainMessage(Constants.MESSAGE_TOAST);
+                        Log.w("BLE READ","Unkown Command. Read: "+message);
+                        /*msg = ServiceMessageHandler.obtainMessage(Constants.MESSAGE_TOAST);
                         b = new Bundle();
                         b.putString(Constants.TOAST,"Read: "+message);
                         msg.setData(b);
-                        ServiceMessageHandler.sendMessage(msg);
+                        ServiceMessageHandler.sendMessage(msg);*/
                 }
             }
 

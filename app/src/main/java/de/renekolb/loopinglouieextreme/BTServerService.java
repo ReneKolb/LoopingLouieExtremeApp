@@ -187,10 +187,10 @@ public class BTServerService {
 
         // Send the name of the connected device back to the UI Activity
         Message msg = mHandler
-                .obtainMessage(Constants.MESSAGE_DEVICE_NAME);
+                .obtainMessage(Constants.messages.BT_DEVICE_NAME);
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.DEVICE_NAME, socket.getRemoteDevice().getName());
-        bundle.putString(Constants.DEVICE_ADDRESS, socket.getRemoteDevice().getAddress());
+        bundle.putString(Constants.KEY_DEVICE_NAME, socket.getRemoteDevice().getName());
+        bundle.putString(Constants.KEY_DEVICE_ADDRESS, socket.getRemoteDevice().getAddress());
         msg.setData(bundle);
         mHandler.sendMessage(msg);
     }

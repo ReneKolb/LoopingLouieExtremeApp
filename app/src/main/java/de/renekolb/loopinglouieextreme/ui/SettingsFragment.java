@@ -60,11 +60,11 @@ public class SettingsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         CheckBox cbDebug = (CheckBox)view.findViewById(R.id.cb_settings_debug);
-        cbDebug.setChecked(fa.settings.isDebugEnabled());
+        cbDebug.setChecked(fa.appSettings.isDebugEnabled());
         cbDebug.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                fa.settings.setDebugEnable(isChecked);
+                fa.appSettings.setDebugEnable(isChecked);
             }
         });
 
@@ -72,7 +72,7 @@ public class SettingsFragment extends Fragment {
         btnTestWheel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onButtonPressed(Constants.BUTTON_GAME_SETTINGS_TEST_WHEEL);
+                onButtonPressed(Constants.buttons.GAME_SETTINGS_TEST_WHEEL);
             }
         });
 

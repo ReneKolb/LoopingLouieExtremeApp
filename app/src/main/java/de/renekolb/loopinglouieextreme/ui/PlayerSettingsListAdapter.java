@@ -5,28 +5,28 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import de.renekolb.loopinglouieextreme.PlayerColor;
 import de.renekolb.loopinglouieextreme.R;
 
 public class PlayerSettingsListAdapter extends BaseAdapter {
 
-    ArrayList<PlayerSettingsData> list;
+    ArrayList<PlayerSettingsListItem> list;
     LayoutInflater layoutInflater;
 
     public PlayerSettingsListAdapter(Context context){
         layoutInflater = LayoutInflater.from(context);
 
         list = new ArrayList<>();
-        list.add(new PlayerSettingsData("Player 1",Color.argb(255,255,0,0),"None"));
-        list.add(new PlayerSettingsData("Player 2",Color.argb(255,136,0,136),"None"));
-        list.add(new PlayerSettingsData("Player 3",Color.argb(255,221,221,0),"None"));
-        list.add(new PlayerSettingsData("Player 4",Color.argb(255,0,255,0),"None"));
+        list.add(new PlayerSettingsListItem("Player 1", PlayerColor.RED,"None"));
+        list.add(new PlayerSettingsListItem("Player 2", PlayerColor.PURPLE,"None"));
+        list.add(new PlayerSettingsListItem("Player 3", PlayerColor.YELLOW,"None"));
+        list.add(new PlayerSettingsListItem("Player 4", PlayerColor.GREEN,"None"));
     }
 
     public void updateName(int index, String newName){
@@ -45,7 +45,7 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
     }
 
     @Override
-    public PlayerSettingsData getItem(int position) {
+    public PlayerSettingsListItem getItem(int position) {
         return list.get(position);
     }
 
@@ -68,7 +68,7 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
             holder = (ViewHolder)convertView.getTag();
         }
 
-        PlayerSettingsData data = getItem(position);
+        PlayerSettingsListItem data = getItem(position);
 
         holder.colorDisplay.setBackgroundColor(data.getColor());
         holder.playerName.setText(data.getPlayerName());

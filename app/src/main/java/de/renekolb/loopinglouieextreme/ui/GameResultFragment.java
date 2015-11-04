@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.R;
 
 
@@ -34,7 +35,8 @@ public class GameResultFragment extends Fragment {
     private int mThirdPlayer;
     private int mFourthPlayer;
 
-    private OnFragmentInteractionListener mListener;
+//    private OnFragmentInteractionListener mListener;
+    private FullscreenActivity fa;
 
     /**
      * Use this factory method to create a new instance of
@@ -60,6 +62,20 @@ public class GameResultFragment extends Fragment {
 
     public GameResultFragment() {
         // Required empty public constructor
+    }
+
+    public void setPlayers(int firstPlayer, int secondPlayer, int thirdPlayer, int fourthPlayer){
+        Bundle args = new Bundle();
+        args.putInt(ARG_FIRST, firstPlayer);
+        args.putInt(ARG_SECOND, secondPlayer);
+        args.putInt(ARG_THIRD, thirdPlayer);
+        args.putInt(ARG_FOURTH, fourthPlayer);
+        setArguments(args);
+
+        mFirstPlayer = firstPlayer;
+        mSecondPlayer = secondPlayer;
+        mThirdPlayer = thirdPlayer;
+        mFourthPlayer = fourthPlayer;
     }
 
     @Override
@@ -101,8 +117,8 @@ public class GameResultFragment extends Fragment {
     }
 
     public void onButtonPressed(int button) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(button);
+        if (fa != null) {
+            fa.onFragmentInteraction(button);
         }
     }
 
@@ -110,7 +126,7 @@ public class GameResultFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            fa = (FullscreenActivity) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -120,10 +136,10 @@ public class GameResultFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        fa = null;
     }
 
-    private String getPlayerNameFromIndex(int playerIndex){
+    private static String getPlayerNameFromIndex(int playerIndex){
         switch (playerIndex){
             case 0: return "Rot";
             case 1: return "Lila";

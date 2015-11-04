@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.security.Guard;
 import java.util.Random;
 
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
@@ -44,7 +45,8 @@ public class WheelOfFortuneFragment extends Fragment {
 
     private Handler animationWaitHandler;
 
-    private OnFragmentInteractionListener mListener;
+    //private OnFragmentInteractionListener mListener;
+    private FullscreenActivity fa;
 
     private boolean winnerWheel = true;
     private WheelOfFortuneSettings wofSettings = WheelOfFortuneSettings.WINNER_WHEEL;
@@ -86,7 +88,7 @@ public class WheelOfFortuneFragment extends Fragment {
         currentRotation = 0;
         isSpinning = false;
 
-        final GestureDetector gdt = new GestureDetector(FullscreenActivity.reference,new GestureListener(),new Handler());
+        final GestureDetector gdt = new GestureDetector(fa,new GestureListener(),new Handler());
 
         mIVWheel.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -125,8 +127,8 @@ public class WheelOfFortuneFragment extends Fragment {
     }
 
     public void onButtonPressed(int button) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(button);
+        if (fa != null) {
+            fa.onFragmentInteraction(button);
         }
     }
 
@@ -134,7 +136,7 @@ public class WheelOfFortuneFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            fa = (FullscreenActivity) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -144,7 +146,7 @@ public class WheelOfFortuneFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        fa = null;
     }
 
 
