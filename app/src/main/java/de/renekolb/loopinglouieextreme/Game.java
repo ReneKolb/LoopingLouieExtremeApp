@@ -8,9 +8,10 @@ public class Game {
     private int currentRound;
     private ArrayList<GamePlayer> gamePlayers;
     private CustomGameSettings settings;
+    private boolean running;
 
     public Game(){
-        this.maxRounds = 1;
+        this.maxRounds = 2;
         this.currentRound = 0;
         this.gamePlayers = new ArrayList<>(4);
 
@@ -34,6 +35,10 @@ public class Game {
         return this.currentRound;
     }
 
+    public void nextRound(){
+        this.currentRound++;
+    }
+
     public void setCurrentRound(int currentRound){
         this.currentRound = currentRound;
     }
@@ -45,6 +50,14 @@ public class Game {
         }
 
         return this.gamePlayers.get(index);
+    }
+
+    public void setRunning(boolean isRunning){
+        this.running = isRunning;
+    }
+
+    public boolean isRunning(){
+        return this.running;
     }
 
     /*

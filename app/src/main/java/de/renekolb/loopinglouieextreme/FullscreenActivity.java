@@ -23,6 +23,7 @@ import de.renekolb.loopinglouieextreme.ui.BlackFragment;
 import de.renekolb.loopinglouieextreme.ui.ConnectFragment;
 import de.renekolb.loopinglouieextreme.ui.Constants;
 import de.renekolb.loopinglouieextreme.ui.CustomGameSettingsFragment;
+import de.renekolb.loopinglouieextreme.ui.GameFragment;
 import de.renekolb.loopinglouieextreme.ui.GameResultFragment;
 import de.renekolb.loopinglouieextreme.ui.GameSettingsFragment;
 import de.renekolb.loopinglouieextreme.ui.HostGameFragment;
@@ -123,6 +124,10 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         super.onDestroy();
 
         unregisterReceiver(mReceiver);
+
+        if(appSettings.getDisableBTonExit()) {
+            BluetoothAdapter.getDefaultAdapter().disable();
+        }
     }
 
 
@@ -261,7 +266,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                 ft = getFragmentManager().beginTransaction();
                 if(gameSettingsFragment == null){
-                    gameSettingsFragment = GameSettingsFragment.newInstance(0,3); // DEFAULT VALUES
+                    gameSettingsFragment = GameSettingsFragment.newInstance(0); // DEFAULT VALUES
                 }
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
@@ -290,9 +295,11 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft.commit();
                 break;
             case Constants.buttons.PLAYER_SETTINGS_START_GAME:
+                //TODO: Check if all (relevant) players have 3 chips plugged in
+                game.nextRound();
                 ft = getFragmentManager().beginTransaction();
                 if(gameFragment == null){
-                    gameFragment = gameFragment.newInstance();
+                    gameFragment = GameFragment.newInstance();
                 }
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
@@ -301,6 +308,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                 btLEService.sendGameSettings(game);
                 btLEService.sendGameStart();
+                game.setRunning(true);
                 break;
 
             case Constants.buttons.GAME_SETTINGS_TEST_WHEEL:
@@ -327,7 +335,21 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
             case Constants.buttons.WHEEL_OF_FORTUNE_NEXT_ROUND:
                 //TODO: handle wheel correct (next Wheel or next Round)
-                Toast.makeText(FullscreenActivity.this, "Hier gehts noch nicht weiter", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(FullscreenActivity.this, "Hier gehts noch nicht weiter", Toast.LENGTH_SHORT).show();
+                if(game.getCurrentRound()>=game.getMaxRounds()){
+                    //TODO: show final stats Screen...
+                    //but for now: go back to first screen (Main Menu)
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                }else {
+                    ft = getFragmentManager().beginTransaction();
+                    if (playerSettingsFragment == null) {
+                        playerSettingsFragment = PlayerSettingsFragment.newInstance();
+                    }
+                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                    ft.addToBackStack(null);
+                    ft.replace(R.id.main_fragment, playerSettingsFragment);
+                    ft.commit();
+                }
                 break;
 
 /*            case Constants.buttons.HOST_GAME_PLAYER_SETTINGS:
@@ -458,6 +480,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     Toast.makeText(FullscreenActivity.this,"Too few players with chips ("+amount+")",Toast.LENGTH_SHORT).show();
                     break;
                 case Constants.messages.BLE_GAME_RESULTS:
+                    game.setRunning(false);
                     int first = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_FIRST);
                     int second = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_SECOND);
                     int third = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_THIRD);
@@ -498,7 +521,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
+            if(game == null || !game.isRunning()) {
+                getFragmentManager().popBackStack();
+            }
         } else {
             super.onBackPressed();
         }

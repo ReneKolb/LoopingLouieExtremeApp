@@ -68,6 +68,15 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        CheckBox cbDisableBT = (CheckBox)view.findViewById(R.id.cb_settings_disable_bt);
+        cbDisableBT.setChecked(fa.appSettings.getDisableBTonExit());
+        cbDisableBT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                fa.appSettings.setDisableBTonExit(isChecked);
+            }
+        });
+
         Button btnTestWheel = (Button) view.findViewById(R.id.btn_settings_test_wheel);
         btnTestWheel.setOnClickListener(new View.OnClickListener() {
             @Override

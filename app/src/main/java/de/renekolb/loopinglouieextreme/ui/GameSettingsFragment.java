@@ -25,10 +25,8 @@ import de.renekolb.loopinglouieextreme.R;
 public class GameSettingsFragment extends Fragment {
 
     private static final String ARG_GAME_MODE = "GAME MODE";
-    private static final String ARG_ROUNDS = "ROUNDS";
 
     private int mGameMode;
-    private int mRounds;
 
     //private OnFragmentInteractionListener mListener;
     private FullscreenActivity fa;
@@ -41,11 +39,10 @@ public class GameSettingsFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment GameSettingsFragment.
      */
-    public static GameSettingsFragment newInstance(int gameMode, int rounds) {
+    public static GameSettingsFragment newInstance(int gameMode) {
         GameSettingsFragment fragment = new GameSettingsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_GAME_MODE, gameMode);
-        args.putInt(ARG_ROUNDS, rounds);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,7 +56,6 @@ public class GameSettingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mGameMode = getArguments().getInt(ARG_GAME_MODE);
-            mRounds = getArguments().getInt(ARG_ROUNDS);
         }
     }
 
@@ -71,13 +67,12 @@ public class GameSettingsFragment extends Fragment {
         NumberPicker np = (NumberPicker) view.findViewById(R.id.np_game_settings_rounds);
         np.setMinValue(1);
         np.setMaxValue(10);
-        np.setValue(mRounds);
+        np.setValue(fa.getGame().getMaxRounds());
         np.setWrapSelectorWheel(false); //click plus when max value is reached, don't go to 1.
         np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                mRounds = newVal;
-                fa.getGame().setMaxRounds(mRounds);
+                fa.getGame().setMaxRounds(newVal);
             }
         });
 

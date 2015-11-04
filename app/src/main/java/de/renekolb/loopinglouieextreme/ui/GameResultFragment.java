@@ -66,12 +66,12 @@ public class GameResultFragment extends Fragment {
     }
 
     public void setPlayers(int firstPlayer, int secondPlayer, int thirdPlayer, int fourthPlayer){
-        Bundle args = new Bundle();
-        args.putInt(ARG_FIRST, firstPlayer);
-        args.putInt(ARG_SECOND, secondPlayer);
-        args.putInt(ARG_THIRD, thirdPlayer);
-        args.putInt(ARG_FOURTH, fourthPlayer);
-        setArguments(args);
+//        Bundle args = new Bundle();
+//        args.putInt(ARG_FIRST, firstPlayer);
+//        args.putInt(ARG_SECOND, secondPlayer);
+//        args.putInt(ARG_THIRD, thirdPlayer);
+//        args.putInt(ARG_FOURTH, fourthPlayer);
+//        setArguments(args);
 
         mFirstPlayer = firstPlayer;
         mSecondPlayer = secondPlayer;
