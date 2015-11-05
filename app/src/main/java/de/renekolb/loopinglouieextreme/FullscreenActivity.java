@@ -486,6 +486,16 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     int third = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_THIRD);
                     int fourth = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_FOURTH);
 
+                    //int playerAmount = 2+(third == -1?0:1)+(fourth==-1?0:1);
+
+                    game.getGamePlayer(first).addPoints(4);
+                    game.getGamePlayer(second).addPoints(3);
+                    if(third!=-1)
+                        game.getGamePlayer(third).addPoints(2);
+                    if(fourth!=-1)
+                        game.getGamePlayer(first).addPoints(1);
+
+
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     if(gameResultsFragment == null){
                         gameResultsFragment = GameResultFragment.newInstance(first, second, third, fourth);

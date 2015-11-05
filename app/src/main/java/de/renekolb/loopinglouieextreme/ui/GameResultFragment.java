@@ -103,18 +103,18 @@ public class GameResultFragment extends Fragment {
 
 
 
-        tvFirst.setText("1. "+fa.getGame().getGamePlayer(mFirstPlayer).getDisplayName());
+        tvFirst.setText("1. "+fa.getGame().getGamePlayer(mFirstPlayer).getDisplayName()+"  +4 ("+fa.getGame().getGamePlayer(mFirstPlayer).getPoints()+")");
         tvFirst.setBackgroundColor(fa.getGame().getGamePlayer(mFirstPlayer).getPlayerColor().getColor());
-        tvSecond.setText("2. " + fa.getGame().getGamePlayer(mSecondPlayer).getDisplayName());
+        tvSecond.setText("2. " + fa.getGame().getGamePlayer(mSecondPlayer).getDisplayName()+"  +3 ("+fa.getGame().getGamePlayer(mSecondPlayer).getPoints()+")");
         tvSecond.setBackgroundColor(fa.getGame().getGamePlayer(mSecondPlayer).getPlayerColor().getColor());
         if(mThirdPlayer != -1) {
-            tvThird.setText("3. " +fa.getGame().getGamePlayer(mThirdPlayer).getDisplayName());
+            tvThird.setText("3. " +fa.getGame().getGamePlayer(mThirdPlayer).getDisplayName()+"  +2 ("+fa.getGame().getGamePlayer(mThirdPlayer).getPoints()+")");
             tvThird.setBackgroundColor(fa.getGame().getGamePlayer(mThirdPlayer).getPlayerColor().getColor());
         }else{
             tvThird.setVisibility(View.GONE);
         }
         if(mFourthPlayer != -1) {
-            tvFourth.setText("4. " + fa.getGame().getGamePlayer(mFourthPlayer).getDisplayName());
+            tvFourth.setText("4. " + fa.getGame().getGamePlayer(mFourthPlayer).getDisplayName()+"  +1 ("+fa.getGame().getGamePlayer(mFourthPlayer).getPoints()+")");
             tvFourth.setBackgroundColor(fa.getGame().getGamePlayer(mFourthPlayer).getPlayerColor().getColor());
         }else{
             tvFourth.setVisibility(View.GONE);

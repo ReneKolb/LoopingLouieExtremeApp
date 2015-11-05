@@ -11,7 +11,7 @@ public class Game {
     private boolean running;
 
     public Game(){
-        this.maxRounds = 2;
+        this.maxRounds = 3;
         this.currentRound = 0;
         this.gamePlayers = new ArrayList<>(4);
 
@@ -71,7 +71,26 @@ public class Game {
 
     public String getDefaultItemsSendData(){
         StringBuilder sb = new StringBuilder();
-        sb.append(getGamePlayer(0).getDefaultItemType().getItemID()).append(getGamePlayer(1).getDefaultItemType().getItemID()).append(getGamePlayer(2).getDefaultItemType().getItemID()).append(getGamePlayer(3).getDefaultItemType().getItemID());
+        if(getGamePlayer(0).getDefaultItemType()!=null)
+            sb.append(getGamePlayer(0).getDefaultItemType().getItemID());
+        else
+            sb.append(0);
+
+        if(getGamePlayer(1).getDefaultItemType()!=null)
+            sb.append(getGamePlayer(1).getDefaultItemType().getItemID());
+        else
+            sb.append(0);
+
+        if(getGamePlayer(2).getDefaultItemType()!=null)
+            sb.append(getGamePlayer(2).getDefaultItemType().getItemID());
+        else
+            sb.append(0);
+
+        if(getGamePlayer(3).getDefaultItemType()!=null)
+            sb.append(getGamePlayer(3).getDefaultItemType().getItemID());
+        else
+            sb.append(0);
+
         return sb.toString();
     }
 

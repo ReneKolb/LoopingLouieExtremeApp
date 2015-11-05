@@ -21,6 +21,7 @@ import java.util.Random;
 
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.R;
+import de.renekolb.loopinglouieextreme.WheelFieldType;
 import de.renekolb.loopinglouieextreme.WheelOfFortuneSettings;
 
 
@@ -199,12 +200,16 @@ public class WheelOfFortuneFragment extends Fragment {
         @Override
         public void run() {
             isSpinning = false;
-            canSpin = false;
             int index = (int)((360-currentRotation) / (360/wofSettings.getFieldAmount()));
 
             mTVResult.setText(wofSettings.getDisplayTextResourceID(index));
+            if(wofSettings.getFieldType(index).equals(WheelFieldType.AGAIN)){
+                canSpin = true;
+            }else {
+                canSpin = false;
+            }
 
-            //TODO: handle Spin again
+            //Handle Spin For All Players!!!
 
             if(!canSpin){
                 mBTNnext.setVisibility(View.VISIBLE);

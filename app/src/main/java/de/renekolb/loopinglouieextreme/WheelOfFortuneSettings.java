@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class WheelOfFortuneSettings {
 
     private int resourceID;
-    private ArrayList<Integer> displayTexts;
+    private ArrayList<WheelOfFortuneField> displayTexts;
 
-    public WheelOfFortuneSettings(int resourceID, int... resourceDisplayTexts ){
+    public WheelOfFortuneSettings(int resourceID, WheelOfFortuneField... wheelFields ){
         this.resourceID = resourceID;
         this.displayTexts = new ArrayList<>();
-        if(resourceDisplayTexts != null) {
-            for (int s : resourceDisplayTexts) {
+        if(wheelFields != null) {
+            for (WheelOfFortuneField s : wheelFields) {
                 this.displayTexts.add(s);
             }
         }
@@ -22,13 +22,30 @@ public class WheelOfFortuneSettings {
     }
 
     public int getDisplayTextResourceID(int index){
-        return (displayTexts.isEmpty()||index>=displayTexts.size())?-1:displayTexts.get(index);
+        return (displayTexts.isEmpty()||index>=displayTexts.size())?-1:displayTexts.get(index).getDisplayTextRessourceID();
+    }
+
+    public WheelFieldType getFieldType(int index){
+        return (displayTexts.isEmpty()||index>=displayTexts.size())?null:displayTexts.get(index).getFieldType();
     }
 
     public int getResourceID(){
         return this.resourceID;
     }
 
-    public static final WheelOfFortuneSettings WINNER_WHEEL = new WheelOfFortuneSettings(R.drawable.wheel_of_fortune_winner, R.string.wof_winner_1, R.string.wof_winner_2, R.string.wof_winner_3, R.string.wof_winner_4, R.string.wof_winner_5, R.string.wof_winner_6);
-    public static final WheelOfFortuneSettings LOSER_WHEEL = new WheelOfFortuneSettings(R.drawable.wheel_of_fortune_loser, R.string.wof_loser_1, R.string.wof_loser_2, R.string.wof_loser_3, R.string.wof_loser_4, R.string.wof_loser_5, R.string.wof_loser_6);
+    public static final WheelOfFortuneSettings WINNER_WHEEL = new WheelOfFortuneSettings(R.drawable.wheel_of_fortune_winner,
+            new WheelOfFortuneField(WheelFieldType.NORMAL,R.string.wof_winner_1),
+            new WheelOfFortuneField(WheelFieldType.JOKER, R.string.wof_winner_2),
+            new WheelOfFortuneField(WheelFieldType.NORMAL,R.string.wof_winner_3),
+            new WheelOfFortuneField(WheelFieldType.AGAIN, R.string.wof_winner_4),
+            new WheelOfFortuneField(WheelFieldType.BLANK, R.string.wof_winner_5),
+            new WheelOfFortuneField(WheelFieldType.NORMAL,R.string.wof_winner_6));
+
+    public static final WheelOfFortuneSettings LOSER_WHEEL = new WheelOfFortuneSettings(R.drawable.wheel_of_fortune_loser,
+            new WheelOfFortuneField(WheelFieldType.NORMAL,R.string.wof_loser_1),
+            new WheelOfFortuneField(WheelFieldType.JOKER, R.string.wof_loser_2),
+            new WheelOfFortuneField(WheelFieldType.NORMAL,R.string.wof_loser_3),
+            new WheelOfFortuneField(WheelFieldType.AGAIN, R.string.wof_loser_4),
+            new WheelOfFortuneField(WheelFieldType.BLANK, R.string.wof_loser_5),
+            new WheelOfFortuneField(WheelFieldType.NORMAL,R.string.wof_loser_6));
 }
