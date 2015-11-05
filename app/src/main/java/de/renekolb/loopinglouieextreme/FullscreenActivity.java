@@ -266,7 +266,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                 ft = getFragmentManager().beginTransaction();
                 if(gameSettingsFragment == null){
-                    gameSettingsFragment = GameSettingsFragment.newInstance(0); // DEFAULT VALUES
+                    gameSettingsFragment = GameSettingsFragment.newInstance(1); // DEFAULT VALUE
                 }
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);

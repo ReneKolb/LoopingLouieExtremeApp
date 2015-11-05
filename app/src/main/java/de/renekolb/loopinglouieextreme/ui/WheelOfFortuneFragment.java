@@ -244,15 +244,19 @@ public class WheelOfFortuneFragment extends Fragment {
                 }else{
                     canSpin = true;
                     if(currentPosition==1) {
+                        wofSettings = WheelOfFortuneSettings.LOSER_WHEEL;
                         mTVplayerName.setText(fa.getGame().getGamePlayer(secondPlayer).getDisplayName());
                         mTVplayerName.setBackgroundColor(fa.getGame().getGamePlayer(secondPlayer).getPlayerColor().getColor());
                     }else if(currentPosition == 2){
+                        wofSettings = WheelOfFortuneSettings.LOSER_WHEEL;
                         mTVplayerName.setText(fa.getGame().getGamePlayer(thirdPlayer).getDisplayName());
                         mTVplayerName.setBackgroundColor(fa.getGame().getGamePlayer(thirdPlayer).getPlayerColor().getColor());
                     }else{
+                        wofSettings = WheelOfFortuneSettings.LOSER_WHEEL;
                         mTVplayerName.setText(fa.getGame().getGamePlayer(fourthPlayer).getDisplayName());
                         mTVplayerName.setBackgroundColor(fa.getGame().getGamePlayer(fourthPlayer).getPlayerColor().getColor());
                     }
+                    mIVWheel.setImageResource(wofSettings.getResourceID());
                 }
             }
         }
