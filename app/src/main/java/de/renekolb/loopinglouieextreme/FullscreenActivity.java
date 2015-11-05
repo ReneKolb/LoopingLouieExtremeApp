@@ -322,11 +322,13 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft.commit();
                 break;
             case Constants.buttons.GAME_RESULTS_WHEEL_OF_FORTUNE:
-                //TODO: Handle all Wheels correctly
-                        ft = getFragmentManager().beginTransaction();
+                ft = getFragmentManager().beginTransaction();
                 if(wheelOfFortuneFragment == null){
                     wheelOfFortuneFragment = WheelOfFortuneFragment.newInstance();
                 }
+                //TODO: only temporary
+                wheelOfFortuneFragment.setPlayerSpin(game.first, game.second,game.third,game.fourth);
+
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
                 ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
@@ -485,6 +487,13 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     int second = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_SECOND);
                     int third = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_THIRD);
                     int fourth = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_FOURTH);
+
+
+                    //TODO: only temporary
+                    game.first = first;
+                    game.second = second;
+                    game.third = third;
+                    game.fourth = fourth;
 
                     //int playerAmount = 2+(third == -1?0:1)+(fourth==-1?0:1);
 

@@ -40,6 +40,15 @@ public class WheelOfFortuneFragment extends Fragment {
     private Button mBTNnext;
     private TextView mTVplayerName;
 
+    private int firstPlayer;
+    private int secondPlayer;
+    private int thirdPlayer;
+    private int fourthPlayer;
+
+    private int currentPosition;
+    private int playerAmount;
+
+
     private boolean canSpin;
 
     private Random random;
@@ -72,6 +81,20 @@ public class WheelOfFortuneFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public void setPlayerSpin(int firstPlayerIndex, int secondPlayerIndex, int thirdPlayerIndex, int fourthPlayerIndex){
+        //first means playerIndex of first winner, second means second winner, ...
+        this.firstPlayer = firstPlayerIndex;
+        this.secondPlayer = secondPlayerIndex;
+        this.thirdPlayer = thirdPlayerIndex;
+        this.fourthPlayer = fourthPlayerIndex;
+
+        this.playerAmount = 2;
+        if(this.thirdPlayer!=-1)
+            this.playerAmount++;
+        if(this.fourthPlayer!=-1)
+            this.playerAmount++;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +109,7 @@ public class WheelOfFortuneFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_wheel_of_fortune, container, false);
 
         canSpin = true;
+        currentPosition = 0;
 
         mIVWheel = (ImageView) view.findViewById(R.id.iv_wheel_of_fortune);
         mTVResult = (TextView) view.findViewById(R.id.tv_wheel_of_fortune_result);
@@ -93,6 +117,10 @@ public class WheelOfFortuneFragment extends Fragment {
         mTVplayerName = (TextView) view.findViewById(R.id.tv_wheel_of_fortune_player_name);
 
         mBTNnext.setVisibility(View.INVISIBLE);
+
+        //currentPosition = 0 -> firstPlayer
+        mTVplayerName.setText(fa.getGame().getGamePlayer(firstPlayer).getDisplayName());
+        mTVplayerName.setBackgroundColor(fa.getGame().getGamePlayer(firstPlayer).getPlayerColor().getColor());
 
         currentRotation = 0;
         isSpinning = false;
@@ -209,32 +237,24 @@ public class WheelOfFortuneFragment extends Fragment {
                 canSpin = false;
             }
 
-            //Handle Spin For All Players!!!
-
             if(!canSpin){
-                mBTNnext.setVisibility(View.VISIBLE);
+                currentPosition++;
+                if(currentPosition>=playerAmount){
+                    mBTNnext.setVisibility(View.VISIBLE);
+                }else{
+                    canSpin = true;
+                    if(currentPosition==1) {
+                        mTVplayerName.setText(fa.getGame().getGamePlayer(secondPlayer).getDisplayName());
+                        mTVplayerName.setBackgroundColor(fa.getGame().getGamePlayer(secondPlayer).getPlayerColor().getColor());
+                    }else if(currentPosition == 2){
+                        mTVplayerName.setText(fa.getGame().getGamePlayer(thirdPlayer).getDisplayName());
+                        mTVplayerName.setBackgroundColor(fa.getGame().getGamePlayer(thirdPlayer).getPlayerColor().getColor());
+                    }else{
+                        mTVplayerName.setText(fa.getGame().getGamePlayer(fourthPlayer).getDisplayName());
+                        mTVplayerName.setBackgroundColor(fa.getGame().getGamePlayer(fourthPlayer).getPlayerColor().getColor());
+                    }
+                }
             }
-/*
-            switch(index){
-                case 0:
-                    mTVResult.setText("Trinke 2");
-                    break;
-                case 1:
-                    mTVResult.setText("Glück gehabt");
-                    break;
-                case 2:
-                    mTVResult.setText("Trinke 1");
-                    break;
-                case 3:
-                    mTVResult.setText("Dreh nochmal");
-                    break;
-                case 4:
-                    mTVResult.setText("Trinke 3");
-                    break;
-                case 5:
-                    mTVResult.setText("Trinke mit einem Partner");
-                    break;
-            }*/
         }
     } ;
 

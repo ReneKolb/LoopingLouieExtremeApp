@@ -10,6 +10,13 @@ public class Game {
     private CustomGameSettings settings;
     private boolean running;
 
+
+    //TODO: only temporary!!!!
+    public int first;
+    public int second;
+    public int third;
+    public int fourth;
+
     public Game(){
         this.maxRounds = 3;
         this.currentRound = 0;
