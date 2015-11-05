@@ -125,6 +125,8 @@ public class WheelOfFortuneFragment extends Fragment {
         currentRotation = 0;
         isSpinning = false;
 
+        wofSettings = WheelOfFortuneSettings.WINNER_WHEEL;
+
         final GestureDetector gdt = new GestureDetector(fa,new GestureListener(),new Handler());
 
         mIVWheel.setOnTouchListener(new View.OnTouchListener() {
