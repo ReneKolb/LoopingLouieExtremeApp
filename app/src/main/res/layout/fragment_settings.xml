@@ -27,8 +27,8 @@
         android:text="Enable Debug"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="80dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
         android:textColor="#000000"
         android:textSize="15sp" />
 
@@ -40,21 +40,9 @@
         android:text="Disable Bluetooth when exiting the app"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="80dp"
-        android:layout_marginStart="80dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
         android:textColor="#000000"
         android:textSize="15sp" />
-
-    <Button
-        android:id="@+id/btn_settings_test_wheel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/cb_settings_debug"
-        android:layout_alignStart="@id/cb_settings_debug"
-        android:layout_below="@id/cb_settings_disable_bt"
-        android:layout_marginTop="10dp"
-        android:text="test Wheel"
-        android:textColor="#000000"
-        />
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>
