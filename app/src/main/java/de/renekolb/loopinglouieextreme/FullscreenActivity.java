@@ -289,6 +289,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 if(playerSettingsFragment == null){
                     playerSettingsFragment = PlayerSettingsFragment.newInstance();
                 }
+                playerSettingsFragment.setPlayerNameEdible(true);
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);
                 ft.replace(R.id.main_fragment, playerSettingsFragment);
@@ -347,6 +348,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     if (playerSettingsFragment == null) {
                         playerSettingsFragment = PlayerSettingsFragment.newInstance();
                     }
+                    playerSettingsFragment.setPlayerNameEdible(false);
                     ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                     ft.addToBackStack(null);
                     ft.replace(R.id.main_fragment, playerSettingsFragment);

@@ -19,6 +19,10 @@ public class GamePlayer {
         return this.displayName;
     }
 
+    public void setDisplayName(String newName){
+        this.displayName = newName;
+    }
+
     public PlayerColor getPlayerColor(){
         return this.playerColor;
     }

@@ -5,14 +5,18 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -34,7 +38,9 @@ public class PlayerSettingsFragment extends Fragment {
     //private OnFragmentInteractionListener mListener;
     private FullscreenActivity fa;
 
-    int mSelectedItem;
+    private int mSelectedItem;
+
+    private boolean mPlayerNameEdible = true;
 
     private PlayerSettingsListAdapter playerSettingsListAdapter;
 
@@ -68,6 +74,30 @@ public class PlayerSettingsFragment extends Fragment {
         final Button btnSlow = (Button)view.findViewById(R.id.btn_player_settings_slow);
         final Button btnReverse = (Button)view.findViewById(R.id.btn_player_settings_reverse);
         final Button btnBlackout = (Button)view.findViewById(R.id.btn_player_settings_blackout);
+
+        final TextView tvPlayerName = (TextView)view.findViewById(R.id.tv_player_settings_player_name_title);
+        final EditText etPlayerName = (EditText)view.findViewById(R.id.et_player_settings_player_name_edit);
+
+        tvPlayerName.setVisibility(View.INVISIBLE);
+        etPlayerName.setVisibility(View.INVISIBLE);
+
+        etPlayerName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(mSelectedItem!=-1){
+                    fa.getGame().getGamePlayer(mSelectedItem).setDisplayName(s.toString());
+                    playerSettingsListAdapter.update(mSelectedItem,fa.getGame().getGamePlayer(mSelectedItem));
+                }
+            }
+        });
 
         btnTurbo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,22 +165,35 @@ public class PlayerSettingsFragment extends Fragment {
         lvPlayers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //     for (int a = 0; a < parent.getChildCount(); a++) {
-                //        parent.getChildAt(a).setBackgroundColor(Color.TRANSPARENT);
-                //   }
                 if (mSelectedItem == -1 || mSelectedItem != position) {
-                    //       view.setBackgroundColor(0xAAAAAA);
                     mSelectedItem = position;
 
                     PlayerSettingsListAdapter p = (PlayerSettingsListAdapter) parent.getAdapter();
 
+                    //if(mPlayerNameEdible){
+                        tvPlayerName.setVisibility(View.VISIBLE);
+                        etPlayerName.setVisibility(View.VISIBLE);
+                    //}else{
+                        //tvPlayerName.setVisibility(View.INVISIBLE);
+                        //etPlayerName.setVisibility(View.INVISIBLE);
+                    //}
+
+                    etPlayerName.setText(p.getItem(position).getPlayerName());
+                    if(!mPlayerNameEdible){
+                        etPlayerName.setEnabled(false);
+                    }else{
+                        etPlayerName.setSelection(etPlayerName.getText().length());
+                    }
+
+                    //UGLY!!!
                     btnTurbo.setEnabled(!p.getItem(position).getBooster().equals("Turbo"));
                     btnSlow.setEnabled(!p.getItem(position).getBooster().equals("Slow"));
                     btnReverse.setEnabled(!p.getItem(position).getBooster().equals("Reverse"));
                     btnBlackout.setEnabled(!p.getItem(position).getBooster().equals("Blackout"));
 
-                } else if (mSelectedItem == position) {
-                    mSelectedItem = -1;
+// cannot unselect
+//                    } else if (mSelectedItem == position) {
+//                    mSelectedItem = -1;
                 }
             }
         });
@@ -170,6 +213,10 @@ public class PlayerSettingsFragment extends Fragment {
         if (fa != null) {
             fa.onFragmentInteraction(button);
         }
+    }
+
+    public void setPlayerNameEdible(boolean edible){
+        this.mPlayerNameEdible = edible;
     }
 
     @Override
