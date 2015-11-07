@@ -77,6 +77,15 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+
+        Button btnWheel = (Button)view.findViewById(R.id.btn_settings_test_wheel);
+        btnWheel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(Constants.buttons.SETTINGS_TEST_WHEEL);
+            }
+        });
+
         return view;
     }
 

@@ -343,6 +343,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     //TODO: show final stats Screen...
                     //but for now: go back to first screen (Main Menu)
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    //TODO:
+                    //alternative: nur bis zum GameSettingsFragment zurück (nochmal spielen ohne neu zu verbinden)
+                    //        oder komplett zum anfang (wie jetzt) und neue rollen (host/client) verteilen
                 }else {
                     ft = getFragmentManager().beginTransaction();
                     if (playerSettingsFragment == null) {
@@ -354,6 +357,20 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     ft.replace(R.id.main_fragment, playerSettingsFragment);
                     ft.commit();
                 }
+                break;
+
+            case Constants.buttons.SETTINGS_TEST_WHEEL:
+                ft = getFragmentManager().beginTransaction();
+                if(wheelOfFortuneFragment == null){
+                    wheelOfFortuneFragment = WheelOfFortuneFragment.newInstance();
+                }
+                //TODO: only temporary
+                wheelOfFortuneFragment.setPlayerSpin(-1,-1,-1,-1);
+
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
+                ft.commit();
                 break;
 
 /*            case Constants.buttons.HOST_GAME_PLAYER_SETTINGS:

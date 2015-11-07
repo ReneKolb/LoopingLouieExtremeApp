@@ -1,9 +1,11 @@
 package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -52,7 +54,9 @@ public class WheelOfFortuneFragment extends Fragment {
     private boolean canSpin;
 
     private Random random;
-    private float currentRotation;
+    //private float currentRotation;
+
+    private boolean debug;
 
     private boolean isSpinning;
 
@@ -63,6 +67,11 @@ public class WheelOfFortuneFragment extends Fragment {
 
     private boolean winnerWheel = true;
     private WheelOfFortuneSettings wofSettings = WheelOfFortuneSettings.WINNER_WHEEL;
+
+    private double startPhi;
+    private double dPhi;
+
+    private float dRotAnim ;
 
     /**
      * Use this factory method to create a new instance of
@@ -87,6 +96,8 @@ public class WheelOfFortuneFragment extends Fragment {
         this.secondPlayer = secondPlayerIndex;
         this.thirdPlayer = thirdPlayerIndex;
         this.fourthPlayer = fourthPlayerIndex;
+
+        debug = firstPlayerIndex==-1;
 
         this.playerAmount = 2;
         if(this.thirdPlayer!=-1)
@@ -119,47 +130,50 @@ public class WheelOfFortuneFragment extends Fragment {
         mBTNnext.setVisibility(View.INVISIBLE);
 
         //currentPosition = 0 -> firstPlayer
-        mTVplayerName.setText(fa.getGame().getGamePlayer(firstPlayer).getDisplayName());
-        mTVplayerName.setBackgroundColor(fa.getGame().getGamePlayer(firstPlayer).getPlayerColor().getColor());
+        if(debug){
+            mTVplayerName.setText("DEBUG PLAYER");
+            mTVplayerName.setBackgroundColor(Color.TRANSPARENT);
+        }else {
+            mTVplayerName.setText(fa.getGame().getGamePlayer(firstPlayer).getDisplayName());
+            mTVplayerName.setBackgroundColor(fa.getGame().getGamePlayer(firstPlayer).getPlayerColor().getColor());
+        }
 
-        currentRotation = 0;
         isSpinning = false;
 
         wofSettings = WheelOfFortuneSettings.WINNER_WHEEL;
 
-        final GestureDetector gdt = new GestureDetector(fa,new GestureListener(),new Handler());
 
         mIVWheel.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(final View view, final MotionEvent event) {
-                gdt.onTouchEvent(event);
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        if(!isSpinning && canSpin) {
+                            startPhi = Math.toDegrees(Math.atan2(event.getY() - (mIVWheel.getHeight() / 2), event.getX() - (mIVWheel.getWidth() / 2))) + 180;
+                        }
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        if(!isSpinning&&canSpin && startPhi != -1) {
+                            double newPhi = Math.toDegrees(Math.atan2(event.getY() - (mIVWheel.getHeight() / 2), event.getX() - (mIVWheel.getWidth() / 2))) + 180;
+                            dPhi = startPhi - newPhi;
+
+                            mIVWheel.setRotation((float) (mIVWheel.getRotation() - dPhi));
+                        }
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        startPhi = -1;
+                        if(!isSpinning && canSpin) {
+                            if (Math.abs(dPhi) > 2) {
+                                spinWheel((int) -Math.signum(dPhi));
+                            }
+                        }
+                        break;
+                }
                 return true;
             }
         });
 
-    /*    if(winnerWheel) {
-            mBTNMode.setText("set Loser");
-        }else{
-            mBTNMode.setText("set Winner");
-        }*/
         mIVWheel.setImageResource(wofSettings.getResourceID());
-
-        /*mBTNMode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!isSpinning){
-                    winnerWheel = !winnerWheel;
-                    if(winnerWheel) {
-                        wofSettings = WheelOfFortuneSettings.WINNER_WHEEL;
-                        mBTNMode.setText("set Loser");
-                    }else{
-                        wofSettings = WheelOfFortuneSettings.LOSER_WHEEL;
-                         mBTNMode.setText("set Winner");
-                    }
-                    mIVWheel.setImageResource(wofSettings.getResourceID());
-                }
-            }
-        });*/
 
         mBTNnext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,8 +217,10 @@ public class WheelOfFortuneFragment extends Fragment {
 
         float dRot = 1080 + random.nextInt(1080); //3-6 Umdrehungen
 
-        RotateAnimation anim = new RotateAnimation(currentRotation, currentRotation+direction*dRot, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
-        currentRotation = (currentRotation+direction*dRot)%360;
+
+        //Animation does not actually turns the entire view. rather the image(drawable)!
+        RotateAnimation anim = new RotateAnimation(0, direction*dRot, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+        dRotAnim = direction*dRot;
         isSpinning= true;
 
 
@@ -230,9 +246,22 @@ public class WheelOfFortuneFragment extends Fragment {
         @Override
         public void run() {
             isSpinning = false;
-            int index = (int)((360-currentRotation) / (360/wofSettings.getFieldAmount()));
 
-            mTVResult.setText(wofSettings.getDisplayTextResourceID(index));
+            float rot = (mIVWheel.getRotation()+dRotAnim)%360;
+            if(rot<0) rot += 360;
+
+            int index = (int)((360-rot)/(360/wofSettings.getFieldAmount()));
+
+            int textRid = wofSettings.getDisplayTextResourceID(index);
+            if(textRid == -1){
+                Log.e("Wheel of Fortune","textRid = -1");
+                mTVResult.setText("Error...");
+                canSpin = false;
+                mBTNnext.setVisibility(View.VISIBLE);
+                return;
+            }
+            mTVResult.setText(textRid);
+
             if(wofSettings.getFieldType(index).equals(WheelFieldType.AGAIN)){
                 canSpin = true;
             }else {
@@ -240,6 +269,10 @@ public class WheelOfFortuneFragment extends Fragment {
             }
 
             if(!canSpin){
+                if(debug){
+                    canSpin = true;
+                    return;
+                }
                 currentPosition++;
                 if(currentPosition>=playerAmount){
                     mBTNnext.setVisibility(View.VISIBLE);
@@ -263,71 +296,5 @@ public class WheelOfFortuneFragment extends Fragment {
             }
         }
     } ;
-
-
-    //private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-
-    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            if(!canSpin){
-                return false;
-            }
-
-            if(isSpinning){
-                return false;
-            }
-
-            if(velocityX*velocityX + velocityY*velocityY<SWIPE_THRESHOLD_VELOCITY*SWIPE_THRESHOLD_VELOCITY){
-                return false; //swipe speed is too slow
-            }
-
-            int direction = 0; //-1 gegen UZ, +1 im UZ, 0 Fehler
-            //long duration; //4000 normal
-
-            //Log.i("TAG","x: "+e1.getX()+" y: "+e1.getY()+" w: "+mIVWheel.getWidth()+" h: "+mIVWheel.getHeight());
-            if(e1.getX()>=mIVWheel.getWidth()/2 &&e1.getY()<=mIVWheel.getHeight()/2){
-                //oben rechst
-//                Log.i("TAG", "oben rechts");
-                if(velocityX>=0 && velocityY>=0){
-                    direction = 1;
-                }else if(velocityX<=0&&velocityY<=0){
-                    direction = -1;
-                }
-
-            }else if(e1.getX()>=mIVWheel.getWidth()/2 &&e1.getY()>mIVWheel.getHeight()/2){
-                //unten rechts
-  //              Log.i("TAG", "unten rechts");
-                if(velocityX<=0 && velocityY>=0){
-                    direction = 1;
-                }else if(velocityX>=0&&velocityY<=0){
-                    direction = -1;
-                }
-            }else if(e1.getX()<mIVWheel.getWidth()/2&&e1.getY()<=mIVWheel.getHeight()/2){
-                //oben links
-    //            Log.i("TAG", "oben links");
-                if(velocityX>=0 && velocityY<=0){
-                    direction = 1;
-                }else if(velocityX<=0&&velocityY>=0){
-                    direction = -1;
-                }
-            }else{
-                //unten rechts
-      //          Log.i("TAG", "unten links");
-                if(velocityX<=0 && velocityY<=0){
-                    direction = 1;
-                }else if(velocityX>=0&&velocityY>=0){
-                    direction = -1;
-                }
-            }
-
-            if(direction != 0 ){
-                spinWheel(direction);
-            }
-            return true;
-        }
-    }
-
 
 }

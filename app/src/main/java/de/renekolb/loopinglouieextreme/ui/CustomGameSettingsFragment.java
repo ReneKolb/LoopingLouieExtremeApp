@@ -246,11 +246,11 @@ public class CustomGameSettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 fa.getGame().getGameSettings().setChefMode(isChecked);
-                if(isChecked){
+                if (isChecked) {
                     trChefRoulette.setVisibility(View.VISIBLE);
                     trChefDelay.setVisibility(View.VISIBLE);
                     trChefCooldown.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     trChefRoulette.setVisibility(View.GONE);
                     trChefDelay.setVisibility(View.GONE);
                     trChefCooldown.setVisibility(View.GONE);
@@ -268,11 +268,11 @@ public class CustomGameSettingsFragment extends Fragment {
         });
 
         final TextView tvChefChangeDelayCnt = (TextView) view.findViewById(R.id.tv_custom_game_settings_change_chef_delay_cnt);
-        tvChefChangeDelayCnt.setText(format.format(fa.getGame().getGameSettings().getChefChangeDelay()/1000f));
+        tvChefChangeDelayCnt.setText(format.format(fa.getGame().getGameSettings().getChefChangeDelay() / 1000f));
 
         SeekBar sbChefChangeDelay = (SeekBar) view.findViewById(R.id.sb_custom_game_settings_change_chef_delay);
         sbChefChangeDelay.setMax(150);
-        sbChefChangeDelay.setProgress(fa.getGame().getGameSettings().getChefChangeDelay()/100);
+        sbChefChangeDelay.setProgress(fa.getGame().getGameSettings().getChefChangeDelay() / 100);
         sbChefChangeDelay.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -297,6 +297,24 @@ public class CustomGameSettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 fa.getGame().getGameSettings().setChefHasShorterCooldown(isChecked);
+            }
+        });
+
+        final Switch swEnableItems = (Switch) view.findViewById(R.id.sw_custom_game_settings_enable_items);
+        swEnableItems.setChecked(fa.getGame().getGameSettings().getEnableItems());
+        swEnableItems.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                fa.getGame().getGameSettings().setEnableItems(isChecked);
+            }
+        });
+
+        final Switch swEnableEvents = (Switch) view.findViewById(R.id.sw_custom_game_settings_enable_events);
+        swEnableEvents.setChecked(fa.getGame().getGameSettings().getEnableEvents());
+        swEnableEvents.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                fa.getGame().getGameSettings().setEnableEvents(isChecked);
             }
         });
 

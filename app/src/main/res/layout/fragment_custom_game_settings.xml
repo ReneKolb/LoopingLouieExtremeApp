@@ -524,6 +524,36 @@
                     android:checked="true"
                     android:layout_column="1"/>
             </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tv_custom_game_settings_enable_events"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Enable Events"
+                    android:textColor="#000000"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_vertical"
+                    android:layout_column="0"/>
+
+                <Switch
+                    android:theme="@android:style/Theme.Holo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:id="@+id/sw_custom_game_settings_enable_events"
+                    android:textOff="OFF"
+                    android:textOn="ON"
+                    android:checked="true"
+                    android:layout_column="1"/>
+            </TableRow>
         </TableLayout>
 
     </ScrollView>
