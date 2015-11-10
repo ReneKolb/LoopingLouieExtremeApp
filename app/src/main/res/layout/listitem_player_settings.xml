@@ -14,22 +14,34 @@
 
     <TextView
         android:id="@+id/tv_listitem_player_settings_player_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0px"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
+        android:layout_weight="10"
         android:textColor="#000000"
         android:text="Player 1"/>
 
     <TextView
         android:id="@+id/tv_listitem_player_settings_player_item"
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_weight="10"
+        android:textColor="#444444"
+        android:text="Turbo"/>
+
+    <TextView
+        android:id="@+id/tv_listitem_player_settings_player_chips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
-        android:textColor="#444444"
-        android:text="Turbo"/>
+        android:textColor="#222222"
+        android:text="0"/>
 
 </LinearLayout>

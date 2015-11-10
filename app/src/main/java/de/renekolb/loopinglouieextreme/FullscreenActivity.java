@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import java.lang.reflect.Modifier;
+
 import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
 import de.renekolb.loopinglouieextreme.ui.BlackFragment;
 import de.renekolb.loopinglouieextreme.ui.ConnectFragment;
@@ -56,10 +58,6 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     private Game game;
 
-    //public static FullscreenActivity reference;
-
-    //public static CustomGameSettings customGameSettings;
-
     private Runnable actionBTon;
 
     public AppSettings appSettings;
@@ -68,8 +66,6 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
-
-        //reference = this; //TODO: sehr unsauber!!!
 
         appSettings = new AppSettings(this);
 
@@ -101,6 +97,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     @Override
     public void onResume() {
         super.onResume();
+
         /*
         mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -109,6 +106,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);*/
     }
+
+
 
     @Override
     public void onDestroy() {
@@ -148,6 +147,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 break;
         }
     }*/
+
+
 
     @Override
     public void onFragmentInteraction(int button) {
@@ -556,6 +557,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         btLEService.connect(remoteAddress, onBoardMessageRead);
     }
 
+
     @Override
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 0) {
@@ -646,6 +648,30 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         break;
                     case 'c':
                         //Countdown started
+                        break;
+                    case  'd':
+                        //players chip amount
+                        int firstAmount = Integer.parseInt(command.substring(1,2));
+                        int secondAmount = Integer.parseInt(command.substring(2,3));
+                        int thirdAmount = Integer.parseInt(command.substring(3,4));
+                        int fourthAmount = Integer.parseInt(command.substring(4,5));
+
+                        if(game!=null){
+                            game.getGamePlayer(0).setCurrentChips(firstAmount);
+                            game.getGamePlayer(1).setCurrentChips(secondAmount);
+                            game.getGamePlayer(2).setCurrentChips(thirdAmount);
+                            game.getGamePlayer(3).setCurrentChips(fourthAmount);
+                        }
+
+                        if(playerSettingsFragment!=null && playerSettingsFragment.isVisible()){
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    playerSettingsFragment.updatePlayerSettings();
+                                }
+                            });
+                        }
+
                         break;
                     default:
                         Log.w("BLE READ","Unkown Command. Read: "+message);

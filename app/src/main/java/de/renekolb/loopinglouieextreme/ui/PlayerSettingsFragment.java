@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -44,6 +47,8 @@ public class PlayerSettingsFragment extends Fragment {
 
     private PlayerSettingsListAdapter playerSettingsListAdapter;
 
+    private Handler chipCountRefreshTimer;
+
     public static PlayerSettingsFragment newInstance() {
         PlayerSettingsFragment fragment = new PlayerSettingsFragment();
         return fragment;
@@ -59,6 +64,8 @@ public class PlayerSettingsFragment extends Fragment {
         if (getArguments() != null) {
         }
 
+        chipCountRefreshTimer = new Handler();
+
         if(savedInstanceState == null){
             this.playerSettingsListAdapter = new PlayerSettingsListAdapter(fa,fa.getGame());
         }
@@ -67,6 +74,11 @@ public class PlayerSettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //TODO: show player -> #chips,
+        // disable Player, oder error if no chips
+        // set "local" player oder "connected"
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_player_settings, container, false);
 
@@ -92,9 +104,9 @@ public class PlayerSettingsFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(mSelectedItem!=-1){
+                if (mSelectedItem != -1) {
                     fa.getGame().getGamePlayer(mSelectedItem).setDisplayName(s.toString());
-                    playerSettingsListAdapter.update(mSelectedItem,fa.getGame().getGamePlayer(mSelectedItem));
+                    playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
                 }
             }
         });
@@ -102,14 +114,14 @@ public class PlayerSettingsFragment extends Fragment {
         btnTurbo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              if(mSelectedItem!=-1){
-                  btnTurbo.setEnabled(false);
-                  btnSlow.setEnabled(true);
-                  btnReverse.setEnabled(true);
-                  btnBlackout.setEnabled(true);
-                  fa.getGame().getGamePlayer(mSelectedItem).setDefaultItemType(ItemType.TURBO);
-                  playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
-              }
+                if (mSelectedItem != -1) {
+                    btnTurbo.setEnabled(false);
+                    btnSlow.setEnabled(true);
+                    btnReverse.setEnabled(true);
+                    btnBlackout.setEnabled(true);
+                    fa.getGame().getGamePlayer(mSelectedItem).setDefaultItemType(ItemType.TURBO);
+                    playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
+                }
             }
         });
 
@@ -146,7 +158,7 @@ public class PlayerSettingsFragment extends Fragment {
         btnBlackout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mSelectedItem!=-1){
+                if (mSelectedItem != -1) {
                     btnTurbo.setEnabled(true);
                     btnSlow.setEnabled(true);
                     btnReverse.setEnabled(true);
@@ -157,6 +169,19 @@ public class PlayerSettingsFragment extends Fragment {
                 }
             }
         });
+
+        final CheckBox cbEnablePlayer = (CheckBox)view.findViewById(R.id.cb_player_settings_enable_player);
+        cbEnablePlayer.setVisibility(View.INVISIBLE);
+        cbEnablePlayer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (mSelectedItem != -1){
+                    fa.getGame().getGamePlayer(mSelectedItem).setEnabled(isChecked);
+                    playerSettingsListAdapter.update(mSelectedItem,fa.getGame().getGamePlayer(mSelectedItem));
+                }
+            }
+        });
+
 
         mSelectedItem = -1;
 
@@ -171,19 +196,22 @@ public class PlayerSettingsFragment extends Fragment {
                     PlayerSettingsListAdapter p = (PlayerSettingsListAdapter) parent.getAdapter();
 
                     //if(mPlayerNameEdible){
-                        tvPlayerName.setVisibility(View.VISIBLE);
-                        etPlayerName.setVisibility(View.VISIBLE);
+                    tvPlayerName.setVisibility(View.VISIBLE);
+                    etPlayerName.setVisibility(View.VISIBLE);
+                    cbEnablePlayer.setVisibility(View.VISIBLE);
                     //}else{
-                        //tvPlayerName.setVisibility(View.INVISIBLE);
-                        //etPlayerName.setVisibility(View.INVISIBLE);
+                    //tvPlayerName.setVisibility(View.INVISIBLE);
+                    //etPlayerName.setVisibility(View.INVISIBLE);
                     //}
 
                     etPlayerName.setText(p.getItem(position).getPlayerName());
-                    if(!mPlayerNameEdible){
+                    if (!mPlayerNameEdible) {
                         etPlayerName.setEnabled(false);
-                    }else{
+                    } else {
                         etPlayerName.setSelection(etPlayerName.getText().length());
                     }
+
+                    cbEnablePlayer.setChecked(p.getItem(position).isPlayerEnabled());
 
                     //UGLY!!!
                     btnTurbo.setEnabled(!p.getItem(position).getBooster().equals("Turbo"));
@@ -202,6 +230,7 @@ public class PlayerSettingsFragment extends Fragment {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                chipCountRefreshTimer.removeCallbacks(updateChipsTask);
                 onButtonPressed(Constants.buttons.PLAYER_SETTINGS_START_GAME);
             }
         });
@@ -213,6 +242,37 @@ public class PlayerSettingsFragment extends Fragment {
         if (fa != null) {
             fa.onFragmentInteraction(button);
         }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateChipsTask.run();
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        chipCountRefreshTimer.removeCallbacks(updateChipsTask);
+    }
+
+    private Runnable updateChipsTask = new Runnable() {
+        @Override
+        public void run() {
+            fa.btLEService.sendRequestChipsCount();
+            chipCountRefreshTimer.postDelayed(updateChipsTask,3000);
+        }
+    };
+
+
+    public void updatePlayerSettings(){
+        //mainly used for updated chip amount
+                playerSettingsListAdapter.update(0,fa.getGame().getGamePlayer(0));
+                playerSettingsListAdapter.update(1,fa.getGame().getGamePlayer(1));
+                playerSettingsListAdapter.update(2,fa.getGame().getGamePlayer(2));
+                playerSettingsListAdapter.update(3,fa.getGame().getGamePlayer(3));
+
     }
 
     public void setPlayerNameEdible(boolean edible){

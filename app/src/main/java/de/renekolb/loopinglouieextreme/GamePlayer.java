@@ -7,12 +7,19 @@ public class GamePlayer {
     private int points;
     private ItemType defaultItemType;
     private ItemStack itemStack;
+    private int currentChips;
+
+    private boolean enabled;
+    private boolean remotePlayer;
 
     public GamePlayer(String displayName, PlayerColor playerColor){
         this.displayName = displayName;
         this.playerColor = playerColor;
         this.itemStack = new ItemStack();
         this.defaultItemType = null;
+        this.currentChips = 0;
+        this.enabled = true;
+        this.remotePlayer = false;
     }
 
     public String getDisplayName(){
@@ -71,6 +78,28 @@ public class GamePlayer {
         this.itemStack.clear();
     }
 
+    public int getCurrentChips(){
+        return this.currentChips;
+    }
 
+    public void setCurrentChips(int currentChips) {
+        this.currentChips = currentChips;
+    }
+
+    public boolean isEnabled(){
+        return this.enabled;
+    }
+
+    public void setEnabled(boolean isEnabled){
+        this.enabled = isEnabled;
+    }
+
+    public boolean isRemotePlayer(){
+        return this.remotePlayer;
+    }
+
+    public void setRemotePlayer(boolean isRemotePlayer){
+        this.remotePlayer = isRemotePlayer;
+    }
 
 }

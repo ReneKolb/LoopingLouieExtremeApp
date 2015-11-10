@@ -230,6 +230,10 @@ public class BluetoothLEService {
  //   private void sendCommand(/*Command, value*/String  cmd){
 //    }
 
+    public void sendRequestChipsCount(){
+        addSendMessage((BTCommands.REQUEST_CHIPS_COUNT+".").getBytes());
+    }
+
     public void sendGameSettings(Game game){
         //addSendMessage(appSettings.getSendArray());
 

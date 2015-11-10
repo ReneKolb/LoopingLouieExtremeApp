@@ -69,6 +69,7 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
             holder.colorDisplay = (ImageView)convertView.findViewById(R.id.iv_listitem_player_settings_color);
             holder.playerName = (TextView)convertView.findViewById(R.id.tv_listitem_player_settings_player_name);
             holder.booster = (TextView)convertView.findViewById(R.id.tv_listitem_player_settings_player_item);
+            holder.chips = (TextView)convertView.findViewById(R.id.tv_listitem_player_settings_player_chips);
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder)convertView.getTag();
@@ -77,8 +78,20 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
         PlayerSettingsListItem data = getItem(position);
 
         holder.colorDisplay.setBackgroundColor(data.getColor());
-        holder.playerName.setText(data.getPlayerName());
-        holder.booster.setText(data.getBooster());
+        if(data.isPlayerEnabled()) {
+            holder.playerName.setText(data.getPlayerName());
+            holder.booster.setText(data.getBooster());
+            holder.chips.setText(String.valueOf(data.getChipAmount()));
+            if(data.getChipAmount()==3) {
+                holder.chips.setTextColor(Color.argb(255,0,255,0));
+            }else{
+                holder.chips.setTextColor(Color.argb(255,255,0,0));
+            }
+        }else{
+            holder.playerName.setText("Disabled Player");
+            holder.booster.setText("");
+            holder.chips.setText("");
+        }
 
         return convertView;
     }
@@ -88,5 +101,6 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
         ImageView colorDisplay;
         TextView playerName;
         TextView booster;
+        TextView chips;
     }
 }
