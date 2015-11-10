@@ -2,13 +2,16 @@ package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
+import de.renekolb.loopinglouieextreme.BuildConfig;
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.R;
 
@@ -72,11 +75,19 @@ public class MainMenuFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
-        btnServer = (Button) view.findViewById(R.id.btn_server);
+        btnServer = (Button) view.findViewById(R.id.btn_main_menu_server);
         btnServer.setEnabled(FullscreenActivity.BLE_SUPPORT);
 
-        btnClient = (Button) view.findViewById(R.id.btn_client);
-        btnSettings = (ImageButton) view.findViewById(R.id.btn_settings);
+        btnClient = (Button) view.findViewById(R.id.btn_main_menu_client);
+        btnSettings = (ImageButton) view.findViewById(R.id.btn_main_menu_settings);
+
+        ImageButton btnInfo = (ImageButton) view.findViewById(R.id.btn_main_menu_info);
+        btnInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
 
         btnServer.setOnClickListener(new View.OnClickListener() {
@@ -100,6 +111,9 @@ public class MainMenuFragment extends Fragment {
             }
         });
 
+
+        TextView tv = (TextView)view.findViewById(R.id.tv_main_menu_version);
+        tv.setText("Version: "+ BuildConfig.VERSION_NAME);
 
 
         return view;

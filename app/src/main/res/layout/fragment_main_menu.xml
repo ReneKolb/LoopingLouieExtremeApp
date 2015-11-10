@@ -1,110 +1,127 @@
-<de.renekolb.loopinglouieextreme.CustomViews.FrameLayoutAnimate xmlns:android="http://schemas.android.com/apk/res/android"
+<de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFACD"
-    tools:context="de.renekolb.loopinglouieextreme.ui.MainMenuFragment"
-    android:clickable="true">
+    android:clickable="true"
+    android:orientation="vertical"
+    tools:context="de.renekolb.loopinglouieextreme.ui.MainMenuFragment">
+
+    <LinearLayout
+        android:id="@+id/ll_main_menu_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_main_menu_server"
+            style="@style/btnStyleGreen"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginStart="30dp"
+            android:layout_weight="1"
+            android:text="@string/btn_server"/>
+
+        <Button
+            android:id="@+id/btn_main_menu_client"
+            style="@style/btnStyleYellow"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginEnd="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:text="@string/btn_client"/>
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_main_menu_settings"
+        style="@style/btnStyleSeagull"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="30dp"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_settings_white"/>
+
+    <ImageButton
+        android:id="@+id/btn_main_menu_info"
+        style="@style/btnStyleSeagull"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/btn_main_menu_settings"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="5dp"
+        android:padding="3dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_action_info"/>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="false">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:paddingBottom="60dp">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="50dp"
-            android:gravity="bottom"
-            android:id="@+id/linearLayout">
-
-            <Button
-                android:id="@+id/btn_server"
-                style="@style/btnStyleGreen"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginEnd="20dp"
-                android:text="@string/btn_server" />
-
-            <Button
-                android:id="@+id/btn_client"
-                style="@style/btnStyleYellow"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_weight="1"
-                android:layout_marginLeft="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginEnd="30dp"
-                android:text="@string/btn_client" />
-
-        </LinearLayout>
-
-        <ImageButton
-            android:id="@+id/btn_settings"
-            style="@style/btnStyleSeagull"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_settings_white"
-            android:scaleType="fitCenter"
-            android:padding="3dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp" />
-
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/iv_main_menu_text_looping_louie"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:paddingBottom="60dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/iv_looping_louie"
-                android:adjustViewBounds="true"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentTop="true"
-                android:maxWidth="300dp"
-                android:src="@drawable/title_looping_louie" />
+            android:adjustViewBounds="true"
+            android:maxWidth="300dp"
+            android:src="@drawable/title_looping_louie"/>
 
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageView"
-                android:adjustViewBounds="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:layout_below="@id/iv_looping_louie"
-                android:maxWidth="180dp"
-                android:src="@drawable/logo" />
+        <ImageView
+            android:id="@+id/iv_main_menu_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_main_menu_text_looping_louie"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:adjustViewBounds="true"
+            android:maxWidth="180dp"
+            android:src="@drawable/logo"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/iv_extreme"
-                android:adjustViewBounds="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:layout_below="@id/imageView"
-                android:maxWidth="300dp"
-                android:src="@drawable/title_extreme" />
-
-        </RelativeLayout>
-
-
+        <ImageView
+            android:id="@+id/iv_main_menu_text_extreme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_main_menu_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:adjustViewBounds="true"
+            android:maxWidth="300dp"
+            android:src="@drawable/title_extreme"/>
     </RelativeLayout>
 
-</de.renekolb.loopinglouieextreme.CustomViews.FrameLayoutAnimate>
+    <TextView
+        android:id="@+id/tv_main_menu_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:textSize="12sp"
+        android:textColor="#000000"/>
+
+
+</de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

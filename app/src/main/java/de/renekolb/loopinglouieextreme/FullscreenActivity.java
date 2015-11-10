@@ -449,6 +449,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     break;
                 case Constants.messages.BT_CONNECTION_LOST:
                     String addr = msg.getData().getString(Constants.KEY_DEVICE_ADDRESS);
+                    Toast.makeText(FullscreenActivity.this, "BT Connection Lost", Toast.LENGTH_SHORT).show();
                     //only relevant when hosting a game
                     if(btServer!=null) {
                         btServer.disconnectClient(addr, true); //cleanup internal connectedThread List
@@ -495,7 +496,11 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 case Constants.messages.BLE_CONNECTION_STATE_CHANGED:
                     boolean connected = msg.getData().getBoolean(Constants.messages.KEY_CONNECTED_TO_BOARD);
                     hostGameFragment.boardConnectionChanged(connected);
-                    Toast.makeText(FullscreenActivity.this, "connected", Toast.LENGTH_SHORT).show();
+                    if(connected) {
+                        Toast.makeText(FullscreenActivity.this, "BLE connected", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(FullscreenActivity.this, "BLE disconnected", Toast.LENGTH_SHORT).show();
+                    }
                     break;
                 case Constants.messages.GAME_TOO_FEW_PLAYERS_CHIPS:
                     int amount = msg.getData().getInt(Constants.messages.KEY_PLAYER_AMOUNT);
