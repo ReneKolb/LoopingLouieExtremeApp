@@ -21,12 +21,12 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/tv_title_board_connection"
+        android:id="@+id/tv_host_game_board_connection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_host_game_title"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="19dp"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -34,12 +34,12 @@
         android:text="Board connection:"/>
 
     <ProgressBar
-        android:id="@+id/pb_scanning_board"
+        android:id="@+id/pb_host_game_scanning_board"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_title_board_connection"
-        android:layout_toRightOf="@id/tv_title_board_connection"
-        android:layout_toEndOf="@id/tv_title_board_connection"
+        android:layout_alignTop="@id/tv_host_game_board_connection"
+        android:layout_toRightOf="@id/tv_host_game_board_connection"
+        android:layout_toEndOf="@id/tv_host_game_board_connection"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         style="@android:style/Widget.ProgressBar.Small"
@@ -49,18 +49,21 @@
         android:id="@+id/lv_host_game_board_devices"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_below="@id/tv_title_board_connection"
-        android:layout_marginLeft="80dp"
-        android:layout_marginStart="80dp"/>
+        android:layout_below="@id/tv_host_game_board_connection"
+        android:layout_alignLeft="@id/tv_host_game_board_connection"
+        android:layout_alignStart="@id/tv_host_game_board_connection"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"/>
 
 
     <TextView
-        android:id="@+id/tv_title_connected_devices"
+        android:id="@+id/tv_host_game_connected_devices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/lv_host_game_board_devices"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="19dp"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -68,12 +71,14 @@
         android:text="Connected Player:"/>
 
     <ListView
-        android:id="@+id/lv_clients"
+        android:id="@+id/lv_host_game_clients"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@id/tv_title_connected_devices"
-        android:layout_alignLeft="@id/tv_title_connected_devices"
-        android:layout_alignStart="@id/tv_title_connected_devices"
+        android:layout_below="@id/tv_host_game_connected_devices"
+        android:layout_alignLeft="@id/tv_host_game_connected_devices"
+        android:layout_alignStart="@id/tv_host_game_connected_devices"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp">
     </ListView>
 
@@ -87,15 +92,11 @@
         android:layout_alignParentBottom="true"/>
 
     <Button
-        android:id="@+id/btn_le_scan"
+        android:id="@+id/btn_host_game_le_scan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/btn_host_game_game_settings"
         android:text="Scan for board"/>
-
-
-
-
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

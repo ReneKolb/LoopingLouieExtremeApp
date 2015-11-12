@@ -28,8 +28,6 @@ public class BTServerService {
 
     private AcceptThread acceptThread;
 
-    //private ArrayList<BTConnectedThread> clientCommThread;
-
     private HashMap<String, BTConnectedThread> clientCommThread;
 
     private BluetoothAdapter mAdapter;
@@ -149,6 +147,7 @@ public class BTServerService {
         }
         return result;
     }
+
 
     public void disconnectClients(){
         for(BTConnectedThread t:clientCommThread.values()){

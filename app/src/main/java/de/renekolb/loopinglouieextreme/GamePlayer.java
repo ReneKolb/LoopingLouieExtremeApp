@@ -1,5 +1,7 @@
 package de.renekolb.loopinglouieextreme;
 
+import android.util.Log;
+
 public class GamePlayer {
 
     private String displayName;
@@ -9,17 +11,17 @@ public class GamePlayer {
     private ItemStack itemStack;
     private int currentChips;
 
-    private boolean enabled;
-    private boolean remotePlayer;
+    private ConnectionState connectionState;
+    private String remoteAddress;
 
-    public GamePlayer(String displayName, PlayerColor playerColor){
+    public GamePlayer(String displayName, PlayerColor playerColor, boolean localPlayer){
         this.displayName = displayName;
         this.playerColor = playerColor;
         this.itemStack = new ItemStack();
         this.defaultItemType = null;
         this.currentChips = 0;
-        this.enabled = true;
-        this.remotePlayer = false;
+        this.connectionState = localPlayer?ConnectionState.LOCAL:ConnectionState.OPEN;
+        this.remoteAddress = null;
     }
 
     public String getDisplayName(){
@@ -86,20 +88,25 @@ public class GamePlayer {
         this.currentChips = currentChips;
     }
 
-    public boolean isEnabled(){
-        return this.enabled;
+    public ConnectionState getConnectionState(){
+        return this.connectionState;
     }
 
-    public void setEnabled(boolean isEnabled){
-        this.enabled = isEnabled;
+    public void setConnectionState(ConnectionState connectionState){
+        if(connectionState == ConnectionState.CONNECTED){
+            Log.e("GamePlayer","Wrong method to set Connected connectionState", new Exception());
+            return;
+        }
+        this.connectionState = connectionState;
     }
 
-    public boolean isRemotePlayer(){
-        return this.remotePlayer;
+    public void setConnectionState(String connectedRemoteAddress){
+        this.connectionState = ConnectionState.CONNECTED;
+        this.remoteAddress = connectedRemoteAddress;
     }
 
-    public void setRemotePlayer(boolean isRemotePlayer){
-        this.remotePlayer = isRemotePlayer;
+    public String getRemoteAddress(){
+        return this.remoteAddress;
     }
 
 }

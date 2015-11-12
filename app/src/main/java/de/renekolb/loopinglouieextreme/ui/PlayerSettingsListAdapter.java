@@ -78,19 +78,38 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
         PlayerSettingsListItem data = getItem(position);
 
         holder.colorDisplay.setBackgroundColor(data.getColor());
-        if(data.isPlayerEnabled()) {
-            holder.playerName.setText(data.getPlayerName());
-            holder.booster.setText(data.getBooster());
-            holder.chips.setText(String.valueOf(data.getChipAmount()));
-            if(data.getChipAmount()==3) {
-                holder.chips.setTextColor(Color.argb(255,0,255,0));
-            }else{
-                holder.chips.setTextColor(Color.argb(255,255,0,0));
-            }
-        }else{
-            holder.playerName.setText("Disabled Player");
-            holder.booster.setText("");
-            holder.chips.setText("");
+
+        switch (data.getConnectionState()){
+            case OPEN:
+                holder.playerName.setTextColor(Color.argb(255,0,0,255));
+                holder.booster.setTextColor(Color.argb(255,0,0,255));
+                holder.playerName.setText("Open Slot");
+                holder.booster.setText("");
+                holder.chips.setTextColor(Color.argb(255,0,180,0));
+                holder.chips.setText(String.valueOf(data.getChipAmount()));
+                break;
+            case CONNECTED:
+                holder.playerName.setTextColor(Color.argb(255,0,0,255));
+                holder.booster.setTextColor(Color.argb(255,0,0,255));
+                holder.playerName.setText(data.getPlayerName());
+                holder.booster.setText(data.getBooster() == null ? "none" : data.getBooster().getDisplayName());
+                holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
+                holder.chips.setText(String.valueOf(data.getChipAmount()));
+                break;
+            case LOCAL:
+                holder.playerName.setTextColor(Color.argb(255,0,0,0));
+                holder.booster.setTextColor(Color.argb(255,0, 0, 0));
+                holder.playerName.setText(data.getPlayerName());
+                holder.booster.setText(data.getBooster() == null ? "none" : data.getBooster().getDisplayName());
+                holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
+                holder.chips.setText(String.valueOf(data.getChipAmount()));
+                break;
+            case CLOSED:
+                holder.playerName.setTextColor(Color.argb(255,120,120,120));
+                holder.playerName.setText("Disabled Player");
+                holder.booster.setText("");
+                holder.chips.setText("");
+                break;
         }
 
         return convertView;

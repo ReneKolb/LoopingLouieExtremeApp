@@ -58,7 +58,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     private Game game;
 
-    private Runnable actionBTon;
+    //private Runnable actionBTon;
 
     public AppSettings appSettings;
 
@@ -84,30 +84,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
-        registerReceiver(mReceiver, filter);
+        //IntentFilter filter = new IntentFilter(BluetoothAdapter.ACTION_STATE_CHANGED);
+        //registerReceiver(mReceiver, filter);
     }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        //hide();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        /*
-        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-                | View.SYSTEM_UI_FLAG_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);*/
-    }
-
-
 
     @Override
     public void onDestroy() {
@@ -122,87 +101,52 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
         super.onDestroy();
 
-        unregisterReceiver(mReceiver);
+        //unregisterReceiver(mReceiver);
 
         if(appSettings.getDisableBTonExit()) {
             BluetoothAdapter.getDefaultAdapter().disable();
         }
     }
 
-
- /*   @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case Constants.REQUEST_CONNECT_DEVICE_SECURE:
-                Toast.makeText(this, "connect...", Toast.LENGTH_SHORT).show();
-                // When DeviceListActivity returns with a device to connect
-                if (resultCode == Activity.RESULT_OK) {
-                    //       connectDevice(data, true);
-                    String address = data.getExtras()
-                            .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
-                    // Get the BluetoothDevice object
-                    BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(address);
-                    connect(device);
-                }
-                break;
-        }
-    }*/
-
-
-
     @Override
     public void onFragmentInteraction(int button) {
         FragmentTransaction ft;
         switch (button) {
             case Constants.buttons.MAIN_MENU_HOST_GAME:
-                actionBTon = new Runnable() {
-                    @Override
-                    public void run() {
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        if(hostGameFragment==null){
-                            hostGameFragment = HostGameFragment.newInstance(ServiceMessageHandler);
-                        }
-                        ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                        ft.addToBackStack(null);
-                        ft.replace(R.id.main_fragment, hostGameFragment);
-                        ft.commit();
-                        //customGameSettings = new CustomGameSettings(); // initialize & set defaults
-                        game = new Game();
-                        startBTServer();
-                        startBTLEService();
-                    }
-                };
-
                 if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                     Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableIntent, Constants.REQUEST_ENABLE_BT);
                 } else {
-                    actionBTon.run();
+                    ft = getFragmentManager().beginTransaction();
+                    if(hostGameFragment==null){
+                        hostGameFragment = HostGameFragment.newInstance(ServiceMessageHandler);
+                    }
+                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                    ft.addToBackStack(null);
+                    ft.replace(R.id.main_fragment, hostGameFragment);
+                    ft.commit();
+                    //customGameSettings = new CustomGameSettings(); // initialize & set defaults
+                    game = new Game();
+                    startBTServer();
+                    startBTLEService();
                 }
 
                 break;
             case Constants.buttons.MAIN_MENU_CONNECT:
-                actionBTon = new Runnable() {
-                    @Override
-                    public void run() {
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        if(connectFragment == null){
-                            connectFragment = ConnectFragment.newInstance();
-                        }
-                        ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                        ft.addToBackStack(null);
-                        ft.replace(R.id.main_fragment, connectFragment);
-                        ft.commit();
-
-                        game = new Game();
-                    }
-                };
-
                 if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                     Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableIntent, Constants.REQUEST_ENABLE_BT);
                 } else {
-                    actionBTon.run();
+                    ft = getFragmentManager().beginTransaction();
+                    if(connectFragment == null){
+                        connectFragment = ConnectFragment.newInstance();
+                    }
+                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                    ft.addToBackStack(null);
+                    ft.replace(R.id.main_fragment, connectFragment);
+                    ft.commit();
+
+                    game = new Game();
                 }
 
                 break;
@@ -373,17 +317,6 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
                 ft.commit();
                 break;
-
-/*            case Constants.buttons.HOST_GAME_PLAYER_SETTINGS:
-                ft = getFragmentManager().beginTransaction();
-                if(playerSettingsFragment == null){
-                    playerSettingsFragment = PlayerSettingsFragment.newInstance();
-                }
-                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, playerSettingsFragment);
-                ft.commit();
-                break;*/
         }
     }
 
@@ -403,6 +336,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         btClient.connect(remoteDevice);
     }
 
+    /*
     private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -421,7 +355,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 }
             }
         }
-    };
+    };*/
 
     private final Handler ServiceMessageHandler = new Handler() {
         @Override
@@ -549,19 +483,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         }
     };
 
-    /**
-     * Schedules a call to hide() in [delay] milliseconds, canceling any
-     * previously scheduled calls.
-     */
-    /*private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
-    }*/
-
     public void connectToBoard(String remoteAddress){
         btLEService.connect(remoteAddress, onBoardMessageRead);
     }
-
 
     @Override
     public void onBackPressed() {
@@ -687,12 +611,6 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         ServiceMessageHandler.sendMessage(msg);*/
                 }
             }
-
-/*            Message msg = ServiceMessageHandler.obtainMessage(Constants.MESSAGE_TOAST);
-            Bundle b = new Bundle();
-            b.putString(Constants.TOAST,"Read: "+message);
-            msg.setData(b);
-            ServiceMessageHandler.sendMessage(msg);*/
         }
     };
 }

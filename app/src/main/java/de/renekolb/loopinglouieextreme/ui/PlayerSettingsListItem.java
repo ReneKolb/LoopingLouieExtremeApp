@@ -2,18 +2,20 @@ package de.renekolb.loopinglouieextreme.ui;
 
 import android.graphics.Color;
 
+import de.renekolb.loopinglouieextreme.Connection;
+import de.renekolb.loopinglouieextreme.ConnectionState;
 import de.renekolb.loopinglouieextreme.GamePlayer;
+import de.renekolb.loopinglouieextreme.ItemType;
 import de.renekolb.loopinglouieextreme.PlayerColor;
 
 public class PlayerSettingsListItem {
 
     private String playerName;
     private int color;
-    private String booster;
+    private ItemType itemType;
     private int chipAmount;
 
-    private boolean playerEnabled;
-    private boolean remotePlayer;
+    private ConnectionState connectionState;
 
     /*public PlayerSettingsListItem(String playerName, PlayerColor color, String booster, int chipAmount){
         this.playerName = playerName;
@@ -25,19 +27,17 @@ public class PlayerSettingsListItem {
     public PlayerSettingsListItem(GamePlayer player){
         this.playerName = player.getDisplayName();
         this.color = player.getPlayerColor().getColor();
-        this.booster = player.getDefaultItemType()==null?"None":player.getDefaultItemType().getDisplayName();
+        this.itemType = player.getDefaultItemType();
         this.chipAmount = player.getCurrentChips();
-        this.playerEnabled = player.isEnabled();
-        this.remotePlayer = player.isRemotePlayer();
+        this.connectionState = player.getConnectionState();
     }
 
     public void update(GamePlayer player){
         this.playerName = player.getDisplayName();
         this.color = player.getPlayerColor().getColor();
-        this.booster = player.getDefaultItemType()==null?"None":player.getDefaultItemType().getDisplayName();
+        this.itemType = player.getDefaultItemType();
         this.chipAmount = player.getCurrentChips();
-        this.playerEnabled = player.isEnabled();
-        this.remotePlayer = player.isRemotePlayer();
+        this.connectionState = player.getConnectionState();
     }
 
     public String getPlayerName(){
@@ -48,31 +48,15 @@ public class PlayerSettingsListItem {
         return this.color;
     }
 
-    public String getBooster(){
-        return this.booster;
+    public ItemType getBooster(){
+        return this.itemType;
     }
 
     public int getChipAmount(){
         return this.chipAmount;
     }
 
-    public boolean isPlayerEnabled(){
-        return this.playerEnabled;
-    }
-
-    public boolean isRemotePlayer(){
-        return this.remotePlayer;
-    }
-
-    @Deprecated
-    public void setPlayerName(String newName){
-        //just for testing the SYSTEM
-        this.playerName = newName;
-    }
-
-    @Deprecated
-    public void setBooster(String newBooser){
-        //just for TEsting the system
-        this.booster = newBooser;
+    public ConnectionState getConnectionState(){
+        return this.connectionState;
     }
 }

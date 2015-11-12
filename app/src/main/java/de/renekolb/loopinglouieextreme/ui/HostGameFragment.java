@@ -112,7 +112,7 @@ public class HostGameFragment extends Fragment {
 
         connectedPlayerAdapter = new ArrayAdapter<ConnectedPlayerListItem>(getActivity(), R.layout.listitem_player);
 
-        ListView players = (ListView) view.findViewById(R.id.lv_clients);
+        ListView players = (ListView) view.findViewById(R.id.lv_host_game_clients);
         players.setAdapter(connectedPlayerAdapter);
         players.setOnItemClickListener(mConnectedPlayerClickListener);
 
@@ -132,7 +132,7 @@ public class HostGameFragment extends Fragment {
             availableBoardAdapter.add(fa.btLEService.getBoard());
         }
 
-        Button btnLeScan =(Button)view.findViewById(R.id.btn_le_scan);
+        Button btnLeScan =(Button)view.findViewById(R.id.btn_host_game_le_scan);
         btnLeScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +140,7 @@ public class HostGameFragment extends Fragment {
             }
         });
 
-        scanningBoardProgress = (ProgressBar) view.findViewById(R.id.pb_scanning_board);
+        scanningBoardProgress = (ProgressBar) view.findViewById(R.id.pb_host_game_scanning_board);
 
         btnGameSettings = (Button)view.findViewById(R.id.btn_host_game_game_settings);
         btnGameSettings.setOnClickListener(new View.OnClickListener() {

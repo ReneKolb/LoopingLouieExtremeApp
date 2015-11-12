@@ -1,10 +1,8 @@
 package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.net.Uri;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,18 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
+import de.renekolb.loopinglouieextreme.ConnectionState;
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
+import de.renekolb.loopinglouieextreme.GamePlayer;
 import de.renekolb.loopinglouieextreme.ItemType;
 import de.renekolb.loopinglouieextreme.R;
 
@@ -82,6 +76,10 @@ public class PlayerSettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_player_settings, container, false);
 
+        final Button btnOpen = (Button) view.findViewById(R.id.btn_player_settings_open);
+        final Button btnLocal = (Button) view.findViewById(R.id.btn_player_settings_local);
+        final Button btnClose = (Button) view.findViewById(R.id.btn_player_settings_close);
+
         final Button btnTurbo = (Button)view.findViewById(R.id.btn_player_settings_turbo);
         final Button btnSlow = (Button)view.findViewById(R.id.btn_player_settings_slow);
         final Button btnReverse = (Button)view.findViewById(R.id.btn_player_settings_reverse);
@@ -89,6 +87,16 @@ public class PlayerSettingsFragment extends Fragment {
 
         final TextView tvPlayerName = (TextView)view.findViewById(R.id.tv_player_settings_player_name_title);
         final EditText etPlayerName = (EditText)view.findViewById(R.id.et_player_settings_player_name_edit);
+
+
+        btnTurbo.setVisibility(View.INVISIBLE);
+        btnSlow.setVisibility(View.INVISIBLE);
+        btnReverse.setVisibility(View.INVISIBLE);
+        btnBlackout.setVisibility(View.INVISIBLE);
+
+        btnOpen.setVisibility(View.INVISIBLE);
+        btnLocal.setVisibility(View.INVISIBLE);
+        btnClose.setVisibility(View.INVISIBLE);
 
         tvPlayerName.setVisibility(View.INVISIBLE);
         etPlayerName.setVisibility(View.INVISIBLE);
@@ -111,6 +119,77 @@ public class PlayerSettingsFragment extends Fragment {
             }
         });
 
+        btnOpen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSelectedItem != -1) {
+                    GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
+                    player.setConnectionState(ConnectionState.OPEN);
+                    playerSettingsListAdapter.update(mSelectedItem, player);
+
+                    btnTurbo.setVisibility(View.INVISIBLE);
+                    btnSlow.setVisibility(View.INVISIBLE);
+                    btnReverse.setVisibility(View.INVISIBLE);
+                    btnBlackout.setVisibility(View.INVISIBLE);
+
+                    tvPlayerName.setVisibility(View.INVISIBLE);
+                    etPlayerName.setVisibility(View.INVISIBLE);
+
+                    btnOpen.setEnabled(false);
+                    btnLocal.setEnabled(true);
+                    btnClose.setEnabled(true);
+                }
+            }
+        });
+
+        btnLocal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSelectedItem != -1) {
+                    GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
+                    player.setConnectionState(ConnectionState.LOCAL);
+                    playerSettingsListAdapter.update(mSelectedItem, player);
+
+                    btnTurbo.setVisibility(View.VISIBLE);
+                    btnSlow.setVisibility(View.VISIBLE);
+                    btnReverse.setVisibility(View.VISIBLE);
+                    btnBlackout.setVisibility(View.VISIBLE);
+
+                    tvPlayerName.setVisibility(View.VISIBLE);
+                    etPlayerName.setVisibility(View.VISIBLE);
+
+                    etPlayerName.setText(player.getDisplayName());
+
+                    btnOpen.setEnabled(true);
+                    btnLocal.setEnabled(false);
+                    btnClose.setEnabled(true);
+                }
+            }
+        });
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mSelectedItem!=-1){
+                    GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
+                    player.setConnectionState(ConnectionState.CLOSED);
+                    playerSettingsListAdapter.update(mSelectedItem, player);
+
+                    btnTurbo.setVisibility(View.INVISIBLE);
+                    btnSlow.setVisibility(View.INVISIBLE);
+                    btnReverse.setVisibility(View.INVISIBLE);
+                    btnBlackout.setVisibility(View.INVISIBLE);
+
+                    tvPlayerName.setVisibility(View.INVISIBLE);
+                    etPlayerName.setVisibility(View.INVISIBLE);
+
+                    btnOpen.setEnabled(true);
+                    btnLocal.setEnabled(true);
+                    btnClose.setEnabled(false);
+                }
+            }
+        });
+
         btnTurbo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,7 +207,7 @@ public class PlayerSettingsFragment extends Fragment {
         btnSlow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mSelectedItem!=-1){
+                if (mSelectedItem != -1) {
                     btnTurbo.setEnabled(true);
                     btnSlow.setEnabled(false);
                     btnReverse.setEnabled(true);
@@ -143,7 +222,7 @@ public class PlayerSettingsFragment extends Fragment {
         btnReverse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mSelectedItem!=-1){
+                if (mSelectedItem != -1) {
                     btnTurbo.setEnabled(true);
                     btnSlow.setEnabled(true);
                     btnReverse.setEnabled(false);
@@ -170,19 +249,6 @@ public class PlayerSettingsFragment extends Fragment {
             }
         });
 
-        final CheckBox cbEnablePlayer = (CheckBox)view.findViewById(R.id.cb_player_settings_enable_player);
-        cbEnablePlayer.setVisibility(View.INVISIBLE);
-        cbEnablePlayer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (mSelectedItem != -1){
-                    fa.getGame().getGamePlayer(mSelectedItem).setEnabled(isChecked);
-                    playerSettingsListAdapter.update(mSelectedItem,fa.getGame().getGamePlayer(mSelectedItem));
-                }
-            }
-        });
-
-
         mSelectedItem = -1;
 
         final ListView lvPlayers = (ListView) view.findViewById(R.id.lv_player_settings_players);
@@ -195,33 +261,62 @@ public class PlayerSettingsFragment extends Fragment {
 
                     PlayerSettingsListAdapter p = (PlayerSettingsListAdapter) parent.getAdapter();
 
-                    //if(mPlayerNameEdible){
-                    tvPlayerName.setVisibility(View.VISIBLE);
-                    etPlayerName.setVisibility(View.VISIBLE);
-                    cbEnablePlayer.setVisibility(View.VISIBLE);
-                    //}else{
-                    //tvPlayerName.setVisibility(View.INVISIBLE);
-                    //etPlayerName.setVisibility(View.INVISIBLE);
-                    //}
+                    GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
 
-                    etPlayerName.setText(p.getItem(position).getPlayerName());
-                    if (!mPlayerNameEdible) {
-                        etPlayerName.setEnabled(false);
-                    } else {
-                        etPlayerName.setSelection(etPlayerName.getText().length());
+                    if(player.getConnectionState().equals(ConnectionState.LOCAL)) {
+                        btnTurbo.setVisibility(View.VISIBLE);
+                        btnSlow.setVisibility(View.VISIBLE);
+                        btnReverse.setVisibility(View.VISIBLE);
+                        btnBlackout.setVisibility(View.VISIBLE);
+
+                        tvPlayerName.setVisibility(View.VISIBLE);
+                        etPlayerName.setVisibility(View.VISIBLE);
+                    }else {
+                        btnTurbo.setVisibility(View.INVISIBLE);
+                        btnSlow.setVisibility(View.INVISIBLE);
+                        btnReverse.setVisibility(View.INVISIBLE);
+                        btnBlackout.setVisibility(View.INVISIBLE);
+
+                        tvPlayerName.setVisibility(View.INVISIBLE);
+                        etPlayerName.setVisibility(View.INVISIBLE);
                     }
 
-                    cbEnablePlayer.setChecked(p.getItem(position).isPlayerEnabled());
+                    if(mPlayerNameEdible) {
+                        if (player.getConnectionState().equals(ConnectionState.LOCAL)) {
+                            tvPlayerName.setVisibility(View.VISIBLE);
+                            etPlayerName.setVisibility(View.VISIBLE);
 
-                    //UGLY!!!
-                    btnTurbo.setEnabled(!p.getItem(position).getBooster().equals("Turbo"));
-                    btnSlow.setEnabled(!p.getItem(position).getBooster().equals("Slow"));
-                    btnReverse.setEnabled(!p.getItem(position).getBooster().equals("Reverse"));
-                    btnBlackout.setEnabled(!p.getItem(position).getBooster().equals("Blackout"));
+                            etPlayerName.setText(player.getDisplayName());
+                            etPlayerName.setSelection(etPlayerName.getText().length());
+                        }
 
-// cannot unselect
-//                    } else if (mSelectedItem == position) {
-//                    mSelectedItem = -1;
+                        btnOpen.setVisibility(View.VISIBLE);
+                        btnLocal.setVisibility(View.VISIBLE);
+                        btnClose.setVisibility(View.VISIBLE);
+                    }
+
+                    btnOpen.setEnabled(!ConnectionState.OPEN.equals(p.getItem(position).getConnectionState()));
+                    btnLocal.setEnabled(!ConnectionState.LOCAL.equals(p.getItem(position).getConnectionState()));
+                    btnClose.setEnabled(!ConnectionState.CLOSED.equals(p.getItem(position).getConnectionState()));
+
+                    btnTurbo.setEnabled(!ItemType.TURBO.equals(p.getItem(position).getBooster()));
+                    btnSlow.setEnabled(!ItemType.SLOW.equals(p.getItem(position).getBooster()));
+                    btnReverse.setEnabled(!ItemType.REVERSE.equals(p.getItem(position).getBooster()));
+                    btnBlackout.setEnabled(!ItemType.BLACKOUT.equals(p.getItem(position).getBooster()));
+                }else if(mSelectedItem == position){
+/*                    mSelectedItem = -1;
+
+                    btnTurbo.setVisibility(View.INVISIBLE);
+                    btnSlow.setVisibility(View.INVISIBLE);
+                    btnReverse.setVisibility(View.INVISIBLE);
+                    btnBlackout.setVisibility(View.INVISIBLE);
+
+                    btnOpen.setVisibility(View.INVISIBLE);
+                    btnLocal.setVisibility(View.INVISIBLE);
+                    btnClose.setVisibility(View.INVISIBLE);
+
+                    tvPlayerName.setVisibility(View.INVISIBLE);
+                    etPlayerName.setVisibility(View.INVISIBLE);*/
                 }
             }
         });

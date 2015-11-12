@@ -50,12 +50,50 @@
         android:layout_centerHorizontal="true"/>
 
     <LinearLayout
-        android:id="@+id/ll_player_settings_select_item"
+        android:id="@+id/ll_player_settings_select_connection_state"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@id/lv_player_settings_players"
         android:layout_marginTop="25dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp">
+
+        <Button
+            android:id="@+id/btn_player_settings_open"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:text="Open"
+            android:textStyle="bold"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_player_settings_local"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:text="Local"
+            android:textStyle="bold"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/btn_player_settings_close"
+            android:layout_width="0px"
+            android:layout_height="fill_parent"
+            android:text="Close"
+            android:textStyle="bold"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_player_settings_select_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/ll_player_settings_select_connection_state"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
         android:layout_marginRight="15dp"
@@ -118,15 +156,6 @@
             android:inputType="text"/>
 
     </LinearLayout>
-
-    <CheckBox
-        android:id="@+id/cb_player_settings_enable_player"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll_player_settings_set_player_name"
-        android:layout_marginTop="10dp"
-        android:text="Enable Player"
-        android:textColor="#000000"/>
 
     <Button
         android:layout_width="wrap_content"

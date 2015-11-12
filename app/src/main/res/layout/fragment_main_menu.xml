@@ -121,7 +121,8 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:textSize="12sp"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        android:text="Version x.x.x"/>
 
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>
