@@ -40,23 +40,22 @@ public final class Constants {
         public static final int MAIN_MENU_HOST_GAME = 1;
         public static final int MAIN_MENU_CONNECT = 2;
         public static final int MAIN_MENU_SETTINGS = 3;
+        public static final int MAIN_MENU_INFO = 4;
 
-        public static final int HOST_GAME_TEST_BLACK = 4;
-        public static final int HOST_GAME_TEST_SERVER_MESSAGE = 5;
-        public static final int CONNECT_GAME_TEST_CLIENT_MESSAGE = 6;
-        public static final int HOST_GAME_GAME_SETTINGS = 7;
+        public static final int HOST_GAME_TEST_BLACK = 5;
+        public static final int HOST_GAME_TEST_SERVER_MESSAGE = 6;
+        public static final int CONNECT_GAME_TEST_CLIENT_MESSAGE = 7;
+        public static final int HOST_GAME_GAME_SETTINGS = 8;
 
-        public static final int GAME_SETTINGS_CUSTOM_SETTINGS = 8;
-        public static final int GAME_SETTINGS_PLAYER_SETTINGS = 9;
-        public static final int GAME_SETTINGS_TEST_WHEEL = 10;
+        public static final int GAME_SETTINGS_CUSTOM_SETTINGS = 9;
+        public static final int GAME_SETTINGS_PLAYER_SETTINGS = 10;
+        public static final int GAME_SETTINGS_TEST_WHEEL = 11;
 
-        public static final int PLAYER_SETTINGS_START_GAME = 11;
+        public static final int PLAYER_SETTINGS_START_GAME = 12;
 
         public static final int GAME_RESULTS_WHEEL_OF_FORTUNE = 13;
 
         public static final int WHEEL_OF_FORTUNE_NEXT_ROUND = 14;
-
-        public static final int HOST_GAME_PLAYER_SETTINGS = 12;
 
         public static final int SETTINGS_TEST_WHEEL = 15;
     }

@@ -85,7 +85,7 @@ public class MainMenuFragment extends Fragment {
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onButtonPressed(Constants.buttons.MAIN_MENU_INFO);
             }
         });
 

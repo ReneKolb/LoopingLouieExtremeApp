@@ -14,7 +14,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -164,6 +167,18 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft.addToBackStack(null);
                 ft.replace(R.id.main_fragment, settingsFragment);
                 ft.commit();
+                break;
+
+            case Constants.buttons.MAIN_MENU_INFO:
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View view = inflater.inflate(R.layout.toast_achievement, (ViewGroup)findViewById(R.id.rl_toast_achievement_root));
+
+                Toast toast = new Toast(getApplicationContext());
+                toast.setGravity(Gravity.TOP,0,150);
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(view);
+
+                toast.show();
                 break;
 
             case Constants.buttons.HOST_GAME_TEST_BLACK:
