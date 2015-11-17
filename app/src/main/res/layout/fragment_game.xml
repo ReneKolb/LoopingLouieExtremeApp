@@ -42,4 +42,16 @@
         android:textColor="#000000"
         android:textSize="18sp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/tv_game_seconds"
+        android:layout_below="@+id/tv_game_round_cnt"
+        android:layout_toRightOf="@+id/tv_game_round_cnt"
+        android:layout_toEndOf="@+id/tv_game_round_cnt"
+        android:layout_marginTop="20dp"
+        android:textSize="25sp"
+        android:textColor="#F4A625"/>
+
 </RelativeLayout>

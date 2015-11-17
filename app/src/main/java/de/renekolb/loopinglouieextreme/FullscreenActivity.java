@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import java.lang.reflect.Modifier;
+import java.util.Timer;
 
 import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
 import de.renekolb.loopinglouieextreme.ui.BlackFragment;
@@ -88,6 +89,10 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         //registerReceiver(mReceiver, filter);
     }
 
+    public GameFragment getGameFragment(){
+        return this.gameFragment;
+    }
+
     @Override
     public void onDestroy() {
         if (btServer != null) {
@@ -126,7 +131,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     ft.replace(R.id.main_fragment, hostGameFragment);
                     ft.commit();
                     //customGameSettings = new CustomGameSettings(); // initialize & set defaults
-                    game = new Game();
+                    game = new Game(this);
                     startBTServer();
                     startBTLEService();
                 }
@@ -146,7 +151,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     ft.replace(R.id.main_fragment, connectFragment);
                     ft.commit();
 
-                    game = new Game();
+                    game = new Game(this);
                 }
 
                 break;

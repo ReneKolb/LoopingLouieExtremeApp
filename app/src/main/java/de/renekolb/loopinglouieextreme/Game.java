@@ -1,6 +1,10 @@
 package de.renekolb.loopinglouieextreme;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import de.renekolb.loopinglouieextreme.ui.GameFragment;
 
 public class Game {
 
@@ -10,6 +14,9 @@ public class Game {
     private CustomGameSettings settings;
     private boolean running;
 
+    private int secondsRunning;
+    private Timer gameTimer;
+
 
     //TODO: only temporary!!!!
     public int first;
@@ -17,7 +24,9 @@ public class Game {
     public int third;
     public int fourth;
 
-    public Game(){
+    private FullscreenActivity fa; //to display the seconds
+
+    public Game(FullscreenActivity fa){
         this.maxRounds = 3;
         this.currentRound = 0;
         this.gamePlayers = new ArrayList<>(4);
@@ -28,6 +37,10 @@ public class Game {
         this.gamePlayers.add(new GamePlayer("Player 4", PlayerColor.GREEN, false));
 
         this.settings = new CustomGameSettings();
+
+        this.fa = fa;
+
+        this.gameTimer = new Timer();
     }
 
     public int getMaxRounds(){
@@ -61,6 +74,28 @@ public class Game {
 
     public void setRunning(boolean isRunning){
         this.running = isRunning;
+        if(isRunning){
+            this.secondsRunning = 0;
+            this.gameTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    secondsRunning++;
+                    fa.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            fa.getGameFragment().updateSeconds(secondsRunning);
+                        }
+                    });
+                }
+            },0,1000);
+        }else{
+            fa.getGameFragment().updateSeconds(secondsRunning);
+            this.gameTimer.cancel();
+        }
+    }
+
+    public long getSecondsRunning(){
+        return this.secondsRunning;
     }
 
     public boolean isRunning(){
