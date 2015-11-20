@@ -66,8 +66,8 @@ public class BTClientService {
         }
     }
 
-    public boolean isConnecting(){
-        return  this.isConnecting;
+    public boolean isConnecting() {
+        return this.isConnecting;
     }
 
     private void connectionFailed() {

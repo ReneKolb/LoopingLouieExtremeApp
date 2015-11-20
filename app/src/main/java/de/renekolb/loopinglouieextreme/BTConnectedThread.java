@@ -86,7 +86,7 @@ public class BTConnectedThread extends Thread {
     private void connectionLost() {
         Message msg = mMessageHandler.obtainMessage(Constants.messages.BT_CONNECTION_LOST);
         Bundle bundle = new Bundle();
-        bundle.putString(Constants.KEY_DEVICE_ADDRESS,remoteAddress);
+        bundle.putString(Constants.KEY_DEVICE_ADDRESS, remoteAddress);
         msg.setData(bundle);
         mMessageHandler.sendMessage(msg);
         remoteAddress = null;

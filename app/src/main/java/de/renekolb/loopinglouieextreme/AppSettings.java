@@ -15,26 +15,26 @@ public class AppSettings {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    public AppSettings(Activity activity){
+    public AppSettings(Activity activity) {
         this.activity = activity;
         this.sharedPreferences = activity.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         this.editor = sharedPreferences.edit();
     }
 
-    public boolean isDebugEnabled(){
-        return sharedPreferences.getBoolean(KEY_ENABLE_DEBUG,false);
+    public boolean isDebugEnabled() {
+        return sharedPreferences.getBoolean(KEY_ENABLE_DEBUG, false);
     }
 
-    public void setDebugEnable(boolean enable){
+    public void setDebugEnable(boolean enable) {
         editor.putBoolean(KEY_ENABLE_DEBUG, enable);
         editor.commit();
     }
 
-    public boolean getDisableBTonExit(){
-        return sharedPreferences.getBoolean(KEY_DISABLE_BT_ON_EXIT,false);
+    public boolean getDisableBTonExit() {
+        return sharedPreferences.getBoolean(KEY_DISABLE_BT_ON_EXIT, false);
     }
 
-    public void setDisableBTonExit(boolean disable){
+    public void setDisableBTonExit(boolean disable) {
         editor.putBoolean(KEY_DISABLE_BT_ON_EXIT, disable);
         editor.commit();
     }

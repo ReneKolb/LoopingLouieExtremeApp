@@ -2,7 +2,6 @@ package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,29 +111,29 @@ public class MainMenuFragment extends Fragment {
         });
 
 
-        TextView tv = (TextView)view.findViewById(R.id.tv_main_menu_version);
-        tv.setText("Version: "+ BuildConfig.VERSION_NAME);
+        TextView tv = (TextView) view.findViewById(R.id.tv_main_menu_version);
+        tv.setText("Version: " + BuildConfig.VERSION_NAME);
 
 
         return view;
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         //?????????????? TODO: Macht das überhaupt sinn, die Services über onResume zu steuern -> wohl nicht
 
         //disconnect from board
-        if(fa.btLEService!=null){
+        if (fa.btLEService != null) {
             fa.btLEService.stopScanning();
             fa.btLEService.disconnect();
         }
 
-        if(fa.btServer != null){
+        if (fa.btServer != null) {
             fa.btServer.stop();
             fa.btServer.disconnectClients();
         }
 
-        if(fa.btClient!=null && !fa.btClient.isConnecting()) {
+        if (fa.btClient != null && !fa.btClient.isConnecting()) {
             fa.btClient.stop();
         }
         super.onResume();

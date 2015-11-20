@@ -1,8 +1,8 @@
 package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,13 +92,13 @@ public class CustomGameSettingsFragment extends Fragment {
 
         Switch swRandomSpeed = (Switch) view.findViewById(R.id.sw_custom_game_settings_random_speed);
         swRandomSpeed.setChecked(fa.getGame().getGameSettings().getRandomSpeed());
-        if(swRandomSpeed.isChecked()){
+        if (swRandomSpeed.isChecked()) {
             trSpeedMinDelay.setVisibility(View.VISIBLE);
             trSpeedMaxDelay.setVisibility(View.VISIBLE);
             trSpeedMinStepSize.setVisibility(View.VISIBLE);
             trSpeedMaxStepSize.setVisibility(View.VISIBLE);
             trEnableReverse.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             trSpeedMinDelay.setVisibility(View.GONE);
             trSpeedMaxDelay.setVisibility(View.GONE);
             trSpeedMinStepSize.setVisibility(View.GONE);
@@ -109,13 +109,13 @@ public class CustomGameSettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 fa.getGame().getGameSettings().setRandomSpeed(isChecked);
-                if(isChecked){
+                if (isChecked) {
                     trSpeedMinDelay.setVisibility(View.VISIBLE);
                     trSpeedMaxDelay.setVisibility(View.VISIBLE);
                     trSpeedMinStepSize.setVisibility(View.VISIBLE);
                     trSpeedMaxStepSize.setVisibility(View.VISIBLE);
                     trEnableReverse.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     trSpeedMinDelay.setVisibility(View.GONE);
                     trSpeedMaxDelay.setVisibility(View.GONE);
                     trSpeedMinStepSize.setVisibility(View.GONE);
@@ -233,11 +233,11 @@ public class CustomGameSettingsFragment extends Fragment {
 
         Switch swChefMode = (Switch) view.findViewById(R.id.sw_custom_game_settings_chef_mode);
         swChefMode.setChecked(fa.getGame().getGameSettings().getChefMode());
-        if(swChefMode.isChecked()){
+        if (swChefMode.isChecked()) {
             trChefRoulette.setVisibility(View.VISIBLE);
             trChefDelay.setVisibility(View.VISIBLE);
             trChefCooldown.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             trChefRoulette.setVisibility(View.GONE);
             trChefDelay.setVisibility(View.GONE);
             trChefCooldown.setVisibility(View.GONE);
@@ -330,7 +330,6 @@ public class CustomGameSettingsFragment extends Fragment {
 
         return view;
     }
-
 
 
     public void onButtonPressed(int button) {

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import de.renekolb.loopinglouieextreme.ui.GameFragment;
-
 public class Game {
 
     private int maxRounds;
@@ -26,7 +24,9 @@ public class Game {
 
     private FullscreenActivity fa; //to display the seconds
 
-    public Game(FullscreenActivity fa){
+    private TimerTask timerTask;
+
+    public Game(FullscreenActivity fa) {
         this.maxRounds = 3;
         this.currentRound = 0;
         this.gamePlayers = new ArrayList<>(4);
@@ -43,28 +43,28 @@ public class Game {
         this.gameTimer = new Timer();
     }
 
-    public int getMaxRounds(){
+    public int getMaxRounds() {
         return this.maxRounds;
     }
 
-    public void setMaxRounds(int maxRounds){
-       this.maxRounds = maxRounds;
+    public void setMaxRounds(int maxRounds) {
+        this.maxRounds = maxRounds;
     }
 
-    public int getCurrentRound(){
+    public int getCurrentRound() {
         return this.currentRound;
     }
 
-    public void nextRound(){
+    public void nextRound() {
         this.currentRound++;
     }
 
-    public void setCurrentRound(int currentRound){
+    public void setCurrentRound(int currentRound) {
         this.currentRound = currentRound;
     }
 
-    public GamePlayer getGamePlayer(int index){
-        if(index<0||index>3){
+    public GamePlayer getGamePlayer(int index) {
+        if (index < 0 || index > 3) {
             return null;
             //throw new IndexOutOfBoundsException();
         }
@@ -72,11 +72,14 @@ public class Game {
         return this.gamePlayers.get(index);
     }
 
-    public void setRunning(boolean isRunning){
+    public void setRunning(boolean isRunning) {
         this.running = isRunning;
-        if(isRunning){
+        if (isRunning) {
             this.secondsRunning = 0;
-            this.gameTimer.scheduleAtFixedRate(new TimerTask() {
+            if (timerTask != null) {
+                timerTask.cancel();
+            }
+            timerTask = new TimerTask() {
                 @Override
                 public void run() {
                     secondsRunning++;
@@ -87,18 +90,22 @@ public class Game {
                         }
                     });
                 }
-            },0,1000);
-        }else{
+            };
+
+            this.gameTimer.scheduleAtFixedRate(timerTask, 0, 1000);
+        } else {
             fa.getGameFragment().updateSeconds(secondsRunning);
-            this.gameTimer.cancel();
+            this.timerTask.cancel();
+            timerTask = null;
+            //this.gameTimer.cancel();
         }
     }
 
-    public long getSecondsRunning(){
+    public long getSecondsRunning() {
         return this.secondsRunning;
     }
 
-    public boolean isRunning(){
+    public boolean isRunning() {
         return this.running;
     }
 
@@ -107,28 +114,28 @@ public class Game {
         this.gamePlayers.set(index, player);
     }*/
 
-    public CustomGameSettings getGameSettings(){
+    public CustomGameSettings getGameSettings() {
         return this.settings;
     }
 
-    public String getDefaultItemsSendData(){
+    public String getDefaultItemsSendData() {
         StringBuilder sb = new StringBuilder();
-        if(getGamePlayer(0).getDefaultItemType()!=null)
+        if (getGamePlayer(0).getDefaultItemType() != null)
             sb.append(getGamePlayer(0).getDefaultItemType().getItemID());
         else
             sb.append(0);
 
-        if(getGamePlayer(1).getDefaultItemType()!=null)
+        if (getGamePlayer(1).getDefaultItemType() != null)
             sb.append(getGamePlayer(1).getDefaultItemType().getItemID());
         else
             sb.append(0);
 
-        if(getGamePlayer(2).getDefaultItemType()!=null)
+        if (getGamePlayer(2).getDefaultItemType() != null)
             sb.append(getGamePlayer(2).getDefaultItemType().getItemID());
         else
             sb.append(0);
 
-        if(getGamePlayer(3).getDefaultItemType()!=null)
+        if (getGamePlayer(3).getDefaultItemType() != null)
             sb.append(getGamePlayer(3).getDefaultItemType().getItemID());
         else
             sb.append(0);

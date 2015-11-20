@@ -17,7 +17,7 @@ public class SplashScreen extends Activity {
     private static final int SPLASH_TIME_OUT = 2000;
 
     @SuppressLint("NewApi")
-    private void loadSettings(){
+    private void loadSettings() {
         FullscreenActivity.BLE_SUPPORT = (Build.VERSION.SDK_INT >= 18) && getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE);
     }
 
@@ -26,7 +26,7 @@ public class SplashScreen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             //only load once
             if (getResources().getBoolean(R.bool.is_tablet)) {
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -58,7 +58,7 @@ public class SplashScreen extends Activity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         //cannot close the app with pressing back!
         //super.onBackPressed();
     }

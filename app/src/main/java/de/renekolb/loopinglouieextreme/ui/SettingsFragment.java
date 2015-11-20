@@ -59,7 +59,7 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
-        CheckBox cbDebug = (CheckBox)view.findViewById(R.id.cb_settings_debug);
+        CheckBox cbDebug = (CheckBox) view.findViewById(R.id.cb_settings_debug);
         cbDebug.setChecked(fa.appSettings.isDebugEnabled());
         cbDebug.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -68,7 +68,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        CheckBox cbDisableBT = (CheckBox)view.findViewById(R.id.cb_settings_disable_bt);
+        CheckBox cbDisableBT = (CheckBox) view.findViewById(R.id.cb_settings_disable_bt);
         cbDisableBT.setChecked(fa.appSettings.getDisableBTonExit());
         cbDisableBT.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -78,7 +78,7 @@ public class SettingsFragment extends Fragment {
         });
 
 
-        Button btnWheel = (Button)view.findViewById(R.id.btn_settings_test_wheel);
+        Button btnWheel = (Button) view.findViewById(R.id.btn_settings_test_wheel);
         btnWheel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

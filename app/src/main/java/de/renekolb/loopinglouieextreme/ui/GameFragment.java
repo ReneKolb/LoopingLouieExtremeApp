@@ -1,15 +1,13 @@
 package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
 
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.R;
@@ -52,9 +50,9 @@ public class GameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
 
         TextView tvRoundCnt = (TextView) view.findViewById(R.id.tv_game_round_cnt);
-        tvRoundCnt.setText(fa.getGame().getCurrentRound()+"/"+fa.getGame().getMaxRounds());
+        tvRoundCnt.setText(fa.getGame().getCurrentRound() + "/" + fa.getGame().getMaxRounds());
 
-        this.tvSecondsDisplay = (TextView)view.findViewById(R.id.tv_game_seconds);
+        this.tvSecondsDisplay = (TextView) view.findViewById(R.id.tv_game_seconds);
 
         return view;
     }
@@ -82,17 +80,17 @@ public class GameFragment extends Fragment {
         fa = null;
     }
 
-    public void updateSeconds(long seconds){
+    public void updateSeconds(long seconds) {
 
-        int sec = (int)(seconds % 60);
+        int sec = (int) (seconds % 60);
         seconds /= 60;
-        int min = (int)seconds;
+        int min = (int) seconds;
 
-        if(tvSecondsDisplay==null){
+        if (tvSecondsDisplay == null) {
             Log.e("GAME FRAGMENT", "no seconds Display found");
             return;
         }
-        this.tvSecondsDisplay.setText(String.format("%02d:%02d",min,sec));
+        this.tvSecondsDisplay.setText(String.format("%02d:%02d", min, sec));
     }
 
 }

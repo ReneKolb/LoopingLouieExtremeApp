@@ -58,7 +58,7 @@ public class BlackFragment extends Fragment {
         super.onAttach(activity);
         try {
             //mListener = (OnFragmentInteractionListener) activity;
-            fa = (FullscreenActivity)activity;
+            fa = (FullscreenActivity) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");

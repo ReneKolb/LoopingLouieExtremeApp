@@ -32,7 +32,7 @@ public class BluetoothLEService {
     private FullscreenActivity fa;
     private Handler h;
 
-    private  boolean connected;
+    private boolean connected;
 
     private BluetoothGatt btGatt;
     private BluetoothGattCharacteristic characteristic;
@@ -41,7 +41,7 @@ public class BluetoothLEService {
 
     LinkedList<byte[]> sendingQueue;
 
-    public BluetoothLEService(FullscreenActivity fa, Handler h){
+    public BluetoothLEService(FullscreenActivity fa, Handler h) {
         this.connected = false;
         this.h = h;
         this.fa = fa;
@@ -55,7 +55,7 @@ public class BluetoothLEService {
     }
 
     @SuppressWarnings("Deprecation")
-    public void startDiscoverDevices(){
+    public void startDiscoverDevices() {
         //Stop scanning after 10 seconds
         h.postDelayed(new Runnable() {
             @Override
@@ -72,15 +72,15 @@ public class BluetoothLEService {
     }
 
     @SuppressWarnings("Deprecation")
-    public void stopScanning(){
+    public void stopScanning() {
         h.sendMessage(h.obtainMessage(Constants.messages.BLE_STOP_DISCOVERING));
         //mBluetoothAdapter.getBluetoothLeScanner().stopScan(scanCallback);
         mBluetoothAdapter.stopLeScan(scanCallback);
     }
 
-    public void disconnect(){
+    public void disconnect() {
         Log.i("", "disconnect BLE!");
-        if(btGatt!=null) {
+        if (btGatt != null) {
             btGatt.disconnect();
             btGatt = null;
         }
@@ -89,10 +89,10 @@ public class BluetoothLEService {
     }
 
     private BluetoothAdapter.LeScanCallback scanCallback = new BluetoothAdapter.LeScanCallback() {
-    //private ScanCallback scanCallback = new ScanCallback() {
+        //private ScanCallback scanCallback = new ScanCallback() {
         @Override
         public void onLeScan(final BluetoothDevice device,
-                        final int rssi, final byte[] scanRecord){
+                             final int rssi, final byte[] scanRecord) {
             Message m = h.obtainMessage(Constants.messages.BLE_DISCOVERED_DEVICE);
             Bundle b = new Bundle();
             b.putString(Constants.KEY_DEVICE_NAME, device.getName());
@@ -111,16 +111,16 @@ public class BluetoothLEService {
         }*/
     };
 
-    public void connect(String remoteAddress, final ReceiveCallback onReceiveCallback){
+    public void connect(String remoteAddress, final ReceiveCallback onReceiveCallback) {
         stopScanning();
 
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(remoteAddress);
-        if(device == null){
-            Toast.makeText(fa,"Unkown Device",Toast.LENGTH_SHORT).show();
+        if (device == null) {
+            Toast.makeText(fa, "Unkown Device", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        btGatt=device.connectGatt(fa, false, new BluetoothGattCallback() {
+        btGatt = device.connectGatt(fa, false, new BluetoothGattCallback() {
             @Override
             public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
                 if (newState == BluetoothProfile.STATE_CONNECTED) {
@@ -181,8 +181,8 @@ public class BluetoothLEService {
             }
 
             @Override
-            public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status){
-                if(!sendingQueue.isEmpty()) {
+            public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status) {
+                if (!sendingQueue.isEmpty()) {
                     sendingQueue.removeFirst();
                     if (sendingQueue.size() > 0) {
                         //still messages to send, so send next one
@@ -193,10 +193,10 @@ public class BluetoothLEService {
         });
     }
 
-    public void addSendMessage(byte[]message){
-        if(message.length>20){
-         Log.e("TAG TAG", "you cannot send messaged larger than 20 bytes");
-        }else {
+    public void addSendMessage(byte[] message) {
+        if (message.length > 20) {
+            Log.e("TAG TAG", "you cannot send messaged larger than 20 bytes");
+        } else {
             sendingQueue.add(message);
             if (sendingQueue.size() == 1) {
                 sendMessage(message);
@@ -204,37 +204,37 @@ public class BluetoothLEService {
         }
     }
 
-    private void sendMessage(byte[] message){
+    private void sendMessage(byte[] message) {
         Log.i("MESSAGE TAG", "Send: " + new String(message));
-        if(characteristic != null){
+        if (characteristic != null) {
             characteristic.setValue(message);
             btGatt.writeCharacteristic(characteristic);
         }
     }
 
-    public boolean isConnected(){
+    public boolean isConnected() {
         return this.connected;
     }
 
-    public ConnectedPlayerListItem getBoard(){
-        if(!connected)
+    public ConnectedPlayerListItem getBoard() {
+        if (!connected)
             return null;
 
-        return new ConnectedPlayerListItem(btGatt.getDevice().getAddress(),btGatt.getDevice().getName());
+        return new ConnectedPlayerListItem(btGatt.getDevice().getAddress(), btGatt.getDevice().getName());
     }
 
-    private String boolToString(boolean b){
-        return b?"1":"0";
+    private String boolToString(boolean b) {
+        return b ? "1" : "0";
     }
 
- //   private void sendCommand(/*Command, value*/String  cmd){
+    //   private void sendCommand(/*Command, value*/String  cmd){
 //    }
 
-    public void sendRequestChipsCount(){
-        addSendMessage((BTCommands.REQUEST_CHIPS_COUNT+".").getBytes());
+    public void sendRequestChipsCount() {
+        addSendMessage((BTCommands.REQUEST_CHIPS_COUNT + ".").getBytes());
     }
 
-    public void sendGameSettings(Game game){
+    public void sendGameSettings(Game game) {
         //addSendMessage(appSettings.getSendArray());
 
         addSendMessage((BTCommands.SET_RANDOM_SPEED + boolToString(game.getGameSettings().getRandomSpeed()) + ".").getBytes());
@@ -252,10 +252,10 @@ public class BluetoothLEService {
         addSendMessage((BTCommands.SET_ENABLE_EVENTS + boolToString(game.getGameSettings().getEnableEvents()) + ".").getBytes());
 
         addSendMessage((BTCommands.SET_ITEM_TYPES + game.getDefaultItemsSendData() + ".").getBytes());
-        
+
     }
 
-    public void sendGameStart(){
+    public void sendGameStart() {
         addSendMessage((BTCommands.START_GAME + ".").getBytes());
     }
 }

@@ -117,32 +117,32 @@ public class HostGameFragment extends Fragment {
         players.setOnItemClickListener(mConnectedPlayerClickListener);
 
         //loadConnectedPlayers();
-        if(fa.btServer.getConnectedDevices()>0) {
+        if (fa.btServer.getConnectedDevices() > 0) {
             connectedPlayerAdapter.addAll(fa.btServer.getConnectedPlayers());
         }
 
-        availableBoardAdapter = new ArrayAdapter<ConnectedPlayerListItem>(getActivity(),R.layout.listitem_player);
+        availableBoardAdapter = new ArrayAdapter<ConnectedPlayerListItem>(getActivity(), R.layout.listitem_player);
 
         ListView boards = (ListView) view.findViewById(R.id.lv_host_game_board_devices);
         boards.setAdapter(availableBoardAdapter);
         boards.setOnItemClickListener(mConnectBoardClickListener);
 
         //loadConnectedBoard();
-        if(fa.btLEService.isConnected()) {
+        if (fa.btLEService.isConnected()) {
             availableBoardAdapter.add(fa.btLEService.getBoard());
         }
 
-        Button btnLeScan =(Button)view.findViewById(R.id.btn_host_game_le_scan);
+        Button btnLeScan = (Button) view.findViewById(R.id.btn_host_game_le_scan);
         btnLeScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              fa.btLEService.startDiscoverDevices();
+                fa.btLEService.startDiscoverDevices();
             }
         });
 
         scanningBoardProgress = (ProgressBar) view.findViewById(R.id.pb_host_game_scanning_board);
 
-        btnGameSettings = (Button)view.findViewById(R.id.btn_host_game_game_settings);
+        btnGameSettings = (Button) view.findViewById(R.id.btn_host_game_game_settings);
         btnGameSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,7 +155,7 @@ public class HostGameFragment extends Fragment {
     }
 
     @Override
-    public void onDestroyView(){
+    public void onDestroyView() {
         /*//disconnect from board
         if(fa.btLEService!=null){
             fa.btLEService.stopScanning();
@@ -188,7 +188,7 @@ public class HostGameFragment extends Fragment {
         //asdasd
     }
 
-    public void boardConnectionChanged(boolean connectedToBoard){
+    public void boardConnectionChanged(boolean connectedToBoard) {
         btnGameSettings.setEnabled(connectedToBoard);
         //TODO: update visual effect ??? ein haken oder so
     }
@@ -205,7 +205,7 @@ public class HostGameFragment extends Fragment {
         super.onAttach(activity);
         try {
             //mListener = (OnFragmentInteractionListener) activity;
-            fa = (FullscreenActivity)activity;
+            fa = (FullscreenActivity) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");

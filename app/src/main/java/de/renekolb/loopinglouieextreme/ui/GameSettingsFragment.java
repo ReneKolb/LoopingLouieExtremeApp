@@ -1,8 +1,8 @@
 package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,7 +84,7 @@ public class GameSettingsFragment extends Fragment {
 
         btnCustomSettings.setVisibility(mGameMode == 2 ? View.VISIBLE : View.INVISIBLE);
 
-        switch(mGameMode){
+        switch (mGameMode) {
             case 0:
                 btnClassic.setEnabled(false);
                 fa.getGame().getGameSettings().loadClassic();

@@ -104,7 +104,7 @@ public class ConnectFragment extends Fragment {
     }
 
     @Override
-    public void onDestroyView(){
+    public void onDestroyView() {
         /*if(fa.btClient!=null) {
             fa.btClient.stop();
         }*/
@@ -137,7 +137,7 @@ public class ConnectFragment extends Fragment {
         super.onAttach(activity);
         try {
             //mListener = (OnFragmentInteractionListener) activity;
-            fa = (FullscreenActivity)activity;
+            fa = (FullscreenActivity) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");

@@ -60,8 +60,8 @@ public class PlayerSettingsFragment extends Fragment {
 
         chipCountRefreshTimer = new Handler();
 
-        if(savedInstanceState == null){
-            this.playerSettingsListAdapter = new PlayerSettingsListAdapter(fa,fa.getGame());
+        if (savedInstanceState == null) {
+            this.playerSettingsListAdapter = new PlayerSettingsListAdapter(fa, fa.getGame());
         }
     }
 
@@ -80,13 +80,13 @@ public class PlayerSettingsFragment extends Fragment {
         final Button btnLocal = (Button) view.findViewById(R.id.btn_player_settings_local);
         final Button btnClose = (Button) view.findViewById(R.id.btn_player_settings_close);
 
-        final Button btnTurbo = (Button)view.findViewById(R.id.btn_player_settings_turbo);
-        final Button btnSlow = (Button)view.findViewById(R.id.btn_player_settings_slow);
-        final Button btnReverse = (Button)view.findViewById(R.id.btn_player_settings_reverse);
-        final Button btnBlackout = (Button)view.findViewById(R.id.btn_player_settings_blackout);
+        final Button btnTurbo = (Button) view.findViewById(R.id.btn_player_settings_turbo);
+        final Button btnSlow = (Button) view.findViewById(R.id.btn_player_settings_slow);
+        final Button btnReverse = (Button) view.findViewById(R.id.btn_player_settings_reverse);
+        final Button btnBlackout = (Button) view.findViewById(R.id.btn_player_settings_blackout);
 
-        final TextView tvPlayerName = (TextView)view.findViewById(R.id.tv_player_settings_player_name_title);
-        final EditText etPlayerName = (EditText)view.findViewById(R.id.et_player_settings_player_name_edit);
+        final TextView tvPlayerName = (TextView) view.findViewById(R.id.tv_player_settings_player_name_title);
+        final EditText etPlayerName = (EditText) view.findViewById(R.id.et_player_settings_player_name_edit);
 
 
         btnTurbo.setVisibility(View.INVISIBLE);
@@ -170,7 +170,7 @@ public class PlayerSettingsFragment extends Fragment {
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mSelectedItem!=-1){
+                if (mSelectedItem != -1) {
                     GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
                     player.setConnectionState(ConnectionState.CLOSED);
                     playerSettingsListAdapter.update(mSelectedItem, player);
@@ -263,7 +263,7 @@ public class PlayerSettingsFragment extends Fragment {
 
                     GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
 
-                    if(player.getConnectionState().equals(ConnectionState.LOCAL)) {
+                    if (player.getConnectionState().equals(ConnectionState.LOCAL)) {
                         btnTurbo.setVisibility(View.VISIBLE);
                         btnSlow.setVisibility(View.VISIBLE);
                         btnReverse.setVisibility(View.VISIBLE);
@@ -271,7 +271,7 @@ public class PlayerSettingsFragment extends Fragment {
 
                         tvPlayerName.setVisibility(View.VISIBLE);
                         etPlayerName.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         btnTurbo.setVisibility(View.INVISIBLE);
                         btnSlow.setVisibility(View.INVISIBLE);
                         btnReverse.setVisibility(View.INVISIBLE);
@@ -281,7 +281,7 @@ public class PlayerSettingsFragment extends Fragment {
                         etPlayerName.setVisibility(View.INVISIBLE);
                     }
 
-                    if(mPlayerNameEdible) {
+                    if (mPlayerNameEdible) {
                         if (player.getConnectionState().equals(ConnectionState.LOCAL)) {
                             tvPlayerName.setVisibility(View.VISIBLE);
                             etPlayerName.setVisibility(View.VISIBLE);
@@ -293,6 +293,9 @@ public class PlayerSettingsFragment extends Fragment {
                         btnOpen.setVisibility(View.VISIBLE);
                         btnLocal.setVisibility(View.VISIBLE);
                         btnClose.setVisibility(View.VISIBLE);
+                    } else {
+                        tvPlayerName.setVisibility(View.INVISIBLE);
+                        etPlayerName.setVisibility(View.INVISIBLE);
                     }
 
                     btnOpen.setEnabled(!ConnectionState.OPEN.equals(p.getItem(position).getConnectionState()));
@@ -303,7 +306,7 @@ public class PlayerSettingsFragment extends Fragment {
                     btnSlow.setEnabled(!ItemType.SLOW.equals(p.getItem(position).getBooster()));
                     btnReverse.setEnabled(!ItemType.REVERSE.equals(p.getItem(position).getBooster()));
                     btnBlackout.setEnabled(!ItemType.BLACKOUT.equals(p.getItem(position).getBooster()));
-                }else if(mSelectedItem == position){
+                } else if (mSelectedItem == position) {
 /*                    mSelectedItem = -1;
 
                     btnTurbo.setVisibility(View.INVISIBLE);
@@ -321,7 +324,7 @@ public class PlayerSettingsFragment extends Fragment {
             }
         });
 
-        Button btnStart = (Button)view.findViewById(R.id.btn_player_settings_start);
+        Button btnStart = (Button) view.findViewById(R.id.btn_player_settings_start);
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -347,7 +350,7 @@ public class PlayerSettingsFragment extends Fragment {
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         chipCountRefreshTimer.removeCallbacks(updateChipsTask);
     }
@@ -356,21 +359,21 @@ public class PlayerSettingsFragment extends Fragment {
         @Override
         public void run() {
             fa.btLEService.sendRequestChipsCount();
-            chipCountRefreshTimer.postDelayed(updateChipsTask,3000);
+            chipCountRefreshTimer.postDelayed(updateChipsTask, 3000);
         }
     };
 
 
-    public void updatePlayerSettings(){
+    public void updatePlayerSettings() {
         //mainly used for updated chip amount
-                playerSettingsListAdapter.update(0,fa.getGame().getGamePlayer(0));
-                playerSettingsListAdapter.update(1,fa.getGame().getGamePlayer(1));
-                playerSettingsListAdapter.update(2,fa.getGame().getGamePlayer(2));
-                playerSettingsListAdapter.update(3,fa.getGame().getGamePlayer(3));
+        playerSettingsListAdapter.update(0, fa.getGame().getGamePlayer(0));
+        playerSettingsListAdapter.update(1, fa.getGame().getGamePlayer(1));
+        playerSettingsListAdapter.update(2, fa.getGame().getGamePlayer(2));
+        playerSettingsListAdapter.update(3, fa.getGame().getGamePlayer(3));
 
     }
 
-    public void setPlayerNameEdible(boolean edible){
+    public void setPlayerNameEdible(boolean edible) {
         this.mPlayerNameEdible = edible;
     }
 
@@ -379,7 +382,7 @@ public class PlayerSettingsFragment extends Fragment {
         super.onAttach(activity);
         try {
             //mListener = (OnFragmentInteractionListener) activity;
-            fa = (FullscreenActivity)activity;
+            fa = (FullscreenActivity) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");

@@ -1,8 +1,8 @@
 package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -127,7 +127,7 @@ public class GameResultFragment extends Fragment {
             }
         });
 
-        tvTime = (TextView)view.findViewById(R.id.tv_game_results_time_cnt);
+        tvTime = (TextView) view.findViewById(R.id.tv_game_results_time_cnt);
 
         long time = fa.getGame().getSecondsRunning();
         int sec = (int) (time % 60);

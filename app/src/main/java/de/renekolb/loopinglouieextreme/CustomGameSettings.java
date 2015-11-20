@@ -27,11 +27,11 @@ public class CustomGameSettings {
     private boolean enableItems;
     private boolean enableEvents;
 
-    public CustomGameSettings(){
+    public CustomGameSettings() {
         loadDefaults();
     }
 
-    public void loadDefaults(){
+    public void loadDefaults() {
         this.randomSpeed = true;
         this.startSpeed = 64;
         this.speedMinDelay = 5000;
@@ -47,21 +47,21 @@ public class CustomGameSettings {
         this.chefHasShorterCooldown = true;
 
         this.enableItems = true;
-        this.enableEvents= true;
+        this.enableEvents = true;
     }
 
-    public void loadClassic(){
+    public void loadClassic() {
         this.startSpeed = 64;
         this.randomSpeed = false;
 
         this.chefMode = false;
 
         this.enableItems = false;
-        this.enableEvents =  false;
+        this.enableEvents = false;
     }
 
 
-    public void loadAction(){
+    public void loadAction() {
         this.randomSpeed = true;
         this.startSpeed = 64;
         this.speedMinDelay = 5000;
@@ -77,144 +77,144 @@ public class CustomGameSettings {
         this.chefHasShorterCooldown = true;
 
         this.enableItems = true;
-        this.enableEvents= true;
+        this.enableEvents = true;
     }
 
-    public void setRandomSpeed(boolean randomSpeed){
+    public void setRandomSpeed(boolean randomSpeed) {
         this.randomSpeed = randomSpeed;
     }
 
-    public boolean getRandomSpeed(){
+    public boolean getRandomSpeed() {
         return this.randomSpeed;
     }
 
-    public void setStartSpeed(byte startSpeed){
+    public void setStartSpeed(byte startSpeed) {
         this.startSpeed = startSpeed;
     }
 
-    public byte getStartSpeed(){
+    public byte getStartSpeed() {
         return this.startSpeed;
     }
 
-    public void setSpeedMinDelay(short speedMinDelay){
+    public void setSpeedMinDelay(short speedMinDelay) {
         this.speedMinDelay = speedMinDelay;
     }
 
-    public short getSpeedMinDelay(){
+    public short getSpeedMinDelay() {
         return this.speedMinDelay;
     }
 
-    public void setSpeedMaxDelay(short speedMaxDelay){
+    public void setSpeedMaxDelay(short speedMaxDelay) {
         this.speedMaxDelay = speedMaxDelay;
     }
 
-    public short getSpeedMaxDelay(){
+    public short getSpeedMaxDelay() {
         return this.speedMaxDelay;
     }
 
-    public void setSpeedMinStepSize(byte speedMinStepSize){
+    public void setSpeedMinStepSize(byte speedMinStepSize) {
         this.speedMinStepSize = speedMinStepSize;
     }
 
-    public byte getSpeedMinStepSize(){
+    public byte getSpeedMinStepSize() {
         return this.speedMinStepSize;
     }
 
-    public void setSpeedMaxStepSize(byte speedMaxStepSize){
+    public void setSpeedMaxStepSize(byte speedMaxStepSize) {
         this.speedMaxStepSize = speedMaxStepSize;
     }
 
-    public byte getSpeedMaxStepSize(){
+    public byte getSpeedMaxStepSize() {
         return this.speedMaxStepSize;
     }
 
-    public void setEnableReverse(boolean enableReverse){
+    public void setEnableReverse(boolean enableReverse) {
         this.enableReverse = enableReverse;
     }
 
-    public boolean getEnableReverse(){
+    public boolean getEnableReverse() {
         return this.enableReverse;
     }
 
-    public void setChefMode(boolean chefMode){
+    public void setChefMode(boolean chefMode) {
         this.chefMode = chefMode;
     }
 
-    public boolean getChefMode(){
+    public boolean getChefMode() {
         return this.chefMode;
     }
 
-    public void setChefRoulette(boolean chefRoulette){
+    public void setChefRoulette(boolean chefRoulette) {
         this.chefRoulette = chefRoulette;
     }
 
-    public boolean getChefRoulette(){
+    public boolean getChefRoulette() {
         return this.chefRoulette;
     }
 
-    public void setChefChangeDelay(short chefChangeDelay){
+    public void setChefChangeDelay(short chefChangeDelay) {
         this.chefChangeDelay = chefChangeDelay;
     }
 
-    public short getChefChangeDelay(){
+    public short getChefChangeDelay() {
         return this.chefChangeDelay;
     }
 
-    public void setChefHasShorterCooldown(boolean chefHasShorterCooldown){
+    public void setChefHasShorterCooldown(boolean chefHasShorterCooldown) {
         this.chefHasShorterCooldown = chefHasShorterCooldown;
     }
 
-    public boolean getChefHasShorterCooldown(){
+    public boolean getChefHasShorterCooldown() {
         return this.chefHasShorterCooldown;
     }
 
-    public void setEnableItems(boolean enableItems){
+    public void setEnableItems(boolean enableItems) {
         this.enableItems = enableItems;
     }
 
-    public boolean getEnableItems(){
+    public boolean getEnableItems() {
         return this.enableItems;
     }
 
-    public void setEnableEvents(boolean enableEvents){
+    public void setEnableEvents(boolean enableEvents) {
         this.enableEvents = enableEvents;
     }
 
-    public boolean getEnableEvents(){
+    public boolean getEnableEvents() {
         return this.enableEvents;
     }
 
 
-    public byte[] getSendArray(){
-        byte[]result = new byte[20];
+    public byte[] getSendArray() {
+        byte[] result = new byte[20];
 
         result[0] = 'z'; //packet type
 
         //kodiere 7 booleans in 1 Byte
         byte bools = 0;
-        if(randomSpeed)            bools |= 1<<7;
-        if(enableReverse)          bools |= 1<<6;
-        if(chefMode)               bools |= 1<<5;
-        if(chefRoulette)           bools |= 1<<4;
-        if(chefHasShorterCooldown) bools |= 1<<3;
-        if(enableItems)            bools |= 1<<2;
-        if(enableEvents)           bools |= 1<<1;
+        if (randomSpeed) bools |= 1 << 7;
+        if (enableReverse) bools |= 1 << 6;
+        if (chefMode) bools |= 1 << 5;
+        if (chefRoulette) bools |= 1 << 4;
+        if (chefHasShorterCooldown) bools |= 1 << 3;
+        if (enableItems) bools |= 1 << 2;
+        if (enableEvents) bools |= 1 << 1;
         result[1] = bools;
 
         result[2] = startSpeed;
 
-        result[3] = (byte)(speedMinDelay & 0x00FF);
-        result[4] = (byte)((speedMinDelay & 0xFF00)>>8);
+        result[3] = (byte) (speedMinDelay & 0x00FF);
+        result[4] = (byte) ((speedMinDelay & 0xFF00) >> 8);
 
-        result[5] = (byte)(speedMaxDelay & 0x00FF);
-        result[6] = (byte)((speedMaxDelay & 0xFF00)>>8);
+        result[5] = (byte) (speedMaxDelay & 0x00FF);
+        result[6] = (byte) ((speedMaxDelay & 0xFF00) >> 8);
 
         result[7] = speedMinStepSize;
 
         result[8] = speedMaxStepSize;
 
-        result[9] = (byte)(chefChangeDelay & 0x00FF);
-        result[10] = (byte)((chefChangeDelay & 0xFF00)>>8);
+        result[9] = (byte) (chefChangeDelay & 0x00FF);
+        result[10] = (byte) ((chefChangeDelay & 0xFF00) >> 8);
 
         return result;
     }

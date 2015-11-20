@@ -1,12 +1,8 @@
 package de.renekolb.loopinglouieextreme.ui;
 
-import android.graphics.Color;
-
-import de.renekolb.loopinglouieextreme.Connection;
 import de.renekolb.loopinglouieextreme.ConnectionState;
 import de.renekolb.loopinglouieextreme.GamePlayer;
 import de.renekolb.loopinglouieextreme.ItemType;
-import de.renekolb.loopinglouieextreme.PlayerColor;
 
 public class PlayerSettingsListItem {
 
@@ -24,7 +20,7 @@ public class PlayerSettingsListItem {
         this.chipAmount = chipAmount;
     }*/
 
-    public PlayerSettingsListItem(GamePlayer player){
+    public PlayerSettingsListItem(GamePlayer player) {
         this.playerName = player.getDisplayName();
         this.color = player.getPlayerColor().getColor();
         this.itemType = player.getDefaultItemType();
@@ -32,7 +28,7 @@ public class PlayerSettingsListItem {
         this.connectionState = player.getConnectionState();
     }
 
-    public void update(GamePlayer player){
+    public void update(GamePlayer player) {
         this.playerName = player.getDisplayName();
         this.color = player.getPlayerColor().getColor();
         this.itemType = player.getDefaultItemType();
@@ -40,23 +36,23 @@ public class PlayerSettingsListItem {
         this.connectionState = player.getConnectionState();
     }
 
-    public String getPlayerName(){
+    public String getPlayerName() {
         return this.playerName;
     }
 
-    public int getColor(){
+    public int getColor() {
         return this.color;
     }
 
-    public ItemType getBooster(){
+    public ItemType getBooster() {
         return this.itemType;
     }
 
-    public int getChipAmount(){
+    public int getChipAmount() {
         return this.chipAmount;
     }
 
-    public ConnectionState getConnectionState(){
+    public ConnectionState getConnectionState() {
         return this.connectionState;
     }
 }

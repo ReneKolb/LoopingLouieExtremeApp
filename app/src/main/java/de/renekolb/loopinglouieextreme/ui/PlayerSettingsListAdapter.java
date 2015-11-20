@@ -13,7 +13,6 @@ import java.util.ArrayList;
 
 import de.renekolb.loopinglouieextreme.Game;
 import de.renekolb.loopinglouieextreme.GamePlayer;
-import de.renekolb.loopinglouieextreme.PlayerColor;
 import de.renekolb.loopinglouieextreme.R;
 
 public class PlayerSettingsListAdapter extends BaseAdapter {
@@ -21,16 +20,16 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
     ArrayList<PlayerSettingsListItem> list;
     LayoutInflater layoutInflater;
 
-    public PlayerSettingsListAdapter(Context context, Game game){
+    public PlayerSettingsListAdapter(Context context, Game game) {
         layoutInflater = LayoutInflater.from(context);
 
         list = new ArrayList<>();
-        for(int i=0;i<4;i++){
+        for (int i = 0; i < 4; i++) {
             list.add(new PlayerSettingsListItem(game.getGamePlayer(i)));
         }
     }
 
-    public void update(int index, GamePlayer player){
+    public void update(int index, GamePlayer player) {
         list.get(index).update(player);
         this.notifyDataSetChanged();
     }
@@ -63,49 +62,49 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
-        if(convertView == null) {
+        if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.listitem_player_settings, parent, false);
             holder = new ViewHolder();
-            holder.colorDisplay = (ImageView)convertView.findViewById(R.id.iv_listitem_player_settings_color);
-            holder.playerName = (TextView)convertView.findViewById(R.id.tv_listitem_player_settings_player_name);
-            holder.booster = (TextView)convertView.findViewById(R.id.tv_listitem_player_settings_player_item);
-            holder.chips = (TextView)convertView.findViewById(R.id.tv_listitem_player_settings_player_chips);
+            holder.colorDisplay = (ImageView) convertView.findViewById(R.id.iv_listitem_player_settings_color);
+            holder.playerName = (TextView) convertView.findViewById(R.id.tv_listitem_player_settings_player_name);
+            holder.booster = (TextView) convertView.findViewById(R.id.tv_listitem_player_settings_player_item);
+            holder.chips = (TextView) convertView.findViewById(R.id.tv_listitem_player_settings_player_chips);
             convertView.setTag(holder);
-        }else{
-            holder = (ViewHolder)convertView.getTag();
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
         PlayerSettingsListItem data = getItem(position);
 
         holder.colorDisplay.setBackgroundColor(data.getColor());
 
-        switch (data.getConnectionState()){
+        switch (data.getConnectionState()) {
             case OPEN:
-                holder.playerName.setTextColor(Color.argb(255,0,0,255));
-                holder.booster.setTextColor(Color.argb(255,0,0,255));
+                holder.playerName.setTextColor(Color.argb(255, 0, 0, 255));
+                holder.booster.setTextColor(Color.argb(255, 0, 0, 255));
                 holder.playerName.setText("Open Slot");
                 holder.booster.setText("");
-                holder.chips.setTextColor(Color.argb(255,0,180,0));
+                holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                 holder.chips.setText(String.valueOf(data.getChipAmount()));
                 break;
             case CONNECTED:
-                holder.playerName.setTextColor(Color.argb(255,0,0,255));
-                holder.booster.setTextColor(Color.argb(255,0,0,255));
+                holder.playerName.setTextColor(Color.argb(255, 0, 0, 255));
+                holder.booster.setTextColor(Color.argb(255, 0, 0, 255));
                 holder.playerName.setText(data.getPlayerName());
                 holder.booster.setText(data.getBooster() == null ? "none" : data.getBooster().getDisplayName());
                 holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                 holder.chips.setText(String.valueOf(data.getChipAmount()));
                 break;
             case LOCAL:
-                holder.playerName.setTextColor(Color.argb(255,0,0,0));
-                holder.booster.setTextColor(Color.argb(255,0, 0, 0));
+                holder.playerName.setTextColor(Color.argb(255, 0, 0, 0));
+                holder.booster.setTextColor(Color.argb(255, 0, 0, 0));
                 holder.playerName.setText(data.getPlayerName());
                 holder.booster.setText(data.getBooster() == null ? "none" : data.getBooster().getDisplayName());
                 holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                 holder.chips.setText(String.valueOf(data.getChipAmount()));
                 break;
             case CLOSED:
-                holder.playerName.setTextColor(Color.argb(255,120,120,120));
+                holder.playerName.setTextColor(Color.argb(255, 120, 120, 120));
                 holder.playerName.setText("Disabled Player");
                 holder.booster.setText("");
                 holder.chips.setText("");
@@ -116,7 +115,7 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
     }
 
 
-    private class ViewHolder{
+    private class ViewHolder {
         ImageView colorDisplay;
         TextView playerName;
         TextView booster;
