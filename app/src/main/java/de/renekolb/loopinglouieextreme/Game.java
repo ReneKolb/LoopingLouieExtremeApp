@@ -83,7 +83,7 @@ public class Game {
                 @Override
                 public void run() {
                     secondsRunning++;
-                    fa.runOnUiThread(new Runnable() {
+                   fa.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             fa.getGameFragment().updateSeconds(secondsRunning);
@@ -141,6 +141,17 @@ public class Game {
             sb.append(0);
 
         return sb.toString();
+    }
+
+    public int getLoser(){
+        if(fourth != -1)
+            return fourth;
+        else if(third != -1)
+            return third;
+        else if(second!=-1)
+            return second;
+        else
+            return -1; //the first one is the winner and cannot be the loser!
     }
 
 }

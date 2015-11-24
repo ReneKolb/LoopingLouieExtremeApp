@@ -288,7 +288,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     wheelOfFortuneFragment = WheelOfFortuneFragment.newInstance();
                 }
                 //TODO: only temporary
-                wheelOfFortuneFragment.setPlayerSpin(game.first, game.second, game.third, game.fourth);
+                //wheelOfFortuneFragment.setPlayerSpin(game.first, game.second, game.third, game.fourth);
+                wheelOfFortuneFragment.setPlayerSpin(game.first, game.getLoser(), -1, -1);
 
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                 ft.addToBackStack(null);

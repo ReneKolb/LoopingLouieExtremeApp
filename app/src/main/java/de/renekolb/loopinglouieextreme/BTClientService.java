@@ -51,7 +51,9 @@ public class BTClientService {
     }
 
     public void sendMessage(String msg) {
-        this.connectedThread.write(msg.getBytes());
+        if(this.connectedThread.isAlive()) {
+            this.connectedThread.write(msg.getBytes());
+        }
     }
 
     public void stop() {
