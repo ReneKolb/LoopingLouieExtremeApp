@@ -154,4 +154,8 @@ public class Game {
             return -1; //the first one is the winner and cannot be the loser!
     }
 
+    public ArrayList<GamePlayer> getPlayers(){
+        return this.gamePlayers;
+    }
+
 }

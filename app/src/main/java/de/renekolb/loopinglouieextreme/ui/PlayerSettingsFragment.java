@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ import de.renekolb.loopinglouieextreme.R;
  * create an instance of this fragment.
  */
 public class PlayerSettingsFragment extends Fragment {
+
+    public static final long CHIP_UPDATE_DELAY = 3000; //3 sec
 
     //private OnFragmentInteractionListener mListener;
     private FullscreenActivity fa;
@@ -328,7 +331,6 @@ public class PlayerSettingsFragment extends Fragment {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chipCountRefreshTimer.removeCallbacks(updateChipsTask);
                 onButtonPressed(Constants.buttons.PLAYER_SETTINGS_START_GAME);
             }
         });
@@ -340,6 +342,10 @@ public class PlayerSettingsFragment extends Fragment {
         if (fa != null) {
             fa.onFragmentInteraction(button);
         }
+    }
+
+    public void stopUpdatingChips() {
+        chipCountRefreshTimer.removeCallbacks(updateChipsTask);
     }
 
 
@@ -358,8 +364,9 @@ public class PlayerSettingsFragment extends Fragment {
     private Runnable updateChipsTask = new Runnable() {
         @Override
         public void run() {
+            Log.v("PlayerSettings", "Request Chip Count");
             fa.btLEService.sendRequestChipsCount();
-            chipCountRefreshTimer.postDelayed(updateChipsTask, 3000);
+            chipCountRefreshTimer.postDelayed(updateChipsTask, CHIP_UPDATE_DELAY);
         }
     };
 

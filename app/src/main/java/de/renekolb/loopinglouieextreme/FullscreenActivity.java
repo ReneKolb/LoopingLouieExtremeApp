@@ -257,19 +257,39 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 break;
             case Constants.buttons.PLAYER_SETTINGS_START_GAME:
                 //TODO: Check if all (relevant) players have 3 chips plugged in
-                game.nextRound();
-                ft = getFragmentManager().beginTransaction();
-                if (gameFragment == null) {
-                    gameFragment = GameFragment.newInstance();
-                }
-                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, gameFragment);
-                ft.commit();
+                boolean canStart = true;
+                for (GamePlayer p : game.getPlayers()) {
+                    if (p.getConnectionState() == ConnectionState.OPEN) {
+                        canStart = false;
+                        break;
+                    }
 
-                btLEService.sendGameSettings(game);
-                btLEService.sendGameStart();
-                game.setRunning(true);
+                    if (p.getConnectionState() == ConnectionState.CONNECTED || p.getConnectionState() == ConnectionState.LOCAL) {
+                        if (p.getCurrentChips() < 3) {
+                            canStart = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (canStart) {
+                    playerSettingsFragment.stopUpdatingChips();
+                    game.nextRound();
+                    ft = getFragmentManager().beginTransaction();
+                    if (gameFragment == null) {
+                        gameFragment = GameFragment.newInstance();
+                    }
+                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                    ft.addToBackStack(null);
+                    ft.replace(R.id.main_fragment, gameFragment);
+                    ft.commit();
+
+                    btLEService.sendGameSettings(game);
+                    btLEService.sendGameStart();
+                    game.setRunning(true);
+                } else {
+                    Toast.makeText(this, "Nicht alle Spieler haben 3 Chips eingesteckt!", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case Constants.buttons.GAME_SETTINGS_TEST_WHEEL:
@@ -412,7 +432,6 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         }
                         if (item != null) {
                             hostGameFragment.connectedPlayerAdapter.remove(item);
-
                         } else {
                             //ERROR
                             Toast.makeText(FullscreenActivity.this, "ERROR unknown address", Toast.LENGTH_SHORT).show();
