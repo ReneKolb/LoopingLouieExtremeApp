@@ -1,5 +1,7 @@
 package de.renekolb.loopinglouieextreme;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -70,6 +72,44 @@ public class Game {
         }
 
         return this.gamePlayers.get(index);
+    }
+
+    public int getGamePlayerIndex(String address) {
+        for (int i = 0; i < gamePlayers.size(); i++) {
+            if (gamePlayers.get(i).getRemoteAddress() != null && gamePlayers.get(i).getRemoteAddress().equals(address)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public GamePlayer getGamePlayer(String address) {
+        int index = getGamePlayerIndex(address);
+
+        return index == -1 ? null : gamePlayers.get(index);
+    }
+
+    public int getNextOpenSlot() {
+        for (int i = 0; i < gamePlayers.size(); i++) {
+            if (gamePlayers.get(i).getConnectionState().equals(ConnectionState.OPEN)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void bindRemotePlayer(int slot, String address) {
+        if (slot < 0 || slot > 3) {
+            Log.e("Game", "invalid Slot");
+            return;
+        }
+
+        if (gamePlayers.get(slot).getConnectionState() != ConnectionState.OPEN) {
+            Log.e("Game", "The Slot is not Open");
+            return;
+        }
+
+        gamePlayers.get(slot).setConnectionState(address);
     }
 
     public void setRunning(boolean isRunning) {

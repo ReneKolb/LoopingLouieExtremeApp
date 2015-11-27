@@ -4,6 +4,7 @@ import android.util.Log;
 
 public class GamePlayer {
 
+    private final String defaultName;
     private String displayName;
     private PlayerColor playerColor;
     private int points;
@@ -14,8 +15,9 @@ public class GamePlayer {
     private ConnectionState connectionState;
     private String remoteAddress;
 
-    public GamePlayer(String displayName, PlayerColor playerColor, boolean localPlayer) {
-        this.displayName = displayName;
+    public GamePlayer(String defaultName, PlayerColor playerColor, boolean localPlayer) {
+        this.defaultName = defaultName;
+        this.displayName = null;
         this.playerColor = playerColor;
         this.itemStack = new ItemStack();
         this.defaultItemType = null;
@@ -25,7 +27,7 @@ public class GamePlayer {
     }
 
     public String getDisplayName() {
-        return this.displayName;
+        return this.displayName == null ? defaultName : displayName;
     }
 
     public void setDisplayName(String newName) {
@@ -98,6 +100,8 @@ public class GamePlayer {
             return;
         }
         this.connectionState = connectionState;
+        this.remoteAddress = null; // clear eventually remaining old address
+        this.displayName = null;
     }
 
     public void setConnectionState(String connectedRemoteAddress) {

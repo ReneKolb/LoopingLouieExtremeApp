@@ -190,7 +190,7 @@ public class BluetoothService {
         mConnectedThread.start();
 
         // Send the name of the connected device back to the UI Activity
-        Message msg = mHandler.obtainMessage(Constants.messages.BT_DEVICE_NAME);
+        Message msg = mHandler.obtainMessage(Constants.messages.BT_DEVICE_CONNECTED);
         Bundle bundle = new Bundle();
         bundle.putString(Constants.KEY_DEVICE_NAME, device.getName());
         msg.setData(bundle);

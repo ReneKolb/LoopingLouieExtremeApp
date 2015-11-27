@@ -58,8 +58,12 @@ public class BTConnectedThread extends Thread {
                 // Read from the InputStream
                 bytes = mmInStream.read(buffer);
                 // Send the obtained bytes to the UI activity
-                mMessageHandler.obtainMessage(Constants.messages.BT_READ, bytes, -1, buffer)
-                        .sendToTarget();
+                Message msg = mMessageHandler.obtainMessage(Constants.messages.BT_READ);
+                Bundle b = new Bundle();
+                b.putString(Constants.KEY_DEVICE_ADDRESS, this.remoteAddress);
+                b.putString(Constants.messages.KEY_BT_MESSAGE, new String(buffer, 0, bytes));
+                msg.setData(b);
+                msg.sendToTarget();
             } catch (IOException e) {
                 connectionLost();
                 break;

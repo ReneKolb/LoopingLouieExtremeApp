@@ -7,10 +7,12 @@ public final class Constants {
         public static final int BT_STATE_CHANGE = 1;
         public static final int BT_READ = 2;
         public static final int BT_WRITE = 3;
-        public static final int BT_DEVICE_NAME = 4;
+        public static final int BT_DEVICE_CONNECTED = 4;
         //public static final int MESSAGE_TOAST = 5;
         public static final int BT_CONNECTION_FAILED = 5;
         public static final int BT_CONNECTION_LOST = 6;
+
+        public static final String KEY_BT_MESSAGE = "bt_message";
 
         public static final int BLE_START_DISCOVERING = 7;
         public static final int BLE_STOP_DISCOVERING = 8;

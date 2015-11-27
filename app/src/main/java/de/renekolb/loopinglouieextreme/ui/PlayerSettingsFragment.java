@@ -127,6 +127,10 @@ public class PlayerSettingsFragment extends Fragment {
             public void onClick(View v) {
                 if (mSelectedItem != -1) {
                     GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
+                    if (player.getConnectionState() == ConnectionState.CONNECTED) {
+                        //Disconnect current Player
+                        fa.btServer.disconnectClient(player.getRemoteAddress(), true);
+                    }
                     player.setConnectionState(ConnectionState.OPEN);
                     playerSettingsListAdapter.update(mSelectedItem, player);
 
@@ -150,6 +154,10 @@ public class PlayerSettingsFragment extends Fragment {
             public void onClick(View v) {
                 if (mSelectedItem != -1) {
                     GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
+                    if (player.getConnectionState() == ConnectionState.CONNECTED) {
+                        //Disconnect current Player
+                        fa.btServer.disconnectClient(player.getRemoteAddress(), true);
+                    }
                     player.setConnectionState(ConnectionState.LOCAL);
                     playerSettingsListAdapter.update(mSelectedItem, player);
 
@@ -175,6 +183,10 @@ public class PlayerSettingsFragment extends Fragment {
             public void onClick(View v) {
                 if (mSelectedItem != -1) {
                     GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
+                    if (player.getConnectionState() == ConnectionState.CONNECTED) {
+                        //Disconnect current Player
+                        fa.btServer.disconnectClient(player.getRemoteAddress(), true);
+                    }
                     player.setConnectionState(ConnectionState.CLOSED);
                     playerSettingsListAdapter.update(mSelectedItem, player);
 
@@ -373,11 +385,19 @@ public class PlayerSettingsFragment extends Fragment {
 
     public void updatePlayerSettings() {
         //mainly used for updated chip amount
-        playerSettingsListAdapter.update(0, fa.getGame().getGamePlayer(0));
-        playerSettingsListAdapter.update(1, fa.getGame().getGamePlayer(1));
-        playerSettingsListAdapter.update(2, fa.getGame().getGamePlayer(2));
-        playerSettingsListAdapter.update(3, fa.getGame().getGamePlayer(3));
+        updatePlayerSettings(0);
+        updatePlayerSettings(1);
+        updatePlayerSettings(2);
+        updatePlayerSettings(3);
+        //playerSettingsListAdapter.update(0, fa.getGame().getGamePlayer(0));
+        //playerSettingsListAdapter.update(1, fa.getGame().getGamePlayer(1));
+        //playerSettingsListAdapter.update(2, fa.getGame().getGamePlayer(2));
+        //playerSettingsListAdapter.update(3, fa.getGame().getGamePlayer(3));
 
+    }
+
+    public void updatePlayerSettings(int slot) {
+        playerSettingsListAdapter.update(slot, fa.getGame().getGamePlayer(slot));
     }
 
     public void setPlayerNameEdible(boolean edible) {

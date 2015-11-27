@@ -400,17 +400,33 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 case Constants.messages.BT_READ:
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
-                    String readMessage = new String(readBuf, 0, msg.arg1);
-                    Toast.makeText(FullscreenActivity.this, "Read: " + readMessage, Toast.LENGTH_SHORT).show();
+                    //String readMessage = new String(readBuf, 0, msg.arg1);
+                    if (btServer != null) {
+                        serverReceiveMessage(msg.getData().getString(Constants.KEY_DEVICE_ADDRESS), msg.getData().getString(Constants.messages.KEY_BT_MESSAGE));
+                    } else if (btClient != null) {
+                        clientReceiveMessage(msg.getData().getString(Constants.KEY_DEVICE_ADDRESS), msg.getData().getString(Constants.messages.KEY_BT_MESSAGE));
+                    }
+                    //Toast.makeText(FullscreenActivity.this, "Read: " + readMessage, Toast.LENGTH_SHORT).show();
                     //mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
                     break;
-                case Constants.messages.BT_DEVICE_NAME:
+                case Constants.messages.BT_DEVICE_CONNECTED:
                     // save the connected device's name
                     String devName = msg.getData().getString(Constants.KEY_DEVICE_NAME);
                     String devAddr = msg.getData().getString(Constants.KEY_DEVICE_ADDRESS);
                     //only relevant when hosting a game!
-                    if (hostGameFragment != null) {
+                    if (hostGameFragment != null && hostGameFragment.isVisible()) {
                         hostGameFragment.connectedPlayerAdapter.add(new ConnectedPlayerListItem(devAddr, devName));
+                    }
+
+                    int index = game.getNextOpenSlot();
+                    if (index != -1) {
+                        game.bindRemotePlayer(index, devAddr);
+                        game.getGamePlayer(index).setDisplayName(devName); // Dummy Name
+                        if (playerSettingsFragment != null && playerSettingsFragment.isVisible()) {
+                            playerSettingsFragment.updatePlayerSettings(index);
+                        }
+                    } else {
+                        Log.e("SDDAFG", "Too many players connected");
                     }
                     //Toast.makeText(FullscreenActivity.this, "new Device: " + devName, Toast.LENGTH_SHORT).show();
                     break;
@@ -422,6 +438,15 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     Toast.makeText(FullscreenActivity.this, "BT Connection Lost", Toast.LENGTH_SHORT).show();
                     //only relevant when hosting a game
                     if (btServer != null) {
+
+                        int pindex = game.getGamePlayerIndex(addr);
+                        if (pindex != -1) {
+                            game.getGamePlayer(pindex).setConnectionState(ConnectionState.OPEN);
+                            if (playerSettingsFragment != null && playerSettingsFragment.isVisible()) {
+                                playerSettingsFragment.updatePlayerSettings(pindex);
+                            }
+                        }
+
                         btServer.disconnectClient(addr, true); //cleanup internal connectedThread List
                         ConnectedPlayerListItem item = null;
                         for (int i = 0; i < hostGameFragment.connectedPlayerAdapter.getCount(); i++) {
@@ -648,4 +673,48 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
             }
         }
     };
+
+    private void serverReceiveMessage(String senderAddress, String msg) {
+        String[] split = msg.split("\\.");
+        char cmdType;
+        String data;
+        for (String command : split) {
+            if (command.length() == 0) {
+                continue;
+            }
+            cmdType = command.charAt(0);
+            data = command.substring(1);
+
+            switch (cmdType) {
+                case 'a':
+                    // player Name
+                    int slot = game.getGamePlayerIndex(senderAddress);
+                    GamePlayer player = game.getGamePlayer(slot);
+                    player.setDisplayName(data);
+                    if (playerSettingsFragment != null && playerSettingsFragment.isVisible()) {
+                        playerSettingsFragment.updatePlayerSettings(slot);
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void clientReceiveMessage(String senderAddress, String msg) {
+        String[] split = msg.split("\\.");
+        char cmdType;
+        String data;
+        for (String command : split) {
+            if (command.length() == 0) {
+                continue;
+            }
+            cmdType = command.charAt(0);
+            data = command.substring(1);
+
+            switch (cmdType) {
+                case 'a':
+                    //update player settings
+                    break;
+            }
+        }
+    }
 }
