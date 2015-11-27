@@ -1,7 +1,7 @@
 package de.renekolb.loopinglouieextreme;
 
 public enum ItemType {
-    TURBO(0, "Turbo"), SLOW(1, "Slow"), REVERSE(2, "Reverse"), BLACKOUT(3, "Black");
+    NONE(-1, "None"), TURBO(0, "Turbo"), SLOW(1, "Slow"), REVERSE(2, "Reverse"), BLACKOUT(3, "Black");
 
     private String displayName;
     private int itemID;
@@ -23,5 +23,14 @@ public enum ItemType {
     @Override
     public String toString() {
         return getDisplayName();
+    }
+
+    public static ItemType fromInt(int id) {
+        for (ItemType it : values()) {
+            if (it.itemID == id) {
+                return it;
+            }
+        }
+        return null;
     }
 }

@@ -250,6 +250,5 @@ public class BTServerService {
         }
     }
 
-    //TODO: Handle connection Lost!!!! Close Conn when Quit App
 
 }

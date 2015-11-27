@@ -260,11 +260,7 @@ public class WheelOfFortuneFragment extends Fragment {
             }
             mTVResult.setText(textRid);
 
-            if (wofSettings.getFieldType(index).equals(WheelFieldType.AGAIN)) {
-                canSpin = true;
-            } else {
-                canSpin = false;
-            }
+            canSpin = wofSettings.getFieldType(index).equals(WheelFieldType.AGAIN);
 
             if (!canSpin) {
                 if (debug) {

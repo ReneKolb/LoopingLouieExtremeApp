@@ -195,7 +195,7 @@ public class BluetoothLEService {
 
     public void addSendMessage(byte[] message) {
         if (message.length > 20) {
-            Log.e("TAG TAG", "you cannot send messaged larger than 20 bytes");
+            Log.e("BTlE Service", "you cannot send messaged larger than 20 bytes");
         } else {
             sendingQueue.add(message);
             if (sendingQueue.size() == 1) {
@@ -205,7 +205,6 @@ public class BluetoothLEService {
     }
 
     private void sendMessage(byte[] message) {
-        Log.i("MESSAGE TAG", "Send: " + new String(message));
         if (characteristic != null) {
             characteristic.setValue(message);
             btGatt.writeCharacteristic(characteristic);

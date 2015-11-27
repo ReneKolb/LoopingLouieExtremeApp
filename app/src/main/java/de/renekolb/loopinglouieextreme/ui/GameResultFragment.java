@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import de.renekolb.loopinglouieextreme.DeviceRole;
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.R;
 
@@ -120,12 +121,16 @@ public class GameResultFragment extends Fragment {
         }
 
         Button btnWheelOfFortune = (Button) view.findViewById(R.id.btn_game_results_wheel_of_fortune);
-        btnWheelOfFortune.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onButtonPressed(Constants.buttons.GAME_RESULTS_WHEEL_OF_FORTUNE);
-            }
-        });
+        if (fa.deviceRole == DeviceRole.SERVER) {
+            btnWheelOfFortune.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onButtonPressed(Constants.buttons.GAME_RESULTS_WHEEL_OF_FORTUNE);
+                }
+            });
+        } else if (fa.deviceRole == DeviceRole.CLIENT) {
+            btnWheelOfFortune.setVisibility(View.GONE);
+        }
 
         tvTime = (TextView) view.findViewById(R.id.tv_game_results_time_cnt);
 

@@ -20,14 +20,14 @@ public class GamePlayer {
         this.displayName = null;
         this.playerColor = playerColor;
         this.itemStack = new ItemStack();
-        this.defaultItemType = null;
+        this.defaultItemType = ItemType.NONE;
         this.currentChips = 0;
         this.connectionState = localPlayer ? ConnectionState.LOCAL : ConnectionState.OPEN;
         this.remoteAddress = null;
     }
 
     public String getDisplayName() {
-        return this.displayName == null ? defaultName : displayName;
+        return displayName == null ? defaultName : displayName;
     }
 
     public void setDisplayName(String newName) {
@@ -96,8 +96,9 @@ public class GamePlayer {
 
     public void setConnectionState(ConnectionState connectionState) {
         if (connectionState == ConnectionState.CONNECTED) {
-            Log.e("GamePlayer", "Wrong method to set Connected connectionState", new Exception());
-            return;
+            Log.w("GamePlayer", "Wrong method to set Connected connectionState?");
+            //but as a client it's ok...
+            //return;
         }
         this.connectionState = connectionState;
         this.remoteAddress = null; // clear eventually remaining old address
