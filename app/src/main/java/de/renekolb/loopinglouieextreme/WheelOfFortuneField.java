@@ -1,12 +1,9 @@
 package de.renekolb.loopinglouieextreme;
 
-/**
- * Created by Admi on 05.11.2015.
- */
 public class WheelOfFortuneField {
 
-    private int displayTextRessourceID;
-    private WheelFieldType fieldType;
+    private final int displayTextRessourceID;
+    private final WheelFieldType fieldType;
 
     public WheelOfFortuneField(WheelFieldType type, int displayTextRessourceID) {
         this.fieldType = type;

@@ -19,26 +19,26 @@ import de.renekolb.loopinglouieextreme.ui.Constants;
 
 public class BTServerService {
 
-    public static final String NAME = "Looping Louie BT";
+    private static final String NAME = "Looping Louie BT";
     public static final UUID commUuid = UUID.fromString("883fd50d-9980-4035-9f2e-eea84e2d1a95");
 
     public static final UUID btAdapterCommUUID = UUID.fromString("0000ffe0-0000-1000-8000-00805f9b34fb");
 
-    private Handler mHandler;
+    private final Handler mHandler;
 
     private AcceptThread acceptThread;
 
-    private HashMap<String, BTConnectedThread> clientCommThread;
+    private final HashMap<String, BTConnectedThread> clientCommThread;
 
-    private BluetoothAdapter mAdapter;
+    private final BluetoothAdapter mAdapter;
 
-    private FullscreenActivity activity;
+    private final FullscreenActivity activity;
 
     public BTServerService(FullscreenActivity activity, Handler handler) {
         this.activity = activity;
         this.mHandler = handler;
         mAdapter = BluetoothAdapter.getDefaultAdapter();
-        clientCommThread = new HashMap<String, BTConnectedThread>();
+        clientCommThread = new HashMap<>();
         //clientCommThread = new ArrayList<BTConnectedThread>(3);
         //for (int i = 0; i < 3; i++) {
 //            clientCommThread.add(null);
@@ -171,7 +171,7 @@ public class BTServerService {
     }*/
 
 
-    public synchronized void manageConnectedSocket(BluetoothSocket socket) {
+    private synchronized void manageConnectedSocket(BluetoothSocket socket) {
 
         // Start the thread to manage the connection and perform transmissions
         BTConnectedThread mConnectedThread = new BTConnectedThread(socket, mHandler);

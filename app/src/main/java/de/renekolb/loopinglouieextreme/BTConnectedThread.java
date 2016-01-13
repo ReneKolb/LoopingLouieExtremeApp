@@ -15,7 +15,7 @@ import de.renekolb.loopinglouieextreme.ui.Constants;
 
 
 public class BTConnectedThread extends Thread {
-    private Handler mMessageHandler;
+    private final Handler mMessageHandler;
 
     private final BluetoothSocket mmSocket;
     private final InputStream mmInStream;

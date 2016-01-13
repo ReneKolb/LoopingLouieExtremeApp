@@ -42,8 +42,7 @@ public class CustomGameSettingsFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static CustomGameSettingsFragment newInstance() {
-        CustomGameSettingsFragment fragment = new CustomGameSettingsFragment();
-        return fragment;
+        return new CustomGameSettingsFragment();
     }
 
     public CustomGameSettingsFragment() {

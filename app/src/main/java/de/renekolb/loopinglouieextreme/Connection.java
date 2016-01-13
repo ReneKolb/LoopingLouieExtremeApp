@@ -1,12 +1,9 @@
 package de.renekolb.loopinglouieextreme;
 
-/**
- * Created by Admi on 17.10.2015.
- */
 public class Connection {
 
-    private BTConnectedThread mConnectedThread;
-    private String mRemoteAddress;
+    private final BTConnectedThread mConnectedThread;
+    private final String mRemoteAddress;
 
     public Connection(BTConnectedThread connectedThread, String remoteAddress) {
         this.mConnectedThread = connectedThread;

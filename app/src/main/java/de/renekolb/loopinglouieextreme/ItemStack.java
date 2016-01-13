@@ -3,14 +3,14 @@ package de.renekolb.loopinglouieextreme;
 import java.util.LinkedList;
 
 public class ItemStack {
-    private LinkedList<ItemType> items;
-    private int maxItems;
+    private final LinkedList<ItemType> items;
+    private final int maxItems;
 
     public ItemStack() {
         this(4);
     }
 
-    public ItemStack(int maxItems) {
+    private ItemStack(int maxItems) {
         this.items = new LinkedList<>();
         this.maxItems = maxItems;
     }

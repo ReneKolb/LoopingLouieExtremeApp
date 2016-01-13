@@ -50,9 +50,8 @@ public class MainMenuFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static MainMenuFragment newInstance() {
-        MainMenuFragment fragment = new MainMenuFragment();
         //fragment.fa = fa;
-        return fragment;
+        return new MainMenuFragment();
     }
 
     public MainMenuFragment() {
@@ -140,7 +139,7 @@ public class MainMenuFragment extends Fragment {
         super.onResume();
     }
 
-    public void onButtonPressed(int button) {
+    private void onButtonPressed(int button) {
         if (fa != null) {
             fa.onFragmentInteraction(button);
         }

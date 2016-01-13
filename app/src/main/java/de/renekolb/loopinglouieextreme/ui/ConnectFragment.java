@@ -126,7 +126,7 @@ public class ConnectFragment extends Fragment {
     }
 
 
-    public void onButtonPressed(int button) {
+    private void onButtonPressed(int button) {
         if (fa != null) {
             fa.onFragmentInteraction(button);
         }

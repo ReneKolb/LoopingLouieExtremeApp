@@ -416,7 +416,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     if (btServer != null) {
                         serverReceiveMessageFromClient(msg.getData().getString(Constants.KEY_DEVICE_ADDRESS), msg.getData().getString(Constants.messages.KEY_BT_MESSAGE));
                     } else if (btClient != null) {
-                        clientReceiveMessageFromServer(msg.getData().getString(Constants.KEY_DEVICE_ADDRESS), msg.getData().getString(Constants.messages.KEY_BT_MESSAGE));
+                        clientReceiveMessageFromServer(/*msg.getData().getString(Constants.KEY_DEVICE_ADDRESS),*/ msg.getData().getString(Constants.messages.KEY_BT_MESSAGE));
                     }
                     //Toast.makeText(FullscreenActivity.this, "Read: " + readMessage, Toast.LENGTH_SHORT).show();
                     //mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
@@ -588,7 +588,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         return this.game;
     }
 
-    private ReceiveCallback onBoardMessageRead = new ReceiveCallback() {
+    private final ReceiveCallback onBoardMessageRead = new ReceiveCallback() {
         @Override
         public void onReceiveMessage(String message) {
             Log.i("ReceivedMSG", "received: " + message);
@@ -751,7 +751,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         }
     }
 
-    private void clientReceiveMessageFromServer(String senderAddress, String msg) {
+    private void clientReceiveMessageFromServer(/*String senderAddress,*/ String msg) {
         String[] split = msg.split("\\.");
         char cmdType;
         String data;

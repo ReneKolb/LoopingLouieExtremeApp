@@ -46,7 +46,6 @@ public class BlackFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_black, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(int button) {
         if (fa != null) {
             fa.onFragmentInteraction(button);

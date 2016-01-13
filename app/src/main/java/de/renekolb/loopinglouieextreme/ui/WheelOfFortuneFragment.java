@@ -79,9 +79,8 @@ public class WheelOfFortuneFragment extends Fragment {
      */
 
     public static WheelOfFortuneFragment newInstance() {
-        WheelOfFortuneFragment fragment = new WheelOfFortuneFragment();
 
-        return fragment;
+        return new WheelOfFortuneFragment();
     }
 
     public WheelOfFortuneFragment() {
@@ -184,7 +183,7 @@ public class WheelOfFortuneFragment extends Fragment {
         return view;
     }
 
-    public void onButtonPressed(int button) {
+    private void onButtonPressed(int button) {
         if (fa != null) {
             fa.onFragmentInteraction(button);
         }
@@ -240,7 +239,7 @@ public class WheelOfFortuneFragment extends Fragment {
     }
 
 
-    private Runnable onAnimationFinish = new Runnable() {
+    private final Runnable onAnimationFinish = new Runnable() {
         @Override
         public void run() {
             isSpinning = false;

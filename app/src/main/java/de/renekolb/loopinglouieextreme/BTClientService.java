@@ -14,12 +14,12 @@ import de.renekolb.loopinglouieextreme.ui.Constants;
 
 public class BTClientService {
 
-    private FullscreenActivity activity;
-    private Handler mHandler;
+    private final FullscreenActivity activity;
+    private final Handler mHandler;
 
     private boolean isConnecting;
 
-    private BluetoothAdapter mAdapter;
+    private final BluetoothAdapter mAdapter;
 
     private ConnectThread connectingThread;
     private BTConnectedThread connectedThread;

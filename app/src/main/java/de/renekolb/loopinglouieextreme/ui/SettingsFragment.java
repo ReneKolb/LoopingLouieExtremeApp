@@ -37,9 +37,8 @@ public class SettingsFragment extends Fragment {
      */
 
     public static SettingsFragment newInstance() {
-        SettingsFragment fragment = new SettingsFragment();
 
-        return fragment;
+        return new SettingsFragment();
     }
 
     public SettingsFragment() {
@@ -89,8 +88,7 @@ public class SettingsFragment extends Fragment {
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(int button) {
+    private void onButtonPressed(int button) {
         if (fa != null) {
             fa.onFragmentInteraction(button);
         }

@@ -4,7 +4,7 @@ public enum ConnectionState {
 
     OPEN(0), CONNECTED(1), LOCAL(2), CLOSED(3);
 
-    private int id;
+    private final int id;
 
     ConnectionState(int id) {
         this.id = id;

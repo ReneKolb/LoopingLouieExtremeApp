@@ -6,17 +6,17 @@ import android.content.SharedPreferences;
 
 public class AppSettings {
 
-    public static final String PREFS_NAME = "LoopingLouieSharedPrefences";
+    private static final String PREFS_NAME = "LoopingLouieSharedPrefences";
 
-    public static final String KEY_ENABLE_DEBUG = "EnableDebug";
-    public static final String KEY_DISABLE_BT_ON_EXIT = "DisableBTonExit";
+    private static final String KEY_ENABLE_DEBUG = "EnableDebug";
+    private static final String KEY_DISABLE_BT_ON_EXIT = "DisableBTonExit";
 
-    private Activity activity;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
+    //private final Activity activity;
+    private final SharedPreferences sharedPreferences;
+    private final SharedPreferences.Editor editor;
 
     public AppSettings(Activity activity) {
-        this.activity = activity;
+        //this.activity = activity;
         this.sharedPreferences = activity.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         this.editor = sharedPreferences.edit();
     }

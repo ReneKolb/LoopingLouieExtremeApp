@@ -28,8 +28,7 @@ public class GameFragment extends Fragment {
     private TextView tvSecondsDisplay;
 
     public static GameFragment newInstance() {
-        GameFragment fragment = new GameFragment();
-        return fragment;
+        return new GameFragment();
     }
 
     public GameFragment() {

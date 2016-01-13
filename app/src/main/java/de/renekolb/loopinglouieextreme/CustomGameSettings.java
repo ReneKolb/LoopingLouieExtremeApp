@@ -1,8 +1,5 @@
 package de.renekolb.loopinglouieextreme;
 
-/**
- * Created by Admi on 28.10.2015.
- */
 public class CustomGameSettings {
 
     //7boolean = ~1Byte
@@ -31,7 +28,7 @@ public class CustomGameSettings {
         loadDefaults();
     }
 
-    public void loadDefaults() {
+    private void loadDefaults() {
         this.randomSpeed = true;
         this.startSpeed = 64;
         this.speedMinDelay = 5000;

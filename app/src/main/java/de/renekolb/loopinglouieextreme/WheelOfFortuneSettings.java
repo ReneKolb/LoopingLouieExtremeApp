@@ -1,19 +1,21 @@
 package de.renekolb.loopinglouieextreme;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class WheelOfFortuneSettings {
 
-    private int resourceID;
-    private ArrayList<WheelOfFortuneField> displayTexts;
+    private final int resourceID;
+    private final ArrayList<WheelOfFortuneField> displayTexts;
 
-    public WheelOfFortuneSettings(int resourceID, WheelOfFortuneField... wheelFields) {
+    private WheelOfFortuneSettings(int resourceID, WheelOfFortuneField... wheelFields) {
         this.resourceID = resourceID;
         this.displayTexts = new ArrayList<>();
         if (wheelFields != null) {
-            for (WheelOfFortuneField s : wheelFields) {
+            Collections.addAll(this.displayTexts, wheelFields); //better performance
+            /*for (WheelOfFortuneField s : wheelFields) {
                 this.displayTexts.add(s);
-            }
+            }*/
         }
     }
 

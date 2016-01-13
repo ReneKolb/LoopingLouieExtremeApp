@@ -144,7 +144,7 @@ public class GameResultFragment extends Fragment {
         return view;
     }
 
-    public void onButtonPressed(int button) {
+    private void onButtonPressed(int button) {
         if (fa != null) {
             fa.onFragmentInteraction(button);
         }

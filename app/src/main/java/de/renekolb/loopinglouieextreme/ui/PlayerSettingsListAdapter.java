@@ -17,8 +17,8 @@ import de.renekolb.loopinglouieextreme.R;
 
 public class PlayerSettingsListAdapter extends BaseAdapter {
 
-    ArrayList<PlayerSettingsListItem> list;
-    LayoutInflater layoutInflater;
+    private final ArrayList<PlayerSettingsListItem> list;
+    private final LayoutInflater layoutInflater;
 
     public PlayerSettingsListAdapter(Context context, Game game) {
         layoutInflater = LayoutInflater.from(context);

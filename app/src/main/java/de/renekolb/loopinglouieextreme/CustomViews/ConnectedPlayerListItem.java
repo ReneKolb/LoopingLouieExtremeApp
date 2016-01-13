@@ -2,8 +2,8 @@ package de.renekolb.loopinglouieextreme.CustomViews;
 
 public class ConnectedPlayerListItem {
 
-    String address;
-    String name;
+    private final String address;
+    private final String name;
 
     public ConnectedPlayerListItem(String address, String name) {
         this.address = address;

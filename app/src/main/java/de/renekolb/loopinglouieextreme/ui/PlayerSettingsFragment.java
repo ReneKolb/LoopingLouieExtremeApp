@@ -34,7 +34,7 @@ import de.renekolb.loopinglouieextreme.R;
  */
 public class PlayerSettingsFragment extends Fragment {
 
-    public static final long CHIP_UPDATE_DELAY = 3000; //3 sec
+    private static final long CHIP_UPDATE_DELAY = 3000; //3 sec
 
     //private OnFragmentInteractionListener mListener;
     private FullscreenActivity fa;
@@ -48,8 +48,7 @@ public class PlayerSettingsFragment extends Fragment {
     private Handler chipCountRefreshTimer;
 
     public static PlayerSettingsFragment newInstance() {
-        PlayerSettingsFragment fragment = new PlayerSettingsFragment();
-        return fragment;
+        return new PlayerSettingsFragment();
     }
 
     public PlayerSettingsFragment() {
@@ -380,7 +379,7 @@ public class PlayerSettingsFragment extends Fragment {
         return view;
     }
 
-    public void onButtonPressed(int button) {
+    private void onButtonPressed(int button) {
         if (fa != null) {
             fa.onFragmentInteraction(button);
         }
@@ -405,7 +404,7 @@ public class PlayerSettingsFragment extends Fragment {
         chipCountRefreshTimer.removeCallbacks(updateChipsTask);
     }
 
-    private Runnable updateChipsTask = new Runnable() {
+    private final Runnable updateChipsTask = new Runnable() {
         @Override
         public void run() {
             Log.v("PlayerSettings", "Request Chip Count");

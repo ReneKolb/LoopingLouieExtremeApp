@@ -2,7 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="de.renekolb.loopinglouieextreme.ui.ConnectFragment"
     android:background="#FFFACD"
     android:clickable="true">
@@ -44,22 +43,6 @@
         android:layout_alignStart="@+id/tv_connect_description1"
         android:textColor="#000000"
         android:textSize="15sp" />
-
-    <de.renekolb.loopinglouieextreme.CustomViews.MagicTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_connect_description2"
-        android:layout_marginTop="5dp"
-        android:layout_alignLeft="@+id/tv_connect_description2"
-        android:layout_alignStart="@+id/tv_connect_description2"
-        android:text="Test Text"
-        android:textStyle="bold"
-        android:textColor="#FFFFFF"
-        android:textSize="78sp"
-        app:strokeColor="#000000"
-        app:strokeJoinStyle="miter"
-        app:strokeWidth="5dp" />
-
 
     <Button
         android:id="@+id/btn_connect"

@@ -27,10 +27,10 @@ public class BluetoothLEService {
     private static final UUID SERVICE_UUID = UUID.fromString("0000FFE0-0000-1000-8000-00805F9B34FB");
     private static final UUID CHARACTERISTIC = UUID.fromString("0000FFE1-0000-1000-8000-00805F9B34FB");
 
-    public static final long SCAN_PERIODE = 10000;
+    private static final long SCAN_PERIODE = 10000;
 
-    private FullscreenActivity fa;
-    private Handler h;
+    private final FullscreenActivity fa;
+    private final Handler h;
 
     private boolean connected;
 
@@ -39,7 +39,7 @@ public class BluetoothLEService {
 
     private BluetoothAdapter mBluetoothAdapter = null;
 
-    LinkedList<byte[]> sendingQueue;
+    private final LinkedList<byte[]> sendingQueue;
 
     public BluetoothLEService(FullscreenActivity fa, Handler h) {
         this.connected = false;
@@ -88,7 +88,7 @@ public class BluetoothLEService {
         connected = false;
     }
 
-    private BluetoothAdapter.LeScanCallback scanCallback = new BluetoothAdapter.LeScanCallback() {
+    private final BluetoothAdapter.LeScanCallback scanCallback = new BluetoothAdapter.LeScanCallback() {
         //private ScanCallback scanCallback = new ScanCallback() {
         @Override
         public void onLeScan(final BluetoothDevice device,
@@ -193,7 +193,7 @@ public class BluetoothLEService {
         });
     }
 
-    public void addSendMessage(byte[] message) {
+    private void addSendMessage(byte[] message) {
         if (message.length > 20) {
             Log.e("BTlE Service", "you cannot send messaged larger than 20 bytes");
         } else {

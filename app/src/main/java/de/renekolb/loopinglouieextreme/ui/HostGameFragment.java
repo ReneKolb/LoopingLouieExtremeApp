@@ -110,7 +110,7 @@ public class HostGameFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_host_game, container, false);
 
-        connectedPlayerAdapter = new ArrayAdapter<ConnectedPlayerListItem>(getActivity(), R.layout.listitem_player);
+        connectedPlayerAdapter = new ArrayAdapter<>(getActivity(), R.layout.listitem_player);
 
         ListView players = (ListView) view.findViewById(R.id.lv_host_game_clients);
         players.setAdapter(connectedPlayerAdapter);
@@ -121,7 +121,7 @@ public class HostGameFragment extends Fragment {
             connectedPlayerAdapter.addAll(fa.btServer.getConnectedPlayers());
         }
 
-        availableBoardAdapter = new ArrayAdapter<ConnectedPlayerListItem>(getActivity(), R.layout.listitem_player);
+        availableBoardAdapter = new ArrayAdapter<>(getActivity(), R.layout.listitem_player);
 
         ListView boards = (ListView) view.findViewById(R.id.lv_host_game_board_devices);
         boards.setAdapter(availableBoardAdapter);
@@ -193,8 +193,7 @@ public class HostGameFragment extends Fragment {
         //TODO: update visual effect ??? ein haken oder so
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(int button) {
+    private void onButtonPressed(int button) {
         if (fa != null) {
             fa.onFragmentInteraction(button);
         }
@@ -218,14 +217,14 @@ public class HostGameFragment extends Fragment {
         fa = null;
     }
 
-    private AdapterView.OnItemClickListener mConnectedPlayerClickListener
+    private final AdapterView.OnItemClickListener mConnectedPlayerClickListener
             = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int position, long id) {
             fa.btServer.sendMessage(connectedPlayerAdapter.getItem(position).getAddress(), "Msg from Server");
         }
     };
 
-    private AdapterView.OnItemClickListener mConnectBoardClickListener = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener mConnectBoardClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             fa.connectToBoard(availableBoardAdapter.getItem(position).getAddress());

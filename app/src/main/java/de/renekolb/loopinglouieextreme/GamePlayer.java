@@ -6,10 +6,10 @@ public class GamePlayer {
 
     private final String defaultName;
     private String displayName;
-    private PlayerColor playerColor;
+    private final PlayerColor playerColor;
     private int points;
     private ItemType defaultItemType;
-    private ItemStack itemStack;
+    private final ItemStack itemStack;
     private int currentChips;
 
     private ConnectionState connectionState;

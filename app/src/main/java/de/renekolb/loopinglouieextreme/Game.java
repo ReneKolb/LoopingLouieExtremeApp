@@ -10,12 +10,12 @@ public class Game {
 
     private int maxRounds;
     private int currentRound;
-    private ArrayList<GamePlayer> gamePlayers;
-    private CustomGameSettings settings;
+    private final ArrayList<GamePlayer> gamePlayers;
+    private final CustomGameSettings settings;
     private boolean running;
 
     private int secondsRunning;
-    private Timer gameTimer;
+    private final Timer gameTimer;
 
 
     //TODO: only temporary!!!!
@@ -24,7 +24,7 @@ public class Game {
     public int third;
     public int fourth;
 
-    private FullscreenActivity fa; //to display the seconds
+    private final FullscreenActivity fa; //to display the seconds
 
     private TimerTask timerTask;
 

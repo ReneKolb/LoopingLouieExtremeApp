@@ -3,8 +3,8 @@ package de.renekolb.loopinglouieextreme;
 public enum ItemType {
     NONE(-1, "None"), TURBO(0, "Turbo"), SLOW(1, "Slow"), REVERSE(2, "Reverse"), BLACKOUT(3, "Black");
 
-    private String displayName;
-    private int itemID;
+    private final String displayName;
+    private final int itemID;
     //private int iconID;
 
     ItemType(int itemID, String displayName) {
