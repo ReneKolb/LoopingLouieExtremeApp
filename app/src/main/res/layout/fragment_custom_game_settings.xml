@@ -83,7 +83,8 @@
                     android:layout_weight="2"
                     android:layout_column="1"
                     android:layout_gravity="center_vertical"
-                    android:progress="50"/>
+                    android:progress="50"
+                    android:saveEnabled="false" />
 
                 <TextView
                     android:id="@+id/tv_custom_game_settings_start_speed_cnt"
@@ -127,7 +128,8 @@
                     android:textOff="OFF"
                     android:textOn="ON"
                     android:checked="true"
-                    android:layout_column="1"/>
+                    android:layout_column="1"
+                    android:saveEnabled="false" />
 
                 <!-- DUMMY-->
                 <TextView
@@ -164,7 +166,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:layout_column="1"
-                    android:progress="50"/>
+                    android:progress="50"
+                    android:saveEnabled="false" />
 
                 <TextView
                     android:id="@+id/tv_custom_game_settings_speed_min_delay_cnt"
@@ -205,7 +208,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:layout_column="1"
-                    android:progress="50"/>
+                    android:progress="50"
+                    android:saveEnabled="false" />
 
                 <TextView
                     android:id="@+id/tv_custom_game_settings_speed_max_delay_cnt"
@@ -246,7 +250,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:layout_column="1"
-                    android:progress="50"/>
+                    android:progress="50"
+                    android:saveEnabled="false" />
 
                 <TextView
                     android:id="@+id/tv_custom_game_settings_speed_min_step_size_cnt"
@@ -288,7 +293,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:layout_column="1"
-                    android:progress="50"/>
+                    android:progress="50"
+                    android:saveEnabled="false" />
 
                 <TextView
                     android:id="@+id/tv_custom_game_settings_speed_max_step_size_cnt"
@@ -333,7 +339,8 @@
                     android:textOff="OFF"
                     android:textOn="ON"
                     android:checked="true"
-                    android:layout_column="1"/>
+                    android:layout_column="1"
+                    android:saveEnabled="false" />
 
                 <!-- DUMMY-->
                 <TextView
@@ -372,7 +379,8 @@
                     android:textOff="OFF"
                     android:textOn="ON"
                     android:checked="true"
-                    android:layout_column="1"/>
+                    android:layout_column="1"
+                    android:saveEnabled="false" />
             </TableRow>
 
             <TableRow
@@ -404,7 +412,8 @@
                     android:textOff="OFF"
                     android:textOn="ON"
                     android:checked="true"
-                    android:layout_column="1"/>
+                    android:layout_column="1"
+                    android:saveEnabled="false" />
 
 
                 <!-- DUMMY-->
@@ -441,7 +450,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:layout_column="1"
-                    android:progress="50"/>
+                    android:progress="50"
+                    android:saveEnabled="false" />
 
                 <TextView
                     android:id="@+id/tv_custom_game_settings_change_chef_delay_cnt"
@@ -485,7 +495,8 @@
                     android:textOff="OFF"
                     android:textOn="ON"
                     android:checked="true"
-                    android:layout_column="1"/>
+                    android:layout_column="1"
+                    android:saveEnabled="false" />
 
                 <!-- DUMMY-->
                 <TextView
@@ -523,7 +534,8 @@
                     android:textOff="OFF"
                     android:textOn="ON"
                     android:checked="true"
-                    android:layout_column="1"/>
+                    android:layout_column="1"
+                    android:saveEnabled="false" />
             </TableRow>
 
             <TableRow
@@ -553,7 +565,8 @@
                     android:textOff="OFF"
                     android:textOn="ON"
                     android:checked="true"
-                    android:layout_column="1"/>
+                    android:layout_column="1"
+                    android:saveEnabled="false" />
             </TableRow>
         </TableLayout>
 
