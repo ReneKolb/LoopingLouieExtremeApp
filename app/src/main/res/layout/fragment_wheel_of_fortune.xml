@@ -1,10 +1,10 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="de.renekolb.loopinglouieextreme.ui.WheelOfFortuneFragment"
-             android:background="#FFFACD"
-             android:clickable="true">
+<de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.renekolb.loopinglouieextreme.ui.WheelOfFortuneFragment"
+    android:background="#FFFACD"
+    android:clickable="true">
 
 
     <TextView
@@ -69,4 +69,4 @@
         android:layout_marginBottom="24dp"/>
 
 
-</RelativeLayout>
+</de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

@@ -229,7 +229,7 @@ public class WheelOfFortuneFragment extends Fragment {
                 return (3 * x) - (3 * x * x) + (x * x * x);
             }
         });
-        anim.setDuration((int) (3.7 * dRot)); // keep rotating time constant
+        anim.setDuration((int) (2.0 * dRot)); // (früher 3.7) keep rotating time constant
         anim.setFillEnabled(true);
         anim.setFillAfter(true);
 
