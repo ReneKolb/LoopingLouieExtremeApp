@@ -45,6 +45,17 @@
         style="@android:style/Widget.ProgressBar.Small"
         android:visibility="invisible"/>
 
+    <Button
+        android:id="@+id/btn_host_game_make_visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/pb_host_game_scanning_board"
+        android:layout_toRightOf="@id/pb_host_game_scanning_board"
+        android:layout_toEndOf="@id/pb_host_game_scanning_board"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:text="vis"/>
+
     <ListView
         android:id="@+id/lv_host_game_board_devices"
         android:layout_width="match_parent"

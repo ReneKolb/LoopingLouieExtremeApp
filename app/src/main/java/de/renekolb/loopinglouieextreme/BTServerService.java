@@ -51,7 +51,7 @@ public class BTServerService {
     /**
      * Makes this device discoverable.
      */
-    private void ensureDiscoverable() {
+    public void ensureDiscoverable() {
         if (mAdapter.getScanMode() !=
                 BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
             Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);

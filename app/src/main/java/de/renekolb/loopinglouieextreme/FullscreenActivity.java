@@ -415,6 +415,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     //String readMessage = new String(readBuf, 0, msg.arg1);
+
+                    /*TODO: Bug! wenn erst Hosten und dann zurück zu Hauptmenü und versuchen zu Connecten btServer!=null -> Nullpointer Exception*/
                     if (btServer != null) {
                         serverReceiveMessageFromClient(msg.getData().getString(Constants.KEY_DEVICE_ADDRESS), msg.getData().getString(Constants.messages.KEY_BT_MESSAGE));
                     } else if (btClient != null) {

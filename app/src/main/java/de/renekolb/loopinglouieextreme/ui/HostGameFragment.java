@@ -151,6 +151,14 @@ public class HostGameFragment extends Fragment {
         });
         btnGameSettings.setEnabled(fa.appSettings.isDebugEnabled() || fa.btLEService.isConnected());
 
+        Button btnMakeVis = (Button) view.findViewById(R.id.btn_host_game_make_visible);
+        btnMakeVis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fa.btServer.ensureDiscoverable();
+            }
+        });
+
         return view;
     }
 
