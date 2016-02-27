@@ -30,6 +30,9 @@ public final class Constants {
         public static final String KEY_GAME_RESULTS_THIRD = "game_results_third";
         public static final String KEY_GAME_RESULTS_FOURTH = "game_results_fourth";
 
+        public static final int UNLOCKED_ACHIEVEMENT = 13;
+        public static final String KEY_ACHIEVEMENT_ID = "achievement_ID";
+
     }
 
     // Intent request codes

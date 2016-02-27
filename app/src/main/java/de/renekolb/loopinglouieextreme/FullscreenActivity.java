@@ -17,9 +17,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
+import de.renekolb.loopinglouieextreme.PlayerProfiles.Achievement;
+import de.renekolb.loopinglouieextreme.PlayerProfiles.Achievements;
+import de.renekolb.loopinglouieextreme.PlayerProfiles.PlayerProfile;
 import de.renekolb.loopinglouieextreme.ui.BlackFragment;
 import de.renekolb.loopinglouieextreme.ui.ConnectFragment;
 import de.renekolb.loopinglouieextreme.ui.Constants;
@@ -55,6 +60,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     private GameResultFragment gameResultsFragment;
     private WheelOfFortuneFragment wheelOfFortuneFragment;
 
+    private PlayerProfile currentPlayerProfile;
+
     private Game game;
 
     public DeviceRole deviceRole;
@@ -73,6 +80,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         Log.e("B LAAAA", "onCreate Activity");
 
         deviceRole = DeviceRole.NONE;
+        this.currentPlayerProfile = new PlayerProfile("TestProfileName",this.ServiceMessageHandler);
 
         //mContentView = findViewById(R.id.fullscreen_content);
 
@@ -349,7 +357,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
             case Constants.buttons.WHEEL_OF_FORTUNE_NEXT_ROUND:
                 //TODO: handle wheel correct (next Wheel or next Round)
                 //Toast.makeText(FullscreenActivity.this, "Hier gehts noch nicht weiter", Toast.LENGTH_SHORT).show();
+                currentPlayerProfile.updateTotalRoundsPlayed(1);
                 if (game.getCurrentRound() >= game.getMaxRounds()) {
+                    currentPlayerProfile.updateTotalGamesPlayed(1);
                     //TODO: show final stats Screen...
                     //but for now: go back to first screen (Main Menu)
                     getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
@@ -579,6 +589,28 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     ft.addToBackStack(null);
                     ft.replace(R.id.main_fragment, gameResultsFragment); // DEFAULT VALUES
                     ft.commit();
+                    break;
+
+                case Constants.messages.UNLOCKED_ACHIEVEMENT:
+                    int achievementID = msg.getData().getInt(Constants.messages.KEY_ACHIEVEMENT_ID);
+                    Achievement ach = Achievements.getAchievement(achievementID);
+
+                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View view = inflater.inflate(R.layout.toast_achievement, (ViewGroup) findViewById(R.id.rl_toast_achievement_root));
+                    TextView tvTitle = (TextView)view.findViewById(R.id.tv_toast_achievement_title);
+                    TextView tvDescription = (TextView)view.findViewById(R.id.tv_toast_achievement_description);
+                    ImageView ivIcon = (ImageView)view.findViewById(R.id.iv_toast_achievement);
+
+                    tvTitle.setText(ach.getTitle()); //TODO: replace with StringID
+                    tvDescription.setText(ach.getDescription());
+                    ivIcon.setImageResource(ach.getDrawableID());
+
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setGravity(Gravity.TOP, 0, 150);
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(view);
+
+                    toast.show();
                     break;
 //                case Constants.MESSAGE_TOAST:
 //                        Toast.makeText(FullscreenActivity.this, msg.getData().getString(Constants.TOAST),
