@@ -267,7 +267,12 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
             case Constants.buttons.PLAYER_SETTINGS_START_GAME:
                 //TODO: Check if all (relevant) players have 3 chips plugged in
                 boolean canStart = true;
+                int playerAmount = 4;
                 for (GamePlayer p : game.getPlayers()) {
+                    if(p.getConnectionState() == ConnectionState.CLOSED){
+                        playerAmount--;
+                    }
+
                     if (p.getConnectionState() == ConnectionState.OPEN) {
                         canStart = false;
                         break;
@@ -281,7 +286,17 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     }
                 }
 
-                if (canStart) {
+                if(playerAmount  < 2){
+                    Toast.makeText(this, "Zu wenige Spieler!", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
+                if(!canStart){
+                    Toast.makeText(this, "Nicht alle Spieler haben 3 Chips eingesteckt!", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
+                //if (canStart) {
                     sendGameStart();
 
                     playerSettingsFragment.stopUpdatingChips();
@@ -299,9 +314,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     btLEService.sendGameStart();
                     game.setRunning(true);
 
-                } else {
-                    Toast.makeText(this, "Nicht alle Spieler haben 3 Chips eingesteckt!", Toast.LENGTH_SHORT).show();
-                }
+               // } else {
+
+               // }
                 break;
 
             case Constants.buttons.GAME_SETTINGS_TEST_WHEEL:
