@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_toast_achievement_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="horizontal"
 
     android:background="@drawable/toast_achievement_background"
     android:padding="15dp">
@@ -12,36 +13,36 @@
         android:id="@+id/iv_toast_achievement"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_gravity="center_vertical"
         android:background="#884444"/>
 
-    <TextView
-        android:id="@+id/tv_toast_achievement_title"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_toast_achievement"
-        android:layout_toEndOf="@id/iv_toast_achievement"
-        android:layout_alignTop="@id/iv_toast_achievement"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:text="Achievement Title"/>
+        android:layout_gravity="center_vertical">
 
-    <TextView
-        android:id="@+id/tv_toast_achievement_description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/iv_toast_achievement"
-        android:layout_toEndOf="@id/iv_toast_achievement"
-        android:layout_below="@id/tv_toast_achievement_title"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:textColor="#BBBBBB"
-        android:textSize="15sp"
-        android:text="Description Text will appear here"/>
+        <TextView
+            android:id="@+id/tv_toast_achievement_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:text="Achievement Title"/>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_toast_achievement_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_toast_achievement_title"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:textColor="#BBBBBB"
+            android:textSize="15sp"
+            android:text="Description Text will appear here. Test wie es aussieht wenn die Zeile zu lang ist"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
