@@ -117,7 +117,7 @@ public class PlayerSettingsFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if (mSelectedItem != -1) {
-                    fa.getGame().getGamePlayer(mSelectedItem).setDisplayName(s.toString());
+                    fa.getGame().getGamePlayer(mSelectedItem).setGuestName(s.toString());
                     playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
                     fa.sendPlayerSettingsUpdate(mSelectedItem);
                 }
@@ -192,6 +192,7 @@ public class PlayerSettingsFragment extends Fragment {
                         fa.btServer.disconnectClient(player.getRemoteAddress(), true);
                     }
                     player.setConnectionState(ConnectionState.CLOSED);
+                    player.setGuestName(null);
                     playerSettingsListAdapter.update(mSelectedItem, player);
                     fa.sendPlayerSettingsUpdate(mSelectedItem);
 
@@ -308,8 +309,13 @@ public class PlayerSettingsFragment extends Fragment {
                             btnReverse.setVisibility(View.VISIBLE);
                             btnBlackout.setVisibility(View.VISIBLE);
 
-                            tvPlayerName.setVisibility(View.VISIBLE);
-                            etPlayerName.setVisibility(View.VISIBLE);
+                            if(player.isGuest()) {
+                                tvPlayerName.setVisibility(View.VISIBLE);
+                                etPlayerName.setVisibility(View.VISIBLE);
+                            }else{
+                                tvPlayerName.setVisibility(View.INVISIBLE);
+                                etPlayerName.setVisibility(View.INVISIBLE);
+                            }
                         } else {
                             btnTurbo.setVisibility(View.INVISIBLE);
                             btnSlow.setVisibility(View.INVISIBLE);
@@ -321,7 +327,7 @@ public class PlayerSettingsFragment extends Fragment {
                         }
 
                         if (mPlayerNameEdible) {
-                            if (player.getConnectionState().equals(ConnectionState.LOCAL)) {
+                            if (player.getConnectionState().equals(ConnectionState.LOCAL) && player.isGuest()) {
                                 tvPlayerName.setVisibility(View.VISIBLE);
                                 etPlayerName.setVisibility(View.VISIBLE);
 
@@ -329,9 +335,9 @@ public class PlayerSettingsFragment extends Fragment {
                                 etPlayerName.setSelection(etPlayerName.getText().length());
                             }
 
-                            btnOpen.setVisibility(View.VISIBLE);
-                            btnLocal.setVisibility(View.VISIBLE);
-                            btnClose.setVisibility(View.VISIBLE);
+                                btnOpen.setVisibility(View.VISIBLE);
+                                btnLocal.setVisibility(View.VISIBLE);
+                                btnClose.setVisibility(View.VISIBLE);
                         } else {
                             tvPlayerName.setVisibility(View.INVISIBLE);
                             etPlayerName.setVisibility(View.INVISIBLE);

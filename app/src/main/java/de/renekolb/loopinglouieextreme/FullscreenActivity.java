@@ -80,7 +80,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         Log.e("B LAAAA", "onCreate Activity");
 
         deviceRole = DeviceRole.NONE;
-        this.currentPlayerProfile = new PlayerProfile("TestProfileName",this.ServiceMessageHandler);
+        this.currentPlayerProfile = new PlayerProfile("Local Player Name",this.ServiceMessageHandler, false);
 
         //mContentView = findViewById(R.id.fullscreen_content);
 
@@ -262,6 +262,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                 break;
             case Constants.buttons.GAME_SETTINGS_PLAYER_SETTINGS:
+                this.game.getGamePlayer(0).setPlayerProfile(this.currentPlayerProfile);
                 ft = getFragmentManager().beginTransaction();
                 if (playerSettingsFragment == null) {
                     playerSettingsFragment = PlayerSettingsFragment.newInstance();
@@ -780,7 +781,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     }
                     player = game.getGamePlayer(slot);
                     Log.i("Client Sent", "New Name: " + data);
-                    player.setDisplayName(data);
+                    player.setGuestName(data);
                     if (playerSettingsFragment != null && playerSettingsFragment.isVisible()) {
                         playerSettingsFragment.updatePlayerSettings(slot);
                     }
@@ -833,7 +834,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     GamePlayer gp = game.getGamePlayer(slot);
 
                     gp.setConnectionState(state); // first update connection State, because it overrides displayName with null!!
-                    gp.setDisplayName(name);
+                    gp.setGuestName(name);
                     gp.setDefaultItemType(itemType);
                     gp.setCurrentChips(chips);
 
@@ -981,7 +982,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         }
 
         game.bindRemotePlayer(index, address);
-        game.getGamePlayer(index).setDisplayName(displayName); // Dummy Name
+        game.getGamePlayer(index).setGuestName(displayName); // Dummy Name
         if (playerSettingsFragment != null && playerSettingsFragment.isVisible()) {
             playerSettingsFragment.updatePlayerSettings(index);
         }

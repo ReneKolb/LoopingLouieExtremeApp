@@ -7,6 +7,7 @@ import de.renekolb.loopinglouieextreme.ItemType;
 public class PlayerSettingsListItem {
 
     private String playerName;
+    private boolean isGuest;
     private int color;
     private ItemType itemType;
     private int chipAmount;
@@ -22,6 +23,7 @@ public class PlayerSettingsListItem {
 
     public PlayerSettingsListItem(GamePlayer player) {
         this.playerName = player.getDisplayName();
+        this.isGuest = player.isGuest();
         this.color = player.getPlayerColor().getColor();
         this.itemType = player.getDefaultItemType();
         this.chipAmount = player.getCurrentChips();
@@ -30,6 +32,7 @@ public class PlayerSettingsListItem {
 
     public void update(GamePlayer player) {
         this.playerName = player.getDisplayName();
+        this.isGuest = player.isGuest();
         this.color = player.getPlayerColor().getColor();
         this.itemType = player.getDefaultItemType();
         this.chipAmount = player.getCurrentChips();
@@ -38,6 +41,10 @@ public class PlayerSettingsListItem {
 
     public String getPlayerName() {
         return this.playerName;
+    }
+
+    public boolean isGuest(){
+        return this.isGuest;
     }
 
     public int getColor() {

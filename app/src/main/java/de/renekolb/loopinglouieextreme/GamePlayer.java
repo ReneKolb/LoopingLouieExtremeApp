@@ -2,9 +2,11 @@ package de.renekolb.loopinglouieextreme;
 
 import android.util.Log;
 
+import de.renekolb.loopinglouieextreme.PlayerProfiles.PlayerProfile;
+
 public class GamePlayer {
 
-    private final String defaultName;
+    //private final String defaultName;
     private String displayName;
     private final PlayerColor playerColor;
     private int points;
@@ -15,8 +17,11 @@ public class GamePlayer {
     private ConnectionState connectionState;
     private String remoteAddress;
 
-    public GamePlayer(String defaultName, PlayerColor playerColor, boolean localPlayer) {
-        this.defaultName = defaultName;
+    private PlayerProfile playerProfile;
+
+    public GamePlayer(PlayerColor playerColor, boolean localPlayer) {
+        //this.defaultName = defaultName;
+        //this.playerProfile = profile;
         this.displayName = null;
         this.playerColor = playerColor;
         this.itemStack = new ItemStack();
@@ -26,12 +31,33 @@ public class GamePlayer {
         this.remoteAddress = null;
     }
 
-    public String getDisplayName() {
-        return displayName == null ? defaultName : displayName;
+    public void setPlayerProfile(PlayerProfile profile){
+        this.playerProfile = profile;
+        this.connectionState = ConnectionState.LOCAL;
+        this.remoteAddress = null;
+        this.displayName = null;
     }
 
-    public void setDisplayName(String newName) {
-        this.displayName = newName;
+    public boolean isGuest(){
+        return this.playerProfile == null ||this.playerProfile.isGuest();
+    }
+
+    public String getDisplayName(){
+        if(this.displayName != null) {
+            return displayName;
+        }
+        if(playerProfile != null) {
+            return playerProfile.getPlayerName();
+        }
+        return "No profile Profile";
+    }
+
+    public void setGuestName(String newName) {
+        if(isGuest()) {
+            this.displayName = newName;
+        }else{
+            Log.e("Tag","Cannot set Player Name. Only Guest Names can be changed");
+        }
     }
 
     public PlayerColor getPlayerColor() {

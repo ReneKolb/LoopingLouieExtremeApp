@@ -33,10 +33,10 @@ public class Game {
         this.currentRound = 0;
         this.gamePlayers = new ArrayList<>(4);
 
-        this.gamePlayers.add(new GamePlayer("Player 1", PlayerColor.RED, true));
-        this.gamePlayers.add(new GamePlayer("Player 2", PlayerColor.PURPLE, false));
-        this.gamePlayers.add(new GamePlayer("Player 3", PlayerColor.YELLOW, false));
-        this.gamePlayers.add(new GamePlayer("Player 4", PlayerColor.GREEN, false));
+        this.gamePlayers.add(new GamePlayer(PlayerColor.RED, false));
+        this.gamePlayers.add(new GamePlayer(PlayerColor.PURPLE, false));
+        this.gamePlayers.add(new GamePlayer(PlayerColor.YELLOW, false));
+        this.gamePlayers.add(new GamePlayer(PlayerColor.GREEN, false));
 
         this.settings = new CustomGameSettings();
 

@@ -96,8 +96,13 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                 holder.chips.setText(String.valueOf(data.getChipAmount()));
                 break;
             case LOCAL:
-                holder.playerName.setTextColor(Color.argb(255, 0, 0, 0));
-                holder.booster.setTextColor(Color.argb(255, 0, 0, 0));
+                if(data.isGuest()){
+                    holder.playerName.setTextColor(Color.argb(255, 80, 120, 0));
+                    holder.booster.setTextColor(Color.argb(255, 0, 0, 0));
+                }else {
+                    holder.playerName.setTextColor(Color.argb(255, 0, 0, 0));
+                    holder.booster.setTextColor(Color.argb(255, 0, 0, 0));
+                }
                 holder.playerName.setText(data.getPlayerName());
                 holder.booster.setText(data.getBooster() == null ? "none" : data.getBooster().getDisplayName());
                 holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
