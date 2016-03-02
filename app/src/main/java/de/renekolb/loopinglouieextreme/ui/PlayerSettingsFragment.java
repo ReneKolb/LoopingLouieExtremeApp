@@ -170,10 +170,12 @@ public class PlayerSettingsFragment extends Fragment {
                     btnReverse.setVisibility(View.VISIBLE);
                     btnBlackout.setVisibility(View.VISIBLE);
 
-                    tvPlayerName.setVisibility(View.VISIBLE);
-                    etPlayerName.setVisibility(View.VISIBLE);
+                    if(player.isGuest()) {
+                        tvPlayerName.setVisibility(View.VISIBLE);
+                        etPlayerName.setVisibility(View.VISIBLE);
 
-                    etPlayerName.setText(player.getDisplayName());
+                        etPlayerName.setText(player.getDisplayName());
+                    }
 
                     btnOpen.setEnabled(true);
                     btnLocal.setEnabled(false);
