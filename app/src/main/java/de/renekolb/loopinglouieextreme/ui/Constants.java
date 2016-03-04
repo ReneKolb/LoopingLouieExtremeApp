@@ -63,6 +63,7 @@ public final class Constants {
         public static final int WHEEL_OF_FORTUNE_NEXT_ROUND = 14;
 
         public static final int SETTINGS_TEST_WHEEL = 15;
+        public static final int SETTINGS_WIPE_FILES = 16;
     }
 
 

@@ -8,6 +8,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,6 +26,7 @@ import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.Achievement;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.Achievements;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.PlayerProfile;
+import de.renekolb.loopinglouieextreme.PlayerProfiles.ProfileManager;
 import de.renekolb.loopinglouieextreme.ui.BlackFragment;
 import de.renekolb.loopinglouieextreme.ui.ConnectFragment;
 import de.renekolb.loopinglouieextreme.ui.Constants;
@@ -66,6 +68,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     public DeviceRole deviceRole;
 
+    public ProfileManager profileManager;
+
     //private Runnable actionBTon;
 
     public AppSettings appSettings;
@@ -73,6 +77,21 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.profileManager = new ProfileManager(this, ServiceMessageHandler);
+
+        //Load default PlayerProfile
+        int defaultProfileID = profileManager.getDefaultProfileID();
+        if(defaultProfileID == -1){
+            Log.i("Loading","No default Player: Creating new Player");
+            this.currentPlayerProfile = profileManager.createNewPlayerProfile("Default Player");
+            profileManager.setDefaultProfileID(this.currentPlayerProfile.getProfileID());
+            Log.w("Loading","No default PlayerProfile found. Creating one");
+        }else {
+            Log.i("Loading","Found default Player");
+            this.currentPlayerProfile = profileManager.getProfile(defaultProfileID);
+        }
+
         setContentView(R.layout.activity_fullscreen);
 
         appSettings = new AppSettings(this);
@@ -80,7 +99,11 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         Log.e("B LAAAA", "onCreate Activity");
 
         deviceRole = DeviceRole.NONE;
-        this.currentPlayerProfile = new PlayerProfile("Local Player Name",this.ServiceMessageHandler, false);
+
+
+
+//TODO: load default!
+        //this.currentPlayerProfile = new PlayerProfile(/*"Local Player Name"*/ Build.DEVICE,this.ServiceMessageHandler, false);
 
         //mContentView = findViewById(R.id.fullscreen_content);
 
@@ -130,6 +153,10 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         FragmentTransaction ft;
         switch (button) {
             case Constants.buttons.MAIN_MENU_HOST_GAME:
+                if(currentPlayerProfile == null){
+                    Toast.makeText(FullscreenActivity.this, "You don't have selected a profile", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                     Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableIntent, Constants.REQUEST_ENABLE_BT);
@@ -151,6 +178,10 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                 break;
             case Constants.buttons.MAIN_MENU_CONNECT:
+                if(currentPlayerProfile == null){
+                    Toast.makeText(FullscreenActivity.this, "You don't have selected a profile", Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                     Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableIntent, Constants.REQUEST_ENABLE_BT);
@@ -393,6 +424,11 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
                 ft.commit();
                 break;
+
+            case Constants.buttons.SETTINGS_WIPE_FILES:
+                Log.i("FullscreenActivity","Wipe files");
+                this.profileManager.wipeFiles();
+                break;
         }
     }
 
@@ -478,7 +514,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         ft.commit();
 
                         //
-                        sendPlayerNameToServer("Dummy Name");
+                        sendPlayerNameToServer(currentPlayerProfile.getPlayerName());
                     }
                     break;
                 case Constants.messages.BT_CONNECTION_FAILED:
@@ -990,5 +1026,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         sendPlayerSettingsToClient(address); // send playerlist to new client
         sendPlayerSettingsUpdate(index); // send new player to all clients
         return index;
+    }
+
+    public PlayerProfile getCurrentPlayer(){
+        return this.currentPlayerProfile;
     }
 }

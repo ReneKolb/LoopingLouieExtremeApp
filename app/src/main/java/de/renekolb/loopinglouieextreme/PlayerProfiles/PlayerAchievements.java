@@ -21,13 +21,15 @@ public class PlayerAchievements {
     }
 
 
-    public void addAchievement(int achievementID){
+    public void addAchievement(int achievementID, boolean notifyUser){
         if(!achievements.contains(achievementID)) {
-            Message msg = this.mHandler.obtainMessage(Constants.messages.UNLOCKED_ACHIEVEMENT);
-            Bundle bundle = new Bundle();
-            bundle.putInt(Constants.messages.KEY_ACHIEVEMENT_ID, achievementID);
-            msg.setData(bundle);
-            mHandler.sendMessage(msg);
+            if(notifyUser) {
+                Message msg = this.mHandler.obtainMessage(Constants.messages.UNLOCKED_ACHIEVEMENT);
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constants.messages.KEY_ACHIEVEMENT_ID, achievementID);
+                msg.setData(bundle);
+                mHandler.sendMessage(msg);
+            }
 
             this.achievements.add(achievementID);
         }

@@ -2,6 +2,7 @@ package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,6 +83,14 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 onButtonPressed(Constants.buttons.SETTINGS_TEST_WHEEL);
+            }
+        });
+
+        Button btnWipeFiles = (Button)view.findViewById(R.id.btn_settings_wipe_files);
+        btnWipeFiles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(Constants.buttons.SETTINGS_WIPE_FILES);
             }
         });
 

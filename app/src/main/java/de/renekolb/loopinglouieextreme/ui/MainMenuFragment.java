@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import de.renekolb.loopinglouieextreme.BuildConfig;
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.R;
@@ -26,20 +28,13 @@ import de.renekolb.loopinglouieextreme.R;
 public class MainMenuFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String PROFILE_NAME = "profileName";
 
+    private TextView tvProfileName;
     private Button btnServer;
     private Button btnClient;
     private ImageButton btnSettings;
 
-    //private FullscreenActivity fa;
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    //private OnFragmentInteractionListener mListener;
     private FullscreenActivity fa;
 
     /**
@@ -61,10 +56,10 @@ public class MainMenuFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+//        if (getArguments() != null) {
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//        }
     }
 
     @Override
@@ -72,6 +67,9 @@ public class MainMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
+
+        tvProfileName = (TextView)view.findViewById(R.id.tv_main_menu_profile_name);
+        tvProfileName.setText(fa.getCurrentPlayer().getPlayerName());
 
         btnServer = (Button) view.findViewById(R.id.btn_main_menu_server);
         btnServer.setEnabled(FullscreenActivity.BLE_SUPPORT);
