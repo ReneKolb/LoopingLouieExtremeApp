@@ -37,7 +37,7 @@
     <string name="wof_loser_5">Drink 3!</string>
     <string name="wof_loser_6">Drink with a partner!</string>
 
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_title_custom_game_settings">Custom Game Settings</string>
     <string name="tv_player_settings_title">Player Settings</string>

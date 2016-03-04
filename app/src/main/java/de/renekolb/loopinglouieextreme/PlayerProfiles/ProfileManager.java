@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -37,7 +38,7 @@ public class ProfileManager {
 
         //TODO: Load den Spaß in loading Screen!!!
 
-        //load available profiles. fill storedProfiles with keys only (only IDs). only load actual profile when needed
+        //load available profiles.
         FileInputStream in = null;
         try {
             in = context.openFileInput(PROFILES_LIST_FILE_NAME);
@@ -52,7 +53,9 @@ public class ProfileManager {
                 oin= new ObjectInputStream(in);
                 defaultID = oin.readInt();
                 while (oin.available() > 0) {
-                    this.storedProfiles.put(oin.readInt(), null);
+                    int id = oin.readInt();
+                    PlayerProfile p = loadProfile(id);
+                    this.storedProfiles.put(id, p);
                 }
             } catch (IOException e) {
                 Log.e("ProfileManager", "Error while loading available profiles list",e);
@@ -178,8 +181,12 @@ public class ProfileManager {
         return null;
     }
 
-    public Set<Integer> getAvailableProfiles(){
-        return storedProfiles.keySet();
+//    public Set<Integer> getAvailableProfiles(){
+//        return storedProfiles.keySet();
+    //}
+
+    public Collection<PlayerProfile> getAvailableProfiles(){
+        return this.storedProfiles.values();
     }
 
     private void saveProfile(int profileID){
@@ -221,6 +228,8 @@ public class ProfileManager {
                 //error closing file
             }
         }
+
+        //TODO: autosave progress
     }
 
     public PlayerProfile createNewPlayerProfile(String playerName){
@@ -262,7 +271,6 @@ public class ProfileManager {
 
 
     public void setDefaultProfileID(int profileID){
-    //TODO: sollte beim auswählen des Profils gesetzt werden (dass dieses Profil beim nächsten Start automatisch geladen wird)
         if(profileID != this.defaultID) {
             this.defaultID = profileID;
             saveProfilesList();
@@ -270,7 +278,11 @@ public class ProfileManager {
     }
 
     public int getDefaultProfileID(){
-        return this.defaultID;
+        if(this.storedProfiles.containsKey(this.defaultID)){
+            return this.defaultID;
+        }else{
+            return this.defaultID = -1;
+        }
     }
 
     @Deprecated

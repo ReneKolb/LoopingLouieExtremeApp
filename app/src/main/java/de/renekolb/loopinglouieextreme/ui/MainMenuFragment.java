@@ -77,11 +77,11 @@ public class MainMenuFragment extends Fragment {
         btnClient = (Button) view.findViewById(R.id.btn_main_menu_client);
         btnSettings = (ImageButton) view.findViewById(R.id.btn_main_menu_settings);
 
-        ImageButton btnInfo = (ImageButton) view.findViewById(R.id.btn_main_menu_info);
+        ImageButton btnInfo = (ImageButton) view.findViewById(R.id.btn_main_menu_profile);
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onButtonPressed(Constants.buttons.MAIN_MENU_INFO);
+                onButtonPressed(Constants.buttons.MAIN_MENU_PROFILE);
             }
         });
 
@@ -141,6 +141,10 @@ public class MainMenuFragment extends Fragment {
         if (fa != null) {
             fa.onFragmentInteraction(button);
         }
+    }
+
+    public void updateProfile(){
+        this.tvProfileName.setText(fa.getCurrentPlayer().getPlayerName());
     }
 
     @Override

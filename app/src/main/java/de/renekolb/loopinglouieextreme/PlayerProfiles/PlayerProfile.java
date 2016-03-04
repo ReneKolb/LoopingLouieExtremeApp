@@ -41,6 +41,10 @@ public class PlayerProfile {
         return this.playerName;
     }
 
+    public void editPlayerName(String newName){
+        this.playerName = newName;
+    }
+
     public int getProfileID(){
         return this.profileID;
     }

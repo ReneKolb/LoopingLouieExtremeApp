@@ -53,6 +53,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     private MainMenuFragment mainMenuFragment;
     private SettingsFragment settingsFragment;
+    private ProfilesFragment profilesFragment;
     private HostGameFragment hostGameFragment;
     private ConnectFragment connectFragment;
     private GameSettingsFragment gameSettingsFragment;
@@ -210,16 +211,15 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft.commit();
                 break;
 
-            case Constants.buttons.MAIN_MENU_INFO:
-                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                View view = inflater.inflate(R.layout.toast_achievement, (ViewGroup) findViewById(R.id.rl_toast_achievement_root));
-
-                Toast toast = new Toast(getApplicationContext());
-                toast.setGravity(Gravity.TOP, 0, 150);
-                toast.setDuration(Toast.LENGTH_LONG);
-                toast.setView(view);
-
-                toast.show();
+            case Constants.buttons.MAIN_MENU_PROFILE:
+                ft = getFragmentManager().beginTransaction();
+                if (profilesFragment == null) {
+                    profilesFragment = ProfilesFragment.newInstance();
+                }
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, profilesFragment);
+                ft.commit();
                 break;
 
             case Constants.buttons.HOST_GAME_TEST_BLACK:
@@ -1031,4 +1031,14 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     public PlayerProfile getCurrentPlayer(){
         return this.currentPlayerProfile;
     }
+
+    public ProfileManager getProfileManager(){
+        return this.profileManager;
+    }
+
+    public void setCurrentPlayerProfile(PlayerProfile profile){
+        this.currentPlayerProfile = profile;
+        this.mainMenuFragment.updateProfile();
+    }
+
 }

@@ -45,7 +45,7 @@ public final class Constants {
         public static final int MAIN_MENU_HOST_GAME = 1;
         public static final int MAIN_MENU_CONNECT = 2;
         public static final int MAIN_MENU_SETTINGS = 3;
-        public static final int MAIN_MENU_INFO = 4;
+        public static final int MAIN_MENU_PROFILE = 4;
 
         public static final int HOST_GAME_TEST_BLACK = 5;
         public static final int HOST_GAME_TEST_SERVER_MESSAGE = 6;

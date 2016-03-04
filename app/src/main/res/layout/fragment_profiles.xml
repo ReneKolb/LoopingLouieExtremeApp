@@ -1,0 +1,98 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="de.renekolb.loopinglouieextreme.ProfilesFragment"
+    android:background="#FFFACD"
+    android:clickable="true">
+
+    <TextView
+        android:id="@+id/tv_profiles_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Profiles"
+        android:textColor="#000000"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/btn_profiles_add_profile"
+        android:layout_below="@id/tv_profiles_title"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="80dp"
+        android:padding="3dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        style="@style/btnStyleMenuSmall"
+        android:scaleType="center"
+        android:src="@drawable/ic_add_circle_outline"
+         />
+
+    <ImageButton
+        android:id="@+id/btn_profiles_edit_profile"
+        android:layout_alignLeft="@id/btn_profiles_add_profile"
+        android:layout_alignStart="@id/btn_profiles_add_profile"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/btn_profiles_add_profile"
+        android:padding="3dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        style="@style/btnStyleMenuSmall"
+        android:scaleType="center"
+        android:src="@drawable/ic_create"
+        />
+
+    <ImageButton
+        android:id="@+id/btn_profiles_delete_profile"
+        android:layout_alignLeft="@id/btn_profiles_add_profile"
+        android:layout_alignStart="@id/btn_profiles_add_profile"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/btn_profiles_edit_profile"
+        android:padding="3dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        style="@style/btnStyleMenuSmall"
+        android:scaleType="center"
+        android:src="@drawable/ic_delete"
+        />
+
+    <ImageButton
+        android:id="@+id/btn_profiles_select_profile"
+        android:layout_alignLeft="@id/btn_profiles_add_profile"
+        android:layout_alignStart="@id/btn_profiles_add_profile"
+        android:layout_marginTop="60dp"
+        android:layout_below="@id/btn_profiles_delete_profile"
+        android:padding="3dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        style="@style/btnStyleMenuSmall"
+        android:scaleType="center"
+        android:src="@drawable/ic_done"
+        />
+
+
+
+        <ListView
+            android:id="@+id/lv_profiles_profiles_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignTop="@id/btn_profiles_add_profile"
+            android:layout_toLeftOf="@id/btn_profiles_add_profile"
+            android:layout_toStartOf="@id/btn_profiles_add_profile"
+            android:choiceMode="singleChoice"
+            android:listSelector="#BBBBBB"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginBottom="60dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10.0sp"
+             />
+
+
+</RelativeLayout>
