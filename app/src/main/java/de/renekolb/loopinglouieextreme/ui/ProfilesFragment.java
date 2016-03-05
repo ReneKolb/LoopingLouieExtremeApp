@@ -1,23 +1,21 @@
-package de.renekolb.loopinglouieextreme;
+package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
 import java.util.Random;
 
+import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.PlayerProfile;
-import de.renekolb.loopinglouieextreme.ui.PlayerProfilesListAdapter;
+import de.renekolb.loopinglouieextreme.R;
 
 
 /**

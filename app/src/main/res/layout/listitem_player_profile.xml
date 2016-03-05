@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/iv_listitem_player_profile_icon"
@@ -11,16 +12,54 @@
         android:layout_height="35dp"
         android:layout_gravity="center_vertical"/>
 
-    <TextView
-        android:id="@+id/tv_listitem_player_profile_name"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
         android:layout_gravity="center_vertical"
-        android:textStyle="bold"
-        android:textColor="#CCCCCC"
-        android:textSize="18sp"
-        android:text="Test Name"/>
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp">
 
+        <TextView
+            android:id="@+id/tv_listitem_player_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="center_vertical"
+            android:textStyle="bold"
+            android:textColor="#CCCCCC"
+            android:textSize="18sp"
+            android:text="Test Name"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_listitem_player_profile_achievements_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="9dp"
+                android:layout_marginStart="9dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="#CCCCCC"
+                android:textSize="16sp"
+                android:text="Achievements:"/>
+
+            <TextView
+                android:id="@+id/tv_listitem_player_profile_achievements_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center_vertical"
+                android:textColor="#CCCCCC"
+                android:textSize="16sp"
+                android:text="-1"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -6,13 +6,15 @@ package de.renekolb.loopinglouieextreme.PlayerProfiles;
 public class Achievement {
 
     private String title;
-    private String description;
+    private String unlockedDescription;
+    private String unlockDescription;
     private int drawableID;
     //UnlockConditions
 
-    Achievement(String title, String description, int drawableID/*, UnlockCondition*/ ){
+    Achievement(String title, String unlockedDescription,String unlockDescription, int drawableID/*, UnlockCondition*/ ){
         this.title = title;
-        this.description = description;
+        this.unlockDescription = unlockDescription;
+        this.unlockedDescription = unlockedDescription;
         this.drawableID = drawableID;
     }
 
@@ -20,9 +22,14 @@ public class Achievement {
         return this.title;
     }
 
-    public String getDescription(){
-        return this.description;
+    public String getUnlockDescription(){
+        return this.unlockDescription;
     }
+
+    public String getUnlockedDescription(){
+        return this.unlockedDescription;
+    }
+
 
     public int getDrawableID(){
         return this.drawableID;

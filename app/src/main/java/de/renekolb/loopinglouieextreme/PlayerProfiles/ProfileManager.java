@@ -189,7 +189,7 @@ public class ProfileManager {
         return this.storedProfiles.values();
     }
 
-    private void saveProfile(int profileID){
+    public void saveProfile(int profileID){
         if(!storedProfiles.containsKey(profileID)) {
             Log.e("ProfileManager","Cannot save Profile. Unkown PlayerProfile ID");
         }

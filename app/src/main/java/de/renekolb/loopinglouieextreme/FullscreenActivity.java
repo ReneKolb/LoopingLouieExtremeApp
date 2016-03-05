@@ -8,7 +8,6 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -27,6 +26,7 @@ import de.renekolb.loopinglouieextreme.PlayerProfiles.Achievement;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.Achievements;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.PlayerProfile;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.ProfileManager;
+import de.renekolb.loopinglouieextreme.ui.AchievementsFragment;
 import de.renekolb.loopinglouieextreme.ui.BlackFragment;
 import de.renekolb.loopinglouieextreme.ui.ConnectFragment;
 import de.renekolb.loopinglouieextreme.ui.Constants;
@@ -38,6 +38,7 @@ import de.renekolb.loopinglouieextreme.ui.HostGameFragment;
 import de.renekolb.loopinglouieextreme.ui.MainMenuFragment;
 import de.renekolb.loopinglouieextreme.ui.OnFragmentInteractionListener;
 import de.renekolb.loopinglouieextreme.ui.PlayerSettingsFragment;
+import de.renekolb.loopinglouieextreme.ui.ProfilesFragment;
 import de.renekolb.loopinglouieextreme.ui.SettingsFragment;
 import de.renekolb.loopinglouieextreme.ui.WheelOfFortuneFragment;
 
@@ -54,6 +55,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     private MainMenuFragment mainMenuFragment;
     private SettingsFragment settingsFragment;
     private ProfilesFragment profilesFragment;
+    private AchievementsFragment achievementsFragment;
     private HostGameFragment hostGameFragment;
     private ConnectFragment connectFragment;
     private GameSettingsFragment gameSettingsFragment;
@@ -220,6 +222,19 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 ft.addToBackStack(null);
                 ft.replace(R.id.main_fragment, profilesFragment);
                 ft.commit();
+                break;
+
+            case Constants.buttons.MAIN_MENU_ACHIEVEMENTS:
+                ft = getFragmentManager().beginTransaction();
+                if (achievementsFragment == null) {
+                    achievementsFragment = AchievementsFragment.newInstance();
+                }
+
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, achievementsFragment);
+                ft.commit();
+
                 break;
 
             case Constants.buttons.HOST_GAME_TEST_BLACK:
@@ -409,6 +424,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     ft.replace(R.id.main_fragment, playerSettingsFragment);
                     ft.commit();
                 }
+                profileManager.saveProfile(currentPlayerProfile.getProfileID());
                 break;
 
             case Constants.buttons.SETTINGS_TEST_WHEEL:
@@ -639,7 +655,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     ImageView ivIcon = (ImageView)view.findViewById(R.id.iv_toast_achievement);
 
                     tvTitle.setText(ach.getTitle()); //TODO: replace with StringID
-                    tvDescription.setText(ach.getDescription());
+                    tvDescription.setText(ach.getUnlockedDescription());
                     ivIcon.setImageResource(ach.getDrawableID());
 
                     Toast toast = new Toast(getApplicationContext());

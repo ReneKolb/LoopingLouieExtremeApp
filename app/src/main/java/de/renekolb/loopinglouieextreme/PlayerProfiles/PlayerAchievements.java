@@ -39,6 +39,10 @@ public class PlayerAchievements {
         return this.achievements;
     }
 
+    public int getAmount(){
+        return this.achievements.size();
+    }
+
     public boolean hasUnlocked(int achievement){
         return achievements.contains(achievement);
     }

@@ -49,6 +49,10 @@ public class PlayerProfile {
         return this.profileID;
     }
 
+    public PlayerAchievements getPlayerAchievements(){
+        return this.playerAchievements;
+    }
+
     PlayerStatistics getPlayerStatistics(){
         return this.playerStatistics;
     }

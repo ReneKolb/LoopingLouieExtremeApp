@@ -77,11 +77,19 @@ public class MainMenuFragment extends Fragment {
         btnClient = (Button) view.findViewById(R.id.btn_main_menu_client);
         btnSettings = (ImageButton) view.findViewById(R.id.btn_main_menu_settings);
 
-        ImageButton btnInfo = (ImageButton) view.findViewById(R.id.btn_main_menu_profile);
-        btnInfo.setOnClickListener(new View.OnClickListener() {
+        ImageButton btnProfile = (ImageButton) view.findViewById(R.id.btn_main_menu_profile);
+        btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onButtonPressed(Constants.buttons.MAIN_MENU_PROFILE);
+            }
+        });
+
+        ImageButton btnAchievements = (ImageButton) view.findViewById(R.id.btn_main_menu_achievements);
+        btnAchievements.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(Constants.buttons.MAIN_MENU_ACHIEVEMENTS);
             }
         });
 

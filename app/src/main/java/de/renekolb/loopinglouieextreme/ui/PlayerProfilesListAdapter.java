@@ -96,6 +96,7 @@ public class PlayerProfilesListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.icon = (ImageView) convertView.findViewById(R.id.iv_listitem_player_profile_icon);
             holder.profileName = (TextView) convertView.findViewById(R.id.tv_listitem_player_profile_name);
+            holder.achievementsAmount = (TextView) convertView.findViewById(R.id.tv_listitem_player_profile_achievements_display);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -104,6 +105,7 @@ public class PlayerProfilesListAdapter extends BaseAdapter {
         PlayerProfile data = getItem(position);
 
         holder.profileName.setText(data.getPlayerName());
+        holder.achievementsAmount.setText(String.valueOf(data.getPlayerAchievements().getAmount()));
         if(selectedIndex == position){
             holder.icon.setImageResource(R.drawable.ic_grade);
             holder.icon.setVisibility(View.VISIBLE);
@@ -117,6 +119,7 @@ public class PlayerProfilesListAdapter extends BaseAdapter {
     private class ViewHolder {
         ImageView icon;
         TextView profileName;
+        TextView achievementsAmount;
     }
 
 }
