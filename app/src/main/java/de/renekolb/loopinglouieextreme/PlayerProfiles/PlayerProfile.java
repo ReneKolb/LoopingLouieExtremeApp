@@ -1,9 +1,6 @@
 package de.renekolb.loopinglouieextreme.PlayerProfiles;
 
-import android.content.Context;
 import android.os.Handler;
-
-import java.util.UUID;
 
 /**
  * Created by Admi on 27.02.2016.

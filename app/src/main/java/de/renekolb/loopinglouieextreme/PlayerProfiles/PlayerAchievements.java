@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Message;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import de.renekolb.loopinglouieextreme.ui.Constants;
 

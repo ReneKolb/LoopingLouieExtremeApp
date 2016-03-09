@@ -160,27 +160,42 @@ public class Game {
 
     public String getDefaultItemsSendData() {
         StringBuilder sb = new StringBuilder();
-        if (getGamePlayer(0).getDefaultItemType() != null)
+        if (getGamePlayer(0).getDefaultItemType() != null && getGamePlayer(0).getDefaultItemType().getItemID() != -1)
             sb.append(getGamePlayer(0).getDefaultItemType().getItemID());
         else
             sb.append(0);
 
-        if (getGamePlayer(1).getDefaultItemType() != null)
+        if (getGamePlayer(1).getDefaultItemType() != null && getGamePlayer(1).getDefaultItemType().getItemID() != -1)
             sb.append(getGamePlayer(1).getDefaultItemType().getItemID());
         else
             sb.append(0);
 
-        if (getGamePlayer(2).getDefaultItemType() != null)
+        if (getGamePlayer(2).getDefaultItemType() != null && getGamePlayer(2).getDefaultItemType().getItemID() != -1)
             sb.append(getGamePlayer(2).getDefaultItemType().getItemID());
         else
             sb.append(0);
 
-        if (getGamePlayer(3).getDefaultItemType() != null)
+        if (getGamePlayer(3).getDefaultItemType() != null && getGamePlayer(3).getDefaultItemType().getItemID() != -1)
             sb.append(getGamePlayer(3).getDefaultItemType().getItemID());
         else
             sb.append(0);
 
         return sb.toString();
+    }
+
+    public String getEnabledPlayersSendData(){
+        String result = "";
+
+        for(int i=0;i<gamePlayers.size();i++) {
+            //getGamePlayer(i) ??
+            if(this.gamePlayers.get(i).getConnectionState() == ConnectionState.CLOSED){
+                result += "0";
+            }else{
+                result += "1";
+            }
+        }
+
+        return result;
     }
 
     public int getLoser() {

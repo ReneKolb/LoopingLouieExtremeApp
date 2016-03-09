@@ -26,7 +26,7 @@ public class GamePlayer {
         this.playerColor = playerColor;
         this.itemStack = new ItemStack();
         this.defaultItemType = ItemType.NONE;
-        this.currentChips = 0;
+        this.currentChips = -1;
         this.connectionState = localPlayer ? ConnectionState.LOCAL : ConnectionState.OPEN;
         this.remoteAddress = null;
     }

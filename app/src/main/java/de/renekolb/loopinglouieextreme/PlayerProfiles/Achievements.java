@@ -1,19 +1,26 @@
 package de.renekolb.loopinglouieextreme.PlayerProfiles;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 import de.renekolb.loopinglouieextreme.R;
 
 public class Achievements {
 
     private static final Achievement[] achievements = new Achievement[]{
-            new Achievement("Play a round","You have finished a round","Unlock this achievement by finishing a round", R.drawable.ic_settings_white),
+            new Achievement("And the addiction begins","You have finished a round","Unlock this achievement by finishing a round", R.drawable.ic_settings_white),
             new Achievement("Play five rounds","You have finished 5 rounds","Unlock this achievement by finishing five rounds", R.drawable.ic_settings_white),
             new Achievement("Play a game","You have finished a hole gane","Unlock this achievement by finishing a hole game", R.drawable.ic_settings_black),
             new Achievement("Play five game","You have finished 5 games","Unlock this achievement by finishing five games", R.drawable.ic_settings_black),
             new Achievement("Win a round","You have won a round","Unlock this achievement by winning a round",R.drawable.ic_action_info),
-            new Achievement("Win a game","You have won a hole game","Unlock this achievement by winning a hole game", R.drawable.ic_action_info_black)
+            new Achievement("Win a game","You have won a hole game","Unlock this achievement by winning a hole game", R.drawable.ic_action_info_black),
+
+            //win 5 games
+            //win 5 rounds
+            //win a round without loosing a chip
+            //Pechvogel: erster der ausscheidet
+            //Mittelfeldspieler: in einem Spiel nicht am glücksrad drehen dürfen
+
+            //spin a joker
+            //spin a blank
+            //spin 3times in a row (2x spin again)
 
     };
     public static final int PLAY_A_ROUND = 0;

@@ -208,6 +208,7 @@ public class BluetoothLEService {
         if (characteristic != null) {
             characteristic.setValue(message);
             btGatt.writeCharacteristic(characteristic);
+            Log.v("BTLe","Sent: "+new String(message));
         }
     }
 
@@ -250,6 +251,7 @@ public class BluetoothLEService {
         addSendMessage((BTCommands.SET_ENABLE_ITEMS + boolToString(game.getGameSettings().getEnableItems()) + ".").getBytes());
         addSendMessage((BTCommands.SET_ENABLE_EVENTS + boolToString(game.getGameSettings().getEnableEvents()) + ".").getBytes());
 
+        addSendMessage((BTCommands.SET_ENABLED_PLAYERS + game.getEnabledPlayersSendData() + ".").getBytes());
         addSendMessage((BTCommands.SET_ITEM_TYPES + game.getDefaultItemsSendData() + ".").getBytes());
 
     }

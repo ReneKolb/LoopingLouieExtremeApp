@@ -1,7 +1,5 @@
 package de.renekolb.loopinglouieextreme.ui;
 
-import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
-import de.renekolb.loopinglouieextreme.GamePlayer;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.PlayerProfile;
 import de.renekolb.loopinglouieextreme.R;
 

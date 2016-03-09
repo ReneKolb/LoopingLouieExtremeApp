@@ -84,16 +84,27 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                 holder.booster.setTextColor(Color.argb(255, 0, 0, 255));
                 holder.playerName.setText("Open Slot");
                 holder.booster.setText("");
-                holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
-                holder.chips.setText(String.valueOf(data.getChipAmount()));
+
+                if(data.getChipAmount()<0){
+                    holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
+                    holder.chips.setText("-");
+                }else {
+                    holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
+                    holder.chips.setText(String.valueOf(data.getChipAmount()));
+                }
                 break;
             case CONNECTED:
                 holder.playerName.setTextColor(Color.argb(255, 0, 255, 255));
                 holder.booster.setTextColor(Color.argb(255, 0, 255, 255));
                 holder.playerName.setText(data.getPlayerName());
                 holder.booster.setText(data.getBooster() == null ? "none" : data.getBooster().getDisplayName());
-                holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
-                holder.chips.setText(String.valueOf(data.getChipAmount()));
+                if(data.getChipAmount()<0){
+                    holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
+                    holder.chips.setText("-");
+                }else {
+                    holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
+                    holder.chips.setText(String.valueOf(data.getChipAmount()));
+                }
                 break;
             case LOCAL:
                 if(data.isGuest()){
@@ -105,8 +116,13 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                 }
                 holder.playerName.setText(data.getPlayerName());
                 holder.booster.setText(data.getBooster() == null ? "none" : data.getBooster().getDisplayName());
-                holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
-                holder.chips.setText(String.valueOf(data.getChipAmount()));
+                if(data.getChipAmount()<0){
+                    holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
+                    holder.chips.setText("-");
+                }else {
+                    holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
+                    holder.chips.setText(String.valueOf(data.getChipAmount()));
+                }
                 break;
             case CLOSED:
                 holder.playerName.setTextColor(Color.argb(255, 120, 120, 120));

@@ -4,9 +4,33 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFACD"
+    android:background="#ccf5ff"
     tools:context="de.renekolb.loopinglouieextreme.ui.MainMenuFragment"
     android:clickable="true">
+
+    <TextView
+        android:id="@+id/tv_main_menu_profile_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="35dp"
+        android:text="Logged in as:"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:id="@+id/tv_main_menu_profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_main_menu_profile_text"
+        android:layout_marginTop="5dp"
+        android:text="Dummy Name"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        />
 
     <LinearLayout
         android:id="@+id/ll_main_menu_buttons"
@@ -47,7 +71,7 @@
 
     <ImageButton
         android:id="@+id/btn_main_menu_settings"
-        style="@style/btnStyleSeagull"
+        style="@style/btnStyleMenuSmall"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
@@ -58,11 +82,11 @@
         android:layout_marginTop="50dp"
         android:padding="5dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_settings_white"/>
+        android:src="@drawable/ic_settings_black"/>
 
     <ImageButton
-        android:id="@+id/btn_main_menu_info"
-        style="@style/btnStyleSeagull"
+        android:id="@+id/btn_main_menu_profile"
+        style="@style/btnStyleMenuSmall"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentEnd="true"
@@ -73,7 +97,22 @@
         android:layout_marginTop="10dp"
         android:padding="5dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/ic_action_info"/>
+        android:src="@drawable/ic_profile"/>
+
+    <ImageButton
+        android:id="@+id/btn_main_menu_achievements"
+        style="@style/btnStyleMenuSmall"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/btn_main_menu_profile"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_action_achievement"/>
 
     <RelativeLayout
         android:layout_width="wrap_content"

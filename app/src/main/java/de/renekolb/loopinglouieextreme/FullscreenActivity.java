@@ -99,8 +99,6 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
         appSettings = new AppSettings(this);
 
-        Log.e("B LAAAA", "onCreate Activity");
-
         deviceRole = DeviceRole.NONE;
 
 
@@ -177,6 +175,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     game = new Game(this);
                     startBTServer();
                     startBTLEService();
+
+                    this.game.getGamePlayer(0).setPlayerProfile(this.currentPlayerProfile);
                 }
 
                 break;
@@ -308,7 +308,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                 break;
             case Constants.buttons.GAME_SETTINGS_PLAYER_SETTINGS:
-                this.game.getGamePlayer(0).setPlayerProfile(this.currentPlayerProfile);
+
                 ft = getFragmentManager().beginTransaction();
                 if (playerSettingsFragment == null) {
                     playerSettingsFragment = PlayerSettingsFragment.newInstance();
@@ -516,7 +516,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                             hostGameFragment.connectedPlayerAdapter.add(new ConnectedPlayerListItem(devAddr, devName));
                         }
 
-                        bindNewPlayer(devAddr, devName);
+                        bindNewPlayer(devAddr, devName.replaceAll(".", "_").replaceAll(":","_"));
                     } else if (deviceRole == DeviceRole.CLIENT) {
                         Log.i("BLAAAAAAAA", "Role = Client");
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -568,6 +568,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         }
                     } else if (deviceRole == DeviceRole.CLIENT) {
                         //TODO: Go back to connect Fragment
+                        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     }
                     break;
 
@@ -896,6 +897,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                     break;
                 case 'b':
+                    Log.i("Client Recieve MSG","Game Start");
                     //receive game Start
                     game.nextRound();
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -910,6 +912,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     game.setRunning(true);
                     break;
                 case 'c':
+                    Log.i("Client Recieve MSG","Game Results");
                     //receive game Results
                     game.setRunning(false);
                     split2 = data.split(":");
@@ -951,6 +954,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                     break;
                 case 'd':
+                    Log.i("Client Recieve MSG","GoTo WheelOfFortune");
                     //GOTO WheelOfFortune
                     ft = getFragmentManager().beginTransaction();
                     if (wheelOfFortuneFragment == null) {
@@ -998,6 +1002,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         GamePlayer gp = game.getGamePlayer(slot);
         String msg = "a" + slot + ":" + gp.getDisplayName() + ":" + gp.getConnectionState().getId() + ":" + gp.getDefaultItemType().getItemID() + ":" + gp.getCurrentChips() + ".";
         btServer.sendMessageToAll(msg);
+        Log.i("Send to Client","Msg: "+msg);
     }
 
     private void sendPlayerNameToServer(String name) {

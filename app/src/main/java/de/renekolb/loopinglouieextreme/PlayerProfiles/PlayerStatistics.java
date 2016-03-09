@@ -2,9 +2,6 @@ package de.renekolb.loopinglouieextreme.PlayerProfiles;
 
 import java.io.Serializable;
 
-/**
- * Created by Admi on 27.02.2016.
- */
 public class PlayerStatistics implements Serializable{
 
     private int totalRoundsPlayed;

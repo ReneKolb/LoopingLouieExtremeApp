@@ -14,8 +14,10 @@ import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import java.util.Random;
 
@@ -35,7 +37,8 @@ import de.renekolb.loopinglouieextreme.WheelOfFortuneSettings;
  */
 public class WheelOfFortuneFragment extends Fragment {
 
-    private ImageView mIVWheel;
+    //private ImageView mIVWheel;
+    private ImageSwitcher mISWheel;
     private TextView mTVResult;
     private Button mBTNnext;
     private TextView mTVplayerName;
@@ -119,7 +122,8 @@ public class WheelOfFortuneFragment extends Fragment {
         canSpin = true;
         currentPosition = 0;
 
-        mIVWheel = (ImageView) view.findViewById(R.id.iv_wheel_of_fortune);
+        //mIVWheel = (ImageView) view.findViewById(R.id.iv_wheel_of_fortune);
+        mISWheel = (ImageSwitcher) view.findViewById(R.id.is_wheel_of_fortune);
         mTVResult = (TextView) view.findViewById(R.id.tv_wheel_of_fortune_result);
         mBTNnext = (Button) view.findViewById(R.id.btn_wheel_of_fortune_next_round);
         mTVplayerName = (TextView) view.findViewById(R.id.tv_wheel_of_fortune_player_name);
@@ -140,21 +144,21 @@ public class WheelOfFortuneFragment extends Fragment {
         wofSettings = WheelOfFortuneSettings.WINNER_WHEEL;
 
 
-        mIVWheel.setOnTouchListener(new View.OnTouchListener() {
+        mISWheel.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(final View view, final MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (!isSpinning && canSpin) {
-                            startPhi = Math.toDegrees(Math.atan2(event.getY() - (mIVWheel.getHeight() / 2), event.getX() - (mIVWheel.getWidth() / 2))) + 180;
+                            startPhi = Math.toDegrees(Math.atan2(event.getY() - (mISWheel.getCurrentView().getHeight() / 2), event.getX() - (mISWheel.getCurrentView().getWidth() / 2))) + 180;
                         }
                         break;
                     case MotionEvent.ACTION_MOVE:
                         if (!isSpinning && canSpin && startPhi != -1) {
-                            double newPhi = Math.toDegrees(Math.atan2(event.getY() - (mIVWheel.getHeight() / 2), event.getX() - (mIVWheel.getWidth() / 2))) + 180;
+                            double newPhi = Math.toDegrees(Math.atan2(event.getY() - (mISWheel.getCurrentView().getHeight() / 2), event.getX() - (mISWheel.getCurrentView().getWidth() / 2))) + 180;
                             dPhi = startPhi - newPhi;
 
-                            mIVWheel.setRotation((float) (mIVWheel.getRotation() - dPhi));
+                            mISWheel.getCurrentView().setRotation((float) (mISWheel.getCurrentView().getRotation() - dPhi));
                         }
                         break;
                     case MotionEvent.ACTION_UP:
@@ -170,7 +174,18 @@ public class WheelOfFortuneFragment extends Fragment {
             }
         });
 
-        mIVWheel.setImageResource(wofSettings.getResourceID());
+        mISWheel.setFactory(new ViewSwitcher.ViewFactory() {
+            @Override
+            public View makeView() {
+                ImageView myView = new ImageView(fa);
+                return myView;
+            }
+        });
+        mISWheel.setImageResource(wofSettings.getResourceID());
+
+        //Animation in = AnimationUtils.loadAnimation(fa, android.R.anim.slide_in_left);
+        mISWheel.setInAnimation(fa, R.anim.slide_in_right);
+        mISWheel.setOutAnimation(fa, R.anim.slide_out_left);
 
         mBTNnext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -234,7 +249,7 @@ public class WheelOfFortuneFragment extends Fragment {
 
         animationWaitHandler.postDelayed(onAnimationFinish, anim.getDuration());
 
-        mIVWheel.startAnimation(anim);
+        mISWheel.getCurrentView().startAnimation(anim);
 
     }
 
@@ -244,7 +259,7 @@ public class WheelOfFortuneFragment extends Fragment {
         public void run() {
             isSpinning = false;
 
-            float rot = (mIVWheel.getRotation() + dRotAnim) % 360;
+            float rot = (mISWheel.getCurrentView().getRotation() + dRotAnim) % 360;
             if (rot < 0) rot += 360;
 
             int index = (int) ((360 - rot) / (360 / wofSettings.getFieldAmount()));
@@ -284,7 +299,8 @@ public class WheelOfFortuneFragment extends Fragment {
                         mTVplayerName.setText(fa.getGame().getGamePlayer(fourthPlayer).getDisplayName());
                         mTVplayerName.setBackgroundColor(fa.getGame().getGamePlayer(fourthPlayer).getPlayerColor().getColor());
                     }
-                    mIVWheel.setImageResource(wofSettings.getResourceID());
+                    //TODO: slide to new wheel, sync with host
+                    mISWheel.setImageResource(wofSettings.getResourceID());
                 }
             }
         }

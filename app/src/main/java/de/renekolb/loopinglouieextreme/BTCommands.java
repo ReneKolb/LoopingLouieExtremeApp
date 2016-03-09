@@ -25,4 +25,6 @@ public class BTCommands {
 
     public static final char START_GAME = 's';
 
+    public static final char SET_ENABLED_PLAYERS = 't';
+
 }

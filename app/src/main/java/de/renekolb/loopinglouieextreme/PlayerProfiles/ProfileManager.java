@@ -1,7 +1,6 @@
 package de.renekolb.loopinglouieextreme.PlayerProfiles;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.util.Log;
 
@@ -14,8 +13,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 
