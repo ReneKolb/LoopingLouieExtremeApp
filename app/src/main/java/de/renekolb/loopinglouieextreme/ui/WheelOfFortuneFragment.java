@@ -21,9 +21,13 @@ import android.widget.ViewSwitcher;
 
 import java.util.Random;
 
+import de.renekolb.loopinglouieextreme.ConnectionState;
+import de.renekolb.loopinglouieextreme.DeviceRole;
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
+import de.renekolb.loopinglouieextreme.GamePlayer;
 import de.renekolb.loopinglouieextreme.R;
 import de.renekolb.loopinglouieextreme.WheelFieldType;
+import de.renekolb.loopinglouieextreme.WheelOfFortuneHandler;
 import de.renekolb.loopinglouieextreme.WheelOfFortuneSettings;
 
 
@@ -37,80 +41,75 @@ import de.renekolb.loopinglouieextreme.WheelOfFortuneSettings;
  */
 public class WheelOfFortuneFragment extends Fragment {
 
-    //private ImageView mIVWheel;
     private ImageSwitcher mISWheel;
     private TextView mTVResult;
     private Button mBTNnext;
     private TextView mTVplayerName;
 
-    private int firstPlayer;
-    private int secondPlayer;
-    private int thirdPlayer;
-    private int fourthPlayer;
+    private String displayName;
+    private int nameBackgroundColor;
+    private int wheelResourceID;
 
-    private int currentPosition;
-    private int playerAmount;
+    private int currentSpinnerPlayerIndex;
 
-
-    private boolean canSpin;
-
-    private Random random;
-    //private float currentRotation;
-
-    private boolean debug;
-
-    private boolean isSpinning;
+    //private boolean isSpinning;
 
     private Handler animationWaitHandler;
 
     //private OnFragmentInteractionListener mListener;
     private FullscreenActivity fa;
 
-    private boolean winnerWheel = true;
-    private WheelOfFortuneSettings wofSettings = WheelOfFortuneSettings.WINNER_WHEEL;
+    private WheelOfFortuneHandler handler;
 
-    private double startPhi;
-    private double dPhi;
+    private double dragStartPhi;
+    private double dragDPhi;
 
-    private float dRotAnim;
-
-    /**
+     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @return A new instance of fragment WheelOfFortuneFragment.
      */
 
-    public static WheelOfFortuneFragment newInstance() {
-
-        return new WheelOfFortuneFragment();
+    public static WheelOfFortuneFragment newInstance(WheelOfFortuneHandler handler) {
+        WheelOfFortuneFragment result = new WheelOfFortuneFragment();
+        result.handler = handler;
+        result.animationWaitHandler = new Handler();
+        return result;
     }
 
     public WheelOfFortuneFragment() {
         // Required empty public constructor
     }
 
-    public void setPlayerSpin(int firstPlayerIndex, int secondPlayerIndex, int thirdPlayerIndex, int fourthPlayerIndex) {
-        //first means playerIndex of first winner, second means second winner, ...
-        this.firstPlayer = firstPlayerIndex;
-        this.secondPlayer = secondPlayerIndex;
-        this.thirdPlayer = thirdPlayerIndex;
-        this.fourthPlayer = fourthPlayerIndex;
+    public void setCurrentSpinner(GamePlayer player){
+        this.displayName = player.getDisplayName();
+        this.nameBackgroundColor = player.getPlayerColor().getColor();
+        this.wheelResourceID = handler.getCurrentSettings().getResourceID();
 
-        debug = firstPlayerIndex == -1;
-
-        this.playerAmount = 2;
-        if (this.thirdPlayer != -1)
-            this.playerAmount++;
-        if (this.fourthPlayer != -1)
-            this.playerAmount++;
+        if(mTVplayerName != null) {
+            mTVplayerName.setText(player.getDisplayName());
+            mTVplayerName.setBackgroundColor(player.getPlayerColor().getColor());
+        }
+        if(mISWheel != null) {
+            this.mISWheel.setImageResource(handler.getCurrentSettings().getResourceID());
+        }
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        random = new Random();
-        animationWaitHandler = new Handler();
+    public void setResultText(int textID){
+        this.mTVResult.setText(textID);
+    }
+
+    public void setResultText(String text){
+        this.mTVResult.setText(text);
+    }
+
+    public void setEnableNextButton(boolean enabled){
+        if(enabled) {
+            mBTNnext.setVisibility(View.VISIBLE);
+        }else{
+            mBTNnext.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -118,9 +117,6 @@ public class WheelOfFortuneFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_wheel_of_fortune, container, false);
-
-        canSpin = true;
-        currentPosition = 0;
 
         //mIVWheel = (ImageView) view.findViewById(R.id.iv_wheel_of_fortune);
         mISWheel = (ImageSwitcher) view.findViewById(R.id.is_wheel_of_fortune);
@@ -130,42 +126,30 @@ public class WheelOfFortuneFragment extends Fragment {
 
         mBTNnext.setVisibility(View.INVISIBLE);
 
-        //currentPosition = 0 -> firstPlayer
-        if (debug) {
-            mTVplayerName.setText("DEBUG PLAYER");
-            mTVplayerName.setBackgroundColor(Color.TRANSPARENT);
-        } else {
-            mTVplayerName.setText(fa.getGame().getGamePlayer(firstPlayer).getDisplayName());
-            mTVplayerName.setBackgroundColor(fa.getGame().getGamePlayer(firstPlayer).getPlayerColor().getColor());
-        }
-
-        isSpinning = false;
-
-        wofSettings = WheelOfFortuneSettings.WINNER_WHEEL;
-
+        this.dragStartPhi = -1;
 
         mISWheel.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(final View view, final MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        if (!isSpinning && canSpin) {
-                            startPhi = Math.toDegrees(Math.atan2(event.getY() - (mISWheel.getCurrentView().getHeight() / 2), event.getX() - (mISWheel.getCurrentView().getWidth() / 2))) + 180;
+                        if (!handler.isSpinning() && handler.canSpin()) {
+                            dragStartPhi = Math.toDegrees(Math.atan2(event.getY() - (mISWheel.getCurrentView().getHeight() / 2), event.getX() - (mISWheel.getCurrentView().getWidth() / 2))) + 180;
                         }
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        if (!isSpinning && canSpin && startPhi != -1) {
+                        if (!handler.isSpinning() && handler.canSpin() && dragStartPhi != -1) {
                             double newPhi = Math.toDegrees(Math.atan2(event.getY() - (mISWheel.getCurrentView().getHeight() / 2), event.getX() - (mISWheel.getCurrentView().getWidth() / 2))) + 180;
-                            dPhi = startPhi - newPhi;
+                            dragDPhi = dragStartPhi - newPhi;
 
-                            mISWheel.getCurrentView().setRotation((float) (mISWheel.getCurrentView().getRotation() - dPhi));
+                            mISWheel.getCurrentView().setRotation((float) (mISWheel.getCurrentView().getRotation() - dragDPhi));
                         }
                         break;
                     case MotionEvent.ACTION_UP:
-                        startPhi = -1;
-                        if (!isSpinning && canSpin) {
-                            if (Math.abs(dPhi) > 2) {
-                                spinWheel((int) -Math.signum(dPhi));
+                        dragStartPhi = -1;
+                        if (!handler.isSpinning() && handler.canSpin()) {
+                            if (Math.abs(dragDPhi) > 2) {
+                                handler.startSpinning(mISWheel.getCurrentView().getRotation(),(int) -Math.signum(dragDPhi));
                             }
                         }
                         break;
@@ -181,7 +165,10 @@ public class WheelOfFortuneFragment extends Fragment {
                 return myView;
             }
         });
-        mISWheel.setImageResource(wofSettings.getResourceID());
+
+        mISWheel.setImageResource(handler.getCurrentSettings().getResourceID());
+        mTVplayerName.setText(displayName);
+        mTVplayerName.setBackgroundColor(nameBackgroundColor);
 
         //Animation in = AnimationUtils.loadAnimation(fa, android.R.anim.slide_in_left);
         mISWheel.setInAnimation(fa, R.anim.slide_in_right);
@@ -193,7 +180,6 @@ public class WheelOfFortuneFragment extends Fragment {
                 onButtonPressed(Constants.buttons.WHEEL_OF_FORTUNE_NEXT_ROUND);
             }
         });
-
 
         return view;
     }
@@ -222,13 +208,35 @@ public class WheelOfFortuneFragment extends Fragment {
     }
 
 
-    private void spinWheel(int direction) {
+    public void startSpin(float startViewRotation, float rotateAnimation){
+        mISWheel.getCurrentView().setRotation(startViewRotation);
+        mTVResult.setText("dum die dum ...");
+        RotateAnimation anim = new RotateAnimation(0,rotateAnimation, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+        anim.setInterpolator(new Interpolator() {
+            @Override
+            public float getInterpolation(float x) {
+                return (3 * x) - (3 * x * x) + (x * x * x);
+            }
+        });
+        anim.setDuration((int) (2.0 * Math.abs(rotateAnimation)));
+        anim.setFillEnabled(true);
+        anim.setFillAfter(true);
+        animationWaitHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                handler.onSpinFinish();
+            }
+        }, anim.getDuration());
+        mISWheel.getCurrentView().startAnimation(anim);
+    }
+
+    /*private void spinWheel(int direction) {
         //direction 1 -> clockwise
         //         -1 -> counter clockwise
         mTVResult.setText("dum di dum ...");
 
         float dRot = 1080 + random.nextInt(1080); //3-6 Umdrehungen
-
+        //TODO: sync with clients/server
 
         //Animation does not actually turns the entire view. rather the image(drawable)!
         RotateAnimation anim = new RotateAnimation(0, direction * dRot, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -251,10 +259,10 @@ public class WheelOfFortuneFragment extends Fragment {
 
         mISWheel.getCurrentView().startAnimation(anim);
 
-    }
+    }*/
 
 
-    private final Runnable onAnimationFinish = new Runnable() {
+  /*  private final Runnable onAnimationFinish = new Runnable() {
         @Override
         public void run() {
             isSpinning = false;
@@ -273,6 +281,8 @@ public class WheelOfFortuneFragment extends Fragment {
                 return;
             }
             mTVResult.setText(textRid);
+
+            fa.onWheelSpinFinish(index);
 
             canSpin = wofSettings.getFieldType(index).equals(WheelFieldType.AGAIN);
 
@@ -304,6 +314,6 @@ public class WheelOfFortuneFragment extends Fragment {
                 }
             }
         }
-    };
+    };*/
 
 }

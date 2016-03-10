@@ -110,6 +110,14 @@ public class BTServerService {
         return -1;
     }*/
 
+    public void sendMessageToAllBut(String msg, String exceptAddress){
+        for (BTConnectedThread b : clientCommThread.values()) {
+            if(!b.getSocket().getRemoteDevice().getAddress().equals(exceptAddress)) {
+                b.write(msg.getBytes());
+            }
+        }
+    }
+
     public void sendMessageToAll(String msg) {
         for (BTConnectedThread b : clientCommThread.values()) {
             b.write(msg.getBytes());
