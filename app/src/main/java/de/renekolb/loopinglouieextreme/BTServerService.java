@@ -112,7 +112,7 @@ public class BTServerService {
 
     public void sendMessageToAllBut(String msg, String exceptAddress){
         for (BTConnectedThread b : clientCommThread.values()) {
-            if(!b.getSocket().getRemoteDevice().getAddress().equals(exceptAddress)) {
+            if(exceptAddress == null || !b.getSocket().getRemoteDevice().getAddress().equals(exceptAddress)) {
                 b.write(msg.getBytes());
             }
         }

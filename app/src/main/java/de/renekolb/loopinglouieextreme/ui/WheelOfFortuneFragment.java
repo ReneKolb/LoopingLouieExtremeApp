@@ -2,10 +2,8 @@ package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,16 +17,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import java.util.Random;
-
-import de.renekolb.loopinglouieextreme.ConnectionState;
-import de.renekolb.loopinglouieextreme.DeviceRole;
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.GamePlayer;
 import de.renekolb.loopinglouieextreme.R;
-import de.renekolb.loopinglouieextreme.WheelFieldType;
 import de.renekolb.loopinglouieextreme.WheelOfFortuneHandler;
-import de.renekolb.loopinglouieextreme.WheelOfFortuneSettings;
 
 
 /**

@@ -67,16 +67,23 @@ public class WheelOfFortuneHandler {
         if(direction >= 0) direction = 1;
         else direction = -1;
 
-        startSpinning(startViewRotation, direction * (1080f + rnd.nextFloat() * 1080f));
+        startSpinning(startViewRotation, direction * (1080f + rnd.nextFloat() * 1080f),true);
     }
 
-    public void startSpinning(float startViewRotation, float rotateAnimation){
+    public void startSpinning(float startViewRotation, float rotateAnimation,boolean doSync){
         this.startViewRotation = startViewRotation;
         this.animationPhi = rotateAnimation;
 
         this.isSpinning = true;
 
         fa.getWheelOfFortuneFragment().startSpin(startViewRotation, rotateAnimation);
+        if(doSync) {
+            if (fa.deviceRole == DeviceRole.CLIENT) {
+                fa.sendWheelOfFortuneSpinToServer(startViewRotation,rotateAnimation);
+            } else {
+                fa.sendWheelOfFortuneSpinToClients(startViewRotation,rotateAnimation,null);
+            }
+        }
     }
 
     public void onSpinFinish(){
@@ -91,7 +98,9 @@ public class WheelOfFortuneHandler {
             Log.e("Wheel of Fortune", "textRid = -1");
             fa.getWheelOfFortuneFragment().setResultText("Error...");
             canSpin = false;
-            fa.getWheelOfFortuneFragment().setEnableNextButton(true);
+            if(fa.deviceRole==DeviceRole.SERVER) {
+                fa.getWheelOfFortuneFragment().setEnableNextButton(true);
+            }
             return;
         }
         fa.getWheelOfFortuneFragment().setResultText(textRid);
@@ -101,16 +110,19 @@ public class WheelOfFortuneHandler {
             //next Player
             currentPosition++;
             if (currentPosition >= playerAmount) {
-                fa.getWheelOfFortuneFragment().setEnableNextButton(true);
+                if(fa.deviceRole==DeviceRole.SERVER) {
+                    fa.getWheelOfFortuneFragment().setEnableNextButton(true);
+                }
             }else{
-               canSpin = true;
+               canSpin = getCanSpin(currentPosition);
                 if(currentPosition>0){
                     wofSettings = WheelOfFortuneSettings.LOSER_WHEEL;
                 }
                 fa.getWheelOfFortuneFragment().setCurrentSpinner(fa.getGame().getGamePlayer(this.playerIndex[currentPosition]));
+                //fa.sendWheelOfFortuneSpinnner(currentPosition);
             }
         }else{
-            canSpin = true;
+            canSpin = getCanSpin(currentPosition);
         }
     }
 
