@@ -25,6 +25,7 @@ public class WheelOfFortuneHandler {
 
     private FullscreenActivity fa;
 
+    private boolean debugMode;
 
     public WheelOfFortuneHandler(FullscreenActivity fa){
         this.fa = fa;
@@ -35,6 +36,8 @@ public class WheelOfFortuneHandler {
     }
 
     public void setPlayers(int firstPlayerIndex, int secondPlayerIndex, int thirdPlayerIndex, int fourthPlayerIndex){
+        debugMode = firstPlayerIndex == -1;
+
         this.playerIndex[0] = firstPlayerIndex;
         this.playerIndex[1] = secondPlayerIndex;
         this.playerIndex[2] = thirdPlayerIndex;
@@ -53,14 +56,23 @@ public class WheelOfFortuneHandler {
     }
 
     public void updateCurrentPlayer(int newPosition){
-        this.currentPosition = newPosition;
+        if(debugMode){
+            this.currentPosition = 0;
+        }else {
+            this.currentPosition = newPosition;
+        }
         this.canSpin = getCanSpin(currentPosition);
         if(newPosition > 0) {
             this.wofSettings = WheelOfFortuneSettings.LOSER_WHEEL;
         }else{
             this.wofSettings = WheelOfFortuneSettings.WINNER_WHEEL;
         }
-        fa.getWheelOfFortuneFragment().setCurrentSpinner(fa.getGame().getGamePlayer(this.playerIndex[newPosition]));
+
+        if(debugMode){
+            fa.getWheelOfFortuneFragment().setCurrentSpinner(null);
+        }else {
+            fa.getWheelOfFortuneFragment().setCurrentSpinner(fa.getGame().getGamePlayer(this.playerIndex[newPosition]));
+        }
     }
 
     public void startSpinning(float startViewRotation, int direction){
@@ -77,7 +89,7 @@ public class WheelOfFortuneHandler {
         this.isSpinning = true;
 
         fa.getWheelOfFortuneFragment().startSpin(startViewRotation, rotateAnimation);
-        if(doSync) {
+        if(doSync&&!debugMode) {
             if (fa.deviceRole == DeviceRole.CLIENT) {
                 fa.sendWheelOfFortuneSpinToServer(startViewRotation,rotateAnimation);
             } else {
@@ -109,7 +121,7 @@ public class WheelOfFortuneHandler {
             canSpin = false;
             //next Player
             currentPosition++;
-            if (currentPosition >= playerAmount) {
+            if (currentPosition >= playerAmount && !debugMode) {
                 if(fa.deviceRole==DeviceRole.SERVER) {
                     fa.getWheelOfFortuneFragment().setEnableNextButton(true);
                 }
@@ -118,7 +130,11 @@ public class WheelOfFortuneHandler {
                 if(currentPosition>0){
                     wofSettings = WheelOfFortuneSettings.LOSER_WHEEL;
                 }
-                fa.getWheelOfFortuneFragment().setCurrentSpinner(fa.getGame().getGamePlayer(this.playerIndex[currentPosition]));
+                if(debugMode) {
+                    fa.getWheelOfFortuneFragment().setCurrentSpinner(null);
+                }else{
+                    fa.getWheelOfFortuneFragment().setCurrentSpinner(fa.getGame().getGamePlayer(this.playerIndex[currentPosition]));
+                }
                 //fa.sendWheelOfFortuneSpinnner(currentPosition);
             }
         }else{
@@ -127,14 +143,20 @@ public class WheelOfFortuneHandler {
     }
 
     public boolean canSpin(){
-        return this.canSpin;
+        return debugMode || this.canSpin;
     }
 
     private boolean getCanSpin(int currentPlayerPosition){
-        if(fa.deviceRole == DeviceRole.CLIENT){
+        if(debugMode)
+            return true;
+
+        if(fa.deviceRole == DeviceRole.CLIENT) {
             return fa.getGame().getGamePlayer(playerIndex[currentPlayerPosition]).getDisplayName().equals(fa.getCurrentPlayer().getPlayerName());
-        }else{
+        }else if(fa.deviceRole == DeviceRole.SERVER){
             return fa.getGame().getGamePlayer(playerIndex[currentPlayerPosition]).getConnectionState().equals(ConnectionState.LOCAL);
+        }else{
+            //debug Mode
+            return true;
         }
     }
 

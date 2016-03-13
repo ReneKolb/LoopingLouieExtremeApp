@@ -2,6 +2,7 @@ package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -74,18 +75,24 @@ public class WheelOfFortuneFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void setCurrentSpinner(GamePlayer player){
-        this.displayName = player.getDisplayName();
-        this.nameBackgroundColor = player.getPlayerColor().getColor();
-        this.wheelResourceID = handler.getCurrentSettings().getResourceID();
-
-        if(mTVplayerName != null) {
-            mTVplayerName.setText(player.getDisplayName());
-            mTVplayerName.setBackgroundColor(player.getPlayerColor().getColor());
+    public void setCurrentSpinner(GamePlayer player) {
+        if (player == null) {
+            this.displayName = "DummyPlayer";
+            this.nameBackgroundColor = Color.TRANSPARENT;
+        } else {
+            this.displayName = player.getDisplayName();
+            this.nameBackgroundColor = player.getPlayerColor().getColor();
         }
-        if(mISWheel != null) {
+
+        this.wheelResourceID = handler.getCurrentSettings().getResourceID();
+        if (mTVplayerName != null) {
+            mTVplayerName.setText(this.displayName);
+            mTVplayerName.setBackgroundColor(this.nameBackgroundColor);
+        }
+        if (mISWheel != null) {
             this.mISWheel.setImageResource(handler.getCurrentSettings().getResourceID());
         }
+
     }
 
     public void setResultText(int textID){
