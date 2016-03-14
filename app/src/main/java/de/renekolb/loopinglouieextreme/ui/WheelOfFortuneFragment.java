@@ -55,7 +55,8 @@ public class WheelOfFortuneFragment extends Fragment {
     private WheelOfFortuneHandler handler;
 
     private double dragStartPhi;
-    private double dragDPhi;
+    private double dragLastPhi;
+    //private double dragDPhi;
 
      /**
      * Use this factory method to create a new instance of
@@ -133,22 +134,21 @@ public class WheelOfFortuneFragment extends Fragment {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         if (!handler.isSpinning() && handler.canSpin()) {
-                            dragStartPhi = Math.toDegrees(Math.atan2(event.getY() - (mISWheel.getCurrentView().getHeight() / 2), event.getX() - (mISWheel.getCurrentView().getWidth() / 2))) + 180;
+                            dragLastPhi = dragStartPhi = Math.toDegrees(Math.atan2(event.getY() - (mISWheel.getHeight() / 2), event.getX() - (mISWheel.getWidth() / 2))) + 180;
                         }
                         break;
                     case MotionEvent.ACTION_MOVE:
                         if (!handler.isSpinning() && handler.canSpin() && dragStartPhi != -1) {
-                            double newPhi = Math.toDegrees(Math.atan2(event.getY() - (mISWheel.getCurrentView().getHeight() / 2), event.getX() - (mISWheel.getCurrentView().getWidth() / 2))) + 180;
-                            dragDPhi = dragStartPhi - newPhi;
-
-                            mISWheel.getCurrentView().setRotation((float) (mISWheel.getCurrentView().getRotation() - dragDPhi));
+                            double newPhi = Math.toDegrees(Math.atan2(event.getY() - (mISWheel.getHeight() / 2), event.getX() - (mISWheel.getWidth() / 2))) + 180;
+                            dragLastPhi = dragLastPhi - newPhi + dragStartPhi;
+                            mISWheel.getCurrentView().setRotation((float) (newPhi - dragStartPhi));
                         }
                         break;
                     case MotionEvent.ACTION_UP:
                         dragStartPhi = -1;
                         if (!handler.isSpinning() && handler.canSpin()) {
-                            if (Math.abs(dragDPhi) > 2) {
-                                handler.startSpinning(mISWheel.getCurrentView().getRotation(),(int) -Math.signum(dragDPhi));
+                            if (Math.abs(dragLastPhi) > 2) {
+                                handler.startSpinning(mISWheel.getCurrentView().getRotation(),(int) -Math.signum(dragLastPhi));
                             }
                         }
                         break;

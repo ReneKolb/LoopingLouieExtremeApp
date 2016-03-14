@@ -8,10 +8,10 @@
 
 
     <TextView
+        android:id="@+id/tv_wheel_of_fortune_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="The Wheel of Fortune"
-        android:id="@+id/tv_wheel_of_fortune_title"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
@@ -20,19 +20,19 @@
         android:textStyle="bold"/>
 
     <TextView
+        android:id="@+id/tv_wheel_of_fortune_player_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Player XY"
-        android:id="@+id/tv_wheel_of_fortune_player_name"
-        android:layout_alignTop="@+id/iv_wheel_of_fortune_pointer"
+        android:layout_below="@id/tv_wheel_of_fortune_title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textColor="#000000"/>
 
     <ImageSwitcher
+        android:id="@+id/is_wheel_of_fortune"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/is_wheel_of_fortune"
         android:layout_centerInParent="true"
         android:layout_margin="10dp"
         android:scaleType="fitCenter">
@@ -49,20 +49,20 @@
         android:scaleType="fitCenter"/>-->
 
     <ImageView
+        android:id="@+id/is_wheel_of_fortune_pointer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/is_wheel_of_fortune_pointer"
         android:src="@drawable/pointer"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="-50dp"
         android:layout_above="@id/is_wheel_of_fortune"/>
 
     <TextView
+        android:id="@+id/tv_wheel_of_fortune_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Drehe am Rad"
-        android:id="@+id/tv_wheel_of_fortune_result"
-        android:layout_below="@+id/is_wheel_of_fortune"
+        android:layout_below="@id/is_wheel_of_fortune"
         android:layout_marginTop="20dp"
         android:textColor="#000000"
         android:textSize="19sp"
@@ -70,10 +70,10 @@
         android:layout_centerHorizontal="true"/>
 
     <Button
+        android:id="@+id/btn_wheel_of_fortune_next_round"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Next Round"
-        android:id="@+id/btn_wheel_of_fortune_next_round"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="24dp"/>
