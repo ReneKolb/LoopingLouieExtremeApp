@@ -50,7 +50,7 @@ public class PlayerProfile {
         return this.playerAchievements;
     }
 
-    PlayerStatistics getPlayerStatistics(){
+    public PlayerStatistics getPlayerStatistics(){
         return this.playerStatistics;
     }
 

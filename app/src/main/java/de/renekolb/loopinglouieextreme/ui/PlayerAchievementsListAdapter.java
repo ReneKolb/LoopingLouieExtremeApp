@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.LinkedHashMap;
@@ -95,6 +96,7 @@ public class PlayerAchievementsListAdapter extends BaseAdapter{
             holder = new ViewHolder();
             holder.icon = (ImageView) convertView.findViewById(R.id.iv_listitem_player_achievement_icon);
             holder.title = (TextView) convertView.findViewById(R.id.tv_listitem_player_achievement_title);
+            holder.progress = (ProgressBar) convertView.findViewById(R.id.pb_listitem_player_achievement_progress);
             holder.description = (TextView) convertView.findViewById(R.id.tv_listitem_player_achievement_description);
             convertView.setTag(holder);
         } else {
@@ -109,14 +111,28 @@ public class PlayerAchievementsListAdapter extends BaseAdapter{
 
         if(unlocked) {
             holder.title.setTextColor(Color.parseColor("#000000"));
+            holder.progress.setVisibility(View.GONE);
             holder.description.setText(ach.getUnlockedDescription());
             holder.description.setTextColor(Color.parseColor("#000000"));
             holder.icon.clearColorFilter();
         }else{
             //grayscale
             holder.title.setTextColor(Color.parseColor("#CCCCCC"));
-            holder.description.setText(ach.getUnlockDescription());
+
+            long maxAmount = ach.getUnlockAmount();
+            long amount = profile.getPlayerStatistics().getAmount(ach.getStatType());
+
+            holder.description.setText(amount+" / "+maxAmount+" "+ach.getUnlockDescription());
             holder.description.setTextColor(Color.parseColor("#CCCCCC"));
+
+            //if(amount > 0){
+                holder.progress.setVisibility(View.VISIBLE);
+                holder.progress.setMax((int)maxAmount);
+                holder.progress.setProgress((int)amount);
+            /*}else{
+                holder.progress.setVisibility(View.GONE);
+            }*/
+
 
             //TODO: maybe use special not-unlocked icons?
             ColorMatrix matrix = new ColorMatrix();
@@ -132,6 +148,7 @@ public class PlayerAchievementsListAdapter extends BaseAdapter{
     private class ViewHolder {
         ImageView icon;
         TextView title;
+        ProgressBar progress;
         TextView description;
     }
 }

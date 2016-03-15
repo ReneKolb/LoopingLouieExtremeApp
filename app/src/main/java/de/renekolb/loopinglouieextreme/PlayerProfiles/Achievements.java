@@ -5,12 +5,12 @@ import de.renekolb.loopinglouieextreme.R;
 public class Achievements {
 
     private static final Achievement[] achievements = new Achievement[]{
-            new Achievement("And the addiction begins","You have finished a round","Unlock this achievement by finishing a round", R.drawable.ic_settings_white),
-            new Achievement("Play five rounds","You have finished 5 rounds","Unlock this achievement by finishing five rounds", R.drawable.ic_settings_white),
-            new Achievement("Play a game","You have finished a hole gane","Unlock this achievement by finishing a hole game", R.drawable.ic_settings_black),
-            new Achievement("Play five game","You have finished 5 games","Unlock this achievement by finishing five games", R.drawable.ic_settings_black),
-            new Achievement("Win a round","You have won a round","Unlock this achievement by winning a round",R.drawable.ic_action_info),
-            new Achievement("Win a game","You have won a hole game","Unlock this achievement by winning a hole game", R.drawable.ic_action_info_black),
+            new Achievement("And the addiction begins","You have finished a round","rounds finished", R.drawable.ic_settings_white, StatisticType.TOTAL_ROUNDS_PLAYED,1),
+            new Achievement("Play five rounds","You have finished 5 rounds","rounds finished", R.drawable.ic_settings_white,StatisticType.TOTAL_ROUNDS_PLAYED,5),
+            new Achievement("Play a game","You have finished a hole gane","games finished", R.drawable.ic_settings_black,StatisticType.TOTAL_GAMES_PLAYED,1),
+            new Achievement("Play five game","You have finished 5 games","games finished", R.drawable.ic_settings_black,StatisticType.TOTAL_GAMES_PLAYED,5),
+            new Achievement("Win a round","You have won a round","rounds won",R.drawable.ic_action_info,StatisticType.TOTAL_ROUNDS_WON,1),
+            new Achievement("Win a game","You have won a hole game","games won", R.drawable.ic_action_info_black,StatisticType.TOTAL_GAMES_WON,1),
 
             //win 5 games
             //win 5 rounds

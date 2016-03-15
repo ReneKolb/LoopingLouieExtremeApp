@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -127,6 +128,7 @@ public class WheelOfFortuneFragment extends Fragment {
         mBTNnext.setVisibility(View.INVISIBLE);
 
         this.dragStartPhi = -1;
+        this.dragLastPhi = -1;
 
         mISWheel.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -140,17 +142,19 @@ public class WheelOfFortuneFragment extends Fragment {
                     case MotionEvent.ACTION_MOVE:
                         if (!handler.isSpinning() && handler.canSpin() && dragStartPhi != -1) {
                             double newPhi = Math.toDegrees(Math.atan2(event.getY() - (mISWheel.getHeight() / 2), event.getX() - (mISWheel.getWidth() / 2))) + 180;
-                            dragLastPhi = dragLastPhi - newPhi + dragStartPhi;
+                            dragLastPhi = mISWheel.getCurrentView().getRotation() - newPhi + dragStartPhi;
                             mISWheel.getCurrentView().setRotation((float) (newPhi - dragStartPhi));
                         }
                         break;
                     case MotionEvent.ACTION_UP:
                         dragStartPhi = -1;
                         if (!handler.isSpinning() && handler.canSpin()) {
-                            if (Math.abs(dragLastPhi) > 2) {
+                            Log.i("WheelOfFortune","LastPhi: "+Math.abs(dragLastPhi));
+                            if (Math.abs(dragLastPhi) > 5) {
                                 handler.startSpinning(mISWheel.getCurrentView().getRotation(),(int) -Math.signum(dragLastPhi));
                             }
                         }
+                        dragLastPhi = -1;
                         break;
                 }
                 return true;
