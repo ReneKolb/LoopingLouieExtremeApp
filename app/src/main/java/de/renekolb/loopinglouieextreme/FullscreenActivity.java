@@ -312,6 +312,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                 break;
             case Constants.buttons.GAME_SETTINGS_PLAYER_SETTINGS:
+                sendGameSettingsToClients();
 
                 ft = getFragmentManager().beginTransaction();
                 if (playerSettingsFragment == null) {
@@ -526,6 +527,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         }
 
                         bindNewPlayer(devAddr, devName.replaceAll("\\.", "_").replaceAll(":","_"));
+                        sendGameSettingsToClient(devAddr);
                     } else if (deviceRole == DeviceRole.CLIENT) {
                         Log.i("BLAAAAAAAA", "Role = Client");
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -1061,6 +1063,12 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     btClient.stop();
                     getFragmentManager().popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     break;
+                case 'j':
+                    Log.i("Client Receive MSG","Game Settings");
+                    //Form: j[#Rounds].
+                    int rounds = Integer.parseInt(data);
+                    this.game.setMaxRounds(rounds);
+                    break;
        /*         case 'b':
                     //update player name
                     break;
@@ -1115,11 +1123,11 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     }
 
     public void sendWheelOfFortuneSpinToServer(float startViewRot, float animRot) {
-        btClient.sendMessage("d" + String.valueOf(startViewRot).replaceAll("\\.", ",") + ":" + String.valueOf(animRot).replaceAll("\\.",",") + ".");
+        btClient.sendMessage("d" + String.valueOf(startViewRot).replaceAll("\\.", ",") + ":" + String.valueOf(animRot).replaceAll("\\.", ",") + ".");
     }
 
     public void sendWheelOfFortuneSpinToClients(float startViewRot, float animRot,@Nullable String receivedFromClient) {
-        btServer.sendMessageToAllBut("g" + String.valueOf(startViewRot).replaceAll("\\.", ",") + ":" + String.valueOf(animRot).replaceAll("\\.",",")+".",receivedFromClient);
+        btServer.sendMessageToAllBut("g" + String.valueOf(startViewRot).replaceAll("\\.", ",") + ":" + String.valueOf(animRot).replaceAll("\\.", ",") + ".", receivedFromClient);
     }
 
     private void sendSwitchToWheelOfFortune() {
@@ -1145,6 +1153,14 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     private void sendWheelOfFortuneResultToServer(int resultIndex){
         btClient.sendMessage("c" + resultIndex + ".");
         //btServer.sendMessageToAll("f"+resultIndex+".");
+    }
+
+    private void sendGameSettingsToClients(){
+        btServer.sendMessageToAll("j" + game.getMaxRounds() + ".");
+    }
+
+    private void sendGameSettingsToClient(String address){
+        btServer.sendMessage(address,"j"+game.getMaxRounds()+".");
     }
 
 /*    public void onWheelSpinFinish(int resultIndex){

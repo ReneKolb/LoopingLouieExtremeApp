@@ -51,7 +51,7 @@ public class PlayerStatistics implements Serializable{
         if(!playerAchievements.hasUnlocked(Achievements.PLAY_A_ROUND) && this.statistics.get(StatisticType.TOTAL_ROUNDS_PLAYED) >= 1){
             playerAchievements.addAchievement(Achievements.PLAY_A_ROUND, notifyUser);
         }
-        if(playerAchievements.hasUnlocked(Achievements.PLAY_FIVE_ROUNDS) && this.statistics.get(StatisticType.TOTAL_ROUNDS_PLAYED) >= 5){
+        if(!playerAchievements.hasUnlocked(Achievements.PLAY_FIVE_ROUNDS) && this.statistics.get(StatisticType.TOTAL_ROUNDS_PLAYED) >= 5){
             playerAchievements.addAchievement(Achievements.PLAY_FIVE_ROUNDS, notifyUser);
         }
     }
@@ -63,7 +63,7 @@ public class PlayerStatistics implements Serializable{
         if(!playerAchievements.hasUnlocked(Achievements.PLAY_A_GAME) && this.statistics.get(StatisticType.TOTAL_GAMES_PLAYED) >= 1){
             playerAchievements.addAchievement(Achievements.PLAY_A_GAME, notifyUser);
         }
-        if(playerAchievements.hasUnlocked(Achievements.PLAY_FIVE_GAMES) && this.statistics.get(StatisticType.TOTAL_GAMES_PLAYED) >= 5){
+        if(!playerAchievements.hasUnlocked(Achievements.PLAY_FIVE_GAMES) && this.statistics.get(StatisticType.TOTAL_GAMES_PLAYED) >= 5){
             playerAchievements.addAchievement(Achievements.PLAY_FIVE_GAMES, notifyUser);
         }
     }
