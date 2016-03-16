@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
 
@@ -79,6 +81,39 @@ public class GameSettingsFragment extends Fragment {
         final Button btnCustom = (Button) view.findViewById(R.id.btn_game_settings_custom);
         final ImageButton btnCustomSettings = (ImageButton) view.findViewById(R.id.btn_game_settings_custom_settings);
         final Button btnPlayerSettings = (Button) view.findViewById(R.id.btn_game_settings_player_settings);
+
+        final CheckBox cbEnableWheel = (CheckBox) view.findViewById(R.id.cb_game_settings_enable_wheel_of_fortune);
+        final CheckBox cbEnableLoserWheel = (CheckBox) view.findViewById(R.id.cb_game_settings_enable_loser_wheel);
+
+        if(fa.getGame().getWheelOfFortuneEnabled()){
+            cbEnableWheel.setChecked(true);
+            cbEnableLoserWheel.setVisibility(View.VISIBLE);
+        }else{
+            cbEnableWheel.setChecked(false);
+            cbEnableLoserWheel.setVisibility(View.INVISIBLE);
+        }
+
+        cbEnableLoserWheel.setChecked(fa.getGame().getLoserWheelEnabled());
+
+        cbEnableWheel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                fa.getGame().setWheelOfFortuneEnabled(isChecked);
+                if(isChecked) {
+                    cbEnableLoserWheel.setVisibility(View.VISIBLE);
+                }else{
+                    cbEnableLoserWheel.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        cbEnableLoserWheel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                fa.getGame().setLoserWheelEnabled(isChecked);
+            }
+        });
+
 
         btnCustomSettings.setVisibility(mGameMode == 2 ? View.VISIBLE : View.INVISIBLE);
 

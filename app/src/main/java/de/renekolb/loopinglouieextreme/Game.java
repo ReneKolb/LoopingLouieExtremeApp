@@ -14,6 +14,9 @@ public class Game {
     private final CustomGameSettings settings;
     private boolean running;
 
+    private boolean enableWheelOfFortune;
+    private boolean enableLoserWheel;
+
     private int secondsRunning;
     private final Timer gameTimer;
 
@@ -40,9 +43,28 @@ public class Game {
 
         this.settings = new CustomGameSettings();
 
+        this.enableWheelOfFortune = true;
+        this.enableLoserWheel = true;
+
         this.fa = fa;
 
         this.gameTimer = new Timer();
+    }
+
+    public boolean getWheelOfFortuneEnabled(){
+        return this.enableWheelOfFortune;
+    }
+
+    public void setWheelOfFortuneEnabled(boolean enabled){
+        this.enableWheelOfFortune = enabled;
+    }
+
+    public boolean getLoserWheelEnabled(){
+        return this.enableLoserWheel;
+    }
+
+    public void setLoserWheelEnabled(boolean enabled){
+        this.enableLoserWheel = enabled;
     }
 
     public int getMaxRounds() {

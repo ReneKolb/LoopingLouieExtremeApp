@@ -121,7 +121,7 @@ public class WheelOfFortuneHandler {
             canSpin = false;
             //next Player
             currentPosition++;
-            if (currentPosition >= playerAmount && !debugMode) {
+            if ((currentPosition >= playerAmount || !fa.getGame().getLoserWheelEnabled()) && !debugMode) {
                 if(fa.deviceRole==DeviceRole.SERVER) {
                     fa.getWheelOfFortuneFragment().setEnableNextButton(true);
                 }

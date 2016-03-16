@@ -391,22 +391,29 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 break;
             case Constants.buttons.GAME_RESULTS_WHEEL_OF_FORTUNE:
                 ft = getFragmentManager().beginTransaction();
-                if (wheelOfFortuneFragment == null) {
-                    wheelOfFortuneFragment = WheelOfFortuneFragment.newInstance(wheelOfFortuneHandler);
+
+                if(getGame().getWheelOfFortuneEnabled()) {
+                    if (wheelOfFortuneFragment == null) {
+                        wheelOfFortuneFragment = WheelOfFortuneFragment.newInstance(wheelOfFortuneHandler);
+                    }
+                    //TODO: only temporary
+                    //wheelOfFortuneFragment.setPlayerSpin(game.first, game.second, game.third, game.fourth);
+                    wheelOfFortuneHandler.setPlayers(game.first, game.getLoser(), -1, -1);
+                    //wheelOfFortuneFragment.setPlayerSpin(game.first, game.getLoser(), -1, -1);
+
+                    sendSwitchToWheelOfFortune();
+                    //sendWheelOfFortuneSpinner(game.first, true);
+
+                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                    ft.addToBackStack(null);
+                    ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
+                    ft.commit();
+                    break;
+                }else{
+                    //dont break; skip WOF -> directly execute WheelOfFortune NextRound button
                 }
-                //TODO: only temporary
-                //wheelOfFortuneFragment.setPlayerSpin(game.first, game.second, game.third, game.fourth);
-                wheelOfFortuneHandler.setPlayers(game.first, game.getLoser(), -1, -1);
-                //wheelOfFortuneFragment.setPlayerSpin(game.first, game.getLoser(), -1, -1);
 
-                sendSwitchToWheelOfFortune();
-                //sendWheelOfFortuneSpinner(game.first, true);
-
-                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                ft.addToBackStack(null);
-                ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
-                ft.commit();
-                break;
+                //break;
 
             case Constants.buttons.WHEEL_OF_FORTUNE_NEXT_ROUND:
                 //TODO: handle wheel correct (next Wheel or next Round)
@@ -1065,9 +1072,18 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     break;
                 case 'j':
                     Log.i("Client Receive MSG","Game Settings");
-                    //Form: j[#Rounds].
-                    int rounds = Integer.parseInt(data);
+                    //Form: j[#Rounds]:[WOF enabled]:[LoserWheel enabled].
+                    split2 = data.split(":");
+                    if(split2.length!=3){
+                        Log.e("Error","Cannot update game settings. Wrong split length");
+                        break;
+                    }
+                    int rounds = Integer.parseInt(split2[0]);
+                    boolean enableWOF = "1".equals(split2[1]);
+                    boolean enableLoserWheel = "1".equals(split2[2]);
                     this.game.setMaxRounds(rounds);
+                    this.game.setWheelOfFortuneEnabled(enableWOF);
+                    this.game.setLoserWheelEnabled(enableLoserWheel);
                     break;
        /*         case 'b':
                     //update player name
@@ -1156,11 +1172,11 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     }
 
     private void sendGameSettingsToClients(){
-        btServer.sendMessageToAll("j" + game.getMaxRounds() + ".");
+        btServer.sendMessageToAll("j" + game.getMaxRounds()+":"+(game.getWheelOfFortuneEnabled()?"1":"0")+":" +(game.getLoserWheelEnabled()?"1":"0")+ ".");
     }
 
     private void sendGameSettingsToClient(String address){
-        btServer.sendMessage(address,"j"+game.getMaxRounds()+".");
+        btServer.sendMessage(address, "j" + game.getMaxRounds() +":"+(game.getWheelOfFortuneEnabled()?"1":"0")+":" +(game.getLoserWheelEnabled()?"1":"0")+  ".");
     }
 
 /*    public void onWheelSpinFinish(int resultIndex){

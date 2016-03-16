@@ -39,6 +39,24 @@
         android:layout_marginLeft="20dp"
         android:layout_centerVertical="true"/>
 
+    <CheckBox
+        android:id="@+id/cb_game_settings_enable_wheel_of_fortune"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/np_game_settings_rounds"
+        android:layout_centerVertical="true"
+        android:text="enable WheelOfFortune"
+        android:textColor="#000000"/>
+
+    <CheckBox
+        android:id="@+id/cb_game_settings_enable_loser_wheel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/np_game_settings_rounds"
+        android:layout_below="@id/cb_game_settings_enable_wheel_of_fortune"
+        android:text="enable looser wheel"
+        android:textColor="#000000"/>
+
     <Button
         android:layout_width="110dp"
         android:layout_height="60dp"
