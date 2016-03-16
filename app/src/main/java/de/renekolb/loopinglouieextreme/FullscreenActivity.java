@@ -1021,17 +1021,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         Log.e("Error","Cannot update Wheel of Fortune Spinner. Fragment is not created");
                         break;
                     }
-
                     final int position = Integer.parseInt(data);
-                    /*if(this.wheelOfFortuneFragment == null || this.wheelOfFortuneFragment.isHidden()){
-                        //TODO: sehr unschön
-                        new Handler().postDelayed(new Runnable(){public void run(){
-                            wheelOfFortuneFragment.setCurrentSpinnerPlayerIndex(slot2,isWinnerWheel);
-                        }},1000);
-                    }else {*/
                     wheelOfFortuneHandler.updateCurrentPlayer(position);
-                        //wheelOfFortuneFragment.setCurrentSpinnerPlayerIndex(slot2, isWinnerWheel);
-                    //}
                     break;
                 case 'f':
                     Log.i("Client Recieve MSG","Wheel of Fortune Spin Result");

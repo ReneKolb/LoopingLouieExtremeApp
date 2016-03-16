@@ -43,7 +43,7 @@ public class WheelOfFortuneSettings {
             new WheelOfFortuneField(WheelFieldType.BLANK, R.string.wof_winner_5),
             new WheelOfFortuneField(WheelFieldType.NORMAL, R.string.wof_winner_6));*/
 
-    public static final WheelOfFortuneSettings WINNER_WHEEL = new WheelOfFortuneSettings(R.drawable.winner_wheel,
+    public static final WheelOfFortuneSettings WINNER_WHEEL = new WheelOfFortuneSettings(R.drawable.wheel_of_fortune_winner_wheel,
             new WheelOfFortuneField(WheelFieldType.AGAIN, R.string.wof_winner_1),
             new WheelOfFortuneField(WheelFieldType.NORMAL, R.string.wof_winner_2),
             new WheelOfFortuneField(WheelFieldType.NORMAL, R.string.wof_winner_3),
@@ -57,7 +57,7 @@ public class WheelOfFortuneSettings {
             new WheelOfFortuneField(WheelFieldType.NORMAL, R.string.wof_winner_11),
             new WheelOfFortuneField(WheelFieldType.NORMAL, R.string.wof_winner_12));
 
-    public static final WheelOfFortuneSettings LOSER_WHEEL = new WheelOfFortuneSettings(R.drawable.loser_wheel,
+    public static final WheelOfFortuneSettings LOSER_WHEEL = new WheelOfFortuneSettings(R.drawable.wheel_of_fortune_loser_wheel,
             new WheelOfFortuneField(WheelFieldType.AGAIN, R.string.wof_loser_1),
             new WheelOfFortuneField(WheelFieldType.NORMAL, R.string.wof_loser_2),
             new WheelOfFortuneField(WheelFieldType.NORMAL, R.string.wof_loser_3),

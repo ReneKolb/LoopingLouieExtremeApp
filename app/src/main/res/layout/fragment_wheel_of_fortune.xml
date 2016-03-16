@@ -49,13 +49,13 @@
         android:scaleType="fitCenter"/>-->
 
     <ImageView
-        android:id="@+id/is_wheel_of_fortune_pointer"
+        android:id="@+id/iv_wheel_of_fortune_pointer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/pointer"
+        android:layout_marginBottom="-25dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-50dp"
-        android:layout_above="@id/is_wheel_of_fortune"/>
+        android:layout_above="@id/is_wheel_of_fortune" />
 
     <TextView
         android:id="@+id/tv_wheel_of_fortune_result"
