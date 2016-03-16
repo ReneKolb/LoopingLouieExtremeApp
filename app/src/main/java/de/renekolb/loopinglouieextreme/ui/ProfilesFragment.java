@@ -1,13 +1,16 @@
 package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -68,7 +71,7 @@ public class ProfilesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profiles, container, false);
@@ -77,11 +80,34 @@ public class ProfilesFragment extends Fragment {
         btnAddProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PlayerProfile newProfile = fa.profileManager.createNewPlayerProfile("blaa blub"+(new Random()).nextInt(500));
+
+                View dialogView = inflater.inflate(R.layout.dialog_user_name,null);
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(fa);
+
+                dialogBuilder.setView(dialogView);
+                final EditText input = (EditText) dialogView.findViewById(R.id.et_dialog_user_name_input);
+
+                dialogBuilder.setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                addPlayer(input.getText().toString());
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            //do nothing
+                            }
+                    });
+
+                dialogBuilder.create().show();
+
+                /*PlayerProfile newProfile = fa.profileManager.createNewPlayerProfile("blaa blub"+(new Random()).nextInt(500));
                 int listIndex = listAdapter.add(newProfile);
                 listAdapter.setSelectedIndex(listIndex);
                 fa.getProfileManager().setDefaultProfileID(newProfile.getProfileID());
-                fa.setCurrentPlayerProfile(newProfile);
+                fa.setCurrentPlayerProfile(newProfile);*/
             }
         });
 
@@ -90,8 +116,33 @@ public class ProfilesFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(mSelectedItem != -1) {
-                    PlayerProfile profile = listAdapter.getItem(mSelectedItem);
-                    Log.i("BLUB", "edit profile " + profile.getProfileID() + ": " + profile.getPlayerName());
+                    final PlayerProfile profile = listAdapter.getItem(mSelectedItem);
+
+                    View dialogView = inflater.inflate(R.layout.dialog_user_name,null);
+                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(fa);
+
+                    dialogBuilder.setView(dialogView);
+                    final EditText input = (EditText) dialogView.findViewById(R.id.et_dialog_user_name_input);
+
+                    input.setText(profile.getPlayerName());
+
+                    dialogBuilder.setCancelable(false)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    editPlayerName(profile,input.getText().toString());
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //do nothing
+                                }
+                            });
+                    dialogBuilder.create().show();
+
+
+                    //Log.i("BLUB", "edit profile " + profile.getProfileID() + ": " + profile.getPlayerName());
                 }else{
                     Log.w("BLUB","No profile selected to edit");
                 }
@@ -146,6 +197,21 @@ public class ProfilesFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private void addPlayer(String name){
+        PlayerProfile newProfile = fa.profileManager.createNewPlayerProfile(name);
+        int listIndex = listAdapter.add(newProfile);
+        listAdapter.setSelectedIndex(listIndex);
+        fa.getProfileManager().setDefaultProfileID(newProfile.getProfileID());
+        fa.setCurrentPlayerProfile(newProfile);
+    }
+
+    private void editPlayerName(PlayerProfile profile, String newName){
+        profile.editPlayerName(newName);
+        fa.getProfileManager().saveProfile(profile.getProfileID());
+        int listIndex = listAdapter.getIndex(profile.getProfileID());
+        listAdapter.updateName(listIndex, newName);
     }
 
     public void updateProfilesList(){
