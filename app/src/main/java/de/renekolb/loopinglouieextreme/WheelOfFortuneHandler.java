@@ -79,7 +79,7 @@ public class WheelOfFortuneHandler {
         if(direction >= 0) direction = 1;
         else direction = -1;
 
-        startSpinning(startViewRotation, direction * (1080f + rnd.nextFloat() * 1080f),true);
+        startSpinning(startViewRotation, direction * (1080f + rnd.nextFloat() * 720f),true);
     }
 
     public void startSpinning(float startViewRotation, float rotateAnimation,boolean doSync){
