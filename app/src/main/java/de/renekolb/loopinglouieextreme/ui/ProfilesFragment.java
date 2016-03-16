@@ -14,8 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
-import java.util.Random;
-
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.PlayerProfile;
 import de.renekolb.loopinglouieextreme.R;

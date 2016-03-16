@@ -75,6 +75,9 @@ public class PlayerStatistics implements Serializable{
         if(!playerAchievements.hasUnlocked(Achievements.WIN_A_ROUND) && this.statistics.get(StatisticType.TOTAL_ROUNDS_WON) >= 1) {
             playerAchievements.addAchievement(Achievements.WIN_A_ROUND, notifyUser);
         }
+        if(!playerAchievements.hasUnlocked(Achievements.WIN_FIVE_ROUNDS) && this.statistics.get(StatisticType.TOTAL_ROUNDS_WON) >= 5) {
+            playerAchievements.addAchievement(Achievements.WIN_FIVE_ROUNDS, notifyUser);
+        }
     }
 
     public void updateTotalGamesWon(int add, boolean notifyUser){
@@ -83,6 +86,9 @@ public class PlayerStatistics implements Serializable{
 
         if(!playerAchievements.hasUnlocked(Achievements.WIN_A_GAME) && this.statistics.get(StatisticType.TOTAL_GAMES_WON) >= 1) {
             playerAchievements.addAchievement(Achievements.WIN_A_GAME, notifyUser);
+        }
+        if(!playerAchievements.hasUnlocked(Achievements.WIN_FIVE_GAMES) && this.statistics.get(StatisticType.TOTAL_GAMES_WON) >= 5) {
+            playerAchievements.addAchievement(Achievements.WIN_FIVE_GAMES, notifyUser);
         }
     }
 

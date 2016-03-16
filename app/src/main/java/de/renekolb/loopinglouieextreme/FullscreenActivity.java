@@ -41,6 +41,7 @@ import de.renekolb.loopinglouieextreme.ui.OnFragmentInteractionListener;
 import de.renekolb.loopinglouieextreme.ui.PlayerSettingsFragment;
 import de.renekolb.loopinglouieextreme.ui.ProfilesFragment;
 import de.renekolb.loopinglouieextreme.ui.SettingsFragment;
+import de.renekolb.loopinglouieextreme.ui.StatisticsFragment;
 import de.renekolb.loopinglouieextreme.ui.WheelOfFortuneFragment;
 
 public class FullscreenActivity extends Activity implements OnFragmentInteractionListener {
@@ -56,6 +57,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     private MainMenuFragment mainMenuFragment;
     private SettingsFragment settingsFragment;
     private ProfilesFragment profilesFragment;
+    private StatisticsFragment statisticsFragment;
     private AchievementsFragment achievementsFragment;
     private HostGameFragment hostGameFragment;
     private ConnectFragment connectFragment;
@@ -241,6 +243,18 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                 break;
 
+            case Constants.buttons.ACHIEVEMENTS_STATISTICS:
+                ft = getFragmentManager().beginTransaction();
+                if (statisticsFragment == null) {
+                    statisticsFragment = StatisticsFragment.newInstance();
+                }
+
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, statisticsFragment);
+                ft.commit();
+                break;
+
             case Constants.buttons.HOST_GAME_TEST_BLACK:
                 WindowManager.LayoutParams params = getWindow().getAttributes();
                 params.screenBrightness = 0;
@@ -419,8 +433,15 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 //TODO: handle wheel correct (next Wheel or next Round)
                 //Toast.makeText(FullscreenActivity.this, "Hier gehts noch nicht weiter", Toast.LENGTH_SHORT).show();
                 currentPlayerProfile.updateTotalRoundsPlayed(1);
+                if(game.getGamePlayer(game.first).getDisplayName().equals(currentPlayerProfile.getPlayerName())){
+                    currentPlayerProfile.updateTotalRoundsWon(1);
+                }
+
                 if (game.getCurrentRound() >= game.getMaxRounds()) {
                     currentPlayerProfile.updateTotalGamesPlayed(1);
+                    if(game.getGameWinnerPlayer().getDisplayName().equals(currentPlayerProfile.getPlayerName())){
+                        currentPlayerProfile.updateTotalGamesWon(1);
+                    }
                     sendEndgameToClients();
                     //TODO: show final stats Screen...
                     //but for now: go back to first screen (Main Menu)
@@ -1042,6 +1063,11 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 case 'h':
                     Log.i("Client Receive MSG", "Next Round");
                     currentPlayerProfile.updateTotalRoundsPlayed(1);
+
+                    if(game.getGamePlayer(game.first).getDisplayName().equals(currentPlayerProfile.getPlayerName())){
+                        currentPlayerProfile.updateTotalRoundsWon(1);
+                    }
+
                     profileManager.saveProfile(currentPlayerProfile.getProfileID());
 
                     ft = getFragmentManager().beginTransaction();
@@ -1058,6 +1084,14 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     Log.i("Client Receive MSG","End Game");
                     currentPlayerProfile.updateTotalRoundsPlayed(1);
                     currentPlayerProfile.updateTotalGamesPlayed(1);
+
+                    if(game.getGamePlayer(game.first).getDisplayName().equals(currentPlayerProfile.getPlayerName())){
+                        currentPlayerProfile.updateTotalRoundsWon(1);
+                    }
+                    if(game.getGameWinnerPlayer().getDisplayName().equals(currentPlayerProfile.getPlayerName())){
+                        currentPlayerProfile.updateTotalGamesWon(1);
+                    }
+                    profileManager.saveProfile(currentPlayerProfile.getProfileID());
                     btClient.stop();
                     getFragmentManager().popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     break;

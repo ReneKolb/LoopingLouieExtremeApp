@@ -65,6 +65,8 @@ public final class Constants {
 
         public static final int SETTINGS_TEST_WHEEL = 16;
         public static final int SETTINGS_WIPE_FILES = 17;
+
+        public static final int ACHIEVEMENTS_STATISTICS = 18;
     }
 
 

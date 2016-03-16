@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
@@ -70,6 +71,14 @@ public class AchievementsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_achievements, container, false);
         ListView lvList = (ListView) view.findViewById(R.id.lv_achievements_list);
         lvList.setAdapter(listAdapter);
+
+        Button btnStats = (Button) view.findViewById(R.id.btn_achievements_statistics);
+        btnStats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onButtonPressed(Constants.buttons.ACHIEVEMENTS_STATISTICS);
+            }
+        });
 
         return view;
     }

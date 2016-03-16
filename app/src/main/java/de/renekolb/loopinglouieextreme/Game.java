@@ -220,6 +220,30 @@ public class Game {
         return result;
     }
 
+    public GamePlayer getGameWinnerPlayer(){
+        int max = 0;
+        GamePlayer best = null;
+        for(GamePlayer gp : this.gamePlayers){
+            if(gp.getPoints() > max){
+                max = gp.getPoints();
+                best = gp;
+            }
+        }
+        return best;
+    }
+
+    public GamePlayer getGameLoserPlayer(){
+        int max = Integer.MAX_VALUE;
+        GamePlayer best = null;
+        for(GamePlayer gp : this.gamePlayers){
+            if(gp.getPoints() < max){
+                max = gp.getPoints();
+                best = gp;
+            }
+        }
+        return best;
+    }
+
     public int getLoser() {
         if (fourth != -1)
             return fourth;
