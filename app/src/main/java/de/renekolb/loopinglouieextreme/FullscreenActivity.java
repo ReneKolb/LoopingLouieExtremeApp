@@ -91,13 +91,13 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
         //Load default PlayerProfile
         int defaultProfileID = profileManager.getDefaultProfileID();
-        if(defaultProfileID == -1){
-            Log.i("Loading","No default Player: Creating new Player");
+        if (defaultProfileID == -1) {
+            Log.i("Loading", "No default Player: Creating new Player");
             this.currentPlayerProfile = profileManager.createNewPlayerProfile("Default Player");
             profileManager.setDefaultProfileID(this.currentPlayerProfile.getProfileID());
-            Log.w("Loading","No default PlayerProfile found. Creating one");
-        }else {
-            Log.i("Loading","Found default Player");
+            Log.w("Loading", "No default PlayerProfile found. Creating one");
+        } else {
+            Log.i("Loading", "Found default Player");
             this.currentPlayerProfile = profileManager.getProfile(defaultProfileID);
         }
 
@@ -106,7 +106,6 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         appSettings = new AppSettings(this);
 
         deviceRole = DeviceRole.NONE;
-
 
 
 //TODO: load default!
@@ -160,7 +159,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         FragmentTransaction ft;
         switch (button) {
             case Constants.buttons.MAIN_MENU_HOST_GAME:
-                if(currentPlayerProfile == null){
+                if (currentPlayerProfile == null) {
                     Toast.makeText(FullscreenActivity.this, "You don't have selected a profile", Toast.LENGTH_SHORT).show();
                     break;
                 }
@@ -187,7 +186,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                 break;
             case Constants.buttons.MAIN_MENU_CONNECT:
-                if(currentPlayerProfile == null){
+                if (currentPlayerProfile == null) {
                     Toast.makeText(FullscreenActivity.this, "You don't have selected a profile", Toast.LENGTH_SHORT).show();
                     break;
                 }
@@ -288,11 +287,6 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     btServer.sendMessageToAll("Test Msg from Server");
                 }
                 break;
-            case Constants.buttons.CONNECT_GAME_TEST_CLIENT_MESSAGE:
-                if (btClient != null) {
-                    btClient.sendMessage("test Msg from Client");
-                }
-                break;
             case Constants.buttons.HOST_GAME_GAME_SETTINGS:
                 //the host must be connected to the board and at least one player has to be connected
                 /*if(true || btLEService.isConnected() && btServer.getConnectedDevices()>=1) {
@@ -343,7 +337,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 boolean canStart = true;
                 int playerAmount = 4;
                 for (GamePlayer p : game.getPlayers()) {
-                    if(p.getConnectionState() == ConnectionState.CLOSED){
+                    if (p.getConnectionState() == ConnectionState.CLOSED) {
                         playerAmount--;
                     }
 
@@ -360,37 +354,37 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     }
                 }
 
-                if(playerAmount  < 2){
+                if (playerAmount < 2) {
                     Toast.makeText(this, "Zu wenige Spieler!", Toast.LENGTH_SHORT).show();
                     break;
                 }
 
-                if(!canStart){
+                if (!canStart) {
                     Toast.makeText(this, "Nicht alle Spieler haben 3 Chips eingesteckt!", Toast.LENGTH_SHORT).show();
                     break;
                 }
 
                 //if (canStart) {
-                    sendGameStart();
+                sendGameStart();
 
-                    playerSettingsFragment.stopUpdatingChips();
-                    game.nextRound();
-                    ft = getFragmentManager().beginTransaction();
-                    if (gameFragment == null) {
-                        gameFragment = GameFragment.newInstance();
-                    }
-                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                    ft.addToBackStack(null);
-                    ft.replace(R.id.main_fragment, gameFragment);
-                    ft.commit();
+                playerSettingsFragment.stopUpdatingChips();
+                game.nextRound();
+                ft = getFragmentManager().beginTransaction();
+                if (gameFragment == null) {
+                    gameFragment = GameFragment.newInstance();
+                }
+                ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                ft.addToBackStack(null);
+                ft.replace(R.id.main_fragment, gameFragment);
+                ft.commit();
 
-                    btLEService.sendGameSettings(game);
-                    btLEService.sendGameStart();
-                    game.setRunning(true);
+                btLEService.sendGameSettings(game);
+                btLEService.sendGameStart();
+                game.setRunning(true);
 
-               // } else {
+                // } else {
 
-               // }
+                // }
                 break;
 
             case Constants.buttons.GAME_SETTINGS_TEST_WHEEL:
@@ -406,7 +400,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
             case Constants.buttons.GAME_RESULTS_WHEEL_OF_FORTUNE:
                 ft = getFragmentManager().beginTransaction();
 
-                if(getGame().getWheelOfFortuneEnabled()) {
+                if (getGame().getWheelOfFortuneEnabled()) {
                     if (wheelOfFortuneFragment == null) {
                         wheelOfFortuneFragment = WheelOfFortuneFragment.newInstance(wheelOfFortuneHandler);
                     }
@@ -423,7 +417,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
                     ft.commit();
                     break;
-                }else{
+                } else {
                     //dont break; skip WOF -> directly execute WheelOfFortune NextRound button
                 }
 
@@ -433,13 +427,13 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 //TODO: handle wheel correct (next Wheel or next Round)
                 //Toast.makeText(FullscreenActivity.this, "Hier gehts noch nicht weiter", Toast.LENGTH_SHORT).show();
                 currentPlayerProfile.updateTotalRoundsPlayed(1);
-                if(game.getGamePlayer(game.first).getDisplayName().equals(currentPlayerProfile.getPlayerName())){
+                if (game.getGamePlayer(game.first).getDisplayName().equals(currentPlayerProfile.getPlayerName())) {
                     currentPlayerProfile.updateTotalRoundsWon(1);
                 }
 
                 if (game.getCurrentRound() >= game.getMaxRounds()) {
                     currentPlayerProfile.updateTotalGamesPlayed(1);
-                    if(game.getGameWinnerPlayer().getDisplayName().equals(currentPlayerProfile.getPlayerName())){
+                    if (game.getGameWinnerPlayer().getDisplayName().equals(currentPlayerProfile.getPlayerName())) {
                         currentPlayerProfile.updateTotalGamesWon(1);
                     }
                     sendEndgameToClients();
@@ -480,7 +474,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 break;
 
             case Constants.buttons.SETTINGS_WIPE_FILES:
-                Log.i("FullscreenActivity","Wipe files");
+                Log.i("FullscreenActivity", "Wipe files");
                 this.profileManager.wipeFiles();
                 break;
         }
@@ -554,7 +548,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                             hostGameFragment.connectedPlayerAdapter.add(new ConnectedPlayerListItem(devAddr, devName));
                         }
 
-                        bindNewPlayer(devAddr, devName.replaceAll("\\.", "_").replaceAll(":","_"));
+                        bindNewPlayer(devAddr, devName.replaceAll("\\.", "_").replaceAll(":", "_"));
                         sendGameSettingsToClient(devAddr);
                     } else if (deviceRole == DeviceRole.CLIENT) {
                         Log.i("BLAAAAAAAA", "Role = Client");
@@ -690,9 +684,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                     LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     View view = inflater.inflate(R.layout.toast_achievement, (ViewGroup) findViewById(R.id.rl_toast_achievement_root));
-                    TextView tvTitle = (TextView)view.findViewById(R.id.tv_toast_achievement_title);
-                    TextView tvDescription = (TextView)view.findViewById(R.id.tv_toast_achievement_description);
-                    ImageView ivIcon = (ImageView)view.findViewById(R.id.iv_toast_achievement);
+                    TextView tvTitle = (TextView) view.findViewById(R.id.tv_toast_achievement_title);
+                    TextView tvDescription = (TextView) view.findViewById(R.id.tv_toast_achievement_description);
+                    ImageView ivIcon = (ImageView) view.findViewById(R.id.iv_toast_achievement);
 
                     tvTitle.setText(ach.getTitle()); //TODO: replace with StringID
                     tvDescription.setText(ach.getUnlockedDescription());
@@ -899,23 +893,28 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                     //wheelOfFortuneFragment.setResult(resultIndex);
                     //send result to all other clients
-                    btServer.sendMessageToAllBut("f"+resultIndex+".",senderAddress);
+                    btServer.sendMessageToAllBut("f" + resultIndex + ".", senderAddress);
 
                     break;
 
                 case 'd':
                     //a client spin the wheel
                     String[] split2 = data.split(":");
-                    if(split2.length!=2){
-                        Log.e("Error","Cannot spin Wheel of Fortune. Wrong split length");
+                    if (split2.length != 2) {
+                        Log.e("Error", "Cannot spin Wheel of Fortune. Wrong split length");
                         break;
                     }
 
-                    float viewRot = Float.parseFloat(split2[0].replaceAll(",","."));
+                    float viewRot = Float.parseFloat(split2[0].replaceAll(",", "."));
                     float animRot = Float.parseFloat(split2[1].replaceAll(",", "."));
 
-                    wheelOfFortuneHandler.startSpinning(viewRot,animRot,false);
-                    sendWheelOfFortuneSpinToClients(viewRot,animRot,senderAddress);
+                    wheelOfFortuneHandler.startSpinning(viewRot, animRot, false);
+                    sendWheelOfFortuneSpinToClients(viewRot, animRot, senderAddress);
+                    break;
+                case 'e':
+                    //a client pressed the nextRound button (he finished drinking)
+                    wheelOfFortuneHandler.updateCurrentPlayer(wheelOfFortuneHandler.getCurrentPosition());
+                    sendWheelOfFortuneSpinnerToClients(wheelOfFortuneHandler.getCurrentPosition());
                     break;
             }
         }
@@ -977,7 +976,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     game.setRunning(true);
                     break;
                 case 'c':
-                    Log.i("Client Recieve MSG","Game Results");
+                    Log.i("Client Recieve MSG", "Game Results");
                     //receive game Results
                     game.setRunning(false);
                     split2 = data.split(":");
@@ -1019,7 +1018,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                     break;
                 case 'd':
-                    Log.i("Client Recieve MSG","GoTo WheelOfFortune");
+                    Log.i("Client Recieve MSG", "GoTo WheelOfFortune");
                     //GOTO WheelOfFortune
                     ft = getFragmentManager().beginTransaction();
                     if (wheelOfFortuneFragment == null) {
@@ -1028,7 +1027,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                     //TODO: only temporary
                     //wheelOfFortuneFragment.setPlayerSpin(game.first, game.second, game.third, game.fourth);
-                    wheelOfFortuneHandler.setPlayers(game.first,game.getLoser(),-1,-1);
+                    wheelOfFortuneHandler.setPlayers(game.first, game.getLoser(), -1, -1);
                     //wheelOfFortuneFragment.setPlayerSpin(game.first, game.getLoser(), -1, -1);
 
                     ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
@@ -1037,34 +1036,34 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     ft.commit();
                     break;
                 case 'e':
-                    Log.i("Client Recieve MSG","Update Wheel of Fortune Spinner");
-                    if(wheelOfFortuneFragment == null || wheelOfFortuneFragment.isHidden()){
-                        Log.e("Error","Cannot update Wheel of Fortune Spinner. Fragment is not created");
+                    Log.i("Client Recieve MSG", "Update Wheel of Fortune Spinner");
+                    if (wheelOfFortuneFragment == null || wheelOfFortuneFragment.isHidden()) {
+                        Log.e("Error", "Cannot update Wheel of Fortune Spinner. Fragment is not created");
                         break;
                     }
                     final int position = Integer.parseInt(data);
                     wheelOfFortuneHandler.updateCurrentPlayer(position);
                     break;
                 case 'f':
-                    Log.i("Client Recieve MSG","Wheel of Fortune Spin Result");
+                    Log.i("Client Recieve MSG", "Wheel of Fortune Spin Result");
                     break;
                 case 'g':
-                    Log.i("Client Recieve MSG","Wheel of Fortune Spin");
-                    Log.i("RECIEVED","received data: "+data);
+                    Log.i("Client Recieve MSG", "Wheel of Fortune Spin");
+                    Log.i("RECIEVED", "received data: " + data);
                     split2 = data.split(":");
-                    Log.i("RECIEVED","received splitLen: "+split2.length);
-                    if(split2.length!=2){
-                        Log.e("Error","Cannot spin Wheel of Fortune. Wrong split length");
+                    Log.i("RECIEVED", "received splitLen: " + split2.length);
+                    if (split2.length != 2) {
+                        Log.e("Error", "Cannot spin Wheel of Fortune. Wrong split length");
                         break;
                     }
-                    wheelOfFortuneHandler.startSpinning(Float.parseFloat(split2[0].replaceAll(",",".")),Float.parseFloat(split2[1].replaceAll(",",".")),false);
+                    wheelOfFortuneHandler.startSpinning(Float.parseFloat(split2[0].replaceAll(",", ".")), Float.parseFloat(split2[1].replaceAll(",", ".")), false);
                     break;
 
                 case 'h':
                     Log.i("Client Receive MSG", "Next Round");
                     currentPlayerProfile.updateTotalRoundsPlayed(1);
 
-                    if(game.getGamePlayer(game.first).getDisplayName().equals(currentPlayerProfile.getPlayerName())){
+                    if (game.getGamePlayer(game.first).getDisplayName().equals(currentPlayerProfile.getPlayerName())) {
                         currentPlayerProfile.updateTotalRoundsWon(1);
                     }
 
@@ -1081,26 +1080,26 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     ft.commit();
                     break;
                 case 'i':
-                    Log.i("Client Receive MSG","End Game");
+                    Log.i("Client Receive MSG", "End Game");
                     currentPlayerProfile.updateTotalRoundsPlayed(1);
                     currentPlayerProfile.updateTotalGamesPlayed(1);
 
-                    if(game.getGamePlayer(game.first).getDisplayName().equals(currentPlayerProfile.getPlayerName())){
+                    if (game.getGamePlayer(game.first).getDisplayName().equals(currentPlayerProfile.getPlayerName())) {
                         currentPlayerProfile.updateTotalRoundsWon(1);
                     }
-                    if(game.getGameWinnerPlayer().getDisplayName().equals(currentPlayerProfile.getPlayerName())){
+                    if (game.getGameWinnerPlayer().getDisplayName().equals(currentPlayerProfile.getPlayerName())) {
                         currentPlayerProfile.updateTotalGamesWon(1);
                     }
                     profileManager.saveProfile(currentPlayerProfile.getProfileID());
                     btClient.stop();
-                    getFragmentManager().popBackStack(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     break;
                 case 'j':
-                    Log.i("Client Receive MSG","Game Settings");
+                    Log.i("Client Receive MSG", "Game Settings");
                     //Form: j[#Rounds]:[WOF enabled]:[LoserWheel enabled].
                     split2 = data.split(":");
-                    if(split2.length!=3){
-                        Log.e("Error","Cannot update game settings. Wrong split length");
+                    if (split2.length != 3) {
+                        Log.e("Error", "Cannot update game settings. Wrong split length");
                         break;
                     }
                     int rounds = Integer.parseInt(split2[0]);
@@ -1167,7 +1166,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         btClient.sendMessage("d" + String.valueOf(startViewRot).replaceAll("\\.", ",") + ":" + String.valueOf(animRot).replaceAll("\\.", ",") + ".");
     }
 
-    public void sendWheelOfFortuneSpinToClients(float startViewRot, float animRot,@Nullable String receivedFromClient) {
+    public void sendWheelOfFortuneSpinToClients(float startViewRot, float animRot, @Nullable String receivedFromClient) {
         btServer.sendMessageToAllBut("g" + String.valueOf(startViewRot).replaceAll("\\.", ",") + ":" + String.valueOf(animRot).replaceAll("\\.", ",") + ".", receivedFromClient);
     }
 
@@ -1175,33 +1174,37 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         btServer.sendMessageToAll("d.");
     }
 
-    private void sendNextRoundToClients(){
+    private void sendNextRoundToClients() {
         btServer.sendMessageToAll("h.");
     }
 
-    private void sendEndgameToClients(){
+    private void sendEndgameToClients() {
         btServer.sendMessageToAll("i.");
     }
 
-    private void sendWheelOfFortuneSpinner(int playerPosition){
-        btServer.sendMessageToAll("e"+playerPosition+".");
+    public void sendWheelOfFortuneSpinnerToClients(int playerPosition) {
+        btServer.sendMessageToAll("e" + playerPosition + ".");
     }
 
-    private void sendWheelOfFortuneResultToClients(int resultIndex){
-        btServer.sendMessageToAll("f"+resultIndex+".");
+    public void sendWheelOfFortuneNextSpinnerToServer() {
+        btClient.sendMessage("e.");
     }
 
-    private void sendWheelOfFortuneResultToServer(int resultIndex){
+    private void sendWheelOfFortuneResultToClients(int resultIndex) {
+        btServer.sendMessageToAll("f" + resultIndex + ".");
+    }
+
+    private void sendWheelOfFortuneResultToServer(int resultIndex) {
         btClient.sendMessage("c" + resultIndex + ".");
         //btServer.sendMessageToAll("f"+resultIndex+".");
     }
 
-    private void sendGameSettingsToClients(){
-        btServer.sendMessageToAll("j" + game.getMaxRounds()+":"+(game.getWheelOfFortuneEnabled()?"1":"0")+":" +(game.getLoserWheelEnabled()?"1":"0")+ ".");
+    private void sendGameSettingsToClients() {
+        btServer.sendMessageToAll("j" + game.getMaxRounds() + ":" + (game.getWheelOfFortuneEnabled() ? "1" : "0") + ":" + (game.getLoserWheelEnabled() ? "1" : "0") + ".");
     }
 
-    private void sendGameSettingsToClient(String address){
-        btServer.sendMessage(address, "j" + game.getMaxRounds() +":"+(game.getWheelOfFortuneEnabled()?"1":"0")+":" +(game.getLoserWheelEnabled()?"1":"0")+  ".");
+    private void sendGameSettingsToClient(String address) {
+        btServer.sendMessage(address, "j" + game.getMaxRounds() + ":" + (game.getWheelOfFortuneEnabled() ? "1" : "0") + ":" + (game.getLoserWheelEnabled() ? "1" : "0") + ".");
     }
 
 /*    public void onWheelSpinFinish(int resultIndex){
@@ -1235,20 +1238,20 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         return index;
     }
 
-    public PlayerProfile getCurrentPlayer(){
+    public PlayerProfile getCurrentPlayer() {
         return this.currentPlayerProfile;
     }
 
-    public ProfileManager getProfileManager(){
+    public ProfileManager getProfileManager() {
         return this.profileManager;
     }
 
-    public void setCurrentPlayerProfile(PlayerProfile profile){
+    public void setCurrentPlayerProfile(PlayerProfile profile) {
         this.currentPlayerProfile = profile;
         this.mainMenuFragment.updateProfile();
     }
 
-    public WheelOfFortuneFragment getWheelOfFortuneFragment(){
+    public WheelOfFortuneFragment getWheelOfFortuneFragment() {
         return this.wheelOfFortuneFragment;
     }
 

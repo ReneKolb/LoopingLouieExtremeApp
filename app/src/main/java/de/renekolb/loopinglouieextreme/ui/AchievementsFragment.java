@@ -54,7 +54,7 @@ public class AchievementsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             this.listAdapter = new PlayerAchievementsListAdapter(fa, fa.getCurrentPlayer());
         }
 
@@ -84,7 +84,7 @@ public class AchievementsFragment extends Fragment {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         updateAchievements();
     }
@@ -95,7 +95,7 @@ public class AchievementsFragment extends Fragment {
         }
     }
 
-    private void updateAchievements(){
+    private void updateAchievements() {
         this.listAdapter.changePlayerProfile(fa.getCurrentPlayer());
     }
 

@@ -52,14 +52,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         style="@style/btnStyleYellow"
-        android:text="connect" />
-
-    <Button
-        android:id="@+id/btn_test_client_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/btn_connect"
-        android:text="send Msg" />
+        android:text="@string/btn_connect_connect" />
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

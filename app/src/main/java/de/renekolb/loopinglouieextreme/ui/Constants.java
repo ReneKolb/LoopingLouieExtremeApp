@@ -50,7 +50,7 @@ public final class Constants {
 
         public static final int HOST_GAME_TEST_BLACK = 6;
         public static final int HOST_GAME_TEST_SERVER_MESSAGE = 7;
-        public static final int CONNECT_GAME_TEST_CLIENT_MESSAGE = 8;
+        //public static final int CONNECT_GAME_TEST_CLIENT_MESSAGE = 8;
         public static final int HOST_GAME_GAME_SETTINGS = 9;
 
         public static final int GAME_SETTINGS_CUSTOM_SETTINGS = 10;

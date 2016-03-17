@@ -5,14 +5,14 @@ import de.renekolb.loopinglouieextreme.R;
 public class Achievements {
 
     private static final Achievement[] achievements = new Achievement[]{
-            new Achievement("And the addiction begins","You have finished a round","rounds finished", R.drawable.ic_settings_white, StatisticType.TOTAL_ROUNDS_PLAYED,1),
-            new Achievement("Play five rounds","You have finished 5 rounds","rounds finished", R.drawable.ic_settings_white,StatisticType.TOTAL_ROUNDS_PLAYED,5),
-            new Achievement("Play a game","You have finished a whole game","games finished", R.drawable.ic_settings_black,StatisticType.TOTAL_GAMES_PLAYED,1),
-            new Achievement("Play five game","You have finished 5 games","games finished", R.drawable.ic_settings_black,StatisticType.TOTAL_GAMES_PLAYED,5),
-            new Achievement("Win a round","You have won a round","rounds won",R.drawable.ic_action_info,StatisticType.TOTAL_ROUNDS_WON,1),
-            new Achievement("Win five rounds","You have won 5 rounds","rounds won",R.drawable.ic_action_info,StatisticType.TOTAL_ROUNDS_WON,5),
-            new Achievement("Win a game","You have won a whole game","games won", R.drawable.ic_action_info_black,StatisticType.TOTAL_GAMES_WON,1),
-            new Achievement("Win five game","You have won 5 games","games won", R.drawable.ic_action_info_black,StatisticType.TOTAL_GAMES_WON,5),
+            new Achievement("And the addiction begins", "You have finished a round", "rounds finished", R.drawable.ic_settings_white, StatisticType.TOTAL_ROUNDS_PLAYED, 1),
+            new Achievement("Play five rounds", "You have finished 5 rounds", "rounds finished", R.drawable.ic_settings_white, StatisticType.TOTAL_ROUNDS_PLAYED, 5),
+            new Achievement("Play a game", "You have finished a whole game", "games finished", R.drawable.ic_settings_black, StatisticType.TOTAL_GAMES_PLAYED, 1),
+            new Achievement("Play five game", "You have finished 5 games", "games finished", R.drawable.ic_settings_black, StatisticType.TOTAL_GAMES_PLAYED, 5),
+            new Achievement("Win a round", "You have won a round", "rounds won", R.drawable.ic_action_info, StatisticType.TOTAL_ROUNDS_WON, 1),
+            new Achievement("Win five rounds", "You have won 5 rounds", "rounds won", R.drawable.ic_action_info, StatisticType.TOTAL_ROUNDS_WON, 5),
+            new Achievement("Win a game", "You have won a whole game", "games won", R.drawable.ic_action_info_black, StatisticType.TOTAL_GAMES_WON, 1),
+            new Achievement("Win five game", "You have won 5 games", "games won", R.drawable.ic_action_info_black, StatisticType.TOTAL_GAMES_WON, 5),
 
             //win a round without loosing a chip
             //Pechvogel: erster der ausscheidet
@@ -32,14 +32,14 @@ public class Achievements {
     public static final int WIN_A_GAME = 6;
     public static final int WIN_FIVE_GAMES = 7;
 
-    private static final int[] achievementIDs = new int[] {PLAY_A_ROUND, PLAY_FIVE_ROUNDS, PLAY_A_GAME, PLAY_FIVE_GAMES, WIN_A_ROUND, WIN_FIVE_ROUNDS, WIN_A_GAME, WIN_FIVE_GAMES};
+    private static final int[] achievementIDs = new int[]{PLAY_A_ROUND, PLAY_FIVE_ROUNDS, PLAY_A_GAME, PLAY_FIVE_GAMES, WIN_A_ROUND, WIN_FIVE_ROUNDS, WIN_A_GAME, WIN_FIVE_GAMES};
 
 
-    public static Achievement getAchievement(int achievementID){
+    public static Achievement getAchievement(int achievementID) {
         return achievements[achievementID];
     }
 
-    public static int[] getAchievementIDs(){
+    public static int[] getAchievementIDs() {
         return achievementIDs;
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_toast_achievement_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,7 +14,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="center_vertical"
-        android:background="#884444"/>
+        android:background="#884444" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:text="Achievement Title"/>
+            tools:text="Achievement Title" />
 
         <TextView
             android:id="@+id/tv_toast_achievement_description"
@@ -41,7 +41,7 @@
             android:layout_marginStart="15dp"
             android:textColor="#BBBBBB"
             android:textSize="15sp"
-            android:text="Description Text will appear here. Test wie es aussieht wenn die Zeile zu lang ist"/>
+            tools:text="Description Text will appear here. Test wie es aussieht wenn die Zeile zu lang ist" />
 
     </RelativeLayout>
 

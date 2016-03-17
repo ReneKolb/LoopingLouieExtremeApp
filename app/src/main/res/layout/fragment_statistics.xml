@@ -1,5 +1,4 @@
-<de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,10 +14,10 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Statistics"
+        android:text="@string/statistics_title"
         android:textColor="#000000"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <TableLayout
         android:layout_marginTop="25dp"
@@ -36,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:text="Rounds played:"
+                android:text="@string/statistics_rounds_played"
                 android:layout_column="0" />
 
             <TextView
@@ -46,7 +45,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:textColor="#000000"
-                android:text="New Text"
+                tools:text="24"
                 android:layout_column="1" />
         </TableRow>
 
@@ -59,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:text="Games played:"
+                android:text="@string/statistics_games_played"
                 android:layout_column="0" />
 
             <TextView
@@ -69,7 +68,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:textColor="#000000"
-                android:text="New Text"
+                tools:text="8"
                 android:layout_column="1" />
         </TableRow>
 
@@ -82,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:text="Rounds won:"
+                android:text="@string/statistics_rounds_won"
                 android:layout_column="0" />
 
             <TextView
@@ -92,7 +91,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:textColor="#000000"
-                android:text="New Text"
+                tools:text="18"
                 android:layout_column="1" />
         </TableRow>
 
@@ -105,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#000000"
-                android:text="Games won:"
+                android:text="@string/statistics_games_won"
                 android:layout_column="0" />
 
             <TextView
@@ -115,7 +114,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
                 android:textColor="#000000"
-                android:text="New Text"
+                tools:text="5"
                 android:layout_column="1" />
         </TableRow>
     </TableLayout>

@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="28dp"
         android:layout_below="@+id/tv_settings_title"
-        android:text="Enable Debug"
+        android:text="@string/settings_enable_debug"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="40dp"
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cb_settings_debug"
-        android:text="Disable Bluetooth when exiting the app"
+        android:text="@string/settings_disable_bluetooth"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginLeft="40dp"
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/cb_settings_disable_bt"
         android:layout_centerHorizontal="true"
-        android:text="test wheel"/>
+        android:text="@string/btn_settings_test_wheel" />
 
     <Button
         android:id="@+id/btn_settings_wipe_files"
@@ -59,7 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_settings_test_wheel"
         android:layout_centerHorizontal="true"
-        android:text="wipe files"/>
+        android:textColor="#CC0000"
+        android:text="@string/btn_settings_wipe_files" />
 
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

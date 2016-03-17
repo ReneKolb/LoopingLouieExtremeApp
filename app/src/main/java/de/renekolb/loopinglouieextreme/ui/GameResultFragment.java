@@ -132,14 +132,14 @@ public class GameResultFragment extends Fragment {
             btnWheelOfFortune.setVisibility(View.GONE);
         }
 
-        tvTime = (TextView) view.findViewById(R.id.tv_game_results_time_cnt);
+        tvTime = (TextView) view.findViewById(R.id.tv_game_results_time);
 
         long time = fa.getGame().getSecondsRunning();
         int sec = (int) (time % 60);
         time /= 60;
         int min = (int) time;
 
-        tvTime.setText(String.format("%02d:%02d", min, sec));
+        tvTime.setText(String.format(fa.getResources().getString(R.string.player_results_time), min, sec));
 
         return view;
     }

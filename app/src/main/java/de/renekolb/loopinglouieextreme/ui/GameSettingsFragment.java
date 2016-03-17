@@ -85,10 +85,10 @@ public class GameSettingsFragment extends Fragment {
         final CheckBox cbEnableWheel = (CheckBox) view.findViewById(R.id.cb_game_settings_enable_wheel_of_fortune);
         final CheckBox cbEnableLoserWheel = (CheckBox) view.findViewById(R.id.cb_game_settings_enable_loser_wheel);
 
-        if(fa.getGame().getWheelOfFortuneEnabled()){
+        if (fa.getGame().getWheelOfFortuneEnabled()) {
             cbEnableWheel.setChecked(true);
             cbEnableLoserWheel.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             cbEnableWheel.setChecked(false);
             cbEnableLoserWheel.setVisibility(View.INVISIBLE);
         }
@@ -99,9 +99,9 @@ public class GameSettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 fa.getGame().setWheelOfFortuneEnabled(isChecked);
-                if(isChecked) {
+                if (isChecked) {
                     cbEnableLoserWheel.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     cbEnableLoserWheel.setVisibility(View.INVISIBLE);
                 }
             }

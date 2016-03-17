@@ -66,7 +66,7 @@ public class MainMenuFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
-        tvProfileName = (TextView)view.findViewById(R.id.tv_main_menu_profile_name);
+        tvProfileName = (TextView) view.findViewById(R.id.tv_main_menu_profile_name);
         tvProfileName.setText(fa.getCurrentPlayer().getPlayerName());
 
         btnServer = (Button) view.findViewById(R.id.btn_main_menu_server);
@@ -115,7 +115,7 @@ public class MainMenuFragment extends Fragment {
 
 
         TextView tv = (TextView) view.findViewById(R.id.tv_main_menu_version);
-        tv.setText("Version: " + BuildConfig.VERSION_NAME);
+        tv.setText(String.format(getResources().getString(R.string.main_menu_version), BuildConfig.VERSION_NAME));
 
 
         return view;
@@ -149,7 +149,7 @@ public class MainMenuFragment extends Fragment {
         }
     }
 
-    public void updateProfile(){
+    public void updateProfile() {
         this.tvProfileName.setText(fa.getCurrentPlayer().getPlayerName());
     }
 

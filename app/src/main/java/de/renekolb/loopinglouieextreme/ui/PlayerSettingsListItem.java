@@ -43,7 +43,7 @@ public class PlayerSettingsListItem {
         return this.playerName;
     }
 
-    public boolean isGuest(){
+    public boolean isGuest() {
         return this.isGuest;
     }
 

@@ -82,13 +82,13 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
             case OPEN:
                 holder.playerName.setTextColor(Color.argb(255, 0, 0, 255));
                 holder.booster.setTextColor(Color.argb(255, 0, 0, 255));
-                holder.playerName.setText("Open Slot");
+                holder.playerName.setText(R.string.listitem_player_settings_open_slot);
                 holder.booster.setText("");
 
-                if(data.getChipAmount()<0){
+                if (data.getChipAmount() < 0) {
                     holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
                     holder.chips.setText("-");
-                }else {
+                } else {
                     holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                     holder.chips.setText(String.valueOf(data.getChipAmount()));
                 }
@@ -98,35 +98,35 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                 holder.booster.setTextColor(Color.argb(255, 0, 255, 255));
                 holder.playerName.setText(data.getPlayerName());
                 holder.booster.setText(data.getBooster() == null ? "none" : data.getBooster().getDisplayName());
-                if(data.getChipAmount()<0){
+                if (data.getChipAmount() < 0) {
                     holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
                     holder.chips.setText("-");
-                }else {
+                } else {
                     holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                     holder.chips.setText(String.valueOf(data.getChipAmount()));
                 }
                 break;
             case LOCAL:
-                if(data.isGuest()){
+                if (data.isGuest()) {
                     holder.playerName.setTextColor(Color.argb(255, 80, 120, 0));
                     holder.booster.setTextColor(Color.argb(255, 0, 0, 0));
-                }else {
+                } else {
                     holder.playerName.setTextColor(Color.argb(255, 0, 0, 0));
                     holder.booster.setTextColor(Color.argb(255, 0, 0, 0));
                 }
                 holder.playerName.setText(data.getPlayerName());
                 holder.booster.setText(data.getBooster() == null ? "none" : data.getBooster().getDisplayName());
-                if(data.getChipAmount()<0){
+                if (data.getChipAmount() < 0) {
                     holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
                     holder.chips.setText("-");
-                }else {
+                } else {
                     holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                     holder.chips.setText(String.valueOf(data.getChipAmount()));
                 }
                 break;
             case CLOSED:
                 holder.playerName.setTextColor(Color.argb(255, 120, 120, 120));
-                holder.playerName.setText("Disabled Player");
+                holder.playerName.setText(R.string.listitem_player_settings_disabled_player);
                 holder.booster.setText("");
                 holder.chips.setText("");
                 break;

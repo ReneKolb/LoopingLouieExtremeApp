@@ -1,5 +1,4 @@
-<de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,7 +30,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="#000000"
-        android:text="Board connection:"/>
+        android:text="@string/host_game_board_connection" />
 
     <ProgressBar
         android:id="@+id/pb_host_game_scanning_board"
@@ -43,7 +42,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         style="@android:style/Widget.ProgressBar.Small"
-        android:visibility="invisible"/>
+        android:visibility="invisible" />
 
     <Button
         android:id="@+id/btn_host_game_make_visible"
@@ -54,7 +53,7 @@
         android:layout_toEndOf="@id/pb_host_game_scanning_board"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
-        android:text="vis"/>
+        android:text="@string/btn_host_game_make_discoverable" />
 
     <ListView
         android:id="@+id/lv_host_game_board_devices"
@@ -65,7 +64,7 @@
         android:layout_alignStart="@id/tv_host_game_board_connection"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp" />
 
 
     <TextView
@@ -79,7 +78,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="#000000"
-        android:text="Connected Player:"/>
+        android:text="@string/host_game_connected_players" />
 
     <ListView
         android:id="@+id/lv_host_game_clients"
@@ -90,17 +89,16 @@
         android:layout_alignStart="@id/tv_host_game_connected_devices"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp">
-    </ListView>
+        android:layout_marginTop="10dp"></ListView>
 
 
     <Button
         android:id="@+id/btn_host_game_game_settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Game Settings"
+        android:text="@string/btn_host_game_game_settings"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true" />
 
     <Button
         android:id="@+id/btn_host_game_le_scan"
@@ -108,6 +106,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/btn_host_game_game_settings"
-        android:text="Scan for board"/>
+        android:text="@string/btn_host_game_scan" />
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

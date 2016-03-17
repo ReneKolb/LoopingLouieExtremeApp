@@ -1,5 +1,4 @@
-<de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,10 +14,10 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Achievements"
+        android:text="@string/achievements_title"
         android:textColor="#000000"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/lv_achievements_list"
@@ -27,8 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="25dp"
-        android:choiceMode="none">
-    </ListView>
+        android:choiceMode="none"></ListView>
 
     <Button
         android:id="@id/btn_achievements_statistics"
@@ -36,6 +34,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Statistics"/>
+        android:text="@string/btn_achievements_statistics" />
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

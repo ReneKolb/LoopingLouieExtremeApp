@@ -48,8 +48,8 @@ public class GameFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game, container, false);
 
-        TextView tvRoundCnt = (TextView) view.findViewById(R.id.tv_game_round_cnt);
-        tvRoundCnt.setText(fa.getGame().getCurrentRound() + "/" + fa.getGame().getMaxRounds());
+        TextView tvRound = (TextView) view.findViewById(R.id.tv_game_round);
+        tvRound.setText(String.format(fa.getResources().getString(R.string.game_round), fa.getGame().getCurrentRound(), fa.getGame().getMaxRounds()));
 
         this.tvSecondsDisplay = (TextView) view.findViewById(R.id.tv_game_seconds);
 

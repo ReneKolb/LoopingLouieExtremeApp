@@ -85,7 +85,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Button btnWipeFiles = (Button)view.findViewById(R.id.btn_settings_wipe_files);
+        Button btnWipeFiles = (Button) view.findViewById(R.id.btn_settings_wipe_files);
         btnWipeFiles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

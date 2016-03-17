@@ -1,5 +1,4 @@
-<de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,29 +31,26 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:isScrollContainer="true">
 
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                >
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:id="@+id/tv_custom_game_settings_speed_settings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Speed Settings"
+                    android:text="@string/custom_game_settings_speed_settings"
                     android:textColor="#000000"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
             </TableRow>
-
 
 
             <TableRow
@@ -69,12 +65,12 @@
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Start Speed"
+                    android:text="@string/custom_game_settings_start_speed"
                     android:textColor="#000000"
                     android:textSize="17sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <SeekBar
                     android:id="@+id/sb_custom_game_settings_start_speed"
@@ -93,9 +89,9 @@
                     android:layout_column="2"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:textColor="#000000"
-                    android:text="14"/>
+                    tools:text="14" />
 
             </TableRow>
 
@@ -111,12 +107,12 @@
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Random Speed"
+                    android:text="@string/custom_game_settings_random_speed"
                     android:textColor="#000000"
                     android:textSize="17sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <Switch
                     android:theme="@android:style/Theme.Holo"
@@ -135,7 +131,7 @@
                 <TextView
                     android:layout_width="0px"
                     android:layout_weight="1"
-                    android:layout_column="2"/>
+                    android:layout_column="2" />
 
             </TableRow>
 
@@ -152,12 +148,12 @@
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Speed Min Delay"
+                    android:text="@string/custom_game_settings_speed_min_delay"
                     android:textColor="#000000"
                     android:textSize="17sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <SeekBar
                     android:id="@+id/sb_custom_game_settings_speed_min_delay"
@@ -176,9 +172,9 @@
                     android:layout_column="2"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:textColor="#000000"
-                    android:text="3000"/>
+                    tools:text="3000" />
             </TableRow>
 
             <TableRow
@@ -194,12 +190,12 @@
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Speed Max Delay"
+                    android:text="@string/custom_game_settings_speed_max_delay"
                     android:textColor="#000000"
                     android:textSize="17sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <SeekBar
                     android:id="@+id/sb_custom_game_settings_speed_max_delay"
@@ -218,9 +214,9 @@
                     android:layout_column="2"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:textColor="#000000"
-                    android:text="5000"/>
+                    tools:text="5000" />
             </TableRow>
 
             <TableRow
@@ -236,12 +232,12 @@
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Speed Min Step Size"
+                    android:text="@string/custom_game_settings_speed_min_step_size"
                     android:textColor="#000000"
                     android:textSize="17sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <SeekBar
                     android:id="@+id/sb_custom_game_settings_speed_min_step_size"
@@ -260,9 +256,9 @@
                     android:layout_column="2"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:textColor="#000000"
-                    android:text="20"/>
+                    tools:text="20" />
 
             </TableRow>
 
@@ -279,12 +275,12 @@
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Speed Max Step Size"
+                    android:text="@string/custom_game_settings_speed_max_step_size"
                     android:textColor="#000000"
                     android:textSize="17sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <SeekBar
                     android:id="@+id/sb_custom_game_settings_speed_max_step_size"
@@ -303,9 +299,9 @@
                     android:layout_column="2"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:textColor="#000000"
-                    android:text="30"/>
+                    tools:text="30" />
 
             </TableRow>
 
@@ -322,12 +318,12 @@
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Enable Reverse"
+                    android:text="@string/custom_game_settings_enable_reverse"
                     android:textColor="#000000"
                     android:textSize="17sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <Switch
                     android:theme="@android:style/Theme.Holo"
@@ -346,7 +342,7 @@
                 <TextView
                     android:layout_width="0px"
                     android:layout_weight="1"
-                    android:layout_column="2"/>
+                    android:layout_column="2" />
 
             </TableRow>
 
@@ -361,13 +357,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Chef Mode"
+                    android:text="@string/custom_game_settings_chef_mode"
                     android:textColor="#000000"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <Switch
                     android:theme="@android:style/Theme.Holo"
@@ -396,11 +392,11 @@
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Chef Roulette"
+                    android:text="@string/custom_game_settings_chef_roulette"
                     android:textColor="#000000"
                     android:textSize="17sp"
                     android:layout_gravity="center_vertical"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <Switch
                     android:theme="@android:style/Theme.Holo"
@@ -420,7 +416,7 @@
                 <TextView
                     android:layout_width="0px"
                     android:layout_weight="1"
-                    android:layout_column="2"/>
+                    android:layout_column="2" />
 
             </TableRow>
 
@@ -438,10 +434,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="3"
-                    android:text="Change Chef Delay"
+                    android:text="@string/custom_game_settings_change_chef_delay"
                     android:textColor="#000000"
                     android:textSize="17sp"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <SeekBar
                     android:id="@+id/sb_custom_game_settings_change_chef_delay"
@@ -460,9 +456,9 @@
                     android:layout_column="2"
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:textColor="#000000"
-                    android:text="5000"/>
+                    tools:text="5000" />
 
             </TableRow>
 
@@ -479,11 +475,11 @@
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Chef Shorter Cooldown"
+                    android:text="@string/custom_game_settings_chef_shorter_cooldown"
                     android:textColor="#000000"
                     android:textSize="17sp"
                     android:layout_gravity="center_vertical"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <Switch
                     android:theme="@android:style/Theme.Holo"
@@ -502,9 +498,8 @@
                 <TextView
                     android:layout_width="0px"
                     android:layout_weight="1"
-                    android:layout_column="2"/>
+                    android:layout_column="2" />
             </TableRow>
-
 
 
             <TableRow
@@ -517,12 +512,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Enable Items"
+                    android:text="@string/custom_game_settings_enable_items"
                     android:textColor="#000000"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <Switch
                     android:theme="@android:style/Theme.Holo"
@@ -548,12 +543,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Enable Events"
+                    android:text="@string/custom_game_settings_enable_events"
                     android:textColor="#000000"
                     android:textSize="17sp"
                     android:textStyle="bold"
                     android:layout_gravity="center_vertical"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <Switch
                     android:theme="@android:style/Theme.Holo"
@@ -579,7 +574,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:textSize="18sp"
-        android:text="OK"/>
+        android:text="@string/btn_custom_game_settings_ok" />
 
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

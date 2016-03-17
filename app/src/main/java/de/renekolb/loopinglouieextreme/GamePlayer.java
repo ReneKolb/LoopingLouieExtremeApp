@@ -31,32 +31,32 @@ public class GamePlayer {
         this.remoteAddress = null;
     }
 
-    public void setPlayerProfile(PlayerProfile profile){
+    public void setPlayerProfile(PlayerProfile profile) {
         this.playerProfile = profile;
         this.connectionState = ConnectionState.LOCAL;
         this.remoteAddress = null;
         this.displayName = null;
     }
 
-    public boolean isGuest(){
-        return this.playerProfile == null ||this.playerProfile.isGuest();
+    public boolean isGuest() {
+        return this.playerProfile == null || this.playerProfile.isGuest();
     }
 
-    public String getDisplayName(){
-        if(this.displayName != null) {
+    public String getDisplayName() {
+        if (this.displayName != null) {
             return displayName;
         }
-        if(playerProfile != null) {
+        if (playerProfile != null) {
             return playerProfile.getPlayerName();
         }
         return "No profile Profile";
     }
 
     public void setGuestName(String newName) {
-        if(isGuest()) {
+        if (isGuest()) {
             this.displayName = newName;
-        }else{
-            Log.e("Tag","Cannot set Player Name. Only Guest Names can be changed");
+        } else {
+            Log.e("Tag", "Cannot set Player Name. Only Guest Names can be changed");
         }
     }
 

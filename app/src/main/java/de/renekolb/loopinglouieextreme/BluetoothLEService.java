@@ -208,7 +208,7 @@ public class BluetoothLEService {
         if (characteristic != null) {
             characteristic.setValue(message);
             btGatt.writeCharacteristic(characteristic);
-            Log.v("BTLe","Sent: "+new String(message));
+            Log.v("BTLe", "Sent: " + new String(message));
         }
     }
 

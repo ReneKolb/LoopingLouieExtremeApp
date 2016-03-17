@@ -24,7 +24,7 @@ public class PlayerProfilesListAdapter extends BaseAdapter {
 
     private FullscreenActivity fa;
 
-    public PlayerProfilesListAdapter(FullscreenActivity fa){
+    public PlayerProfilesListAdapter(FullscreenActivity fa) {
         this.fa = fa;
         this.layoutInflater = LayoutInflater.from(fa);
         this.list = new ArrayList<>(fa.getProfileManager().getAvailableProfiles());
@@ -36,33 +36,33 @@ public class PlayerProfilesListAdapter extends BaseAdapter {
         this.notifyDataSetChanged();
     }
 
-    public int add(PlayerProfile p){
+    public int add(PlayerProfile p) {
         list.add(p);
         this.notifyDataSetChanged();
-        return list.size()-1;
+        return list.size() - 1;
     }
 
-    public void remove(int index){
+    public void remove(int index) {
         list.remove(index);
-        if(selectedIndex >= index){
+        if (selectedIndex >= index) {
             selectedIndex--;
         }
         this.notifyDataSetChanged();
     }
 
-    public void setSelectedIndex(int index){
+    public void setSelectedIndex(int index) {
         this.selectedIndex = index;
         this.notifyDataSetChanged();
     }
 
-    public void refresh(){
+    public void refresh() {
         this.list = new ArrayList<>(fa.getProfileManager().getAvailableProfiles());
         this.notifyDataSetChanged();
     }
 
-    public int getIndex(int profileID){
-        for(int i=0;i<this.list.size();i++){
-            if(list.get(i).getProfileID() == profileID){
+    public int getIndex(int profileID) {
+        for (int i = 0; i < this.list.size(); i++) {
+            if (list.get(i).getProfileID() == profileID) {
                 return i;
             }
         }
@@ -103,10 +103,10 @@ public class PlayerProfilesListAdapter extends BaseAdapter {
 
         holder.profileName.setText(data.getPlayerName());
         holder.achievementsAmount.setText(String.valueOf(data.getPlayerAchievements().getAmount()));
-        if(selectedIndex == position){
+        if (selectedIndex == position) {
             holder.icon.setImageResource(R.drawable.ic_grade);
             holder.icon.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             holder.icon.setVisibility(View.INVISIBLE);
         }
 

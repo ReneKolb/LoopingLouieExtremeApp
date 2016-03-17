@@ -93,13 +93,6 @@ public class ConnectFragment extends Fragment {
             }
         });
 
-        Button btnTestMessage = (Button) view.findViewById(R.id.btn_test_client_msg);
-        btnTestMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onButtonPressed(Constants.buttons.CONNECT_GAME_TEST_CLIENT_MESSAGE);
-            }
-        });
         return view;
     }
 
@@ -164,7 +157,7 @@ public class ConnectFragment extends Fragment {
                     Toast.makeText(getActivity(), "Selected a Device to connect!", Toast.LENGTH_SHORT).show();
 
                     //TODO: Check if bound
-                    if(device.getBondState() == BluetoothDevice.BOND_NONE){
+                    if (device.getBondState() == BluetoothDevice.BOND_NONE) {
                         device.createBond();
                     }
                     fa.connect(device);

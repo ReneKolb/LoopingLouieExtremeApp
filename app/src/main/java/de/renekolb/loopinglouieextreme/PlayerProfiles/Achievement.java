@@ -13,7 +13,7 @@ public class Achievement {
     private StatisticType statType;
     private long unlockAmount;
 
-    Achievement(String title, String unlockedDescription,String unlockDescription, int drawableID/*, UnlockCondition*/,StatisticType statType,  long unlockAmount ){
+    Achievement(String title, String unlockedDescription, String unlockDescription, int drawableID/*, UnlockCondition*/, StatisticType statType, long unlockAmount) {
         this.title = title;
         this.unlockDescription = unlockDescription;
         this.unlockedDescription = unlockedDescription;
@@ -22,27 +22,29 @@ public class Achievement {
         this.unlockAmount = unlockAmount;
     }
 
-    public String getTitle(){
+    public String getTitle() {
         return this.title;
     }
 
-    public String getUnlockDescription(){
+    @Deprecated
+    public String getUnlockDescription() {
+        //replace with Ressource IDs
         return this.unlockDescription;
     }
 
-    public String getUnlockedDescription(){
+    public String getUnlockedDescription() {
         return this.unlockedDescription;
     }
 
-    public StatisticType getStatType(){
+    public StatisticType getStatType() {
         return this.statType;
     }
 
-    public long getUnlockAmount(){
+    public long getUnlockAmount() {
         return this.unlockAmount;
     }
 
-    public int getDrawableID(){
+    public int getDrawableID() {
         return this.drawableID;
     }
 

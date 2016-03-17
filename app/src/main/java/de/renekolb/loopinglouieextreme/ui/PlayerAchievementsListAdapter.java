@@ -19,20 +19,20 @@ import de.renekolb.loopinglouieextreme.PlayerProfiles.Achievements;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.PlayerProfile;
 import de.renekolb.loopinglouieextreme.R;
 
-public class PlayerAchievementsListAdapter extends BaseAdapter{
+public class PlayerAchievementsListAdapter extends BaseAdapter {
 
-    private LinkedHashMap<Integer,Boolean> list; //AchievementID, unlocked
+    private LinkedHashMap<Integer, Boolean> list; //AchievementID, unlocked
     private final LayoutInflater layoutInflater;
 
     private FullscreenActivity fa;
     private PlayerProfile profile;
 
-    public PlayerAchievementsListAdapter(FullscreenActivity fa, PlayerProfile playerProfile){
+    public PlayerAchievementsListAdapter(FullscreenActivity fa, PlayerProfile playerProfile) {
         this.fa = fa;
         this.profile = playerProfile;
         this.layoutInflater = LayoutInflater.from(fa);
         this.list = new LinkedHashMap<>();
-        for (int id : Achievements.getAchievementIDs()){
+        for (int id : Achievements.getAchievementIDs()) {
             this.list.put(id, playerProfile.getPlayerAchievements().hasUnlocked(id));
         }
 //        sortList();
@@ -63,12 +63,12 @@ public class PlayerAchievementsListAdapter extends BaseAdapter{
 
     }*/
 
-    public void changePlayerProfile(PlayerProfile newProfile){
+    public void changePlayerProfile(PlayerProfile newProfile) {
         this.profile = newProfile;
-        for(int id :Achievements.getAchievementIDs()){
+        for (int id : Achievements.getAchievementIDs()) {
             this.list.put(id, newProfile.getPlayerAchievements().hasUnlocked(id));
         }
-     //   sortList();
+        //   sortList();
         this.notifyDataSetChanged();
     }
 
@@ -109,26 +109,26 @@ public class PlayerAchievementsListAdapter extends BaseAdapter{
         holder.title.setText(ach.getTitle());
         holder.icon.setImageResource(ach.getDrawableID());
 
-        if(unlocked) {
+        if (unlocked) {
             holder.title.setTextColor(Color.parseColor("#000000"));
             holder.progress.setVisibility(View.GONE);
             holder.description.setText(ach.getUnlockedDescription());
             holder.description.setTextColor(Color.parseColor("#000000"));
             holder.icon.clearColorFilter();
-        }else{
+        } else {
             //grayscale
             holder.title.setTextColor(Color.parseColor("#CCCCCC"));
 
             long maxAmount = ach.getUnlockAmount();
             long amount = profile.getPlayerStatistics().getAmount(ach.getStatType());
 
-            holder.description.setText(amount+" / "+maxAmount+" "+ach.getUnlockDescription());
+            holder.description.setText(String.format(fa.getResources().getString(R.string.listitem_player_achievements_progress),amount,maxAmount,ach.getUnlockDescription()));
             holder.description.setTextColor(Color.parseColor("#CCCCCC"));
 
             //if(amount > 0){
-                holder.progress.setVisibility(View.VISIBLE);
-                holder.progress.setMax((int)maxAmount);
-                holder.progress.setProgress((int)amount);
+            holder.progress.setVisibility(View.VISIBLE);
+            holder.progress.setMax((int) maxAmount);
+            holder.progress.setProgress((int) amount);
             /*}else{
                 holder.progress.setVisibility(View.GONE);
             }*/

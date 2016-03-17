@@ -14,15 +14,15 @@ public class PlayerAchievements {
 
     private Handler mHandler;
 
-    public PlayerAchievements(Handler mHandler){
+    public PlayerAchievements(Handler mHandler) {
         this.achievements = new ArrayList<>();
         this.mHandler = mHandler;
     }
 
 
-    public void addAchievement(int achievementID, boolean notifyUser){
-        if(!achievements.contains(achievementID)) {
-            if(notifyUser) {
+    public void addAchievement(int achievementID, boolean notifyUser) {
+        if (!achievements.contains(achievementID)) {
+            if (notifyUser) {
                 Message msg = this.mHandler.obtainMessage(Constants.messages.UNLOCKED_ACHIEVEMENT);
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constants.messages.KEY_ACHIEVEMENT_ID, achievementID);
@@ -34,15 +34,15 @@ public class PlayerAchievements {
         }
     }
 
-    public ArrayList<Integer> getAchievements(){
+    public ArrayList<Integer> getAchievements() {
         return this.achievements;
     }
 
-    public int getAmount(){
+    public int getAmount() {
         return this.achievements.size();
     }
 
-    public boolean hasUnlocked(int achievement){
+    public boolean hasUnlocked(int achievement) {
         return achievements.contains(achievement);
     }
 }

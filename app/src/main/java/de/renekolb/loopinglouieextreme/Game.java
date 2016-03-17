@@ -51,19 +51,19 @@ public class Game {
         this.gameTimer = new Timer();
     }
 
-    public boolean getWheelOfFortuneEnabled(){
+    public boolean getWheelOfFortuneEnabled() {
         return this.enableWheelOfFortune;
     }
 
-    public void setWheelOfFortuneEnabled(boolean enabled){
+    public void setWheelOfFortuneEnabled(boolean enabled) {
         this.enableWheelOfFortune = enabled;
     }
 
-    public boolean getLoserWheelEnabled(){
+    public boolean getLoserWheelEnabled() {
         return this.enableLoserWheel;
     }
 
-    public void setLoserWheelEnabled(boolean enabled){
+    public void setLoserWheelEnabled(boolean enabled) {
         this.enableLoserWheel = enabled;
     }
 
@@ -205,14 +205,14 @@ public class Game {
         return sb.toString();
     }
 
-    public String getEnabledPlayersSendData(){
+    public String getEnabledPlayersSendData() {
         String result = "";
 
-        for(int i=0;i<gamePlayers.size();i++) {
+        for (int i = 0; i < gamePlayers.size(); i++) {
             //getGamePlayer(i) ??
-            if(this.gamePlayers.get(i).getConnectionState() == ConnectionState.CLOSED){
+            if (this.gamePlayers.get(i).getConnectionState() == ConnectionState.CLOSED) {
                 result += "0";
-            }else{
+            } else {
                 result += "1";
             }
         }
@@ -220,11 +220,11 @@ public class Game {
         return result;
     }
 
-    public GamePlayer getGameWinnerPlayer(){
+    public GamePlayer getGameWinnerPlayer() {
         int max = 0;
         GamePlayer best = null;
-        for(GamePlayer gp : this.gamePlayers){
-            if(gp.getPoints() > max){
+        for (GamePlayer gp : this.gamePlayers) {
+            if (gp.getPoints() > max) {
                 max = gp.getPoints();
                 best = gp;
             }
@@ -232,11 +232,11 @@ public class Game {
         return best;
     }
 
-    public GamePlayer getGameLoserPlayer(){
+    public GamePlayer getGameLoserPlayer() {
         int max = Integer.MAX_VALUE;
         GamePlayer best = null;
-        for(GamePlayer gp : this.gamePlayers){
-            if(gp.getPoints() < max){
+        for (GamePlayer gp : this.gamePlayers) {
+            if (gp.getPoints() < max) {
                 max = gp.getPoints();
                 best = gp;
             }

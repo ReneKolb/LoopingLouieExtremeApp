@@ -62,7 +62,7 @@ public class ProfilesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
             this.listAdapter = new PlayerProfilesListAdapter(fa);
             this.listAdapter.setSelectedIndex(listAdapter.getIndex(fa.getProfileManager().getDefaultProfileID()));
         }
@@ -79,7 +79,7 @@ public class ProfilesFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                View dialogView = inflater.inflate(R.layout.dialog_user_name,null);
+                View dialogView = inflater.inflate(R.layout.dialog_user_name, null);
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(fa);
 
                 dialogBuilder.setView(dialogView);
@@ -95,9 +95,9 @@ public class ProfilesFragment extends Fragment {
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                            //do nothing
+                                //do nothing
                             }
-                    });
+                        });
 
                 dialogBuilder.create().show();
 
@@ -113,10 +113,10 @@ public class ProfilesFragment extends Fragment {
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mSelectedItem != -1) {
+                if (mSelectedItem != -1) {
                     final PlayerProfile profile = listAdapter.getItem(mSelectedItem);
 
-                    View dialogView = inflater.inflate(R.layout.dialog_user_name,null);
+                    View dialogView = inflater.inflate(R.layout.dialog_user_name, null);
                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(fa);
 
                     dialogBuilder.setView(dialogView);
@@ -128,7 +128,7 @@ public class ProfilesFragment extends Fragment {
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    editPlayerName(profile,input.getText().toString());
+                                    editPlayerName(profile, input.getText().toString());
                                 }
                             })
                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -141,26 +141,26 @@ public class ProfilesFragment extends Fragment {
 
 
                     //Log.i("BLUB", "edit profile " + profile.getProfileID() + ": " + profile.getPlayerName());
-                }else{
-                    Log.w("BLUB","No profile selected to edit");
+                } else {
+                    Log.w("BLUB", "No profile selected to edit");
                 }
             }
         });
 
-        this.mSelectedItem = this.listAdapter.getIndex( fa.getProfileManager().getDefaultProfileID());
+        this.mSelectedItem = this.listAdapter.getIndex(fa.getProfileManager().getDefaultProfileID());
 
         btnDeleteProfile = (ImageButton) view.findViewById(R.id.btn_profiles_delete_profile);
         btnDeleteProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mSelectedItem != -1){
+                if (mSelectedItem != -1) {
                     //TODO: add confirmation window
                     PlayerProfile profile = listAdapter.getItem(mSelectedItem);
                     fa.getProfileManager().deleteProfile(profile.getProfileID());
                     listAdapter.remove(mSelectedItem);
                     mSelectedItem = -1;
-                }else{
-                    Log.w("BLUB","No profile selected to delete");
+                } else {
+                    Log.w("BLUB", "No profile selected to delete");
                 }
             }
         });
@@ -168,26 +168,26 @@ public class ProfilesFragment extends Fragment {
         btnSelectProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mSelectedItem != -1){
+                if (mSelectedItem != -1) {
                     PlayerProfile profile = listAdapter.getItem(mSelectedItem);
                     listAdapter.setSelectedIndex(mSelectedItem);
                     fa.getProfileManager().setDefaultProfileID(profile.getProfileID());
                     fa.setCurrentPlayerProfile(profile);
-                }else{
-                    Log.w("BLUB","No profile selected to delete");
+                } else {
+                    Log.w("BLUB", "No profile selected to delete");
                 }
             }
         });
 
         lvProfilesList = (ListView) view.findViewById(R.id.lv_profiles_profiles_list);
         lvProfilesList.setAdapter(this.listAdapter);
-        if(this.mSelectedItem != -1) {
+        if (this.mSelectedItem != -1) {
             lvProfilesList.setSelection(this.mSelectedItem);
         }
         lvProfilesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(mSelectedItem != position) {
+                if (mSelectedItem != position) {
                     mSelectedItem = position;
 
                 }
@@ -197,7 +197,7 @@ public class ProfilesFragment extends Fragment {
         return view;
     }
 
-    private void addPlayer(String name){
+    private void addPlayer(String name) {
         PlayerProfile newProfile = fa.profileManager.createNewPlayerProfile(name);
         int listIndex = listAdapter.add(newProfile);
         listAdapter.setSelectedIndex(listIndex);
@@ -205,14 +205,14 @@ public class ProfilesFragment extends Fragment {
         fa.setCurrentPlayerProfile(newProfile);
     }
 
-    private void editPlayerName(PlayerProfile profile, String newName){
+    private void editPlayerName(PlayerProfile profile, String newName) {
         profile.editPlayerName(newName);
         fa.getProfileManager().saveProfile(profile.getProfileID());
         int listIndex = listAdapter.getIndex(profile.getProfileID());
         listAdapter.updateName(listIndex, newName);
     }
 
-    public void updateProfilesList(){
+    public void updateProfilesList() {
         listAdapter.refresh();
     }
 

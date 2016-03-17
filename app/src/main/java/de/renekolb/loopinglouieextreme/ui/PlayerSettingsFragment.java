@@ -170,7 +170,7 @@ public class PlayerSettingsFragment extends Fragment {
                     btnReverse.setVisibility(View.VISIBLE);
                     btnBlackout.setVisibility(View.VISIBLE);
 
-                    if(player.isGuest()) {
+                    if (player.isGuest()) {
                         tvPlayerName.setVisibility(View.VISIBLE);
                         etPlayerName.setVisibility(View.VISIBLE);
 
@@ -311,10 +311,10 @@ public class PlayerSettingsFragment extends Fragment {
                             btnReverse.setVisibility(View.VISIBLE);
                             btnBlackout.setVisibility(View.VISIBLE);
 
-                            if(player.isGuest()) {
+                            if (player.isGuest()) {
                                 tvPlayerName.setVisibility(View.VISIBLE);
                                 etPlayerName.setVisibility(View.VISIBLE);
-                            }else{
+                            } else {
                                 tvPlayerName.setVisibility(View.INVISIBLE);
                                 etPlayerName.setVisibility(View.INVISIBLE);
                             }
@@ -337,9 +337,9 @@ public class PlayerSettingsFragment extends Fragment {
                                 etPlayerName.setSelection(etPlayerName.getText().length());
                             }
 
-                                btnOpen.setVisibility(View.VISIBLE);
-                                btnLocal.setVisibility(View.VISIBLE);
-                                btnClose.setVisibility(View.VISIBLE);
+                            btnOpen.setVisibility(View.VISIBLE);
+                            btnLocal.setVisibility(View.VISIBLE);
+                            btnClose.setVisibility(View.VISIBLE);
                         } else {
                             tvPlayerName.setVisibility(View.INVISIBLE);
                             etPlayerName.setVisibility(View.INVISIBLE);

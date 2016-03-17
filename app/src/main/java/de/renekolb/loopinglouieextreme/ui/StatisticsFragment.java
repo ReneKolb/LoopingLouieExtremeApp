@@ -53,12 +53,12 @@ public class StatisticsFragment extends Fragment {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         updateStatistics();
     }
 
-    private void updateStatistics(){
+    private void updateStatistics() {
         tvRoundsPlayed.setText(String.valueOf(fa.getCurrentPlayer().getPlayerStatistics().getAmount(StatisticType.TOTAL_ROUNDS_PLAYED)));
         tvGamesPlayed.setText(String.valueOf(fa.getCurrentPlayer().getPlayerStatistics().getAmount(StatisticType.TOTAL_GAMES_PLAYED)));
         tvRoundsWon.setText(String.valueOf(fa.getCurrentPlayer().getPlayerStatistics().getAmount(StatisticType.TOTAL_ROUNDS_WON)));

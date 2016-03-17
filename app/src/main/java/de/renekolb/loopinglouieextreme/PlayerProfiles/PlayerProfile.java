@@ -13,7 +13,7 @@ public class PlayerProfile {
     private int profileID;
     //private boolean isGuest;
 
-    public PlayerProfile(String playerName, Handler mHandler/*, boolean isGuest*/){
+    public PlayerProfile(String playerName, Handler mHandler/*, boolean isGuest*/) {
         //create a Guest Profile!
         this.playerName = playerName;
         //this.playerAchievements = new PlayerAchievements(mHandler);
@@ -26,7 +26,7 @@ public class PlayerProfile {
 //        load();
     }
 
-    PlayerProfile(int profileID, String playerName, PlayerStatistics ps){
+    PlayerProfile(int profileID, String playerName, PlayerStatistics ps) {
         //Create a player Profile (with staticstics etc.)
         this.playerName = playerName;
         this.profileID = profileID;
@@ -34,23 +34,23 @@ public class PlayerProfile {
         this.playerStatistics = ps;
     }
 
-    public String getPlayerName(){
+    public String getPlayerName() {
         return this.playerName;
     }
 
-    public void editPlayerName(String newName){
+    public void editPlayerName(String newName) {
         this.playerName = newName;
     }
 
-    public int getProfileID(){
+    public int getProfileID() {
         return this.profileID;
     }
 
-    public PlayerAchievements getPlayerAchievements(){
+    public PlayerAchievements getPlayerAchievements() {
         return this.playerAchievements;
     }
 
-    public PlayerStatistics getPlayerStatistics(){
+    public PlayerStatistics getPlayerStatistics() {
         return this.playerStatistics;
     }
 
@@ -67,28 +67,28 @@ public class PlayerProfile {
         }
     }*/
 
-    public boolean isGuest(){
+    public boolean isGuest() {
         return profileID == -1;
         //return isGuest;
     }
 
-    public void updateTotalRoundsPlayed(int add){
-        if(!isGuest())
+    public void updateTotalRoundsPlayed(int add) {
+        if (!isGuest())
             playerStatistics.updateTotalRoundsPlayed(add, true);
     }
 
-    public void updateTotalGamesPlayed(int add){
-        if(!isGuest())
+    public void updateTotalGamesPlayed(int add) {
+        if (!isGuest())
             playerStatistics.updateTotalGamesPlayed(add, true);
     }
 
-    public void updateTotalRoundsWon(int add){
-        if(!isGuest())
+    public void updateTotalRoundsWon(int add) {
+        if (!isGuest())
             playerStatistics.updateTotalRoundsWon(add, true);
     }
 
-    public void updateTotalGamesWon(int add){
-        if(!isGuest())
+    public void updateTotalGamesWon(int add) {
+        if (!isGuest())
             playerStatistics.updateTotalGamesWon(add, true);
     }
 

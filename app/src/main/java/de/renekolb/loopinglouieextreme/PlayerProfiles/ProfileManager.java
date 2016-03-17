@@ -47,7 +47,7 @@ public class ProfileManager {
         if (in != null) {
             ObjectInputStream oin = null;
             try {
-                oin= new ObjectInputStream(in);
+                oin = new ObjectInputStream(in);
                 defaultID = oin.readInt();
                 while (oin.available() > 0) {
                     int id = oin.readInt();
@@ -55,102 +55,102 @@ public class ProfileManager {
                     this.storedProfiles.put(id, p);
                 }
             } catch (IOException e) {
-                Log.e("ProfileManager", "Error while loading available profiles list",e);
-            }finally{
-                if(oin != null) {
+                Log.e("ProfileManager", "Error while loading available profiles list", e);
+            } finally {
+                if (oin != null) {
                     try {
                         oin.close();
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         //error closing file
                     }
                 }
             }
 
-            try{
+            try {
                 in.close();
-            }catch (Exception e){
+            } catch (Exception e) {
                 //error closing file
             }
         }
     }
 
-    private void saveProfilesList(){
+    private void saveProfilesList() {
         FileOutputStream out = null;
         try {
             out = context.openFileOutput(PROFILES_LIST_FILE_NAME, Context.MODE_PRIVATE);
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             Log.e("ProfileManager", "File not found to save", e);
         }
 
-        if(out != null){
+        if (out != null) {
             ObjectOutputStream oout = null;
-            try{
+            try {
                 oout = new ObjectOutputStream(out);
                 oout.writeInt(this.defaultID);
-                for(int profileID : this.storedProfiles.keySet()) {
+                for (int profileID : this.storedProfiles.keySet()) {
                     oout.writeInt(profileID);
                 }
-                Log.v("ProfileManager","saved profiles list successfully");
-            }catch (IOException e){
-                Log.e("ProfileManager","Error while saving profiles list",e);
-            }finally {
-                if(oout != null){
+                Log.v("ProfileManager", "saved profiles list successfully");
+            } catch (IOException e) {
+                Log.e("ProfileManager", "Error while saving profiles list", e);
+            } finally {
+                if (oout != null) {
                     try {
                         oout.close();
-                    }catch (IOException e){
+                    } catch (IOException e) {
                         //error closing file
                     }
                 }
             }
 
 
-            try{
+            try {
                 out.close();
-            }catch (IOException e){
+            } catch (IOException e) {
                 //error while closing file
             }
         }
     }
 
-    public PlayerProfile getProfile(int profileID){
-        if(!storedProfiles.containsKey(profileID)) {
-            Log.e("ProfileManager","Cannot return Profile. Unkown PlayerProfile ID");
+    public PlayerProfile getProfile(int profileID) {
+        if (!storedProfiles.containsKey(profileID)) {
+            Log.e("ProfileManager", "Cannot return Profile. Unkown PlayerProfile ID");
             return null;
         }
 
-        if(storedProfiles.get(profileID) == null){
+        if (storedProfiles.get(profileID) == null) {
             return loadProfile(profileID);
-        }else{
+        } else {
             return storedProfiles.get(profileID);
         }
     }
 
-    private PlayerProfile loadProfile(int profileID){
+    private PlayerProfile loadProfile(int profileID) {
         FileInputStream in = null;
 
         try {
-            in = context.openFileInput(PROFILE_FILE_NAME+profileID+".sav");
-        }catch (FileNotFoundException e){
-            Log.e("ProfileManager","Cannot find player profile file");
+            in = context.openFileInput(PROFILE_FILE_NAME + profileID + ".sav");
+        } catch (FileNotFoundException e) {
+            Log.e("ProfileManager", "Cannot find player profile file");
         }
 
-        if(in != null){
+        if (in != null) {
             ObjectInputStream oin = null;
             String playerName = null;
             PlayerStatistics playerStats = null;
             try {
                 oin = new ObjectInputStream(in);
                 playerName = oin.readUTF();
-                playerStats = (PlayerStatistics)oin.readObject();
-            }catch (IOException e) {
+                playerStats = (PlayerStatistics) oin.readObject();
+            } catch (IOException e) {
                 Log.e("ProfileManager", "Error while loading profile", e);
-            }catch (ClassNotFoundException e){
-                Log.e("ProfileManager","Error while loading profile. Class not found",e);
-            }finally{
-                if(oin != null) {
+            } catch (ClassNotFoundException e) {
+                Log.e("ProfileManager", "Error while loading profile. Class not found", e);
+            } finally {
+                if (oin != null) {
                     try {
                         oin.close();
-                    }catch (IOException e){
+                    } catch (IOException e) {
                         //error closing file
                     }
                 }
@@ -158,20 +158,20 @@ public class ProfileManager {
 
             try {
                 in.close();
-            }catch (IOException e){
+            } catch (IOException e) {
                 //error closing file
             }
 
-            if(playerName != null && playerStats != null){
+            if (playerName != null && playerStats != null) {
                 PlayerAchievements ach = new PlayerAchievements(this.mHandler);
                 playerStats.setPlayerAchievements(ach);
                 playerStats.updateAllAchievements(false);
-                PlayerProfile playerProfile = new PlayerProfile(profileID,playerName,playerStats);
+                PlayerProfile playerProfile = new PlayerProfile(profileID, playerName, playerStats);
 
                 this.storedProfiles.put(profileID, playerProfile); // fill Map with the data
-                return  playerProfile;
-            }else{
-                Log.e("ProfileManager","PlayerName or PlayerStats == null");
+                return playerProfile;
+            } else {
+                Log.e("ProfileManager", "PlayerName or PlayerStats == null");
             }
         }
 
@@ -182,46 +182,46 @@ public class ProfileManager {
 //        return storedProfiles.keySet();
     //}
 
-    public Collection<PlayerProfile> getAvailableProfiles(){
+    public Collection<PlayerProfile> getAvailableProfiles() {
         return this.storedProfiles.values();
     }
 
-    public void saveProfile(int profileID){
-        if(!storedProfiles.containsKey(profileID)) {
-            Log.e("ProfileManager","Cannot save Profile. Unkown PlayerProfile ID");
+    public void saveProfile(int profileID) {
+        if (!storedProfiles.containsKey(profileID)) {
+            Log.e("ProfileManager", "Cannot save Profile. Unkown PlayerProfile ID");
         }
         PlayerProfile p = storedProfiles.get(profileID);
 
         FileOutputStream out = null;
-        try{
-            out = context.openFileOutput(PROFILE_FILE_NAME+profileID+".sav",Context.MODE_PRIVATE);
-        }catch (FileNotFoundException e){
+        try {
+            out = context.openFileOutput(PROFILE_FILE_NAME + profileID + ".sav", Context.MODE_PRIVATE);
+        } catch (FileNotFoundException e) {
             Log.e("ProfileManager", "File not found to save", e);
         }
 
-        if(out != null){
+        if (out != null) {
             ObjectOutputStream oout = null;
-            try{
+            try {
                 oout = new ObjectOutputStream(out);
 
                 oout.writeUTF(p.getPlayerName());
                 oout.writeObject(p.getPlayerStatistics());
-                Log.v("ProfileManager","saved profile successfully");
-            }catch (IOException e){
-                Log.e("ProfileManager","Error while saving profile",e);
-            }finally {
-                if(oout != null){
+                Log.v("ProfileManager", "saved profile successfully");
+            } catch (IOException e) {
+                Log.e("ProfileManager", "Error while saving profile", e);
+            } finally {
+                if (oout != null) {
                     try {
                         oout.close();
-                    }catch (IOException e){
+                    } catch (IOException e) {
                         //error closing file
                     }
                 }
             }
 
-            try{
+            try {
                 out.close();
-            }catch (IOException e){
+            } catch (IOException e) {
                 //error closing file
             }
         }
@@ -229,24 +229,24 @@ public class ProfileManager {
         //TODO: autosave progress
     }
 
-    public PlayerProfile createNewPlayerProfile(String playerName){
-        Log.i("ProfileManager","Create new Profile: "+playerName);
+    public PlayerProfile createNewPlayerProfile(String playerName) {
+        Log.i("ProfileManager", "Create new Profile: " + playerName);
         int profileID = -1;
-        for (int i=0;i<Integer.MAX_VALUE;i++){
-            if(!storedProfiles.containsKey(i)){
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
+            if (!storedProfiles.containsKey(i)) {
                 profileID = i;
                 break;
             }
         }
 
-        if(profileID == -1){
-            Log.e("ProfileManager","Error generating ProfileID");
+        if (profileID == -1) {
+            Log.e("ProfileManager", "Error generating ProfileID");
             return null;
         }
 
         PlayerAchievements ach = new PlayerAchievements(this.mHandler);
         PlayerStatistics stats = new PlayerStatistics(ach);
-        PlayerProfile p = new PlayerProfile(profileID,playerName,stats);
+        PlayerProfile p = new PlayerProfile(profileID, playerName, stats);
 
         storedProfiles.put(profileID, p);
         saveProfilesList();
@@ -255,11 +255,11 @@ public class ProfileManager {
     }
 
     public void deleteProfile(int profileID) {
-        File f = new File(context.getFilesDir(),PROFILE_FILE_NAME+profileID+".sav");
-        if(f.exists()){
-           if(f.delete()){
-               Log.v("ProfileManager","profile file deleted successfully");
-           }
+        File f = new File(context.getFilesDir(), PROFILE_FILE_NAME + profileID + ".sav");
+        if (f.exists()) {
+            if (f.delete()) {
+                Log.v("ProfileManager", "profile file deleted successfully");
+            }
         }
 
         storedProfiles.remove(profileID);
@@ -267,34 +267,34 @@ public class ProfileManager {
     }
 
 
-    public void setDefaultProfileID(int profileID){
-        if(profileID != this.defaultID) {
+    public void setDefaultProfileID(int profileID) {
+        if (profileID != this.defaultID) {
             this.defaultID = profileID;
             saveProfilesList();
         }
     }
 
-    public int getDefaultProfileID(){
-        if(this.storedProfiles.containsKey(this.defaultID)){
+    public int getDefaultProfileID() {
+        if (this.storedProfiles.containsKey(this.defaultID)) {
             return this.defaultID;
-        }else{
+        } else {
             return this.defaultID = -1;
         }
     }
 
     @Deprecated
-    public void wipeFiles(){
+    public void wipeFiles() {
         File[] files = context.getFilesDir().listFiles();
 
-        for (File d : files){
-            if(d.getName().startsWith(PROFILE_FILE_NAME)||d.getName().startsWith(PROFILES_LIST_FILE_NAME)){
-                if(d.delete()){
-                    Log.i("ProfileManager","Wipe: deleted: "+d.getName());
+        for (File d : files) {
+            if (d.getName().startsWith(PROFILE_FILE_NAME) || d.getName().startsWith(PROFILES_LIST_FILE_NAME)) {
+                if (d.delete()) {
+                    Log.i("ProfileManager", "Wipe: deleted: " + d.getName());
                 }
             }
         }
 
-        Log.i("ProfileManager","Wiping complete");
+        Log.i("ProfileManager", "Wiping complete");
     }
 
 }

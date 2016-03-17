@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/dialog_user_name_root"
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -11,14 +10,15 @@
         android:id="@+id/tv_dialog_user_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Geben Sie den Profilnamen ein:"
-        android:textAppearance="?android:attr/textAppearanceLarge"/>
+        android:text="@string/dialog_enter_profile_name"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
         android:id="@+id/et_dialog_user_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp">
+
         <requestFocus />
     </EditText>
 

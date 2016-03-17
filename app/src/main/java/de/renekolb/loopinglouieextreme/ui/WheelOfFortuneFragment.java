@@ -44,6 +44,8 @@ public class WheelOfFortuneFragment extends Fragment {
     private int nameBackgroundColor;
     private int wheelResourceID;
 
+    private int resultText;
+
     private int currentSpinnerPlayerIndex;
 
     //private boolean isSpinning;
@@ -59,7 +61,7 @@ public class WheelOfFortuneFragment extends Fragment {
     private double dragLastPhi;
     //private double dragDPhi;
 
-     /**
+    /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
@@ -97,19 +99,20 @@ public class WheelOfFortuneFragment extends Fragment {
 
     }
 
-    public void setResultText(int textID){
-        this.mTVResult.setText(textID);
+    public void setResultText(int textID) {
+        resultText = textID;
+        if (mTVResult != null) {
+            this.mTVResult.setText(resultText);
+        }
     }
 
-    public void setResultText(String text){
-        this.mTVResult.setText(text);
-    }
-
-    public void setEnableNextButton(boolean enabled){
-        if(enabled) {
-            mBTNnext.setVisibility(View.VISIBLE);
-        }else{
-            mBTNnext.setVisibility(View.INVISIBLE);
+    public void setEnableNextButton(boolean enabled) {
+        if(mBTNnext!=null) {
+            if (enabled) {
+                mBTNnext.setVisibility(View.VISIBLE);
+            } else {
+                mBTNnext.setVisibility(View.INVISIBLE);
+            }
         }
     }
 
@@ -126,6 +129,10 @@ public class WheelOfFortuneFragment extends Fragment {
         mTVplayerName = (TextView) view.findViewById(R.id.tv_wheel_of_fortune_player_name);
 
         mBTNnext.setVisibility(View.INVISIBLE);
+
+        if (resultText != -1) {
+            mTVResult.setText(this.resultText);
+        }
 
         this.dragStartPhi = -1;
         this.dragLastPhi = -1;
@@ -149,9 +156,9 @@ public class WheelOfFortuneFragment extends Fragment {
                     case MotionEvent.ACTION_UP:
                         dragStartPhi = -1;
                         if (!handler.isSpinning() && handler.canSpin()) {
-                            Log.i("WheelOfFortune","LastPhi: "+Math.abs(dragLastPhi));
+                            Log.i("WheelOfFortune", "LastPhi: " + Math.abs(dragLastPhi));
                             if (Math.abs(dragLastPhi) > 5) {
-                                handler.startSpinning(mISWheel.getCurrentView().getRotation(),(int) -Math.signum(dragLastPhi));
+                                handler.startSpinning(mISWheel.getCurrentView().getRotation(), (int) -Math.signum(dragLastPhi));
                             }
                         }
                         dragLastPhi = -1;
@@ -180,7 +187,8 @@ public class WheelOfFortuneFragment extends Fragment {
         mBTNnext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onButtonPressed(Constants.buttons.WHEEL_OF_FORTUNE_NEXT_ROUND);
+                //onButtonPressed(Constants.buttons.WHEEL_OF_FORTUNE_NEXT_ROUND);
+                handler.onButtonNextPressed();
             }
         });
 
@@ -211,17 +219,17 @@ public class WheelOfFortuneFragment extends Fragment {
     }
 
 
-    public void startSpin(float startViewRotation, float rotateAnimation){
+    public void startSpin(float startViewRotation, float rotateAnimation) {
         mISWheel.getCurrentView().setRotation(startViewRotation);
-        mTVResult.setText("dum die dum ...");
-        RotateAnimation anim = new RotateAnimation(0,rotateAnimation, Animation.RELATIVE_TO_SELF,0.5f,Animation.RELATIVE_TO_SELF,0.5f);
+        mTVResult.setText(R.string.wof_spinning);
+        RotateAnimation anim = new RotateAnimation(0, rotateAnimation, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         anim.setInterpolator(new Interpolator() {
             @Override
             public float getInterpolation(float x) {
                 return (3 * x) - (3 * x * x) + (x * x * x);
             }
         });
-        anim.setDuration((int) (1.5f*Math.abs(rotateAnimation)+2000));
+        anim.setDuration((int) (1.5f * Math.abs(rotateAnimation) + 2000));
         anim.setFillEnabled(true);
         anim.setFillAfter(true);
         animationWaitHandler.postDelayed(new Runnable() {

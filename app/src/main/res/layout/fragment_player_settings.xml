@@ -1,5 +1,4 @@
-<de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -31,7 +30,7 @@
         android:textColor="#000000"
         android:textSize="19sp"
         android:textStyle="bold"
-        android:text="Players:"/>
+        android:text="@string/player_settings_players" />
 
     <ListView
         android:layout_width="wrap_content"
@@ -47,7 +46,7 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
         android:layout_below="@id/tv_player_settings_players_title"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" />
 
     <LinearLayout
         android:id="@+id/ll_player_settings_select_connection_state"
@@ -65,25 +64,28 @@
             android:id="@+id/btn_player_settings_open"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            android:text="Open"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/player_settings_slot_open"
             android:textStyle="bold"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/btn_player_settings_local"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            android:text="Local"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/player_settings_slot_local"
             android:textStyle="bold"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/btn_player_settings_close"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            android:text="Close"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/player_settings_slot_close"
             android:textStyle="bold"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -103,33 +105,37 @@
             android:id="@+id/btn_player_settings_turbo"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            android:text="Turbo"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/player_settings_item_turbo"
             android:textStyle="bold"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/btn_player_settings_slow"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            android:text="Slow"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/player_settings_item_slow"
             android:textStyle="bold"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/btn_player_settings_reverse"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            android:text="Reverse"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/player_settings_item_reverse"
             android:textStyle="bold"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <Button
             android:id="@+id/btn_player_settings_blackout"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            android:text="Black"
+            style="?android:attr/buttonBarButtonStyle"
+            android:text="@string/player_settings_item_black"
             android:textStyle="bold"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -146,24 +152,24 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textColor="#000000"
-            android:text="Player Name: "/>
+            android:text="@string/player_settings_player_name" />
 
         <EditText
             android:id="@+id/et_player_settings_player_name_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:inputType="text"/>
+            android:inputType="text" />
 
     </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start"
+        android:text="@string/btn_player_settings_start"
         android:id="@+id/btn_player_settings_start"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" />
 
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>
