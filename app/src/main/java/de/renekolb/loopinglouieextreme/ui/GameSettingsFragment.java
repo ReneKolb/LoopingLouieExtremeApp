@@ -66,8 +66,8 @@ public class GameSettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game_settings, container, false);
 
-        Button btnUP = (Button) view.findViewById(R.id.btn_game_settings_number_picker_button_up);
-        Button btnDOWN = (Button) view.findViewById(R.id.btn_game_settings_number_picker_button_down);
+        ImageButton btnUP = (ImageButton) view.findViewById(R.id.btn_game_settings_number_picker_button_up);
+        ImageButton btnDOWN = (ImageButton) view.findViewById(R.id.btn_game_settings_number_picker_button_down);
         final TextView tvValue = (TextView) view.findViewById(R.id.tv_game_settings_number_picker_value);
         //TODO: maybe EditText??
 
