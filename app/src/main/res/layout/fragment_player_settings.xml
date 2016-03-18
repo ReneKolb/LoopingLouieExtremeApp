@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="de.renekolb.loopinglouieextreme.ui.PlayerSettingsFragment"
-    android:background="#FFFACD"
+    android:background="@color/fragment_background"
     android:padding="15dp"
     android:clickable="true">
 
@@ -64,7 +64,9 @@
             android:id="@+id/btn_player_settings_open"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            style="@style/btnSelect"
             android:text="@string/player_settings_slot_open"
             android:textStyle="bold"
             android:layout_weight="1" />
@@ -73,7 +75,9 @@
             android:id="@+id/btn_player_settings_local"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            style="@style/btnSelect"
             android:text="@string/player_settings_slot_local"
             android:textStyle="bold"
             android:layout_weight="1" />
@@ -82,7 +86,9 @@
             android:id="@+id/btn_player_settings_close"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            style="@style/btnSelect"
             android:text="@string/player_settings_slot_close"
             android:textStyle="bold"
             android:layout_weight="1" />
@@ -105,8 +111,11 @@
             android:id="@+id/btn_player_settings_turbo"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            style="@style/btnSelect"
             android:text="@string/player_settings_item_turbo"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:layout_weight="1" />
 
@@ -114,8 +123,11 @@
             android:id="@+id/btn_player_settings_slow"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            style="@style/btnSelect"
             android:text="@string/player_settings_item_slow"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:layout_weight="1" />
 
@@ -123,8 +135,11 @@
             android:id="@+id/btn_player_settings_reverse"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            style="@style/btnSelect"
             android:text="@string/player_settings_item_reverse"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:layout_weight="1" />
 
@@ -132,8 +147,11 @@
             android:id="@+id/btn_player_settings_blackout"
             android:layout_width="0px"
             android:layout_height="fill_parent"
-            style="?android:attr/buttonBarButtonStyle"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            style="@style/btnSelect"
             android:text="@string/player_settings_item_black"
+            android:textSize="14sp"
             android:textStyle="bold"
             android:layout_weight="1" />
 

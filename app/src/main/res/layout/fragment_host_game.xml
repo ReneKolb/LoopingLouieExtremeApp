@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="de.renekolb.loopinglouieextreme.ui.HostGameFragment"
-    android:background="#FFFACD"
+    android:background="@color/fragment_background"
     android:padding="15dp"
     android:clickable="true">
 
@@ -96,6 +96,9 @@
         android:id="@+id/btn_host_game_game_settings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dip"
+        android:layout_marginBottom="2dip"
+        style="@style/btnSelect"
         android:text="@string/btn_host_game_game_settings"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true" />
@@ -106,6 +109,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_above="@id/btn_host_game_game_settings"
+        android:layout_marginTop="2dip"
+        android:layout_marginBottom="2dip"
+        style="@style/btnSelect"
         android:text="@string/btn_host_game_scan" />
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

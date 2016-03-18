@@ -84,7 +84,7 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                 holder.booster.setTextColor(Color.argb(255, 0, 0, 255));
                 holder.playerName.setText(R.string.listitem_player_settings_open_slot);
                 holder.booster.setText("");
-
+                holder.booster.setVisibility(View.GONE);
                 if (data.getChipAmount() < 0) {
                     holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
                     holder.chips.setText("-");
@@ -92,12 +92,14 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                     holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                     holder.chips.setText(String.valueOf(data.getChipAmount()));
                 }
+                holder.chips.setVisibility(View.VISIBLE);
                 break;
             case CONNECTED:
                 holder.playerName.setTextColor(Color.argb(255, 0, 255, 255));
                 holder.booster.setTextColor(Color.argb(255, 0, 255, 255));
                 holder.playerName.setText(data.getPlayerName());
                 holder.booster.setText(data.getBooster() == null ? "none" : data.getBooster().getDisplayName());
+                holder.booster.setVisibility(View.VISIBLE);
                 if (data.getChipAmount() < 0) {
                     holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
                     holder.chips.setText("-");
@@ -105,6 +107,7 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                     holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                     holder.chips.setText(String.valueOf(data.getChipAmount()));
                 }
+                holder.chips.setVisibility(View.VISIBLE);
                 break;
             case LOCAL:
                 if (data.isGuest()) {
@@ -116,6 +119,7 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                 }
                 holder.playerName.setText(data.getPlayerName());
                 holder.booster.setText(data.getBooster() == null ? "none" : data.getBooster().getDisplayName());
+                holder.booster.setVisibility(View.VISIBLE);
                 if (data.getChipAmount() < 0) {
                     holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
                     holder.chips.setText("-");
@@ -123,12 +127,15 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                     holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                     holder.chips.setText(String.valueOf(data.getChipAmount()));
                 }
+                holder.chips.setVisibility(View.VISIBLE);
                 break;
             case CLOSED:
                 holder.playerName.setTextColor(Color.argb(255, 120, 120, 120));
                 holder.playerName.setText(R.string.listitem_player_settings_disabled_player);
                 holder.booster.setText("");
+                holder.booster.setVisibility(View.GONE);
                 holder.chips.setText("");
+                holder.chips.setVisibility(View.GONE);
                 break;
         }
 

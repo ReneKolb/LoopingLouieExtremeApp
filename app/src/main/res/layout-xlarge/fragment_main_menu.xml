@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ccf5ff"
+    android:background="@color/fragment_background"
     tools:context="de.renekolb.loopinglouieextreme.ui.MainMenuFragment"
     android:clickable="true">
 

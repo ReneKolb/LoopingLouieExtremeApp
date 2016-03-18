@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.AchievementsFragment"
-    android:background="#FFFACD"
+    android:background="@color/fragment_background"
     android:padding="15dp"
     android:clickable="true">
 

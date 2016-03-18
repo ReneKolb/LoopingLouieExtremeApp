@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.R;
@@ -64,7 +65,35 @@ public class GameSettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game_settings, container, false);
-        NumberPicker np = (NumberPicker) view.findViewById(R.id.np_game_settings_rounds);
+
+        Button btnUP = (Button) view.findViewById(R.id.btn_game_settings_number_picker_button_up);
+        Button btnDOWN = (Button) view.findViewById(R.id.btn_game_settings_number_picker_button_down);
+        final TextView tvValue = (TextView) view.findViewById(R.id.tv_game_settings_number_picker_value);
+        //TODO: maybe EditText??
+
+        btnUP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(fa.getGame().getMaxRounds()<10){
+                    fa.getGame().setMaxRounds(fa.getGame().getMaxRounds()+1);
+                    tvValue.setText(String.valueOf(fa.getGame().getMaxRounds()));
+                }
+            }
+        });
+
+        btnDOWN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(fa.getGame().getMaxRounds()>1){
+                    fa.getGame().setMaxRounds(fa.getGame().getMaxRounds()-1);
+                    tvValue.setText(String.valueOf(fa.getGame().getMaxRounds()));
+                }
+            }
+        });
+
+        tvValue.setText(String.valueOf(fa.getGame().getMaxRounds()));
+
+      /*  NumberPicker np = (NumberPicker) view.findViewById(R.id.np_game_settings_rounds);
         np.setMinValue(1);
         np.setMaxValue(10);
         np.setValue(fa.getGame().getMaxRounds());
@@ -74,7 +103,7 @@ public class GameSettingsFragment extends Fragment {
             public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
                 fa.getGame().setMaxRounds(newVal);
             }
-        });
+        });*/
 
         final Button btnClassic = (Button) view.findViewById(R.id.btn_game_settings_classic);
         final Button btnAction = (Button) view.findViewById(R.id.btn_game_settings_action);
