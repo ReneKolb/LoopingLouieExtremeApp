@@ -122,7 +122,7 @@ public class PlayerAchievementsListAdapter extends BaseAdapter {
             long maxAmount = ach.getUnlockAmount();
             long amount = profile.getPlayerStatistics().getAmount(ach.getStatType());
 
-            holder.description.setText(String.format(fa.getResources().getString(R.string.listitem_player_achievements_progress),amount,maxAmount,ach.getUnlockDescription()));
+            holder.description.setText(String.format(fa.getResources().getString(R.string.listitem_player_achievements_progress), amount, maxAmount, ach.getUnlockDescription()));
             holder.description.setTextColor(Color.parseColor("#CCCCCC"));
 
             //if(amount > 0){

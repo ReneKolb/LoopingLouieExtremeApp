@@ -139,4 +139,9 @@
         <item name="android:padding">8dip</item>
     </style>
 
+    <style name="customSwitchStyle" parent="@android:style/TextAppearance.Small">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@drawable/custom_switch_text_color</item>
+    </style>
+
 </resources>

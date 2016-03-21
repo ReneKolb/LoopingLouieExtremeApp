@@ -14,6 +14,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:gravity="center"
         android:text="@string/tv_title_custom_game_settings"
         android:textColor="#000000"
         android:textSize="20sp"
@@ -80,6 +81,9 @@
                     android:layout_column="1"
                     android:layout_gravity="center_vertical"
                     android:progress="50"
+                    android:progressDrawable="@drawable/custom_seekbar_progressbar"
+                    android:thumb="@drawable/custom_seekbar_thumb"
+                    android:thumbOffset="-1dp"
                     android:saveEnabled="false" />
 
                 <TextView
@@ -115,14 +119,18 @@
                     android:layout_column="0" />
 
                 <Switch
-                    android:theme="@android:style/Theme.Holo"
+                    android:id="@+id/sw_custom_game_settings_random_speed"
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
                     android:gravity="end"
-                    android:id="@+id/sw_custom_game_settings_random_speed"
-                    android:textOff="OFF"
-                    android:textOn="ON"
+                    android:thumbTextPadding="10dp"
+                    android:track="@drawable/custom_switch_track"
+                    android:thumb="@drawable/custom_switch_thumb"
+                    android:switchTextAppearance="@style/customSwitchStyle"
+                    android:textSize="18sp"
+                    android:textOff="@string/switch_text_off"
+                    android:textOn="@string/switch_text_on"
                     android:checked="true"
                     android:layout_column="1"
                     android:saveEnabled="false" />

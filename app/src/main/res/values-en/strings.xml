@@ -98,5 +98,7 @@
     <string name="host_game_connected_players">Connected Players:</string>
     <string name="listitem_player_settings_disabled_player">Disabled Player</string>
     <string name="listitem_player_settings_open_slot">Open Slot</string>
+    <string name="switch_text_off">OFF</string>
+    <string name="switch_text_on">ON</string>
 
 </resources>

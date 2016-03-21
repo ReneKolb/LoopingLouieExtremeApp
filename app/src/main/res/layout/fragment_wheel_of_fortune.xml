@@ -61,6 +61,7 @@
         android:id="@+id/tv_wheel_of_fortune_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/wof_spin_the_wheel"
         android:layout_below="@id/is_wheel_of_fortune"
         android:layout_marginTop="20dp"

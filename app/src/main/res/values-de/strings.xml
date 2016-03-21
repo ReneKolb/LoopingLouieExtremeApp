@@ -98,5 +98,7 @@
     <string name="host_game_connected_players">Verbundene Spieler:</string>
     <string name="listitem_player_settings_disabled_player">Deaktivierter Spieler</string>
     <string name="listitem_player_settings_open_slot">Offener Slot</string>
+    <string name="switch_text_off">AUS</string>
+    <string name="switch_text_on">AN</string>
 
 </resources>

@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
@@ -74,8 +73,8 @@ public class GameSettingsFragment extends Fragment {
         btnUP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(fa.getGame().getMaxRounds()<10){
-                    fa.getGame().setMaxRounds(fa.getGame().getMaxRounds()+1);
+                if (fa.getGame().getMaxRounds() < 10) {
+                    fa.getGame().setMaxRounds(fa.getGame().getMaxRounds() + 1);
                     tvValue.setText(String.valueOf(fa.getGame().getMaxRounds()));
                 }
             }
@@ -84,8 +83,8 @@ public class GameSettingsFragment extends Fragment {
         btnDOWN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(fa.getGame().getMaxRounds()>1){
-                    fa.getGame().setMaxRounds(fa.getGame().getMaxRounds()-1);
+                if (fa.getGame().getMaxRounds() > 1) {
+                    fa.getGame().setMaxRounds(fa.getGame().getMaxRounds() - 1);
                     tvValue.setText(String.valueOf(fa.getGame().getMaxRounds()));
                 }
             }

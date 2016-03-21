@@ -101,9 +101,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
             this.currentPlayerProfile = profileManager.getProfile(defaultProfileID);
         }
 
-        setContentView(R.layout.activity_fullscreen);
-
         appSettings = new AppSettings(this);
+
+        setContentView(R.layout.activity_fullscreen);
 
         deviceRole = DeviceRole.NONE;
 

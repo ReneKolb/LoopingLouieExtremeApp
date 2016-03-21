@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import java.util.LinkedList;
+
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.GamePlayer;
 import de.renekolb.loopinglouieextreme.R;
@@ -52,6 +54,8 @@ public class WheelOfFortuneFragment extends Fragment {
 
     private Handler animationWaitHandler;
 
+    private LinkedList<Double> dragPhis;
+
     //private OnFragmentInteractionListener mListener;
     private FullscreenActivity fa;
 
@@ -61,13 +65,19 @@ public class WheelOfFortuneFragment extends Fragment {
     private double dragLastPhi;
     //private double dragDPhi;
 
+
+    @Override
+    public void onCreate(Bundle savedInstance) {
+        super.onCreate(savedInstance);
+        dragPhis = new LinkedList<>();
+    }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @return A new instance of fragment WheelOfFortuneFragment.
      */
-
     public static WheelOfFortuneFragment newInstance(WheelOfFortuneHandler handler) {
         WheelOfFortuneFragment result = new WheelOfFortuneFragment();
         result.handler = handler;
@@ -107,7 +117,7 @@ public class WheelOfFortuneFragment extends Fragment {
     }
 
     public void setEnableNextButton(boolean enabled) {
-        if(mBTNnext!=null) {
+        if (mBTNnext != null) {
             if (enabled) {
                 mBTNnext.setVisibility(View.VISIBLE);
             } else {
@@ -144,20 +154,25 @@ public class WheelOfFortuneFragment extends Fragment {
                     case MotionEvent.ACTION_DOWN:
                         if (!handler.isSpinning() && handler.canSpin()) {
                             dragLastPhi = dragStartPhi = Math.toDegrees(Math.atan2(event.getY() - (mISWheel.getHeight() / 2), event.getX() - (mISWheel.getWidth() / 2))) + 180;
+                            dragPhis.clear();
                         }
                         break;
                     case MotionEvent.ACTION_MOVE:
                         if (!handler.isSpinning() && handler.canSpin() && dragStartPhi != -1) {
                             double newPhi = Math.toDegrees(Math.atan2(event.getY() - (mISWheel.getHeight() / 2), event.getX() - (mISWheel.getWidth() / 2))) + 180;
                             dragLastPhi = mISWheel.getCurrentView().getRotation() - newPhi + dragStartPhi;
+                            dragPhis.add(dragLastPhi);
+                            if (dragPhis.size() > 5) {
+                                dragPhis.removeFirst();
+                            }
                             mISWheel.getCurrentView().setRotation((float) (newPhi - dragStartPhi));
                         }
                         break;
                     case MotionEvent.ACTION_UP:
                         dragStartPhi = -1;
                         if (!handler.isSpinning() && handler.canSpin()) {
-                            Log.i("WheelOfFortune", "LastPhi: " + Math.abs(dragLastPhi));
-                            if (Math.abs(dragLastPhi) > 5) {
+                            Log.i("WheelOfFortune", "LastPhi: " + Math.abs(getLastPhiAverage()));
+                            if (Math.abs(getLastPhiAverage()) > 4) {
                                 handler.startSpinning(mISWheel.getCurrentView().getRotation(), (int) -Math.signum(dragLastPhi));
                             }
                         }
@@ -193,6 +208,16 @@ public class WheelOfFortuneFragment extends Fragment {
         });
 
         return view;
+    }
+
+    private double getLastPhiAverage() {
+        if (dragPhis.size() == 0) return 0;
+
+        double phi = 0;
+        for (double d : dragPhis) {
+            phi += d;
+        }
+        return phi / (double) dragPhis.size();
     }
 
     private void onButtonPressed(int button) {

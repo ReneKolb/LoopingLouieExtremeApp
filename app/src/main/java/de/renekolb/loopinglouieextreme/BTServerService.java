@@ -61,8 +61,6 @@ public class BTServerService {
     }
 
     public synchronized void start() {
-        //ensureDiscoverable(); // TODO: nur nötig für koppeln? nur sichtbar wenn User will bzw neue Spieler.
-//wenn gerät schon gekoppelt, nur MAC-addresse nötig (die ist ja bekannt)
 
         if (acceptThread == null) {
             acceptThread = new AcceptThread();

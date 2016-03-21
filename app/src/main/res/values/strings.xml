@@ -37,7 +37,6 @@
     <string name="wof_loser_5">Drink with a partner!</string>
     <string name="wof_loser_6">Drink 1!</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_title_custom_game_settings">Custom Game Settings</string>
     <string name="tv_player_settings_title">Player Settings</string>
@@ -121,5 +120,7 @@
     <string name="listitem_player_achievements_progress" translatable="false">%1$d / %2$d %3$s</string>
     <string name="listitem_player_settings_open_slot">Open Slot</string>
     <string name="listitem_player_settings_disabled_player">Disabled Player</string>
+    <string name="switch_text_on">ON</string>
+    <string name="switch_text_off">OFF</string>
 
 </resources>
