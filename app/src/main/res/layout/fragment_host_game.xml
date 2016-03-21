@@ -19,49 +19,58 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_host_game_board_connection"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_host_game_top_line"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_host_game_title"
         android:layout_marginLeft="15dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="19dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="#000000"
-        android:text="@string/host_game_board_connection" />
+        android:layout_marginTop="19dp">
 
-    <ProgressBar
-        android:id="@+id/pb_host_game_scanning_board"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_host_game_board_connection"
-        android:layout_toRightOf="@id/tv_host_game_board_connection"
-        android:layout_toEndOf="@id/tv_host_game_board_connection"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        style="@android:style/Widget.ProgressBar.Small"
-        android:visibility="invisible" />
+        <TextView
+            android:id="@+id/tv_host_game_board_connection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:text="@string/host_game_board_connection" />
 
-    <Button
-        android:id="@+id/btn_host_game_make_visible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@id/pb_host_game_scanning_board"
-        android:layout_toRightOf="@id/pb_host_game_scanning_board"
-        android:layout_toEndOf="@id/pb_host_game_scanning_board"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
-        android:text="@string/btn_host_game_make_discoverable" />
+        <ProgressBar
+            android:id="@+id/pb_host_game_scanning_board"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/btn_host_game_make_visible"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center_vertical"
+            style="@style/btnDefault"
+            android:src="@drawable/ic_visibility"
+            android:scaleType="fitCenter"
+            android:padding="3dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp" />
+
+    </LinearLayout>
+
 
     <ListView
         android:id="@+id/lv_host_game_board_devices"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_below="@id/tv_host_game_board_connection"
-        android:layout_alignLeft="@id/tv_host_game_board_connection"
-        android:layout_alignStart="@id/tv_host_game_board_connection"
+        android:layout_below="@id/ll_host_game_top_line"
+        android:layout_alignLeft="@id/ll_host_game_top_line"
+        android:layout_alignStart="@id/ll_host_game_top_line"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp" />

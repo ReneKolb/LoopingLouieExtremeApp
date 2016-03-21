@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -151,7 +152,7 @@ public class HostGameFragment extends Fragment {
         });
         btnGameSettings.setEnabled(fa.appSettings.isDebugEnabled() || fa.btLEService.isConnected());
 
-        Button btnMakeVis = (Button) view.findViewById(R.id.btn_host_game_make_visible);
+        ImageButton btnMakeVis = (ImageButton) view.findViewById(R.id.btn_host_game_make_visible);
         btnMakeVis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
