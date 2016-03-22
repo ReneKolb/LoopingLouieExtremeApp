@@ -37,8 +37,6 @@ public class GameResultFragment extends Fragment {
     private int mThirdPlayer;
     private int mFourthPlayer;
 
-    private TextView tvTime;
-
     //    private OnFragmentInteractionListener mListener;
     private FullscreenActivity fa;
 
@@ -132,7 +130,7 @@ public class GameResultFragment extends Fragment {
             btnWheelOfFortune.setVisibility(View.GONE);
         }
 
-        tvTime = (TextView) view.findViewById(R.id.tv_game_results_time);
+        TextView tvTime = (TextView) view.findViewById(R.id.tv_game_results_time);
 
         long time = fa.getGame().getSecondsRunning();
         int sec = (int) (time % 60);

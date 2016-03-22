@@ -4,6 +4,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:background="#FFFFFF"
     android:padding="5dp">
 
     <ImageView
@@ -26,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textStyle="bold"
-            android:textColor="#CCCCCC"
+            android:textColor="#000000"
             android:textSize="18sp"
             tools:text="Test Name" />
 
@@ -42,7 +43,7 @@
                 android:layout_marginLeft="9dp"
                 android:layout_marginStart="9dp"
                 android:layout_gravity="center_vertical"
-                android:textColor="#CCCCCC"
+                android:textColor="#000000"
                 android:textSize="16sp"
                 android:text="@string/listitem_player_profile_achievements" />
 
@@ -53,7 +54,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_gravity="center_vertical"
-                android:textColor="#CCCCCC"
+                android:textColor="#000000"
                 android:textSize="16sp"
                 tools:text="-1" />
 

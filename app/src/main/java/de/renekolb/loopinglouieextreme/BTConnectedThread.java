@@ -37,6 +37,7 @@ public class BTConnectedThread extends Thread {
             tmpRemoteAddr = socket.getRemoteDevice().getAddress();
             Log.i("BT Connected: ", "opened comm Thread");
         } catch (IOException e) {
+            Log.e("BT Connected", "error getting input/output streams", e);
         }
 
         mmInStream = tmpIn;
@@ -76,6 +77,7 @@ public class BTConnectedThread extends Thread {
         try {
             mmOutStream.write(bytes);
         } catch (IOException e) {
+            Log.e("BT Connected", "error sending data", e);
         }
     }
 
@@ -84,6 +86,7 @@ public class BTConnectedThread extends Thread {
         try {
             mmSocket.close();
         } catch (IOException e) {
+            Log.e("BT Connected", "error closing socket", e);
         }
     }
 

@@ -2,9 +2,6 @@ package de.renekolb.loopinglouieextreme.PlayerProfiles;
 
 import android.os.Handler;
 
-/**
- * Created by Admi on 27.02.2016.
- */
 public class PlayerProfile {
 
     private String playerName;
@@ -27,7 +24,7 @@ public class PlayerProfile {
     }
 
     PlayerProfile(int profileID, String playerName, PlayerStatistics ps) {
-        //Create a player Profile (with staticstics etc.)
+        //Create a player Profile (with statistics etc.)
         this.playerName = playerName;
         this.profileID = profileID;
         this.playerAchievements = ps.getPlayerAchievements();

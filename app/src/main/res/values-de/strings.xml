@@ -84,7 +84,6 @@
     <string name="btn_settings_test_wheel">test Rad</string>
     <string name="btn_player_settings_start">Start</string>
     <string name="btn_host_game_scan">Suche nach Board</string>
-    <string name="btn_host_game_make_discoverable">sichtbar machen</string>
     <string name="btn_host_game_game_settings">Spieleinstellungen</string>
     <string name="btn_game_settings_player_settings">Spielereinstellungen</string>
     <string name="btn_game_results_wof">Glücksrad</string>

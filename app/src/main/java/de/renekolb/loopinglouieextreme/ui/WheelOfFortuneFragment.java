@@ -44,7 +44,7 @@ public class WheelOfFortuneFragment extends Fragment {
 
     private String displayName;
     private int nameBackgroundColor;
-    private int wheelResourceID;
+    //private int wheelResourceID;
 
     private int resultText;
 
@@ -98,7 +98,7 @@ public class WheelOfFortuneFragment extends Fragment {
             this.nameBackgroundColor = player.getPlayerColor().getColor();
         }
 
-        this.wheelResourceID = handler.getCurrentSettings().getResourceID();
+        //this.wheelResourceID = handler.getCurrentSettings().getResourceID();
         if (mTVplayerName != null) {
             mTVplayerName.setText(this.displayName);
             mTVplayerName.setBackgroundColor(this.nameBackgroundColor);
@@ -186,8 +186,7 @@ public class WheelOfFortuneFragment extends Fragment {
         mISWheel.setFactory(new ViewSwitcher.ViewFactory() {
             @Override
             public View makeView() {
-                ImageView myView = new ImageView(fa);
-                return myView;
+                return new ImageView(fa);
             }
         });
 

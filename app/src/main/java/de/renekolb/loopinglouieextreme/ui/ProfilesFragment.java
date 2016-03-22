@@ -30,13 +30,6 @@ import de.renekolb.loopinglouieextreme.R;
 public class ProfilesFragment extends Fragment {
 
 
-    private ImageButton btnAddProfile;
-    private ImageButton btnEditProfile;
-    private ImageButton btnDeleteProfile;
-    private ImageButton btnSelectProfile;
-
-    private ListView lvProfilesList;
-
     private int mSelectedItem;
 
     private FullscreenActivity fa;
@@ -54,8 +47,7 @@ public class ProfilesFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static ProfilesFragment newInstance() {
-        ProfilesFragment fragment = new ProfilesFragment();
-        return fragment;
+        return new ProfilesFragment();
     }
 
     @Override
@@ -74,7 +66,7 @@ public class ProfilesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profiles, container, false);
 
-        btnAddProfile = (ImageButton) view.findViewById(R.id.btn_profiles_add_profile);
+        ImageButton btnAddProfile = (ImageButton) view.findViewById(R.id.btn_profiles_add_profile);
         btnAddProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +101,7 @@ public class ProfilesFragment extends Fragment {
             }
         });
 
-        btnEditProfile = (ImageButton) view.findViewById(R.id.btn_profiles_edit_profile);
+        ImageButton btnEditProfile = (ImageButton) view.findViewById(R.id.btn_profiles_edit_profile);
         btnEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +141,7 @@ public class ProfilesFragment extends Fragment {
 
         this.mSelectedItem = this.listAdapter.getIndex(fa.getProfileManager().getDefaultProfileID());
 
-        btnDeleteProfile = (ImageButton) view.findViewById(R.id.btn_profiles_delete_profile);
+        ImageButton btnDeleteProfile = (ImageButton) view.findViewById(R.id.btn_profiles_delete_profile);
         btnDeleteProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +156,7 @@ public class ProfilesFragment extends Fragment {
                 }
             }
         });
-        btnSelectProfile = (ImageButton) view.findViewById(R.id.btn_profiles_select_profile);
+        ImageButton btnSelectProfile = (ImageButton) view.findViewById(R.id.btn_profiles_select_profile);
         btnSelectProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,7 +171,7 @@ public class ProfilesFragment extends Fragment {
             }
         });
 
-        lvProfilesList = (ListView) view.findViewById(R.id.lv_profiles_profiles_list);
+        ListView lvProfilesList = (ListView) view.findViewById(R.id.lv_profiles_profiles_list);
         lvProfilesList.setAdapter(this.listAdapter);
         if (this.mSelectedItem != -1) {
             lvProfilesList.setSelection(this.mSelectedItem);

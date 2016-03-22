@@ -90,7 +90,7 @@ public class PlayerAchievementsListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.listitem_player_achievement, parent, false);
             holder = new ViewHolder();

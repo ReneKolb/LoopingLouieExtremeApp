@@ -27,7 +27,7 @@ public class BluetoothLEService {
     private static final UUID SERVICE_UUID = UUID.fromString("0000FFE0-0000-1000-8000-00805F9B34FB");
     private static final UUID CHARACTERISTIC = UUID.fromString("0000FFE1-0000-1000-8000-00805F9B34FB");
 
-    private static final long SCAN_PERIODE = 10000;
+    private static final long SCAN_PERIOD = 10000;
 
     private final FullscreenActivity fa;
     private final Handler h;
@@ -62,7 +62,7 @@ public class BluetoothLEService {
             public void run() {
                 stopScanning();
             }
-        }, SCAN_PERIODE);
+        }, SCAN_PERIOD);
         h.sendMessage(h.obtainMessage(Constants.messages.BLE_START_DISCOVERING));
         //only available in API 21 or higher!!
         //mBluetoothAdapter.getBluetoothLeScanner().startScan(scanCallback);
@@ -116,7 +116,7 @@ public class BluetoothLEService {
 
         BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(remoteAddress);
         if (device == null) {
-            Toast.makeText(fa, "Unkown Device", Toast.LENGTH_SHORT).show();
+            Toast.makeText(fa, "Unknown Device", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -148,7 +148,7 @@ public class BluetoothLEService {
                     }
                     characteristic = service.getCharacteristic(CHARACTERISTIC);
                     if (characteristic == null) {
-                        //Log.e(TAG,"Characteristic not found");
+                        Log.e("BTLe Service", "Characteristic not found");
                     }
 
                     gatt.setCharacteristicNotification(characteristic, true); // setup onRead Event
@@ -170,7 +170,7 @@ public class BluetoothLEService {
             @Override
             public void onCharacteristicChanged(BluetoothGatt gatt,
                                                 BluetoothGattCharacteristic characteristic) {
-                //on MEssage Read
+                //on Message Read
                 String msg = new String(characteristic.getValue());
                 onReceiveCallback.onReceiveMessage(msg);
                 //

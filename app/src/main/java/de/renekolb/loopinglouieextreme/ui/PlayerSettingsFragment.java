@@ -58,8 +58,6 @@ public class PlayerSettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-        }
 
         chipCountRefreshTimer = new Handler();
 
@@ -353,8 +351,8 @@ public class PlayerSettingsFragment extends Fragment {
                         btnSlow.setEnabled(!ItemType.SLOW.equals(p.getItem(position).getBooster()));
                         btnReverse.setEnabled(!ItemType.REVERSE.equals(p.getItem(position).getBooster()));
                         btnBlackout.setEnabled(!ItemType.BLACKOUT.equals(p.getItem(position).getBooster()));
-                    } else if (mSelectedItem == position) {
-/*                    mSelectedItem = -1;
+/*                    } else if (mSelectedItem == position) {
+                    mSelectedItem = -1;
 
                     btnTurbo.setVisibility(View.INVISIBLE);
                     btnSlow.setVisibility(View.INVISIBLE);

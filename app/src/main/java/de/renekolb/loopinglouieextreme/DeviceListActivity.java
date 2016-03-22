@@ -24,8 +24,6 @@ public class DeviceListActivity extends Activity {
      */
     public static final String EXTRA_DEVICE_ADDRESS = "device_address";
 
-    private View mContentView;
-
     /**
      * Member fields
      */
@@ -44,7 +42,7 @@ public class DeviceListActivity extends Activity {
         //requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_device_list);
 
-        mContentView = findViewById(R.id.device_lin_layout);
+        //View mContentView = findViewById(R.id.device_lin_layout);
 
         // Initialize the button to perform device discovery
         Button scanButton = (Button) findViewById(R.id.button_scan);

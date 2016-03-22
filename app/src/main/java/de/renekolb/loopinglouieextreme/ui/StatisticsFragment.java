@@ -12,14 +12,6 @@ import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.StatisticType;
 import de.renekolb.loopinglouieextreme.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link StatisticsFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link StatisticsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class StatisticsFragment extends Fragment {
 
     private FullscreenActivity fa;
@@ -35,8 +27,7 @@ public class StatisticsFragment extends Fragment {
     }
 
     public static StatisticsFragment newInstance() {
-        StatisticsFragment fragment = new StatisticsFragment();
-        return fragment;
+        return new StatisticsFragment();
     }
 
     @Override

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name" translatable="false">LoopingLouie Extreme</string>
 
     <!--  MainMenuFragment -->
@@ -37,7 +37,6 @@
     <string name="wof_loser_5">Drink with a partner!</string>
     <string name="wof_loser_6">Drink 1!</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tv_title_custom_game_settings">Custom Game Settings</string>
     <string name="tv_player_settings_title">Player Settings</string>
     <string name="wof_winner_7">Spin again!</string>
@@ -52,7 +51,7 @@
     <string name="wof_loser_10">Lucky you!</string>
     <string name="wof_loser_11">Drink 2!</string>
     <string name="wof_loser_12">Drink 1!</string>
-    <string name="wof_spinning">dum die dum …</string>
+    <string name="wof_spinning" tools:ignore="Typos">dum die dum …</string>
     <string name="wof_spin_the_wheel">Spin the wheel!</string>
     <string name="wof_wait_for_other_player">Wait for other players …</string>
     <string name="error" translatable="false">ERROR</string>
@@ -113,7 +112,6 @@
     <string name="btn_host_game_game_settings">Game Settings</string>
     <string name="btn_host_game_scan">Scan for board</string>
     <string name="btn_game_settings_player_settings">Player Settings</string>
-    <string name="btn_host_game_make_discoverable">make discoverable</string>
     <string name="btn_settings_test_wheel">test wheel</string>
     <string name="btn_settings_wipe_files">wipe files</string>
     <string name="main_menu_version" translatable="false">Version: %1$s</string>
@@ -122,5 +120,6 @@
     <string name="listitem_player_settings_disabled_player">Disabled Player</string>
     <string name="switch_text_on">ON</string>
     <string name="switch_text_off">OFF</string>
+    <string name="dialog_user_name_hint">Enter a profile name for your new player profile</string>
 
 </resources>

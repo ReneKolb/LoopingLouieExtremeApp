@@ -190,6 +190,7 @@ public class BluetoothService {
         // Send the name of the connected device back to the UI Activity
         Message msg = mHandler.obtainMessage(Constants.messages.BT_DEVICE_CONNECTED);
         Bundle bundle = new Bundle();
+        bundle.putString(Constants.KEY_DEVICE_ADDRESS, device.getAddress());
         bundle.putString(Constants.KEY_DEVICE_NAME, device.getName());
         msg.setData(bundle);
         mHandler.sendMessage(msg);
@@ -314,7 +315,7 @@ public class BluetoothService {
             //   "BEGIN mAcceptThread" + this);
             setName("AcceptThread" + mSocketType);
 
-            BluetoothSocket socket = null;
+            BluetoothSocket socket;
 
             // Listen to the server socket if we're not connected
             while (mState != STATE_CONNECTED) {

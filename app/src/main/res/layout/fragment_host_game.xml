@@ -98,7 +98,7 @@
         android:layout_alignStart="@id/tv_host_game_connected_devices"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"></ListView>
+        android:layout_marginTop="10dp" />
 
 
     <Button

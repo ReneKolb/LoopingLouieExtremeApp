@@ -1,8 +1,5 @@
 package de.renekolb.loopinglouieextreme.PlayerProfiles;
 
-/**
- * Created by Admi on 27.02.2016.
- */
 public class Achievement {
 
     private String title;
@@ -28,7 +25,7 @@ public class Achievement {
 
     @Deprecated
     public String getUnlockDescription() {
-        //replace with Ressource IDs
+        //replace with resource IDs
         return this.unlockDescription;
     }
 

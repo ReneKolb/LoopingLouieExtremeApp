@@ -29,9 +29,6 @@ public class MainMenuFragment extends Fragment {
     private static final String PROFILE_NAME = "profileName";
 
     private TextView tvProfileName;
-    private Button btnServer;
-    private Button btnClient;
-    private ImageButton btnSettings;
 
     private FullscreenActivity fa;
 
@@ -69,11 +66,11 @@ public class MainMenuFragment extends Fragment {
         tvProfileName = (TextView) view.findViewById(R.id.tv_main_menu_profile_name);
         tvProfileName.setText(fa.getCurrentPlayer().getPlayerName());
 
-        btnServer = (Button) view.findViewById(R.id.btn_main_menu_server);
+        Button btnServer = (Button) view.findViewById(R.id.btn_main_menu_server);
         btnServer.setEnabled(FullscreenActivity.BLE_SUPPORT);
 
-        btnClient = (Button) view.findViewById(R.id.btn_main_menu_client);
-        btnSettings = (ImageButton) view.findViewById(R.id.btn_main_menu_settings);
+        Button btnClient = (Button) view.findViewById(R.id.btn_main_menu_client);
+        ImageButton btnSettings = (ImageButton) view.findViewById(R.id.btn_main_menu_settings);
 
         ImageButton btnProfile = (ImageButton) view.findViewById(R.id.btn_main_menu_profile);
         btnProfile.setOnClickListener(new View.OnClickListener() {

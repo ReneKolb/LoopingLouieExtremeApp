@@ -22,14 +22,6 @@ import de.renekolb.loopinglouieextreme.R;
  * create an instance of this fragment.
  */
 public class AchievementsFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private FullscreenActivity fa;
     private PlayerAchievementsListAdapter listAdapter;
@@ -44,10 +36,8 @@ public class AchievementsFragment extends Fragment {
      *
      * @return A new instance of fragment AchievementsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static AchievementsFragment newInstance() {
-        AchievementsFragment fragment = new AchievementsFragment();
-        return fragment;
+        return new AchievementsFragment();
     }
 
     @Override
@@ -58,10 +48,6 @@ public class AchievementsFragment extends Fragment {
             this.listAdapter = new PlayerAchievementsListAdapter(fa, fa.getCurrentPlayer());
         }
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override

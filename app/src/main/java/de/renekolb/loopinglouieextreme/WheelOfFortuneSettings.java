@@ -24,7 +24,7 @@ public class WheelOfFortuneSettings {
     }
 
     public int getDisplayTextResourceID(int index) {
-        return (displayTexts.isEmpty() || index >= displayTexts.size()) ? -1 : displayTexts.get(index).getDisplayTextRessourceID();
+        return (displayTexts.isEmpty() || index >= displayTexts.size()) ? -1 : displayTexts.get(index).getDisplayTextResourceID();
     }
 
     public WheelFieldType getFieldType(int index) {

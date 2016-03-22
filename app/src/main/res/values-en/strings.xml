@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!--  MainMenuFragment -->
     <string name="btn_server">host game</string>
     <string name="btn_client">connect</string>
@@ -47,7 +47,7 @@
     <string name="wof_loser_10">Lucky you!</string>
     <string name="wof_loser_11">Drink 2!</string>
     <string name="wof_loser_12">Drink 1!</string>
-    <string name="wof_spinning">dum die dum …</string>
+    <string name="wof_spinning" tools:ignore="Typos">dum die dum …</string>
     <string name="wof_spin_the_wheel">Spin the wheel!</string>
     <string name="wof_wait_for_other_player">Wait for other players …</string>
     <string name="dialog_enter_profile_name">Enter a profile name:</string>
@@ -85,7 +85,6 @@
     <string name="btn_settings_test_wheel">test wheel</string>
     <string name="btn_player_settings_start">Start</string>
     <string name="btn_host_game_scan">Scan for board</string>
-    <string name="btn_host_game_make_discoverable">make discoverable</string>
     <string name="btn_host_game_game_settings">Game Settings</string>
     <string name="btn_game_settings_player_settings">Player Settings</string>
     <string name="btn_game_results_wof">Wheel of Fortune</string>

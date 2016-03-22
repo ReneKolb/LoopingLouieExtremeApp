@@ -13,9 +13,6 @@ import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.PlayerProfile;
 import de.renekolb.loopinglouieextreme.R;
 
-/**
- * Created by Admi on 04.03.2016.
- */
 public class PlayerProfilesListAdapter extends BaseAdapter {
 
     private int selectedIndex;
@@ -87,7 +84,7 @@ public class PlayerProfilesListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.listitem_player_profile, parent, false);
             holder = new ViewHolder();

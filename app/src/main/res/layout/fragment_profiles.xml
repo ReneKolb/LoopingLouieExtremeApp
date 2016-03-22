@@ -20,52 +20,54 @@
 
     <ImageButton
         android:id="@+id/btn_profiles_add_profile"
-        android:layout_below="@id/tv_profiles_title"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="80dp"
-        android:padding="3dp"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_below="@id/tv_profiles_title"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="80dp"
+        android:padding="3dp"
         style="@style/btnStyleMenuSmall"
         android:scaleType="center"
         android:src="@drawable/ic_add_circle_outline" />
 
     <ImageButton
         android:id="@+id/btn_profiles_edit_profile"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignLeft="@id/btn_profiles_add_profile"
         android:layout_alignStart="@id/btn_profiles_add_profile"
         android:layout_marginTop="10dp"
         android:layout_below="@id/btn_profiles_add_profile"
         android:padding="3dp"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
         style="@style/btnStyleMenuSmall"
         android:scaleType="center"
         android:src="@drawable/ic_create" />
 
     <ImageButton
         android:id="@+id/btn_profiles_delete_profile"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignLeft="@id/btn_profiles_add_profile"
         android:layout_alignStart="@id/btn_profiles_add_profile"
         android:layout_marginTop="10dp"
         android:layout_below="@id/btn_profiles_edit_profile"
         android:padding="3dp"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
         style="@style/btnStyleMenuSmall"
         android:scaleType="center"
         android:src="@drawable/ic_delete" />
 
     <ImageButton
         android:id="@+id/btn_profiles_select_profile"
-        android:layout_alignLeft="@id/btn_profiles_add_profile"
-        android:layout_alignStart="@id/btn_profiles_add_profile"
-        android:layout_marginTop="60dp"
-        android:layout_below="@id/btn_profiles_delete_profile"
-        android:padding="3dp"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:layout_alignLeft="@id/btn_profiles_add_profile"
+        android:layout_alignStart="@id/btn_profiles_add_profile"
+        android:layout_marginTop="34dp"
+        android:layout_below="@id/btn_profiles_delete_profile"
+        android:padding="3dp"
         style="@style/btnStyleMenuSmall"
         android:scaleType="center"
         android:src="@drawable/ic_done" />

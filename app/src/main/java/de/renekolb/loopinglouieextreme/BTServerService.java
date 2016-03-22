@@ -216,12 +216,13 @@ public class BTServerService {
                 tmp = mAdapter.listenUsingRfcommWithServiceRecord(NAME, commUuid);
                 Log.i("BT Server Service: ", "listening...");
             } catch (IOException e) {
+                Log.e("BT Server Service", "error when trying to listen", e);
             }
             mmServerSocket = tmp;
         }
 
         public void run() {
-            BluetoothSocket socket = null;
+            BluetoothSocket socket;
             // Keep listening until exception occurs or a socket is returned
             while (true) {
                 try {
@@ -252,6 +253,7 @@ public class BTServerService {
             try {
                 mmServerSocket.close();
             } catch (IOException e) {
+                Log.e("BT Server Service", "error closing socket", e);
             }
         }
     }

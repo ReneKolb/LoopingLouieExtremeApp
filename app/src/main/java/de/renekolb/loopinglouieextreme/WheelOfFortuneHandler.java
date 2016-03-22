@@ -6,9 +6,6 @@ import java.util.Random;
 
 import de.renekolb.loopinglouieextreme.ui.Constants;
 
-/**
- * Created by Admi on 10.03.2016.
- */
 public class WheelOfFortuneHandler {
 
     private int[] playerIndex; //1st = winnerPlayer etc.

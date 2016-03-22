@@ -14,7 +14,7 @@ import de.renekolb.loopinglouieextreme.ui.Constants;
 
 public class BTClientService {
 
-    private final FullscreenActivity activity;
+    //private final FullscreenActivity activity;
     private final Handler mHandler;
 
     private boolean isConnecting;
@@ -24,10 +24,10 @@ public class BTClientService {
     private ConnectThread connectingThread;
     private BTConnectedThread connectedThread;
 
-    public BTClientService(FullscreenActivity activity, Handler handler) {
+    public BTClientService(/*FullscreenActivity activity,*/ Handler handler) {
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         this.mHandler = handler;
-        this.activity = activity;
+        //this.activity = activity;
         this.isConnecting = false;
     }
 
@@ -122,6 +122,7 @@ public class BTClientService {
                     mmSocket.close();
                     connectionFailed();
                 } catch (IOException closeException) {
+                    Log.e("BT Client Service", "error closing socket", closeException);
                 }
                 return;
             }
@@ -138,6 +139,7 @@ public class BTClientService {
             try {
                 mmSocket.close();
             } catch (IOException e) {
+                Log.e("BT Client Service", "error closing socket", e);
             }
         }
     }

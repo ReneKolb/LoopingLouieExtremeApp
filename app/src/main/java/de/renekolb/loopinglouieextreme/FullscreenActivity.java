@@ -417,8 +417,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
                     ft.commit();
                     break;
-                } else {
-                    //dont break; skip WOF -> directly execute WheelOfFortune NextRound button
+                    //} else {
+                    //don't break; skip WOF -> directly execute WheelOfFortune NextRound button
                 }
 
                 //break;
@@ -492,7 +492,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     public void connect(BluetoothDevice remoteDevice) {
         Log.i("FA connect", "remote Device: " + remoteDevice);
-        this.btClient = new BTClientService(this, ServiceMessageHandler);
+        this.btClient = new BTClientService(ServiceMessageHandler);
         btClient.connect(remoteDevice);
     }
 
@@ -522,11 +522,11 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case Constants.messages.BT_READ:
-                    byte[] readBuf = (byte[]) msg.obj;
+                    //byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     //String readMessage = new String(readBuf, 0, msg.arg1);
 
-                    /*TODO: Bug! wenn erst Hosten und dann zurück zu Hauptmenü und versuchen zu Connecten btServer!=null -> Nullpointer Exception*/
+                    /*TODO: Bug! wenn erst Hosten und dann zurück zu Hauptmenü und versuchen zu Connecten btServer!=null -> NullPointerException*/
                     if (btServer != null) {
                         serverReceiveMessageFromClient(msg.getData().getString(Constants.KEY_DEVICE_ADDRESS), msg.getData().getString(Constants.messages.KEY_BT_MESSAGE));
                     } else if (btClient != null) {
@@ -541,6 +541,16 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     String devAddr = msg.getData().getString(Constants.KEY_DEVICE_ADDRESS);
 
                     Log.i("BLAAAAAAAA", "BT Connected: Role" + deviceRole);
+
+                    if (devName == null) {
+                        Log.e("BLAAAAAAAA", "BT_DEVICE_CONNECTED but device name is null");
+                        break;
+                    }
+
+                    if (devAddr == null) {
+                        Log.e("BLAAAAAAAA", "BT_DEVICE_CONNECTED but device Address is null");
+                        break;
+                    }
 
                     if (deviceRole == DeviceRole.SERVER) {
                         Log.i("BLAAAAAAAA", "Role = Server");
@@ -744,7 +754,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     case 'a':
                         //Game End Results
                         //Form: a[1st]:[2nd]:[3rd]:[4th]. 1st=winner (liste ist von hinten gefüllt!! d.h. bei 3 Spielern ist [1st] = 255)
-                        String[] scoreSplit = command.substring(1).split("\\:");
+                        String[] scoreSplit = command.substring(1).split(":");
                         if (scoreSplit.length != 4) {
                             //ERROR wrong length
                             Log.e("ReceivedMSG", "Wrong Split length in Game End Results");
@@ -1233,7 +1243,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
             playerSettingsFragment.updatePlayerSettings(index);
         }
 
-        sendPlayerSettingsToClient(address); // send playerlist to new client
+        sendPlayerSettingsToClient(address); // send player list to new client
         sendPlayerSettingsUpdate(index); // send new player to all clients
         return index;
     }

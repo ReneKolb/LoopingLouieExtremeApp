@@ -28,15 +28,6 @@ public class ConnectFragment extends Fragment {
 
     private BluetoothAdapter mBluetoothAdapter = null;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private FullscreenActivity fa;
 
     //private OnFragmentInteractionListener mListener;
@@ -47,14 +38,8 @@ public class ConnectFragment extends Fragment {
      *
      * @return A new instance of fragment ConnectFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ConnectFragment newInstance() {
-        ConnectFragment fragment = new ConnectFragment();
-        Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        return new ConnectFragment();
     }
 
     public ConnectFragment() {
@@ -65,10 +50,6 @@ public class ConnectFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 

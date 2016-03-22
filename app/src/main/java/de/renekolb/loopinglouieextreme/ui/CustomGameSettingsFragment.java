@@ -61,7 +61,6 @@ public class CustomGameSettingsFragment extends Fragment {
     private Switch swChefCooldown;
     private Switch swEnableItems;
     private Switch swEnableEvents;
-    private Button btnOK;
 
     /**
      * Use this factory method to create a new instance of
@@ -347,7 +346,7 @@ public class CustomGameSettingsFragment extends Fragment {
         });
 
 
-        btnOK = (Button) view.findViewById(R.id.btn_custom_game_settings_ok);
+        Button btnOK = (Button) view.findViewById(R.id.btn_custom_game_settings_ok);
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
