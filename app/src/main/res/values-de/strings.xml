@@ -99,5 +99,17 @@
     <string name="listitem_player_settings_open_slot">Offener Slot</string>
     <string name="switch_text_off">AUS</string>
     <string name="switch_text_on">AN</string>
+    <string name="custom_game_settings_change_chef_delay">Chefwechsel Verzögerung</string>
+    <string name="custom_game_settings_chef_mode">Chef Modus</string>
+    <string name="custom_game_settings_chef_roulette">Chef Roulette</string>
+    <string name="custom_game_settings_chef_shorter_cooldown">Chef kürzere Abklingzeit</string>
+    <string name="custom_game_settings_enable_events">Aktiviere Ereignisse</string>
+    <string name="custom_game_settings_enable_items">Aktiviere Gegenstände</string>
+    <string name="custom_game_settings_enable_reverse">Aktiviere Richtungswechsel</string>
+    <string name="custom_game_settings_speed_max_delay">Maximale Geschwindigkeitsänderungsverzögerung</string>
+    <string name="custom_game_settings_speed_max_step_size">Maximale Geschwindigkeitsänderungsschrittweite</string>
+    <string name="custom_game_settings_speed_min_delay">Minimale Geschwindigkeitsänderungsverzögerung</string>
+    <string name="custom_game_settings_speed_min_step_size">Minimale Geschwindigkeitsänderungsschrittweite</string>
+    <string name="dialog_user_name_hint">Geben Sie einen Namen für Ihr neues Spielerprofil ein</string>
 
 </resources>
