@@ -7,5 +7,6 @@
     <color name="black_overlay">#66000000</color>
 
     <color name="fragment_background">#ccf5ff</color>
+    <color name="setting_fragments">#e6faff</color>
 
 </resources>
