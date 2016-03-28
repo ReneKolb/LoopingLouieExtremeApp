@@ -9,4 +9,7 @@
     <color name="fragment_background">#ccf5ff</color>
     <color name="setting_fragments">#e6faff</color>
 
+    <color name="header_background">#0000b3</color>
+    <color name="header_text_color">#FFFFFF</color>
+
 </resources>

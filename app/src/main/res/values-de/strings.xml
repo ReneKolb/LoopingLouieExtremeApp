@@ -55,7 +55,7 @@
     <string name="wof_title">Das Glücksrad</string>
     <string name="player_profiles_title">Spielerprofile</string>
     <string name="achievements_title">Errungenschaften</string>
-    <string name="main_menu_logged_in_as">Eingeloggt als:</string>
+    <string name="main_menu_logged_in_as">Benutzer:</string>
     <string name="statistics_title">Statistiken</string>
     <string name="game_round">Runde: %1$d / %2$d</string>
     <string name="player_results_time">Spieldauer: %1$02d:%2$02d</string>
