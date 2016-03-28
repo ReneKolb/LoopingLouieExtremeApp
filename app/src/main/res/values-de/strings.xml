@@ -84,14 +84,14 @@
     <string name="btn_settings_test_wheel">test Rad</string>
     <string name="btn_player_settings_start">Start</string>
     <string name="btn_host_game_scan">Suche nach Board</string>
-    <string name="btn_host_game_game_settings">Spieleinstellungen</string>
-    <string name="btn_game_settings_player_settings">Spielereinstellungen</string>
+    <string name="btn_host_game_game_settings">Spiel Einstellungen</string>
+    <string name="btn_game_settings_player_settings">Spieler Einstellungen</string>
     <string name="btn_game_results_wof">Glücksrad</string>
     <string name="btn_custom_game_settings_ok">OK</string>
     <string name="btn_connect_connect">verbinden</string>
     <string name="player_settings_slot_local">Lokal</string>
     <string name="player_settings_slot_open">Offen</string>
-    <string name="tv_player_settings_title">Spielereinstellungen</string>
+    <string name="tv_player_settings_title">Spieler Einstellungen</string>
     <string name="player_settings_slot_close">Schließen</string>
     <string name="player_settings_player_name">Spielername:</string>
     <string name="host_game_connected_players">Verbundene Spieler:</string>

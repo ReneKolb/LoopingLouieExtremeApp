@@ -20,8 +20,7 @@
         android:textSize="@dimen/header_text_size"
         android:background="@color/header_background"
         android:textStyle="bold"
-        android:gravity="center"
-    />
+        android:gravity="center" />
 
 
     <LinearLayout

@@ -119,7 +119,7 @@ public class HostGameFragment extends Fragment {
             connectedPlayerAdapter.addAll(fa.btServer.getConnectedPlayers());
         }
 
-        availableBoardAdapter = new ArrayAdapter<>(getActivity(), R.layout.listitem_player);
+        availableBoardAdapter = new ArrayAdapter<>(getActivity(), R.layout.listitem_board_connection);
 
         ListView boards = (ListView) view.findViewById(R.id.lv_host_game_board_devices);
         boards.setAdapter(availableBoardAdapter);

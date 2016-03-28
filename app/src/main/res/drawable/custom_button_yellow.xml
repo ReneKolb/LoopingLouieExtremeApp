@@ -19,7 +19,6 @@
             <corners android:radius="5dip" />
             <stroke android:width="3dip" android:color="#999900" />
             <solid android:color="#ffff33"/>
-
         </shape>
     </item>
 </selector>
