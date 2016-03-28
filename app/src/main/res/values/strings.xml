@@ -2,8 +2,8 @@
     <string name="app_name" translatable="false">LoopingLouie Extreme</string>
 
     <!--  MainMenuFragment -->
-    <string name="btn_server">host game</string>
-    <string name="btn_client">connect</string>
+    <string name="btn_server">Host game</string>
+    <string name="btn_client">Connect</string>
 
     <!--  HostGameFragment -->
     <string name="tv_title_host_game">Host a game</string>
@@ -61,7 +61,7 @@
     <string name="wof_title">The Wheel of Fortune</string>
     <string name="player_profiles_title">Player profiles</string>
     <string name="achievements_title">Achievements</string>
-    <string name="main_menu_logged_in_as">Logged in as:</string>
+    <string name="main_menu_logged_in_as">User:</string>
     <string name="statistics_title">Statistics</string>
     <string name="game_round">Round: %1$d / %2$d</string>
     <string name="player_results_time">Game Time: %1$02d:%2$02d</string>

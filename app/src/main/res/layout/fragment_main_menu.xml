@@ -16,6 +16,7 @@
         android:layout_marginTop="35dp"
         android:text="@string/main_menu_logged_in_as"
         android:textSize="14sp"
+        android:textStyle="bold"
         android:textColor="#000000" />
 
     <TextView
@@ -24,9 +25,10 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/tv_main_menu_profile_text"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:textSize="20sp"
-        android:textColor="#000000"
+        android:textStyle="italic"
+        android:textColor="#262626"
         tools:text="Profile Name" />
 
     <LinearLayout
@@ -85,10 +87,10 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_below="@id/btn_main_menu_settings"
         android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
         android:padding="3dp"
         android:scaleType="fitCenter"
@@ -100,10 +102,10 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
         android:layout_below="@id/btn_main_menu_profile"
         android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
         android:padding="3dp"
         android:scaleType="fitCenter"
