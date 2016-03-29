@@ -555,6 +555,11 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     if (deviceRole == DeviceRole.SERVER) {
                         Log.i("BLAAAAAAAA", "Role = Server");
                         if (hostGameFragment != null && hostGameFragment.isVisible()) {
+
+                            if (hostGameFragment.connectedPlayerAdapter.getItem(0).getAddress() == null) {
+                                hostGameFragment.connectedPlayerAdapter.remove(hostGameFragment.connectedPlayerAdapter.getItem(0));
+                            }
+
                             hostGameFragment.connectedPlayerAdapter.add(new ConnectedPlayerListItem(devAddr, devName));
                         }
 
@@ -604,6 +609,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                             }
                             if (item != null) {
                                 hostGameFragment.connectedPlayerAdapter.remove(item);
+                                if (hostGameFragment.connectedPlayerAdapter.getCount() == 0) {
+                                    hostGameFragment.connectedPlayerAdapter.add(new ConnectedPlayerListItem(null, "no connected players"));
+                                }
                             } else {
                                 //ERROR
                                 Toast.makeText(FullscreenActivity.this, "ERROR unknown address", Toast.LENGTH_SHORT).show();
@@ -625,6 +633,11 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     String bleAddr = msg.getData().getString(Constants.KEY_DEVICE_ADDRESS);
                     String bleName = msg.getData().getString(Constants.KEY_DEVICE_NAME);
                     if (hostGameFragment != null) {
+                        //remove dummy-entry
+                        if (hostGameFragment.availableBoardAdapter.getItem(0).getAddress() == null) {
+                            hostGameFragment.availableBoardAdapter.remove(hostGameFragment.availableBoardAdapter.getItem(0));
+                        }
+
                         boolean contains = false;
                         for (int i = 0; i < hostGameFragment.availableBoardAdapter.getCount(); i++) {
                             if (hostGameFragment.availableBoardAdapter.getItem(i).getAddress().equals(bleAddr)) {

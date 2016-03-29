@@ -117,6 +117,8 @@ public class HostGameFragment extends Fragment {
         //loadConnectedPlayers();
         if (fa.btServer.getConnectedDevices() > 0) {
             connectedPlayerAdapter.addAll(fa.btServer.getConnectedPlayers());
+        }else{
+            connectedPlayerAdapter.add(new ConnectedPlayerListItem(null,"no connected players"));
         }
 
         availableBoardAdapter = new ArrayAdapter<>(getActivity(), R.layout.listitem_board_connection);
@@ -128,6 +130,8 @@ public class HostGameFragment extends Fragment {
         //loadConnectedBoard();
         if (fa.btLEService.isConnected()) {
             availableBoardAdapter.add(fa.btLEService.getBoard());
+        }else{
+            availableBoardAdapter.add(new ConnectedPlayerListItem(null,"no connected board"));
         }
 
         Button btnLeScan = (Button) view.findViewById(R.id.btn_host_game_le_scan);
