@@ -4,19 +4,13 @@
     android:layout_height="match_parent"
     tools:context="de.renekolb.loopinglouieextreme.ui.SettingsFragment"
     android:background="@color/fragment_background"
+    android:padding="15dp"
     android:clickable="true">
 
     <TextView
         android:id="@+id/tv_settings_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="@string/tv_title_settings"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        style="@style/tv_header"
+        android:text="@string/tv_title_settings" />
 
     <CheckBox
         android:id="@+id/cb_settings_debug"

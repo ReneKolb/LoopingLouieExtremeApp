@@ -2,25 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/setting_fragments"
+    android:background="@color/fragment_background"
     android:padding="15dp"
     android:clickable="true"
     tools:context="de.renekolb.loopinglouieextreme.ui.GameSettingsFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/game_settings_title"
         android:id="@+id/tv_game_settings_title"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="@dimen/header_padding_vert"
-        android:paddingBottom="@dimen/header_padding_vert"
-        android:textColor="@color/header_text_color"
-        android:textSize="@dimen/header_text_size"
-        android:background="@color/header_background"
-        android:textStyle="bold"
-        android:gravity="center" />
+        style="@style/tv_header"
+        android:text="@string/game_settings_title" />
 
 
     <LinearLayout

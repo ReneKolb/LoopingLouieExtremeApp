@@ -9,15 +9,8 @@
 
     <TextView
         android:id="@+id/tv_player_settings_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="@string/tv_player_settings_title"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        style="@style/tv_header"
+        android:text="@string/tv_player_settings_title" />
 
     <TextView
         android:id="@+id/tv_player_settings_players_title"

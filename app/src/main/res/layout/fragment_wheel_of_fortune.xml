@@ -4,20 +4,14 @@
     android:layout_height="match_parent"
     tools:context="de.renekolb.loopinglouieextreme.ui.WheelOfFortuneFragment"
     android:background="@color/fragment_background"
+    android:padding="15dp"
     android:clickable="true">
 
 
     <TextView
         android:id="@+id/tv_wheel_of_fortune_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/wof_title"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        style="@style/tv_header"
+        android:text="@string/wof_title" />
 
     <TextView
         android:id="@+id/tv_wheel_of_fortune_player_name"

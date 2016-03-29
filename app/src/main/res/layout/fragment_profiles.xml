@@ -4,19 +4,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.ProfilesFragment"
     android:background="@color/fragment_background"
+    android:padding="15dp"
     android:clickable="true">
 
     <TextView
         android:id="@+id/tv_profiles_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:text="@string/player_profiles_title"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        style="@style/tv_header"
+        android:text="@string/player_profiles_title" />
 
     <ImageButton
         android:id="@+id/btn_profiles_add_profile"
@@ -25,9 +19,9 @@
         android:layout_below="@id/tv_profiles_title"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="65dp"
         android:padding="3dp"
         style="@style/btnStyleMenuSmall"
         android:scaleType="center"
