@@ -230,14 +230,18 @@ public class HostGameFragment extends Fragment {
     private final AdapterView.OnItemClickListener mConnectedPlayerClickListener
             = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int position, long id) {
-            fa.btServer.sendMessage(connectedPlayerAdapter.getItem(position).getAddress(), "Msg from Server");
+            if(connectedPlayerAdapter.getItem(position).getAddress()!=null) {
+                fa.btServer.sendMessage(connectedPlayerAdapter.getItem(position).getAddress(), "Msg from Server");
+            }
         }
     };
 
     private final AdapterView.OnItemClickListener mConnectBoardClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            fa.connectToBoard(availableBoardAdapter.getItem(position).getAddress());
+            if(availableBoardAdapter.getItem(position).getAddress()!=null) {
+                fa.connectToBoard(availableBoardAdapter.getItem(position).getAddress());
+            }
         }
     };
 

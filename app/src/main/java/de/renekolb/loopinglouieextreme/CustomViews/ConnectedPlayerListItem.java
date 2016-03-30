@@ -19,7 +19,11 @@ public class ConnectedPlayerListItem {
     }
 
     @Override
-    public String toString() {
-        return name + " (" + address + ")";
+    public String toString(){
+        if(address == null){
+            return name;
+        }else {
+            return name + " (" + address + ")";
+        }
     }
 }
