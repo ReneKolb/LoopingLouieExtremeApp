@@ -117,8 +117,8 @@ public class HostGameFragment extends Fragment {
         //loadConnectedPlayers();
         if (fa.btServer.getConnectedDevices() > 0) {
             connectedPlayerAdapter.addAll(fa.btServer.getConnectedPlayers());
-        }else{
-            connectedPlayerAdapter.add(new ConnectedPlayerListItem(null,"no connected players"));
+        } else {
+            connectedPlayerAdapter.add(new ConnectedPlayerListItem(null, "no connected players"));
         }
 
         availableBoardAdapter = new ArrayAdapter<>(getActivity(), R.layout.listitem_board_connection);
@@ -130,8 +130,8 @@ public class HostGameFragment extends Fragment {
         //loadConnectedBoard();
         if (fa.btLEService.isConnected()) {
             availableBoardAdapter.add(fa.btLEService.getBoard());
-        }else{
-            availableBoardAdapter.add(new ConnectedPlayerListItem(null,"no connected board"));
+        } else {
+            availableBoardAdapter.add(new ConnectedPlayerListItem(null, "no connected board"));
         }
 
         Button btnLeScan = (Button) view.findViewById(R.id.btn_host_game_le_scan);
@@ -230,7 +230,7 @@ public class HostGameFragment extends Fragment {
     private final AdapterView.OnItemClickListener mConnectedPlayerClickListener
             = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int position, long id) {
-            if(connectedPlayerAdapter.getItem(position).getAddress()!=null) {
+            if (connectedPlayerAdapter.getItem(position).getAddress() != null) {
                 fa.btServer.sendMessage(connectedPlayerAdapter.getItem(position).getAddress(), "Msg from Server");
             }
         }
@@ -239,7 +239,7 @@ public class HostGameFragment extends Fragment {
     private final AdapterView.OnItemClickListener mConnectBoardClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if(availableBoardAdapter.getItem(position).getAddress()!=null) {
+            if (availableBoardAdapter.getItem(position).getAddress() != null) {
                 fa.connectToBoard(availableBoardAdapter.getItem(position).getAddress());
             }
         }

@@ -98,7 +98,7 @@
     </style>
 
     <style name="btnSelect" parent="@android:style/Widget.Button">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@drawable/custom_button_select_text_color</item>
         <item name="android:gravity">center</item>
         <item name="android:shadowColor">#000000</item>
@@ -146,9 +146,9 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:paddingTop">@dimen/header_padding_vert</item>
         <item name="android:paddingBottom">@dimen/header_padding_vert</item>
-        <item name="android:textColor">@color/header_text_color</item>
+        <item name="android:textColor">@color/header_settings_text</item>
         <item name="android:textSize">@dimen/header_text_size</item>
-        <item name="android:background">@color/header_background</item>
+        <item name="android:background">@color/header_settings_background</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
     </style>

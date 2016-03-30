@@ -4,10 +4,11 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="fragment_background">#ccf5ff</color>
+    <color name="settings_Header">#00ccff</color>
+    <color name="fragment_background">#ffffe6</color>
     <!-- <color name="fragments_background">#e6faff</color> -->
 
-    <color name="header_background">#0000b3</color>
-    <color name="header_text_color">#FFFFFF</color>
+    <color name="header_settings_background">#00ccff</color>
+    <color name="header_settings_text">#FFFFFF</color>
 
 </resources>

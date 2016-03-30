@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fragment_background"
-    android:padding="15dp"
     android:clickable="true"
     tools:context="de.renekolb.loopinglouieextreme.ui.GameSettingsFragment">
 
@@ -11,17 +10,85 @@
         android:id="@+id/tv_game_settings_title"
         style="@style/tv_header"
         android:text="@string/game_settings_title" />
+    
+    <LinearLayout
+        android:id="@+id/ll_game_settings_buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="vertical"
+        android:layout_below="@id/tv_game_settings_title"
+        android:layout_marginTop="30dp">
 
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Spielmodus:"
+            android:textSize="20sp"
+            android:layout_marginBottom="10dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+
+            />
+
+
+        <Button
+            android:id="@+id/btn_game_settings_classic"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:text="@string/game_settings_classic"
+            android:layout_marginBottom="5dp"
+            style="@style/btnSelect"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_game_settings_action"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:layout_marginBottom="5dp"
+            android:text="@string/game_settings_action"
+            style="@style/btnSelect"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_game_settings_custom"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:text="@string/game_settings_custom"
+            style="@style/btnSelect"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/btn_game_settings_custom_settings"
+            android:layout_width="35dp"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:layout_marginTop="5dp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_settings_black"
+            android:scaleType="fitCenter"
+            style="@style/btnSelect"
+            android:padding="4dp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_game_settings_dummy_number_picker"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_game_settings_custom_settings"
-        android:layout_marginLeft="0dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="50dp"
+        android:layout_below="@id/ll_game_settings_buttons"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true">
 
         <TextView
@@ -29,22 +96,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/game_settings_rounds"
-            android:textSize="22sp"
+            android:textSize="26sp"
             android:textStyle="bold"
             android:textColor="#000000"
             android:layout_marginRight="40dp"
-            android:layout_centerHorizontal="true" />
+            android:layout_marginEnd="40dp" />
 
 
         <ImageButton
             android:id="@+id/btn_game_settings_number_picker_button_down"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:layout_marginRight="15dp"
             android:layout_toRightOf="@+id/tv_game_settings_number_picker_value"
             android:layout_toEndOf="@+id/tv_game_settings_number_picker_value"
             android:src="@drawable/ic_remove"
             style="@style/customNumberPickerButtonDown" />
-
 
 
         <TextView
@@ -57,6 +124,7 @@
             android:layout_toEndOf="@+id/btn_game_settings_number_picker_button_up"
             android:textColor="#000000"
             android:textStyle="bold"
+            android:layout_marginRight="15dp"
             android:textSize="20sp"
             tools:text="3" />
 
@@ -75,7 +143,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_game_settings_dummy_number_picker"
         android:layout_centerVertical="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
         android:text="@string/game_settings_enable_wof"
         android:textColor="#000000" />
 
@@ -83,70 +152,10 @@
         android:id="@+id/cb_game_settings_enable_loser_wheel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
         android:layout_below="@id/cb_game_settings_enable_wheel_of_fortune"
         android:text="@string/game_settings_enable_loser_wheel"
         android:textColor="#000000" />
-
-    <LinearLayout
-        android:id="@+id/ll_game_settings_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_game_settings_title"
-        android:layout_marginTop="50dp">
-
-        <Button
-            android:id="@+id/btn_game_settings_classic"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/game_settings_classic"
-            android:layout_marginLeft="4dip"
-            android:layout_marginRight="4dip"
-            style="@style/btnSelect"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btn_game_settings_action"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/game_settings_action"
-            android:layout_marginLeft="4dip"
-            android:layout_marginRight="4dip"
-            style="@style/btnSelect"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btn_game_settings_custom"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/game_settings_custom"
-            android:layout_marginLeft="4dip"
-            android:layout_marginRight="4dip"
-            style="@style/btnSelect"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-
-    <ImageButton
-        android:id="@+id/btn_game_settings_custom_settings"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_below="@id/ll_game_settings_buttons"
-        android:layout_alignRight="@id/ll_game_settings_buttons"
-        android:layout_alignEnd="@id/ll_game_settings_buttons"
-        android:src="@drawable/ic_settings_black"
-        android:scaleType="fitCenter"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="3dp"
-        style="@style/btnSelect"
-        android:padding="4dp" />
 
 
     <Button
