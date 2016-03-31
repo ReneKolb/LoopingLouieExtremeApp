@@ -31,16 +31,12 @@
 
             <TextView
                 android:id="@+id/tv_host_game_board_connection"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/tv_sub_header"
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
-                android:text="@string/host_game_board_connection"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:text="@string/host_game_board_connection" />
 
             <ProgressBar
                 android:id="@+id/pb_host_game_scanning_board"
@@ -90,16 +86,12 @@
 
             <TextView
                 android:id="@+id/tv_host_game_connected_devices"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                style="@style/tv_sub_header"
                 android:layout_centerInParent="true"
                 android:gravity="center"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
-                android:text="@string/host_game_connected_players"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:text="@string/host_game_connected_players" />
 
             <ImageButton
                 android:id="@+id/btn_host_game_make_visible"
