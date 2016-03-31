@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="de.renekolb.loopinglouieextreme.ui.SettingsFragment"
     android:background="@color/fragment_background"
-    android:padding="15dp"
     android:clickable="true">
 
     <TextView

@@ -96,6 +96,19 @@ public class Game {
         return this.gamePlayers.get(index);
     }
 
+    public void switchGamePlayers(int index1, int index2){
+        //switches players but keeps the slot colors!
+        GamePlayer player1 = gamePlayers.get(index1);
+        GamePlayer player2 = gamePlayers.get(index2);
+
+        PlayerColor tmp = player1.getPlayerColor();
+        player1.setPlayerColor(player2.getPlayerColor());
+        player2.setPlayerColor(tmp);
+
+        gamePlayers.set(index1,player2);
+        gamePlayers.set(index2,player1);
+    }
+
     public int getGamePlayerIndex(String address) {
         for (int i = 0; i < gamePlayers.size(); i++) {
             if (gamePlayers.get(i).getRemoteAddress() != null && gamePlayers.get(i).getRemoteAddress().equals(address)) {

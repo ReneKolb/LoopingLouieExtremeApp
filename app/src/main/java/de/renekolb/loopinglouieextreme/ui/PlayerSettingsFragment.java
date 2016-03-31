@@ -2,11 +2,13 @@ package de.renekolb.loopinglouieextreme.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.ClipData;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +48,9 @@ public class PlayerSettingsFragment extends Fragment {
     private PlayerSettingsListAdapter playerSettingsListAdapter;
 
     private Handler chipCountRefreshTimer;
+
+    private boolean changeingPosition;
+    private int changePositionIndex;
 
     public static PlayerSettingsFragment newInstance() {
         return new PlayerSettingsFragment();
@@ -292,65 +297,93 @@ public class PlayerSettingsFragment extends Fragment {
 
         final ListView lvPlayers = (ListView) view.findViewById(R.id.lv_player_settings_players);
         lvPlayers.setAdapter(this.playerSettingsListAdapter);
+
         if (fa.deviceRole == DeviceRole.SERVER) {
+            lvPlayers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    changeingPosition = true;
+                    changePositionIndex = position;
+                    Log.i("Test", "long click:" + position);
+                    return true;
+                }
+            });
+
             lvPlayers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    if (mSelectedItem == -1 || mSelectedItem != position) {
-                        mSelectedItem = position;
 
-                        PlayerSettingsListAdapter p = (PlayerSettingsListAdapter) parent.getAdapter();
+                    Log.i("Test","click:"+position);
+                    if(changeingPosition){
+                        Log.i("Test","swap:"+changePositionIndex+" - "+position);
+                        changeingPosition = false;
+                        if(changePositionIndex != position){
+                            Log.i("Test","swap!");
+                            fa.getGame().switchGamePlayers(changePositionIndex, position);
+                            playerSettingsListAdapter.update(changePositionIndex,fa.getGame().getGamePlayer(changePositionIndex));
+                            playerSettingsListAdapter.update(position,fa.getGame().getGamePlayer(position));
 
-                        GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
+                            //sync with clients
+                            fa.sendPlayerSettingsUpdate(changePositionIndex);
+                            fa.sendPlayerSettingsUpdate(position);
+                        }
+                    }else {
 
-                        if (player.getConnectionState().equals(ConnectionState.LOCAL)) {
-                            btnTurbo.setVisibility(View.VISIBLE);
-                            btnSlow.setVisibility(View.VISIBLE);
-                            btnReverse.setVisibility(View.VISIBLE);
-                            btnBlackout.setVisibility(View.VISIBLE);
+                        if (mSelectedItem == -1 || mSelectedItem != position) {
+                            mSelectedItem = position;
 
-                            if (player.isGuest()) {
-                                tvPlayerName.setVisibility(View.VISIBLE);
-                                etPlayerName.setVisibility(View.VISIBLE);
+                            PlayerSettingsListAdapter p = (PlayerSettingsListAdapter) parent.getAdapter();
+
+                            GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
+
+                            if (player.getConnectionState().equals(ConnectionState.LOCAL)) {
+                                btnTurbo.setVisibility(View.VISIBLE);
+                                btnSlow.setVisibility(View.VISIBLE);
+                                btnReverse.setVisibility(View.VISIBLE);
+                                btnBlackout.setVisibility(View.VISIBLE);
+
+                                if (player.isGuest()) {
+                                    tvPlayerName.setVisibility(View.VISIBLE);
+                                    etPlayerName.setVisibility(View.VISIBLE);
+                                } else {
+                                    tvPlayerName.setVisibility(View.INVISIBLE);
+                                    etPlayerName.setVisibility(View.INVISIBLE);
+                                }
+                            } else {
+                                btnTurbo.setVisibility(View.INVISIBLE);
+                                btnSlow.setVisibility(View.INVISIBLE);
+                                btnReverse.setVisibility(View.INVISIBLE);
+                                btnBlackout.setVisibility(View.INVISIBLE);
+
+                                tvPlayerName.setVisibility(View.INVISIBLE);
+                                etPlayerName.setVisibility(View.INVISIBLE);
+                            }
+
+                            if (mPlayerNameEdible) {
+                                if (player.getConnectionState().equals(ConnectionState.LOCAL) && player.isGuest()) {
+                                    tvPlayerName.setVisibility(View.VISIBLE);
+                                    etPlayerName.setVisibility(View.VISIBLE);
+
+                                    etPlayerName.setText(player.getDisplayName());
+                                    etPlayerName.setSelection(etPlayerName.getText().length());
+                                }
+
+                                btnOpen.setVisibility(View.VISIBLE);
+                                btnLocal.setVisibility(View.VISIBLE);
+                                btnClose.setVisibility(View.VISIBLE);
                             } else {
                                 tvPlayerName.setVisibility(View.INVISIBLE);
                                 etPlayerName.setVisibility(View.INVISIBLE);
                             }
-                        } else {
-                            btnTurbo.setVisibility(View.INVISIBLE);
-                            btnSlow.setVisibility(View.INVISIBLE);
-                            btnReverse.setVisibility(View.INVISIBLE);
-                            btnBlackout.setVisibility(View.INVISIBLE);
 
-                            tvPlayerName.setVisibility(View.INVISIBLE);
-                            etPlayerName.setVisibility(View.INVISIBLE);
-                        }
+                            btnOpen.setEnabled(!ConnectionState.OPEN.equals(p.getItem(position).getConnectionState()));
+                            btnLocal.setEnabled(!ConnectionState.LOCAL.equals(p.getItem(position).getConnectionState()));
+                            btnClose.setEnabled(!ConnectionState.CLOSED.equals(p.getItem(position).getConnectionState()));
 
-                        if (mPlayerNameEdible) {
-                            if (player.getConnectionState().equals(ConnectionState.LOCAL) && player.isGuest()) {
-                                tvPlayerName.setVisibility(View.VISIBLE);
-                                etPlayerName.setVisibility(View.VISIBLE);
-
-                                etPlayerName.setText(player.getDisplayName());
-                                etPlayerName.setSelection(etPlayerName.getText().length());
-                            }
-
-                            btnOpen.setVisibility(View.VISIBLE);
-                            btnLocal.setVisibility(View.VISIBLE);
-                            btnClose.setVisibility(View.VISIBLE);
-                        } else {
-                            tvPlayerName.setVisibility(View.INVISIBLE);
-                            etPlayerName.setVisibility(View.INVISIBLE);
-                        }
-
-                        btnOpen.setEnabled(!ConnectionState.OPEN.equals(p.getItem(position).getConnectionState()));
-                        btnLocal.setEnabled(!ConnectionState.LOCAL.equals(p.getItem(position).getConnectionState()));
-                        btnClose.setEnabled(!ConnectionState.CLOSED.equals(p.getItem(position).getConnectionState()));
-
-                        btnTurbo.setEnabled(!ItemType.TURBO.equals(p.getItem(position).getBooster()));
-                        btnSlow.setEnabled(!ItemType.SLOW.equals(p.getItem(position).getBooster()));
-                        btnReverse.setEnabled(!ItemType.REVERSE.equals(p.getItem(position).getBooster()));
-                        btnBlackout.setEnabled(!ItemType.BLACKOUT.equals(p.getItem(position).getBooster()));
+                            btnTurbo.setEnabled(!ItemType.TURBO.equals(p.getItem(position).getBooster()));
+                            btnSlow.setEnabled(!ItemType.SLOW.equals(p.getItem(position).getBooster()));
+                            btnReverse.setEnabled(!ItemType.REVERSE.equals(p.getItem(position).getBooster()));
+                            btnBlackout.setEnabled(!ItemType.BLACKOUT.equals(p.getItem(position).getBooster()));
 /*                    } else if (mSelectedItem == position) {
                     mSelectedItem = -1;
 
@@ -365,6 +398,7 @@ public class PlayerSettingsFragment extends Fragment {
 
                     tvPlayerName.setVisibility(View.INVISIBLE);
                     etPlayerName.setVisibility(View.INVISIBLE);*/
+                        }
                     }
                 }
             });

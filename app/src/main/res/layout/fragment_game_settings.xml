@@ -27,50 +27,78 @@
             style="@style/tv_sub_header"
             android:text="Spielmodus:" />
 
-
-        <Button
-            android:id="@+id/btn_game_settings_classic"
+        <ScrollView
+            android:id="@+id/sv_game_settings_game_modes"
             android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            android:text="@string/game_settings_classic"
-            android:layout_marginBottom="5dp"
-            style="@style/btnSelect"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_height="180dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:background="#33000000"
+            android:scrollbars="none">
 
-        <Button
-            android:id="@+id/btn_game_settings_action"
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            android:layout_marginBottom="5dp"
-            android:text="@string/game_settings_action"
-            style="@style/btnSelect"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/btn_game_settings_classic"
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:text="@string/game_settings_classic"
+                    android:layout_marginBottom="5dp"
+                    style="@style/btnSelect"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btn_game_settings_custom"
-            android:layout_width="match_parent"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            android:text="@string/game_settings_custom"
-            style="@style/btnSelect"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+                <Button
+                    android:id="@+id/btn_game_settings_action"
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/game_settings_action"
+                    style="@style/btnSelect"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/btn_game_settings_custom_settings"
-            android:layout_width="35dp"
-            android:layout_height="0px"
-            android:layout_weight="1"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_settings_black"
-            android:scaleType="fitCenter"
-            style="@style/btnSelect"
-            android:padding="4dp" />
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:layout_marginBottom="5dp"
+                    android:text="Test new Mode"
+                    style="@style/btnSelect"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_game_settings_custom"
+                    android:layout_width="match_parent"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:text="@string/game_settings_custom"
+                    style="@style/btnSelect"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/btn_game_settings_custom_settings"
+                    android:layout_width="35dp"
+                    android:layout_height="0px"
+                    android:layout_weight="1"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/ic_settings_black"
+                    android:scaleType="fitCenter"
+                    style="@style/btnSelect"
+                    android:padding="4dp" />
+            </LinearLayout>
+
+        </ScrollView>
+
 
     </LinearLayout>
 
@@ -78,6 +106,7 @@
         android:id="@+id/tv_game_settings_rounds"
         style="@style/tv_sub_header"
         android:layout_below="@id/ll_game_settings_buttons"
+        android:layout_marginTop="25dp"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginBottom="10dp"
@@ -94,13 +123,11 @@
         android:layout_centerHorizontal="true">
 
 
-
-
         <ImageButton
             android:id="@+id/btn_game_settings_number_picker_button_down"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/tv_game_settings_number_picker_value"
             android:layout_toEndOf="@+id/tv_game_settings_number_picker_value"
             android:src="@drawable/ic_remove"
@@ -117,7 +144,7 @@
             android:layout_toEndOf="@+id/btn_game_settings_number_picker_button_up"
             android:textColor="#000000"
             android:textStyle="bold"
-            android:layout_marginRight="15dp"
+            android:layout_marginRight="10dp"
             android:textSize="20sp"
             tools:text="3" />
 

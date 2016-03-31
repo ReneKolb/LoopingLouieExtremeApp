@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
@@ -104,6 +105,8 @@ public class GameSettingsFragment extends Fragment {
             }
         });*/
 
+        final ScrollView svGameModes = (ScrollView) view.findViewById(R.id.sv_game_settings_game_modes);
+
         final Button btnClassic = (Button) view.findViewById(R.id.btn_game_settings_classic);
         final Button btnAction = (Button) view.findViewById(R.id.btn_game_settings_action);
         final Button btnCustom = (Button) view.findViewById(R.id.btn_game_settings_custom);
@@ -143,7 +146,7 @@ public class GameSettingsFragment extends Fragment {
         });
 
 
-        btnCustomSettings.setVisibility(mGameMode == 2 ? View.VISIBLE : View.INVISIBLE);
+        btnCustomSettings.setVisibility(mGameMode == 2 ? View.VISIBLE : View.GONE);
 
         switch (mGameMode) {
             case 0:
@@ -165,7 +168,7 @@ public class GameSettingsFragment extends Fragment {
                 btnClassic.setEnabled(false);
                 btnAction.setEnabled(true);
                 btnCustom.setEnabled(true);
-                btnCustomSettings.setVisibility(View.INVISIBLE);
+                btnCustomSettings.setVisibility(View.GONE);
                 fa.getGame().getGameSettings().loadClassic();
                 mGameMode = 0;
             }
@@ -177,7 +180,7 @@ public class GameSettingsFragment extends Fragment {
                 btnClassic.setEnabled(true);
                 btnAction.setEnabled(false);
                 btnCustom.setEnabled(true);
-                btnCustomSettings.setVisibility(View.INVISIBLE);
+                btnCustomSettings.setVisibility(View.GONE);
                 fa.getGame().getGameSettings().loadAction();
                 mGameMode = 1;
             }
@@ -190,6 +193,7 @@ public class GameSettingsFragment extends Fragment {
                 btnAction.setEnabled(true);
                 btnCustom.setEnabled(false);
                 btnCustomSettings.setVisibility(View.VISIBLE);
+                svGameModes.fullScroll(View.FOCUS_DOWN); //scroll to bottom (so the custom settings button is visible)
                 mGameMode = 2;
             }
         });

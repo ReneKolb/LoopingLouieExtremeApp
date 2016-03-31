@@ -8,7 +8,7 @@ public class GamePlayer {
 
     //private final String defaultName;
     private String displayName;
-    private final PlayerColor playerColor;
+    private PlayerColor playerColor;
     private int points;
     private ItemType defaultItemType;
     private final ItemStack itemStack;
@@ -58,6 +58,10 @@ public class GamePlayer {
         } else {
             Log.e("Tag", "Cannot set Player Name. Only Guest Names can be changed");
         }
+    }
+
+    public void setPlayerColor(PlayerColor color){
+        this.playerColor = color;
     }
 
     public PlayerColor getPlayerColor() {
