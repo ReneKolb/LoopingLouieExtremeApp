@@ -9,8 +9,8 @@
         </shape>
     </item>
     <item android:state_checked="true">
-        <layer-list >
-            <item >
+        <layer-list>
+            <item>
                 <shape android:shape="rectangle">
                     <corners android:radius="5dip" />
                     <stroke android:width="2dip" android:color="#444444" />
@@ -18,13 +18,7 @@
                     <size android:height="35dp" android:width="35dp" />
                 </shape>
             </item>
-            <item android:drawable="@drawable/wheel_checkbox"
-                android:left="3dp"
-                android:right="3dp"
-                android:top="3dp"
-                android:bottom="3dp"
-                android:height="29dp"
-                android:width="29dp"/>
+            <item android:drawable="@drawable/wheel_checkbox" android:left="3dp" android:right="3dp" android:top="3dp" android:bottom="3dp" android:height="29dp" android:width="29dp" />
         </layer-list>
     </item>
 

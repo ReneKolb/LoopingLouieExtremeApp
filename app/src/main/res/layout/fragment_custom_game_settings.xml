@@ -29,8 +29,7 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:isScrollContainer="true"
-            >
+            android:isScrollContainer="true">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -354,7 +353,7 @@
                     android:text="@string/custom_game_settings_chef_mode"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
-                    android:layout_column="0"/>
+                    android:layout_column="0" />
 
                 <Switch
                     android:theme="@android:style/Theme.Holo"

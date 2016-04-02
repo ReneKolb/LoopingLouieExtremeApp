@@ -447,7 +447,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     //but for now: go back to first screen (Main Menu)
                     game.setGameStarted(false);
                     getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    ft=getFragmentManager().beginTransaction();
+                    ft = getFragmentManager().beginTransaction();
                     if (mainMenuFragment == null) {
                         mainMenuFragment = MainMenuFragment.newInstance();
                     }
@@ -582,7 +582,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         sendGameSettingsToClient(devAddr);
                     } else if (deviceRole == DeviceRole.CLIENT) {
                         Log.i("BLAAAAAAAA", "Role = Client");
-                        getFragmentManager().popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         if (playerSettingsFragment == null) {
                             playerSettingsFragment = PlayerSettingsFragment.newInstance();
@@ -618,7 +618,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                             btServer.disconnectClient(addr, true); //cleanup internal connectedThread List
                             ConnectedPlayerListItem item = null;
                             for (int i = 0; i < hostGameFragment.connectedPlayerAdapter.getCount(); i++) {
-                                if (hostGameFragment.connectedPlayerAdapter.getItem(i).getAddress()!=null && hostGameFragment.connectedPlayerAdapter.getItem(i).getAddress().equals(addr)) {
+                                if (hostGameFragment.connectedPlayerAdapter.getItem(i).getAddress() != null && hostGameFragment.connectedPlayerAdapter.getItem(i).getAddress().equals(addr)) {
                                     item = hostGameFragment.connectedPlayerAdapter.getItem(i);
                                     break;
                                 }
@@ -636,7 +636,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     } else if (deviceRole == DeviceRole.CLIENT) {
                         //TODO: Go back to connect Fragment
                         getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                        FragmentTransaction ft=getFragmentManager().beginTransaction();
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
                         if (mainMenuFragment == null) {
                             mainMenuFragment = MainMenuFragment.newInstance();
                         }
@@ -762,13 +762,13 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             if (game == null || !game.isRunning()) {
-                if(game != null && getFragmentManager().getBackStackEntryCount() == 1){
+                if (game != null && getFragmentManager().getBackStackEntryCount() == 1) {
                     game.setGameStarted(false);
                 }
                 getFragmentManager().popBackStack();
             }
         } else {
-            if(game==null||(!game.isGameStarted()&&!game.isRunning())) {
+            if (game == null || (!game.isGameStarted() && !game.isRunning())) {
                 super.onBackPressed();
             }
         }
@@ -1016,7 +1016,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     Log.i("Client Recieve MSG", "Game Start");
                     //receive game Start
                     game.nextRound();
-                    getFragmentManager().popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     if (gameFragment == null) {
                         gameFragment = GameFragment.newInstance();
@@ -1056,8 +1056,6 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         game.getGamePlayer(third).addPoints(2);
                     if (fourth != -1)
                         game.getGamePlayer(first).addPoints(1);
-
-
 
 
                     ft = getFragmentManager().beginTransaction();
@@ -1149,7 +1147,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     game.setGameStarted(false);
                     //btClient.stop();
                     getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    ft=getFragmentManager().beginTransaction();
+                    ft = getFragmentManager().beginTransaction();
                     if (mainMenuFragment == null) {
                         mainMenuFragment = MainMenuFragment.newInstance();
                     }

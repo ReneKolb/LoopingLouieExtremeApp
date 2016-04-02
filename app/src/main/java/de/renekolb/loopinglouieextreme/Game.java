@@ -99,9 +99,9 @@ public class Game {
         return this.gamePlayers.get(index);
     }
 
-    public void setGameStarted(boolean started){
+    public void setGameStarted(boolean started) {
         this.gameStarted = started;
-        if(!started){
+        if (!started) {
             if (fa.btLEService != null) {
                 fa.btLEService.stopScanning();
                 fa.btLEService.disconnect();
@@ -118,11 +118,11 @@ public class Game {
         }
     }
 
-    public boolean isGameStarted(){
+    public boolean isGameStarted() {
         return this.gameStarted;
     }
 
-    public void switchGamePlayers(int index1, int index2){
+    public void switchGamePlayers(int index1, int index2) {
         //switches players but keeps the slot colors!
         GamePlayer player1 = gamePlayers.get(index1);
         GamePlayer player2 = gamePlayers.get(index2);
@@ -131,8 +131,8 @@ public class Game {
         player1.setPlayerColor(player2.getPlayerColor());
         player2.setPlayerColor(tmp);
 
-        gamePlayers.set(index1,player2);
-        gamePlayers.set(index2,player1);
+        gamePlayers.set(index1, player2);
+        gamePlayers.set(index2, player1);
     }
 
     public int getGamePlayerIndex(String address) {

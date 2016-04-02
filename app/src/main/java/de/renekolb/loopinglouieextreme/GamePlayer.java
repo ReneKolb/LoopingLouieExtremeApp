@@ -60,7 +60,7 @@ public class GamePlayer {
         }
     }
 
-    public void setPlayerColor(PlayerColor color){
+    public void setPlayerColor(PlayerColor color) {
         this.playerColor = color;
     }
 
