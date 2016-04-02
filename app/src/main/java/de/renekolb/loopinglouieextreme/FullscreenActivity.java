@@ -178,6 +178,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     //customGameSettings = new CustomGameSettings(); // initialize & set defaults
                     deviceRole = DeviceRole.SERVER;
                     game = new Game(this);
+                    game.setGameStarted(true);
                     startBTServer();
                     startBTLEService();
 
@@ -204,6 +205,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     ft.commit();
                     deviceRole = DeviceRole.CLIENT;
                     game = new Game(this);
+                    game.setGameStarted(true);
                 }
 
                 break;
@@ -369,12 +371,15 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                 playerSettingsFragment.stopUpdatingChips();
                 game.nextRound();
+
+                //clear BackStack
+                getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 ft = getFragmentManager().beginTransaction();
                 if (gameFragment == null) {
                     gameFragment = GameFragment.newInstance();
                 }
                 ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                ft.addToBackStack(null);
+                //ft.addToBackStack(null);
                 ft.replace(R.id.main_fragment, gameFragment);
                 ft.commit();
 
@@ -413,7 +418,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     //sendWheelOfFortuneSpinner(game.first, true);
 
                     ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                    ft.addToBackStack(null);
+                    //ft.addToBackStack(null);
                     ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
                     ft.commit();
                     break;
@@ -431,6 +436,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     currentPlayerProfile.updateTotalRoundsWon(1);
                 }
 
+
                 if (game.getCurrentRound() >= game.getMaxRounds()) {
                     currentPlayerProfile.updateTotalGamesPlayed(1);
                     if (game.getGameWinnerPlayer().getDisplayName().equals(currentPlayerProfile.getPlayerName())) {
@@ -439,19 +445,28 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     sendEndgameToClients();
                     //TODO: show final stats Screen...
                     //but for now: go back to first screen (Main Menu)
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    game.setGameStarted(false);
+                    getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    ft=getFragmentManager().beginTransaction();
+                    if (mainMenuFragment == null) {
+                        mainMenuFragment = MainMenuFragment.newInstance();
+                    }
+                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                    ft.replace(R.id.main_fragment, mainMenuFragment);
+                    ft.commit();
                     //TODO:
                     //alternative: nur bis zum GameSettingsFragment zurück (nochmal spielen ohne neu zu verbinden)
                     //        oder komplett zum anfang (wie jetzt) und neue rollen (host/client) verteilen
                 } else {
                     sendNextRoundToClients();
+                    getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     ft = getFragmentManager().beginTransaction();
                     if (playerSettingsFragment == null) {
                         playerSettingsFragment = PlayerSettingsFragment.newInstance();
                     }
                     playerSettingsFragment.setPlayerNameEdible(false);
                     ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                    ft.addToBackStack(null);
+                    //ft.addToBackStack(null);
                     ft.replace(R.id.main_fragment, playerSettingsFragment);
                     ft.commit();
                 }
@@ -567,6 +582,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         sendGameSettingsToClient(devAddr);
                     } else if (deviceRole == DeviceRole.CLIENT) {
                         Log.i("BLAAAAAAAA", "Role = Client");
+                        getFragmentManager().popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         if (playerSettingsFragment == null) {
                             playerSettingsFragment = PlayerSettingsFragment.newInstance();
@@ -602,7 +618,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                             btServer.disconnectClient(addr, true); //cleanup internal connectedThread List
                             ConnectedPlayerListItem item = null;
                             for (int i = 0; i < hostGameFragment.connectedPlayerAdapter.getCount(); i++) {
-                                if (hostGameFragment.connectedPlayerAdapter.getItem(i).getAddress().equals(addr)) {
+                                if (hostGameFragment.connectedPlayerAdapter.getItem(i).getAddress()!=null && hostGameFragment.connectedPlayerAdapter.getItem(i).getAddress().equals(addr)) {
                                     item = hostGameFragment.connectedPlayerAdapter.getItem(i);
                                     break;
                                 }
@@ -619,7 +635,15 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         }
                     } else if (deviceRole == DeviceRole.CLIENT) {
                         //TODO: Go back to connect Fragment
-                        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        FragmentTransaction ft=getFragmentManager().beginTransaction();
+                        if (mainMenuFragment == null) {
+                            mainMenuFragment = MainMenuFragment.newInstance();
+                        }
+                        ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                        ft.replace(R.id.main_fragment, mainMenuFragment);
+                        ft.commit();
+                        game.setGameStarted(false);
                     }
                     break;
 
@@ -696,7 +720,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         gameResultsFragment.setPlayers(first, second, third, fourth);
                     }
                     ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                    ft.addToBackStack(null);
+                    //ft.addToBackStack(null);
                     ft.replace(R.id.main_fragment, gameResultsFragment); // DEFAULT VALUES
                     ft.commit();
                     break;
@@ -738,10 +762,15 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     public void onBackPressed() {
         if (getFragmentManager().getBackStackEntryCount() > 0) {
             if (game == null || !game.isRunning()) {
+                if(game != null && getFragmentManager().getBackStackEntryCount() == 1){
+                    game.setGameStarted(false);
+                }
                 getFragmentManager().popBackStack();
             }
         } else {
-            super.onBackPressed();
+            if(game==null||(!game.isGameStarted()&&!game.isRunning())) {
+                super.onBackPressed();
+            }
         }
     }
 
@@ -987,12 +1016,13 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     Log.i("Client Recieve MSG", "Game Start");
                     //receive game Start
                     game.nextRound();
+                    getFragmentManager().popBackStackImmediate(null,FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     if (gameFragment == null) {
                         gameFragment = GameFragment.newInstance();
                     }
                     ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                    ft.addToBackStack(null);
+                    //ft.addToBackStack(null);
                     ft.replace(R.id.main_fragment, gameFragment);
                     ft.commit();
 
@@ -1028,6 +1058,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         game.getGamePlayer(first).addPoints(1);
 
 
+
+
                     ft = getFragmentManager().beginTransaction();
                     if (gameResultsFragment == null) {
                         gameResultsFragment = GameResultFragment.newInstance(first, second, third, fourth);
@@ -1035,7 +1067,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         gameResultsFragment.setPlayers(first, second, third, fourth);
                     }
                     ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                    ft.addToBackStack(null);
+                    //ft.addToBackStack(null);
                     ft.replace(R.id.main_fragment, gameResultsFragment); // DEFAULT VALUES
                     ft.commit();
 
@@ -1054,7 +1086,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     //wheelOfFortuneFragment.setPlayerSpin(game.first, game.getLoser(), -1, -1);
 
                     ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                    ft.addToBackStack(null);
+                    //ft.addToBackStack(null);
                     ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
                     ft.commit();
                     break;
@@ -1098,7 +1130,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     }
                     playerSettingsFragment.setPlayerNameEdible(true);
                     ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                    ft.addToBackStack(null);
+                    //ft.addToBackStack(null);
                     ft.replace(R.id.main_fragment, playerSettingsFragment);
                     ft.commit();
                     break;
@@ -1114,8 +1146,16 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         currentPlayerProfile.updateTotalGamesWon(1);
                     }
                     profileManager.saveProfile(currentPlayerProfile.getProfileID());
-                    btClient.stop();
-                    getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    game.setGameStarted(false);
+                    //btClient.stop();
+                    getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    ft=getFragmentManager().beginTransaction();
+                    if (mainMenuFragment == null) {
+                        mainMenuFragment = MainMenuFragment.newInstance();
+                    }
+                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
+                    ft.replace(R.id.main_fragment, mainMenuFragment);
+                    ft.commit();
                     break;
                 case 'j':
                     Log.i("Client Receive MSG", "Game Settings");

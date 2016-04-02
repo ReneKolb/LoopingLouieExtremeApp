@@ -20,6 +20,7 @@ public class Game {
     private int secondsRunning;
     private final Timer gameTimer;
 
+    private boolean gameStarted; //is true since the moment one press "connect" or "host a game"
 
     //TODO: only temporary!!!!
     public int first;
@@ -49,6 +50,8 @@ public class Game {
         this.fa = fa;
 
         this.gameTimer = new Timer();
+
+        this.gameStarted = false;
     }
 
     public boolean getWheelOfFortuneEnabled() {
@@ -94,6 +97,29 @@ public class Game {
         }
 
         return this.gamePlayers.get(index);
+    }
+
+    public void setGameStarted(boolean started){
+        this.gameStarted = started;
+        if(!started){
+            if (fa.btLEService != null) {
+                fa.btLEService.stopScanning();
+                fa.btLEService.disconnect();
+            }
+
+            if (fa.btServer != null) {
+                fa.btServer.stop();
+                fa.btServer.disconnectClients();
+            }
+
+            if (fa.btClient != null && !fa.btClient.isConnecting()) {
+                fa.btClient.stop();
+            }
+        }
+    }
+
+    public boolean isGameStarted(){
+        return this.gameStarted;
     }
 
     public void switchGamePlayers(int index1, int index2){

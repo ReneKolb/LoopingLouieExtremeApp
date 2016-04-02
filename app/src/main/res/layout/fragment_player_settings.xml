@@ -179,7 +179,8 @@
         android:text="@string/btn_player_settings_start"
         android:id="@+id/btn_player_settings_start"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"/>
 
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

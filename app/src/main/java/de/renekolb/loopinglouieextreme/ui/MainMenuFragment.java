@@ -118,28 +118,6 @@ public class MainMenuFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onResume() {
-        //disconnect from board
-        if (fa.btLEService != null) {
-            fa.btLEService.stopScanning();
-            fa.btLEService.disconnect();
-        }
-
-        if (fa.btServer != null) {
-            fa.btServer.stop();
-            fa.btServer.disconnectClients();
-        }
-
-        if (fa.btClient != null && !fa.btClient.isConnecting()) {
-            fa.btClient.stop();
-        }
-
-        //Log.e("BLAA", "MainMenu Resume. Role = None");
-        //fa.deviceRole = DeviceRole.NONE;
-        super.onResume();
-    }
-
     private void onButtonPressed(int button) {
         if (fa != null) {
             fa.onFragmentInteraction(button);

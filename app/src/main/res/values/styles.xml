@@ -141,16 +141,16 @@
 
     <style name="tv_header" parent="@android:style/Widget.TextView">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_height">80dp</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:layout_centerHorizontal">true</item>
-        <item name="android:paddingTop">@dimen/header_padding_top</item>
-        <item name="android:paddingBottom">@dimen/header_padding_bottom</item>
         <item name="android:textColor">@color/header_settings_text</item>
         <item name="android:textSize">@dimen/header_text_size</item>
         <item name="android:background">@color/header_settings_background</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">@dimen/header_padding_bottom</item>
+        <item name="android:paddingTop">@dimen/header_padding_top</item>
     </style>
 
     <style name="tv_sub_header" parent="@android:style/Widget.TextView">
