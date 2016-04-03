@@ -17,9 +17,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_host_game_title"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="@dimen/margin_vert"
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginRight="@dimen/margin_horz"
         android:background="@drawable/blue_layout_background"
         android:orientation="vertical">
 
@@ -73,8 +73,8 @@
         android:layout_above="@+id/ll_host_game_buttons"
         android:layout_below="@id/ll_host_game_board_connection"
         android:layout_marginBottom="15dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginRight="@dimen/margin_horz"
         android:layout_marginTop="20dp"
         android:background="@drawable/blue_layout_background"
         android:orientation="vertical">
@@ -125,11 +125,11 @@
     <LinearLayout
         android:id="@id/ll_host_game_buttons"
         android:layout_width="match_parent"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
+        android:layout_marginRight="@dimen/margin_horz"
+        android:layout_marginLeft="@dimen/margin_horz"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="@dimen/margin_vert"
         android:orientation="horizontal">
 
         <Button

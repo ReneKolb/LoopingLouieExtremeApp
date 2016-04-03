@@ -16,9 +16,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_player_settings_title"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginStart="@dimen/margin_horz"
+        android:layout_marginTop="@dimen/margin_vert"
         android:textColor="#000000"
         android:textSize="19sp"
         android:textStyle="bold"
@@ -31,10 +31,10 @@
         android:choiceMode="singleChoice"
         android:listSelector="#AAAAAA"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginStart="@dimen/margin_horz"
+        android:layout_marginRight="@dimen/margin_horz"
+        android:layout_marginEnd="@dimen/margin_horz"
         android:divider="@android:color/transparent"
         android:dividerHeight="10.0sp"
         android:background="@drawable/blue_list_background"
@@ -52,10 +52,10 @@
         android:orientation="horizontal"
         android:layout_below="@id/lv_player_settings_players"
         android:layout_marginTop="25dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginEnd="15dp">
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginStart="@dimen/margin_horz"
+        android:layout_marginRight="@dimen/margin_horz"
+        android:layout_marginEnd="@dimen/margin_horz">
 
         <Button
             android:id="@+id/btn_player_settings_open"
@@ -99,10 +99,10 @@
         android:orientation="horizontal"
         android:layout_below="@id/ll_player_settings_select_connection_state"
         android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginEnd="15dp">
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginStart="@dimen/margin_horz"
+        android:layout_marginRight="@dimen/margin_horz"
+        android:layout_marginEnd="@dimen/margin_horz">
 
         <Button
             android:id="@+id/btn_player_settings_turbo"
@@ -159,6 +159,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_player_settings_select_item"
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginRight="@dimen/margin_horz"
         android:layout_marginTop="10dp">
 
         <TextView
@@ -185,7 +187,7 @@
         android:id="@+id/btn_player_settings_start"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="@dimen/margin_vert" />
 
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

@@ -15,11 +15,11 @@
         android:id="@+id/ll_game_settings_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginRight="@dimen/margin_horz"
         android:orientation="vertical"
         android:layout_below="@id/tv_game_settings_title"
-        android:layout_marginTop="30dp">
+        android:layout_marginTop="@dimen/margin_vert">
 
 
         <TextView
@@ -108,8 +108,8 @@
         style="@style/tv_sub_header"
         android:layout_below="@id/ll_game_settings_buttons"
         android:layout_marginTop="25dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginStart="@dimen/margin_horz"
         android:layout_marginBottom="10dp"
         android:text="@string/game_settings_rounds" />
 
@@ -119,8 +119,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_game_settings_rounds"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginRight="@dimen/margin_horz"
         android:layout_centerHorizontal="true">
 
 
@@ -129,8 +129,6 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginRight="10dp"
-            android:layout_toRightOf="@+id/tv_game_settings_number_picker_value"
-            android:layout_toEndOf="@+id/tv_game_settings_number_picker_value"
             android:src="@drawable/ic_remove"
             style="@style/customNumberPickerButtonDown" />
 
@@ -141,8 +139,6 @@
             android:layout_height="45dp"
             style="@style/customNumberPickerValue"
             android:gravity="center"
-            android:layout_toRightOf="@+id/btn_game_settings_number_picker_button_up"
-            android:layout_toEndOf="@+id/btn_game_settings_number_picker_button_up"
             android:textColor="#000000"
             android:textStyle="bold"
             android:layout_marginRight="10dp"
@@ -165,8 +161,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_game_settings_dummy_number_picker"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginRight="@dimen/margin_horz"
         android:text="@string/game_settings_enable_wof" />
 
     <CheckBox
@@ -174,8 +170,8 @@
         style="@style/custom_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginRight="@dimen/margin_horz"
         android:layout_marginTop="5dp"
         android:layout_below="@id/cb_game_settings_enable_wheel_of_fortune"
         android:text="@string/game_settings_enable_loser_wheel" />
@@ -188,7 +184,7 @@
         android:id="@+id/btn_game_settings_player_settings"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/margin_vert"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold" />

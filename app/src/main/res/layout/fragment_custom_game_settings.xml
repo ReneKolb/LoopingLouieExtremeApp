@@ -16,10 +16,10 @@
         android:layout_height="fill_parent"
         android:layout_below="@id/tv_custom_game_settings_title"
         android:layout_above="@+id/btn_custom_game_settings_ok"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/margin_vert"
         android:layout_marginBottom="15dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginRight="@dimen/margin_horz"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:scrollbars="none"
@@ -557,7 +557,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/margin_vert"
         android:textSize="18sp"
         android:text="@string/btn_custom_game_settings_ok" />
 
