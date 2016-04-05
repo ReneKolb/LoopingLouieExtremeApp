@@ -1,5 +1,7 @@
 package de.renekolb.loopinglouieextreme.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.app.Activity;
 import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import java.util.UUID;
 
 import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
+import de.renekolb.loopinglouieextreme.FragmentUtils;
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.R;
 
@@ -81,6 +84,17 @@ public class HostGameFragment extends Fragment {
 
     public HostGameFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
+        if (FragmentUtils.disableAnimations) {
+            Animator a = AnimatorInflater.loadAnimator(fa, nextAnim);
+            a.setDuration(0);
+            return a;
+        } else {
+            return super.onCreateAnimator(transit, enter, nextAnim);
+        }
     }
 
     @Override

@@ -1,5 +1,7 @@
 package de.renekolb.loopinglouieextreme.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import de.renekolb.loopinglouieextreme.FragmentUtils;
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.R;
 
@@ -50,6 +53,17 @@ public class GameSettingsFragment extends Fragment {
 
     public GameSettingsFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
+        if (FragmentUtils.disableAnimations) {
+            Animator a = AnimatorInflater.loadAnimator(fa, nextAnim);
+            a.setDuration(0);
+            return a;
+        } else {
+            return super.onCreateAnimator(transit, enter, nextAnim);
+        }
     }
 
     @Override

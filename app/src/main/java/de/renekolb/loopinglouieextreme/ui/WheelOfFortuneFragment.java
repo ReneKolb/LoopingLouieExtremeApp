@@ -1,5 +1,7 @@
 package de.renekolb.loopinglouieextreme.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Color;
@@ -21,6 +23,7 @@ import android.widget.ViewSwitcher;
 
 import java.util.LinkedList;
 
+import de.renekolb.loopinglouieextreme.FragmentUtils;
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.GamePlayer;
 import de.renekolb.loopinglouieextreme.R;
@@ -65,6 +68,17 @@ public class WheelOfFortuneFragment extends Fragment {
     private double dragLastPhi;
     //private double dragDPhi;
 
+
+    @Override
+    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
+        if (FragmentUtils.disableAnimations) {
+            Animator a = AnimatorInflater.loadAnimator(fa, nextAnim);
+            a.setDuration(0);
+            return a;
+        } else {
+            return super.onCreateAnimator(transit, enter, nextAnim);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstance) {

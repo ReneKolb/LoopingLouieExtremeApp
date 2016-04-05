@@ -1,5 +1,7 @@
 package de.renekolb.loopinglouieextreme.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import de.renekolb.loopinglouieextreme.FragmentUtils;
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.StatisticType;
 import de.renekolb.loopinglouieextreme.R;
@@ -28,6 +31,17 @@ public class StatisticsFragment extends Fragment {
 
     public static StatisticsFragment newInstance() {
         return new StatisticsFragment();
+    }
+
+    @Override
+    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
+        if (FragmentUtils.disableAnimations) {
+            Animator a = AnimatorInflater.loadAnimator(fa, nextAnim);
+            a.setDuration(0);
+            return a;
+        } else {
+            return super.onCreateAnimator(transit, enter, nextAnim);
+        }
     }
 
     @Override

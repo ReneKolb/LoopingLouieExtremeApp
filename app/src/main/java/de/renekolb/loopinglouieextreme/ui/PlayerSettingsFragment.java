@@ -1,14 +1,14 @@
 package de.renekolb.loopinglouieextreme.ui;
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.ClipData;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import de.renekolb.loopinglouieextreme.ConnectionState;
 import de.renekolb.loopinglouieextreme.DeviceRole;
+import de.renekolb.loopinglouieextreme.FragmentUtils;
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.GamePlayer;
 import de.renekolb.loopinglouieextreme.ItemType;
@@ -58,6 +59,17 @@ public class PlayerSettingsFragment extends Fragment {
 
     public PlayerSettingsFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public Animator onCreateAnimator(int transit, boolean enter, int nextAnim) {
+        if (FragmentUtils.disableAnimations) {
+            Animator a = AnimatorInflater.loadAnimator(fa, nextAnim);
+            a.setDuration(0);
+            return a;
+        } else {
+            return super.onCreateAnimator(transit, enter, nextAnim);
+        }
     }
 
     @Override
@@ -313,21 +325,21 @@ public class PlayerSettingsFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    Log.i("Test","click:"+position);
-                    if(changeingPosition){
-                        Log.i("Test","swap:"+changePositionIndex+" - "+position);
+                    Log.i("Test", "click:" + position);
+                    if (changeingPosition) {
+                        Log.i("Test", "swap:" + changePositionIndex + " - " + position);
                         changeingPosition = false;
-                        if(changePositionIndex != position){
-                            Log.i("Test","swap!");
+                        if (changePositionIndex != position) {
+                            Log.i("Test", "swap!");
                             fa.getGame().switchGamePlayers(changePositionIndex, position);
-                            playerSettingsListAdapter.update(changePositionIndex,fa.getGame().getGamePlayer(changePositionIndex));
-                            playerSettingsListAdapter.update(position,fa.getGame().getGamePlayer(position));
+                            playerSettingsListAdapter.update(changePositionIndex, fa.getGame().getGamePlayer(changePositionIndex));
+                            playerSettingsListAdapter.update(position, fa.getGame().getGamePlayer(position));
 
                             //sync with clients
                             fa.sendPlayerSettingsUpdate(changePositionIndex);
                             fa.sendPlayerSettingsUpdate(position);
                         }
-                    }else {
+                    } else {
 
                         if (mSelectedItem == -1 || mSelectedItem != position) {
                             mSelectedItem = position;

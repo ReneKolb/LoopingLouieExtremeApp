@@ -373,7 +373,10 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 game.nextRound();
 
                 //clear BackStack
+                FragmentUtils.disableAnimations=true;
                 getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                FragmentUtils.disableAnimations=false;
+
                 ft = getFragmentManager().beginTransaction();
                 if (gameFragment == null) {
                     gameFragment = GameFragment.newInstance();
@@ -446,7 +449,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     //TODO: show final stats Screen...
                     //but for now: go back to first screen (Main Menu)
                     game.setGameStarted(false);
+                    FragmentUtils.disableAnimations=true;
                     getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    FragmentUtils.disableAnimations=false;
                     ft = getFragmentManager().beginTransaction();
                     if (mainMenuFragment == null) {
                         mainMenuFragment = MainMenuFragment.newInstance();
@@ -459,7 +464,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     //        oder komplett zum anfang (wie jetzt) und neue rollen (host/client) verteilen
                 } else {
                     sendNextRoundToClients();
+                    FragmentUtils.disableAnimations=true;
                     getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    FragmentUtils.disableAnimations=false;
                     ft = getFragmentManager().beginTransaction();
                     if (playerSettingsFragment == null) {
                         playerSettingsFragment = PlayerSettingsFragment.newInstance();
@@ -582,7 +589,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         sendGameSettingsToClient(devAddr);
                     } else if (deviceRole == DeviceRole.CLIENT) {
                         Log.i("BLAAAAAAAA", "Role = Client");
+                        FragmentUtils.disableAnimations=true;
                         getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        FragmentUtils.disableAnimations=false;
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         if (playerSettingsFragment == null) {
                             playerSettingsFragment = PlayerSettingsFragment.newInstance();
@@ -635,7 +644,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         }
                     } else if (deviceRole == DeviceRole.CLIENT) {
                         //TODO: Go back to connect Fragment
+                        FragmentUtils.disableAnimations=true;
                         getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        FragmentUtils.disableAnimations=false;
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         if (mainMenuFragment == null) {
                             mainMenuFragment = MainMenuFragment.newInstance();
@@ -1016,7 +1027,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     Log.i("Client Recieve MSG", "Game Start");
                     //receive game Start
                     game.nextRound();
+                    FragmentUtils.disableAnimations=true;
                     getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    FragmentUtils.disableAnimations=false;
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     if (gameFragment == null) {
                         gameFragment = GameFragment.newInstance();
@@ -1146,7 +1159,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     profileManager.saveProfile(currentPlayerProfile.getProfileID());
                     game.setGameStarted(false);
                     //btClient.stop();
+                    FragmentUtils.disableAnimations=true;
                     getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                    FragmentUtils.disableAnimations=false;
                     ft = getFragmentManager().beginTransaction();
                     if (mainMenuFragment == null) {
                         mainMenuFragment = MainMenuFragment.newInstance();
