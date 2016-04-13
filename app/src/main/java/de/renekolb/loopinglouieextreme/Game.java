@@ -195,7 +195,12 @@ public class Game {
 
             this.gameTimer.scheduleAtFixedRate(timerTask, 0, 1000);
         } else {
-            fa.getGameFragment().updateSeconds(secondsRunning);
+            fa.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    fa.getGameFragment().updateSeconds(secondsRunning);
+                }
+            });
             this.timerTask.cancel();
             timerTask = null;
             //this.gameTimer.cancel();

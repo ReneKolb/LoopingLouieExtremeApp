@@ -57,8 +57,6 @@ public class GameResultFragment extends Fragment {
         args.putInt(ARG_THIRD, thirdPlayer);
         args.putInt(ARG_FOURTH, fourthPlayer);
 
-        Log.i("GameResults", "1: " + firstPlayer + " 2: " + secondPlayer + " 3: " + thirdPlayer + " 4: " + fourthPlayer);
-
         fragment.setArguments(args);
         return fragment;
     }

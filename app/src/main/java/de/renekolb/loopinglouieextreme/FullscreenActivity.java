@@ -22,6 +22,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import de.renekolb.loopinglouieextreme.BTPackets.PacketClientPlayerName;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketServerEndGame;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketServerGameResults;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketServerGameSettings;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketServerGameStart;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketServerGoToWheel;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketServerNextRound;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketServerUpdatePlayerSettings;
 import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.Achievement;
 import de.renekolb.loopinglouieextreme.PlayerProfiles.Achievements;
@@ -54,7 +62,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     public BluetoothLEService btLEService;
 
-    private MainMenuFragment mainMenuFragment;
+    public MainMenuFragment mainMenuFragment;
     private SettingsFragment settingsFragment;
     private ProfilesFragment profilesFragment;
     private StatisticsFragment statisticsFragment;
@@ -63,14 +71,14 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     private ConnectFragment connectFragment;
     private GameSettingsFragment gameSettingsFragment;
     private CustomGameSettingsFragment customGameSettingsFragment;
-    private PlayerSettingsFragment playerSettingsFragment;
-    private GameFragment gameFragment;
-    private GameResultFragment gameResultsFragment;
-    private WheelOfFortuneFragment wheelOfFortuneFragment;
+    public PlayerSettingsFragment playerSettingsFragment;
+    public GameFragment gameFragment;
+    public GameResultFragment gameResultsFragment;
+    public WheelOfFortuneFragment wheelOfFortuneFragment;
 
     private PlayerProfile currentPlayerProfile;
 
-    private WheelOfFortuneHandler wheelOfFortuneHandler;
+    public WheelOfFortuneHandler wheelOfFortuneHandler;
 
     private Game game;
 
@@ -78,13 +86,16 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     public ProfileManager profileManager;
 
-    //private Runnable actionBTon;
+    private Handler closeAttemptDelayHandler;
+    private boolean closeAttempt;
 
     public AppSettings appSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.closeAttemptDelayHandler = new Handler();
 
         this.profileManager = new ProfileManager(this, ServiceMessageHandler);
         this.wheelOfFortuneHandler = new WheelOfFortuneHandler(this);
@@ -148,6 +159,10 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         super.onDestroy();
 
         //unregisterReceiver(mReceiver);
+
+        if(this.closeAttemptDelayHandler!=null){
+            this.closeAttemptDelayHandler.removeCallbacks(mResetCloseAttempt);
+        }
 
         if (appSettings.getDisableBTonExit()) {
             BluetoothAdapter.getDefaultAdapter().disable();
@@ -284,11 +299,11 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     }
                 }, 5000);
                 break;
-            case Constants.buttons.HOST_GAME_TEST_SERVER_MESSAGE:
+            /*case Constants.buttons.HOST_GAME_TEST_SERVER_MESSAGE:
                 if (btServer != null) {
                     btServer.sendMessageToAll("Test Msg from Server");
                 }
-                break;
+                break;*/
             case Constants.buttons.HOST_GAME_GAME_SETTINGS:
                 //the host must be connected to the board and at least one player has to be connected
                 /*if(true || btLEService.isConnected() && btServer.getConnectedDevices()>=1) {
@@ -322,7 +337,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
                 break;
             case Constants.buttons.GAME_SETTINGS_PLAYER_SETTINGS:
-                sendGameSettingsToClients();
+                btServer.sendMessageToAll(new PacketServerGameSettings(getGame().getMaxRounds(), getGame().getWheelOfFortuneEnabled(), getGame().getLoserWheelEnabled()));
+                //sendGameSettingsToClients();
 
                 ft = getFragmentManager().beginTransaction();
                 if (playerSettingsFragment == null) {
@@ -367,7 +383,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 }
 
                 //if (canStart) {
-                sendGameStart();
+                btServer.sendMessageToAll(new PacketServerGameStart());
+                //sendGameStart();
 
                 playerSettingsFragment.stopUpdatingChips();
                 game.nextRound();
@@ -417,7 +434,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     wheelOfFortuneHandler.setPlayers(game.first, game.getLoser(), -1, -1);
                     //wheelOfFortuneFragment.setPlayerSpin(game.first, game.getLoser(), -1, -1);
 
-                    sendSwitchToWheelOfFortune();
+                    btServer.sendMessageToAll(new PacketServerGoToWheel());
+                    //sendSwitchToWheelOfFortune();
                     //sendWheelOfFortuneSpinner(game.first, true);
 
                     ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
@@ -445,7 +463,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     if (game.getGameWinnerPlayer().getDisplayName().equals(currentPlayerProfile.getPlayerName())) {
                         currentPlayerProfile.updateTotalGamesWon(1);
                     }
-                    sendEndgameToClients();
+                    btServer.sendMessageToAll(new PacketServerEndGame());
+                    //sendEndgameToClients();
                     //TODO: show final stats Screen...
                     //but for now: go back to first screen (Main Menu)
                     game.setGameStarted(false);
@@ -463,7 +482,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     //alternative: nur bis zum GameSettingsFragment zurück (nochmal spielen ohne neu zu verbinden)
                     //        oder komplett zum anfang (wie jetzt) und neue rollen (host/client) verteilen
                 } else {
-                    sendNextRoundToClients();
+                    btServer.sendMessageToAll(new PacketServerNextRound());
+                    //sendNextRoundToClients();
                     FragmentUtils.disableAnimations=true;
                     getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                     FragmentUtils.disableAnimations=false;
@@ -514,7 +534,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     public void connect(BluetoothDevice remoteDevice) {
         Log.i("FA connect", "remote Device: " + remoteDevice);
-        this.btClient = new BTClientService(ServiceMessageHandler);
+        this.btClient = new BTClientService(this);
         btClient.connect(remoteDevice);
     }
 
@@ -539,30 +559,28 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         }
     };*/
 
-    private final Handler ServiceMessageHandler = new Handler() {
+    public final Handler ServiceMessageHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
-                case Constants.messages.BT_READ:
+             /*   case Constants.messages.BT_READ:
                     //byte[] readBuf = (byte[]) msg.obj;
                     // construct a string from the valid bytes in the buffer
                     //String readMessage = new String(readBuf, 0, msg.arg1);
 
-                    /*TODO: Bug! wenn erst Hosten und dann zurück zu Hauptmenü und versuchen zu Connecten btServer!=null -> NullPointerException*/
+                    //TODO: Bug! wenn erst Hosten und dann zurück zu Hauptmenü und versuchen zu Connecten btServer!=null -> NullPointerException
                     if (btServer != null) {
                         serverReceiveMessageFromClient(msg.getData().getString(Constants.KEY_DEVICE_ADDRESS), msg.getData().getString(Constants.messages.KEY_BT_MESSAGE));
                     } else if (btClient != null) {
-                        clientReceiveMessageFromServer(/*msg.getData().getString(Constants.KEY_DEVICE_ADDRESS),*/ msg.getData().getString(Constants.messages.KEY_BT_MESSAGE));
+                        clientReceiveMessageFromServer( msg.getData().getString(Constants.messages.KEY_BT_MESSAGE));
                     }
                     //Toast.makeText(FullscreenActivity.this, "Read: " + readMessage, Toast.LENGTH_SHORT).show();
                     //mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
-                    break;
+                    break;*/
                 case Constants.messages.BT_DEVICE_CONNECTED:
                     // save the connected device's name
                     String devName = msg.getData().getString(Constants.KEY_DEVICE_NAME);
                     String devAddr = msg.getData().getString(Constants.KEY_DEVICE_ADDRESS);
-
-                    Log.i("BLAAAAAAAA", "BT Connected: Role" + deviceRole);
 
                     if (devName == null) {
                         Log.e("BLAAAAAAAA", "BT_DEVICE_CONNECTED but device name is null");
@@ -575,20 +593,17 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     }
 
                     if (deviceRole == DeviceRole.SERVER) {
-                        Log.i("BLAAAAAAAA", "Role = Server");
                         if (hostGameFragment != null && hostGameFragment.isVisible()) {
-
                             if (hostGameFragment.connectedPlayerAdapter.getItem(0).getAddress() == null) {
                                 hostGameFragment.connectedPlayerAdapter.remove(hostGameFragment.connectedPlayerAdapter.getItem(0));
                             }
-
                             hostGameFragment.connectedPlayerAdapter.add(new ConnectedPlayerListItem(devAddr, devName));
                         }
 
                         bindNewPlayer(devAddr, devName.replaceAll("\\.", "_").replaceAll(":", "_"));
-                        sendGameSettingsToClient(devAddr);
+                        btServer.sendMessage(devAddr, new PacketServerGameSettings(getGame().getMaxRounds(), getGame().getWheelOfFortuneEnabled(), getGame().getLoserWheelEnabled()));
+                        //sendGameSettingsToClient(devAddr);
                     } else if (deviceRole == DeviceRole.CLIENT) {
-                        Log.i("BLAAAAAAAA", "Role = Client");
                         FragmentUtils.disableAnimations=true;
                         getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         FragmentUtils.disableAnimations=false;
@@ -602,8 +617,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         ft.replace(R.id.main_fragment, playerSettingsFragment);
                         ft.commit();
 
-                        //
-                        sendPlayerNameToServer(currentPlayerProfile.getPlayerName());
+                        //sendPlayerNameToServer(currentPlayerProfile.getPlayerName());
+                        btClient.sendPacket(new PacketClientPlayerName(currentPlayerProfile.getPlayerName()));
                     }
                     break;
                 case Constants.messages.BT_CONNECTION_FAILED:
@@ -706,7 +721,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     int third = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_THIRD);
                     int fourth = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_FOURTH);
 
-                    sendGameResults(first, second, third, fourth);
+                    btServer.sendMessageToAll(new PacketServerGameResults(first,second,third,fourth));
+                    //sendGameResults(first, second, third, fourth);
 
                     //TODO: only temporary
                     game.first = first;
@@ -776,11 +792,17 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 if (game != null && getFragmentManager().getBackStackEntryCount() == 1) {
                     game.setGameStarted(false);
                 }
-                getFragmentManager().popBackStack();
+                getFragmentManager().popBackStackImmediate();
             }
         } else {
             if (game == null || (!game.isGameStarted() && !game.isRunning())) {
-                super.onBackPressed();
+                if(!this.closeAttempt) {
+                    this.closeAttempt = true;
+                    Toast.makeText(FullscreenActivity.this, R.string.toast_close_attempt, Toast.LENGTH_SHORT).show();
+                    this.closeAttemptDelayHandler.postDelayed(mResetCloseAttempt,2000);
+                }else {
+                    super.onBackPressed();
+                }
             }
         }
     }
@@ -788,6 +810,12 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
     public Game getGame() {
         return this.game;
     }
+
+    private final Runnable mResetCloseAttempt = new Runnable(){
+        public void run(){
+            closeAttempt = false;
+        }
+    };
 
     private final ReceiveCallback onBoardMessageRead = new ReceiveCallback() {
         @Override
@@ -889,10 +917,15 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         }
 
                         //send update chips
-                        sendPlayerSettingsUpdate(0);
+                        btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(0,getGame().getGamePlayer(0)));
+                        btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(1,getGame().getGamePlayer(1)));
+                        btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(2,getGame().getGamePlayer(2)));
+                        btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(3,getGame().getGamePlayer(3)));
+
+                        /*sendPlayerSettingsUpdate(0);
                         sendPlayerSettingsUpdate(1);
                         sendPlayerSettingsUpdate(2);
-                        sendPlayerSettingsUpdate(3);
+                        sendPlayerSettingsUpdate(3);*/
 
                         break;
                     default:
@@ -907,301 +940,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         }
     };
 
-    private void serverReceiveMessageFromClient(String senderAddress, String msg) {
-        String[] split = msg.split("\\.");
-        char cmdType;
-        String data;
-        int slot;
-        GamePlayer player;
-        for (String command : split) {
-            if (command.length() == 0) {
-                continue;
-            }
-            cmdType = command.charAt(0);
-            data = command.substring(1);
-
-            switch (cmdType) {
-                case 'a':
-                    // player Name
-                    //FORM: a[PlayerName].
-                    slot = game.getGamePlayerIndex(senderAddress);
-                    if (slot == -1) {
-                        slot = bindNewPlayer(senderAddress, "Test");
-                    }
-                    player = game.getGamePlayer(slot);
-                    Log.i("Client Sent", "New Name: " + data);
-                    player.setGuestName(data);
-                    if (playerSettingsFragment != null && playerSettingsFragment.isVisible()) {
-                        playerSettingsFragment.updatePlayerSettings(slot);
-                    }
-                    sendPlayerSettingsUpdate(slot); //send the change to all clients
-                    break;
-                case 'b':
-                    //player change item
-                    //Form: b[ItemID].
-                    slot = game.getGamePlayerIndex(senderAddress);
-                    player = game.getGamePlayer(slot);
-                    ItemType it = ItemType.fromInt(Integer.parseInt(data));
-                    player.setDefaultItemType(it);
-                    if (playerSettingsFragment != null && playerSettingsFragment.isVisible()) {
-                        playerSettingsFragment.updatePlayerSettings(slot);
-                    }
-                    sendPlayerSettingsUpdate(slot); //send the change to all clients
-                    break;
-
-                case 'c':
-                    //client has spin the Wheel and sent the result
-                    //Form: c[ResultIndex].
-                    int resultIndex = Integer.parseInt(data);
-
-                    //wheelOfFortuneFragment.setResult(resultIndex);
-                    //send result to all other clients
-                    btServer.sendMessageToAllBut("f" + resultIndex + ".", senderAddress);
-
-                    break;
-
-                case 'd':
-                    //a client spin the wheel
-                    String[] split2 = data.split(":");
-                    if (split2.length != 2) {
-                        Log.e("Error", "Cannot spin Wheel of Fortune. Wrong split length");
-                        break;
-                    }
-
-                    float viewRot = Float.parseFloat(split2[0].replaceAll(",", "."));
-                    float animRot = Float.parseFloat(split2[1].replaceAll(",", "."));
-
-                    wheelOfFortuneHandler.startSpinning(viewRot, animRot, false);
-                    sendWheelOfFortuneSpinToClients(viewRot, animRot, senderAddress);
-                    break;
-                case 'e':
-                    //a client pressed the nextRound button (he finished drinking)
-                    wheelOfFortuneHandler.updateCurrentPlayer(wheelOfFortuneHandler.getCurrentPosition());
-                    sendWheelOfFortuneSpinnerToClients(wheelOfFortuneHandler.getCurrentPosition());
-                    break;
-            }
-        }
-    }
-
-    private void clientReceiveMessageFromServer(/*String senderAddress,*/ String msg) {
-        String[] split = msg.split("\\.");
-        char cmdType;
-        String data;
-        for (String command : split) {
-            if (command.length() == 0) {
-                continue;
-            }
-            cmdType = command.charAt(0);
-            data = command.substring(1);
-
-            switch (cmdType) {
-                case 'a':
-                    Log.v("Client Receive", "Update a client's player settings");
-                    //update player settings (complete)
-                    //FORM: a[PlayerSlot]:[PlayerName]:[ConnectionStateID]:[ItemID]:[Chips].
-                    String[] split2 = data.split(":");
-                    if (split2.length != 5) {
-                        Log.e("Client Received Message", "Update Player Settings: Wrong split length");
-                        continue;
-                    }
-                    int slot = Integer.parseInt(split2[0]);
-                    String name = split2[1];
-                    ConnectionState state = ConnectionState.fromInt(Integer.parseInt(split2[2]));
-                    ItemType itemType = ItemType.fromInt(Integer.parseInt(split2[3]));
-                    int chips = Integer.parseInt(split2[4]);
-                    Log.v("Client Receive", "Slot:" + slot + " Name:" + name + " State: " + state + " item: " + itemType + " chips: " + chips);
-
-                    GamePlayer gp = game.getGamePlayer(slot);
-
-                    gp.setConnectionState(state); // first update connection State, because it overrides displayName with null!!
-                    gp.setGuestName(name);
-                    gp.setDefaultItemType(itemType);
-                    gp.setCurrentChips(chips);
-
-                    if (playerSettingsFragment != null && playerSettingsFragment.isVisible()) {
-                        playerSettingsFragment.updatePlayerSettings(slot);
-                    }
-
-                    break;
-                case 'b':
-                    Log.i("Client Recieve MSG", "Game Start");
-                    //receive game Start
-                    game.nextRound();
-                    FragmentUtils.disableAnimations=true;
-                    getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    FragmentUtils.disableAnimations=false;
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    if (gameFragment == null) {
-                        gameFragment = GameFragment.newInstance();
-                    }
-                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                    //ft.addToBackStack(null);
-                    ft.replace(R.id.main_fragment, gameFragment);
-                    ft.commit();
-
-                    game.setRunning(true);
-                    break;
-                case 'c':
-                    Log.i("Client Recieve MSG", "Game Results");
-                    //receive game Results
-                    game.setRunning(false);
-                    split2 = data.split(":");
-                    if (split2.length != 4) {
-                        Log.e("Client Received Message", "Game Results: Wrong split length");
-                        continue;
-                    }
-
-                    int first = Integer.parseInt(split2[0]);
-                    int second = Integer.parseInt(split2[1]);
-                    int third = Integer.parseInt(split2[2]);
-                    int fourth = Integer.parseInt(split2[3]);
-
-                    game.first = first;
-                    game.second = second;
-                    game.third = third;
-                    game.fourth = fourth;
-
-                    //int playerAmount = 2+(third == -1?0:1)+(fourth==-1?0:1);
-
-                    game.getGamePlayer(first).addPoints(4);
-                    game.getGamePlayer(second).addPoints(3);
-                    if (third != -1)
-                        game.getGamePlayer(third).addPoints(2);
-                    if (fourth != -1)
-                        game.getGamePlayer(first).addPoints(1);
 
 
-                    ft = getFragmentManager().beginTransaction();
-                    if (gameResultsFragment == null) {
-                        gameResultsFragment = GameResultFragment.newInstance(first, second, third, fourth);
-                    } else {
-                        gameResultsFragment.setPlayers(first, second, third, fourth);
-                    }
-                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                    //ft.addToBackStack(null);
-                    ft.replace(R.id.main_fragment, gameResultsFragment); // DEFAULT VALUES
-                    ft.commit();
-
-                    break;
-                case 'd':
-                    Log.i("Client Recieve MSG", "GoTo WheelOfFortune");
-                    //GOTO WheelOfFortune
-                    ft = getFragmentManager().beginTransaction();
-                    if (wheelOfFortuneFragment == null) {
-                        wheelOfFortuneFragment = WheelOfFortuneFragment.newInstance(wheelOfFortuneHandler);
-                    }
-
-                    //TODO: only temporary
-                    //wheelOfFortuneFragment.setPlayerSpin(game.first, game.second, game.third, game.fourth);
-                    wheelOfFortuneHandler.setPlayers(game.first, game.getLoser(), -1, -1);
-                    //wheelOfFortuneFragment.setPlayerSpin(game.first, game.getLoser(), -1, -1);
-
-                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                    //ft.addToBackStack(null);
-                    ft.replace(R.id.main_fragment, wheelOfFortuneFragment);
-                    ft.commit();
-                    break;
-                case 'e':
-                    Log.i("Client Recieve MSG", "Update Wheel of Fortune Spinner");
-                    if (wheelOfFortuneFragment == null || wheelOfFortuneFragment.isHidden()) {
-                        Log.e("Error", "Cannot update Wheel of Fortune Spinner. Fragment is not created");
-                        break;
-                    }
-                    final int position = Integer.parseInt(data);
-                    wheelOfFortuneHandler.updateCurrentPlayer(position);
-                    break;
-                case 'f':
-                    Log.i("Client Recieve MSG", "Wheel of Fortune Spin Result");
-                    break;
-                case 'g':
-                    Log.i("Client Recieve MSG", "Wheel of Fortune Spin");
-                    Log.i("RECIEVED", "received data: " + data);
-                    split2 = data.split(":");
-                    Log.i("RECIEVED", "received splitLen: " + split2.length);
-                    if (split2.length != 2) {
-                        Log.e("Error", "Cannot spin Wheel of Fortune. Wrong split length");
-                        break;
-                    }
-                    wheelOfFortuneHandler.startSpinning(Float.parseFloat(split2[0].replaceAll(",", ".")), Float.parseFloat(split2[1].replaceAll(",", ".")), false);
-                    break;
-
-                case 'h':
-                    Log.i("Client Receive MSG", "Next Round");
-                    currentPlayerProfile.updateTotalRoundsPlayed(1);
-
-                    if (game.getGamePlayer(game.first).getDisplayName().equals(currentPlayerProfile.getPlayerName())) {
-                        currentPlayerProfile.updateTotalRoundsWon(1);
-                    }
-
-                    profileManager.saveProfile(currentPlayerProfile.getProfileID());
-
-                    ft = getFragmentManager().beginTransaction();
-                    if (playerSettingsFragment == null) {
-                        playerSettingsFragment = PlayerSettingsFragment.newInstance();
-                    }
-                    playerSettingsFragment.setPlayerNameEdible(true);
-                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                    //ft.addToBackStack(null);
-                    ft.replace(R.id.main_fragment, playerSettingsFragment);
-                    ft.commit();
-                    break;
-                case 'i':
-                    Log.i("Client Receive MSG", "End Game");
-                    currentPlayerProfile.updateTotalRoundsPlayed(1);
-                    currentPlayerProfile.updateTotalGamesPlayed(1);
-
-                    if (game.getGamePlayer(game.first).getDisplayName().equals(currentPlayerProfile.getPlayerName())) {
-                        currentPlayerProfile.updateTotalRoundsWon(1);
-                    }
-                    if (game.getGameWinnerPlayer().getDisplayName().equals(currentPlayerProfile.getPlayerName())) {
-                        currentPlayerProfile.updateTotalGamesWon(1);
-                    }
-                    profileManager.saveProfile(currentPlayerProfile.getProfileID());
-                    game.setGameStarted(false);
-                    //btClient.stop();
-                    FragmentUtils.disableAnimations=true;
-                    getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                    FragmentUtils.disableAnimations=false;
-                    ft = getFragmentManager().beginTransaction();
-                    if (mainMenuFragment == null) {
-                        mainMenuFragment = MainMenuFragment.newInstance();
-                    }
-                    ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                    ft.replace(R.id.main_fragment, mainMenuFragment);
-                    ft.commit();
-                    break;
-                case 'j':
-                    Log.i("Client Receive MSG", "Game Settings");
-                    //Form: j[#Rounds]:[WOF enabled]:[LoserWheel enabled].
-                    split2 = data.split(":");
-                    if (split2.length != 3) {
-                        Log.e("Error", "Cannot update game settings. Wrong split length");
-                        break;
-                    }
-                    int rounds = Integer.parseInt(split2[0]);
-                    boolean enableWOF = "1".equals(split2[1]);
-                    boolean enableLoserWheel = "1".equals(split2[2]);
-                    this.game.setMaxRounds(rounds);
-                    this.game.setWheelOfFortuneEnabled(enableWOF);
-                    this.game.setLoserWheelEnabled(enableLoserWheel);
-                    break;
-       /*         case 'b':
-                    //update player name
-                    break;
-                case 'c':
-                    //update connection state
-                    break;
-                case 'd':
-                    //update player item
-                    break;
-                case 'e':
-                    //update player chip count
-                    break;*/
-            }
-        }
-    }
-
-    private void sendPlayerSettingsToClient(String client) {
+  /*  private void sendPlayerSettingsToClient(String client) {
         sendPlayerSettingsToClient(client, 0);
         sendPlayerSettingsToClient(client, 1);
         sendPlayerSettingsToClient(client, 2);
@@ -1212,25 +953,25 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         GamePlayer gp = game.getGamePlayer(slot);
         String msg = "a" + slot + ":" + gp.getDisplayName() + ":" + gp.getConnectionState().getId() + ":" + gp.getDefaultItemType().getItemID() + ":" + gp.getCurrentChips() + ".";
         btServer.sendMessage(client, msg);
-    }
+    }*/
 
-    public void sendPlayerSettingsUpdate(int slot) {
+  /*  public void sendPlayerSettingsUpdate(int slot) {
         GamePlayer gp = game.getGamePlayer(slot);
         String msg = "a" + slot + ":" + gp.getDisplayName() + ":" + gp.getConnectionState().getId() + ":" + gp.getDefaultItemType().getItemID() + ":" + gp.getCurrentChips() + ".";
         btServer.sendMessageToAll(msg);
         Log.i("Send to Client", "Msg: " + msg);
-    }
+    }*/
 
-    private void sendPlayerNameToServer(String name) {
+/*    private void sendPlayerNameToServer(String name) {
         btClient.sendMessage("a" + name + ".");
-    }
+    }*/
 
-    public void sendItemTypeToServer(ItemType itemType) {
+   /* public void sendItemTypeToServer(ItemType itemType) {
         btClient.sendMessage("b" + itemType.getItemID() + ".");
 
-    }
+    }*/
 
-    private void sendGameStart() {
+    /*private void sendGameStart() {
         btServer.sendMessageToAll("b.");
     }
 
@@ -1281,7 +1022,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     private void sendGameSettingsToClient(String address) {
         btServer.sendMessage(address, "j" + game.getMaxRounds() + ":" + (game.getWheelOfFortuneEnabled() ? "1" : "0") + ":" + (game.getLoserWheelEnabled() ? "1" : "0") + ".");
-    }
+    }*/
 
 /*    public void onWheelSpinFinish(int resultIndex){
         if(deviceRole == DeviceRole.CLIENT){
@@ -1291,7 +1032,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         }
     }*/
 
-    private int bindNewPlayer(String address, String displayName) {
+    public int bindNewPlayer(String address, String displayName) {
         if (game.getGamePlayerIndex(address) != -1) {
             //already bound
             return -1;
@@ -1309,8 +1050,10 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
             playerSettingsFragment.updatePlayerSettings(index);
         }
 
-        sendPlayerSettingsToClient(address); // send player list to new client
-        sendPlayerSettingsUpdate(index); // send new player to all clients
+        btServer.sendMessage(address,new PacketServerUpdatePlayerSettings(index,game.getGamePlayer(index)));
+        btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(index, game.getGamePlayer(index)));
+        //sendPlayerSettingsToClient(address); // send player list to new client
+        //sendPlayerSettingsUpdate(index); // send new player to all clients
         return index;
     }
 

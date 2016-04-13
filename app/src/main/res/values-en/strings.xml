@@ -111,5 +111,6 @@
     <string name="custom_game_settings_speed_max_step_size">Speed Max Step Size</string>
     <string name="custom_game_settings_speed_min_step_size">Speed Min Step Size</string>
     <string name="dialog_user_name_hint">Enter a name for your new player profile</string>
+    <string name="toast_close_attempt">Please click BACK again to exit</string>
 
 </resources>

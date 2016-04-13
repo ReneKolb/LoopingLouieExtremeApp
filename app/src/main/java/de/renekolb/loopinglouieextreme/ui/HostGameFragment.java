@@ -245,7 +245,7 @@ public class HostGameFragment extends Fragment {
             = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> av, View v, int position, long id) {
             if (connectedPlayerAdapter.getItem(position).getAddress() != null) {
-                fa.btServer.sendMessage(connectedPlayerAdapter.getItem(position).getAddress(), "Msg from Server");
+                //fa.btServer.sendMessage(connectedPlayerAdapter.getItem(position).getAddress(), "Msg from Server");
             }
         }
     };

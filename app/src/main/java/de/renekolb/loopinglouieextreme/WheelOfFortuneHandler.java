@@ -4,6 +4,10 @@ import android.util.Log;
 
 import java.util.Random;
 
+import de.renekolb.loopinglouieextreme.BTPackets.PacketClientSpinWheel;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketClientWheelNextPlayer;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketServerSpinWheel;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketServerUpdateWheelSpinner;
 import de.renekolb.loopinglouieextreme.ui.Constants;
 
 public class WheelOfFortuneHandler {
@@ -101,9 +105,11 @@ public class WheelOfFortuneHandler {
         fa.getWheelOfFortuneFragment().startSpin(startViewRotation, rotateAnimation);
         if (doSync && !debugMode) {
             if (fa.deviceRole == DeviceRole.CLIENT) {
-                fa.sendWheelOfFortuneSpinToServer(startViewRotation, rotateAnimation);
+                //fa.sendWheelOfFortuneSpinToServer(startViewRotation, rotateAnimation);
+                fa.btClient.sendPacket(new PacketClientSpinWheel(startViewRotation,rotateAnimation));
             } else {
-                fa.sendWheelOfFortuneSpinToClients(startViewRotation, rotateAnimation, null);
+                //fa.sendWheelOfFortuneSpinToClients(startViewRotation, rotateAnimation, null);
+                fa.btServer.sendMessageToAll(new PacketServerSpinWheel(startViewRotation,rotateAnimation));
             }
         }
     }
@@ -172,10 +178,12 @@ public class WheelOfFortuneHandler {
                 canSpin = getCanSpin(currentPosition);
                 fa.getWheelOfFortuneFragment().setCurrentSpinner(fa.getGame().getGamePlayer(this.playerIndex[currentPosition]));
                 if (fa.deviceRole == DeviceRole.SERVER) {
-                    fa.sendWheelOfFortuneSpinnerToClients(currentPosition);
+                    //fa.sendWheelOfFortuneSpinnerToClients(currentPosition);
+                    fa.btServer.sendMessageToAll(new PacketServerUpdateWheelSpinner(currentPosition));
                 } else if (fa.deviceRole == DeviceRole.CLIENT) {
                     //
-                    fa.sendWheelOfFortuneNextSpinnerToServer();
+                    //fa.sendWheelOfFortuneNextSpinnerToServer();
+                    fa.btClient.sendPacket(new PacketClientWheelNextPlayer());
                 }
             }
             if (canSpin) {

@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.ClipData;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -18,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import de.renekolb.loopinglouieextreme.BTPackets.PacketClientChangeItem;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketServerUpdatePlayerSettings;
 import de.renekolb.loopinglouieextreme.ConnectionState;
 import de.renekolb.loopinglouieextreme.DeviceRole;
 import de.renekolb.loopinglouieextreme.FragmentUtils;
@@ -134,7 +137,7 @@ public class PlayerSettingsFragment extends Fragment {
                 if (mSelectedItem != -1) {
                     fa.getGame().getGamePlayer(mSelectedItem).setGuestName(s.toString());
                     playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
-                    fa.sendPlayerSettingsUpdate(mSelectedItem);
+                    fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
                 }
             }
         });
@@ -150,7 +153,8 @@ public class PlayerSettingsFragment extends Fragment {
                     }
                     player.setConnectionState(ConnectionState.OPEN);
                     playerSettingsListAdapter.update(mSelectedItem, player);
-                    fa.sendPlayerSettingsUpdate(mSelectedItem);
+                    //fa.sendPlayerSettingsUpdate(mSelectedItem);
+                    fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
 
                     btnTurbo.setVisibility(View.INVISIBLE);
                     btnSlow.setVisibility(View.INVISIBLE);
@@ -178,7 +182,8 @@ public class PlayerSettingsFragment extends Fragment {
                     }
                     player.setConnectionState(ConnectionState.LOCAL);
                     playerSettingsListAdapter.update(mSelectedItem, player);
-                    fa.sendPlayerSettingsUpdate(mSelectedItem);
+                    //fa.sendPlayerSettingsUpdate(mSelectedItem);
+                    fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
 
                     btnTurbo.setVisibility(View.VISIBLE);
                     btnSlow.setVisibility(View.VISIBLE);
@@ -211,7 +216,8 @@ public class PlayerSettingsFragment extends Fragment {
                     player.setConnectionState(ConnectionState.CLOSED);
                     player.setGuestName(null);
                     playerSettingsListAdapter.update(mSelectedItem, player);
-                    fa.sendPlayerSettingsUpdate(mSelectedItem);
+                    //fa.sendPlayerSettingsUpdate(mSelectedItem);
+                    fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
 
                     btnTurbo.setVisibility(View.INVISIBLE);
                     btnSlow.setVisibility(View.INVISIBLE);
@@ -240,10 +246,12 @@ public class PlayerSettingsFragment extends Fragment {
                     if (mSelectedItem != -1) {
                         fa.getGame().getGamePlayer(mSelectedItem).setDefaultItemType(ItemType.TURBO);
                         playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
-                        fa.sendPlayerSettingsUpdate(mSelectedItem);
+                        //fa.sendPlayerSettingsUpdate(mSelectedItem);
+                        fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem,fa.getGame().getGamePlayer(mSelectedItem)));
                     }
                 } else if (fa.deviceRole == DeviceRole.CLIENT) {
-                    fa.sendItemTypeToServer(ItemType.TURBO);
+                    //fa.sendItemTypeToServer(ItemType.TURBO);
+                    fa.btClient.sendPacket(new PacketClientChangeItem(ItemType.TURBO.getItemID()));
                 }
             }
         });
@@ -259,10 +267,12 @@ public class PlayerSettingsFragment extends Fragment {
                     if (mSelectedItem != -1) {
                         fa.getGame().getGamePlayer(mSelectedItem).setDefaultItemType(ItemType.SLOW);
                         playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
-                        fa.sendPlayerSettingsUpdate(mSelectedItem);
+                        //fa.sendPlayerSettingsUpdate(mSelectedItem);
+                        fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
                     }
                 } else if (fa.deviceRole == DeviceRole.CLIENT) {
-                    fa.sendItemTypeToServer(ItemType.SLOW);
+                    //fa.sendItemTypeToServer(ItemType.SLOW);
+                    fa.btClient.sendPacket(new PacketClientChangeItem(ItemType.SLOW.getItemID()));
                 }
             }
         });
@@ -278,10 +288,12 @@ public class PlayerSettingsFragment extends Fragment {
                     if (mSelectedItem != -1) {
                         fa.getGame().getGamePlayer(mSelectedItem).setDefaultItemType(ItemType.REVERSE);
                         playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
-                        fa.sendPlayerSettingsUpdate(mSelectedItem);
+                        //fa.sendPlayerSettingsUpdate(mSelectedItem);
+                        fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
                     }
                 } else if (fa.deviceRole == DeviceRole.CLIENT) {
-                    fa.sendItemTypeToServer(ItemType.REVERSE);
+                    //fa.sendItemTypeToServer(ItemType.REVERSE);
+                    fa.btClient.sendPacket(new PacketClientChangeItem(ItemType.REVERSE.getItemID()));
                 }
             }
         });
@@ -297,10 +309,12 @@ public class PlayerSettingsFragment extends Fragment {
                     if (mSelectedItem != -1) {
                         fa.getGame().getGamePlayer(mSelectedItem).setDefaultItemType(ItemType.BLACKOUT);
                         playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
-                        fa.sendPlayerSettingsUpdate(mSelectedItem);
+                        //fa.sendPlayerSettingsUpdate(mSelectedItem);
+                        fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
                     }
                 } else if (fa.deviceRole == DeviceRole.CLIENT) {
-                    fa.sendItemTypeToServer(ItemType.BLACKOUT);
+                    //fa.sendItemTypeToServer(ItemType.BLACKOUT);
+                    fa.btClient.sendPacket(new PacketClientChangeItem(ItemType.BLACKOUT.getItemID()));
                 }
             }
         });
@@ -336,8 +350,11 @@ public class PlayerSettingsFragment extends Fragment {
                             playerSettingsListAdapter.update(position, fa.getGame().getGamePlayer(position));
 
                             //sync with clients
-                            fa.sendPlayerSettingsUpdate(changePositionIndex);
-                            fa.sendPlayerSettingsUpdate(position);
+                            fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(changePositionIndex,fa.getGame().getGamePlayer(changePositionIndex)));
+                            fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(position,fa.getGame().getGamePlayer(position)));
+
+                            //fa.sendPlayerSettingsUpdate(changePositionIndex);
+                            //fa.sendPlayerSettingsUpdate(position);
                         }
                     } else {
 
@@ -479,8 +496,11 @@ public class PlayerSettingsFragment extends Fragment {
 
     }
 
-    public void updatePlayerSettings(int slot) {
-        playerSettingsListAdapter.update(slot, fa.getGame().getGamePlayer(slot));
+    public void updatePlayerSettings(final int slot) {
+        fa.runOnUiThread(new Runnable() {
+            public void run() {
+                playerSettingsListAdapter.update(slot, fa.getGame().getGamePlayer(slot));
+        } });
     }
 
     public void setPlayerNameEdible(boolean edible) {

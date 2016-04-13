@@ -11,7 +11,6 @@
         style="@style/tv_header"
         android:text="@string/tv_title_host_game" />
 
-
     <LinearLayout
         android:id="@+id/ll_host_game_board_connection"
         android:layout_width="match_parent"

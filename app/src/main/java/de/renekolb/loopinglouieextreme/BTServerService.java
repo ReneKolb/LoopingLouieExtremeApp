@@ -14,10 +14,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import de.renekolb.loopinglouieextreme.BTPackets.Packet;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketClientChangeItem;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketClientPlayerName;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketClientSpinWheel;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketClientWheelNextPlayer;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketServerSpinWheel;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketServerUpdatePlayerSettings;
+import de.renekolb.loopinglouieextreme.BTPackets.PacketServerUpdateWheelSpinner;
 import de.renekolb.loopinglouieextreme.CustomViews.ConnectedPlayerListItem;
 import de.renekolb.loopinglouieextreme.ui.Constants;
 
-public class BTServerService {
+public class BTServerService implements BTService {
 
     private static final String NAME = "Looping Louie BT";
     public static final UUID commUuid = UUID.fromString("883fd50d-9980-4035-9f2e-eea84e2d1a95");
@@ -32,10 +40,10 @@ public class BTServerService {
 
     private final BluetoothAdapter mAdapter;
 
-    private final FullscreenActivity activity;
+    private final FullscreenActivity fa;
 
-    public BTServerService(FullscreenActivity activity, Handler handler) {
-        this.activity = activity;
+    public BTServerService(FullscreenActivity fa, Handler handler) {
+        this.fa = fa;
         this.mHandler = handler;
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         clientCommThread = new HashMap<>();
@@ -56,7 +64,7 @@ public class BTServerService {
                 BluetoothAdapter.SCAN_MODE_CONNECTABLE_DISCOVERABLE) {
             Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
             //discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300);
-            activity.startActivity(discoverableIntent);
+            fa.startActivity(discoverableIntent);
         }
     }
 
@@ -108,17 +116,19 @@ public class BTServerService {
         return -1;
     }*/
 
-    public void sendMessageToAllBut(String msg, String exceptAddress) {
+    public void sendMessageToAllBut(Packet packet, String exceptAddress) {
         for (BTConnectedThread b : clientCommThread.values()) {
             if (exceptAddress == null || !b.getSocket().getRemoteDevice().getAddress().equals(exceptAddress)) {
-                b.write(msg.getBytes());
+                //b.write(msg.getBytes());
+                b.sendPacket(packet);
             }
         }
     }
 
-    public void sendMessageToAll(String msg) {
+    public void sendMessageToAll(Packet packet) {
         for (BTConnectedThread b : clientCommThread.values()) {
-            b.write(msg.getBytes());
+            //b.write(msg.getBytes());
+            b.sendPacket(packet);
         }
         /*for (int i = 0; i < 3; i++) {
             if (clientCommThread.get(i) != null) {
@@ -127,8 +137,9 @@ public class BTServerService {
         }*/
     }
 
-    public void sendMessage(String address, String msg) {
-        clientCommThread.get(address).write(msg.getBytes());
+    public void sendMessage(String address, Packet packet) {
+        //clientCommThread.get(address).write(msg.getBytes());
+        clientCommThread.get(address).sendPacket(packet);
         /*if(clientCommThread.get(index) != null){
             clientCommThread.get(index).write(msg.getBytes());
         }*/
@@ -180,7 +191,7 @@ public class BTServerService {
     private synchronized void manageConnectedSocket(BluetoothSocket socket) {
 
         // Start the thread to manage the connection and perform transmissions
-        BTConnectedThread mConnectedThread = new BTConnectedThread(socket, mHandler);
+        BTConnectedThread mConnectedThread = new BTConnectedThread(socket, fa, this);
         mConnectedThread.start();
         // Add each connected thread to an array
         if (getConnectedDevices() >= 3)
@@ -201,6 +212,77 @@ public class BTServerService {
         bundle.putString(Constants.KEY_DEVICE_ADDRESS, socket.getRemoteDevice().getAddress());
         msg.setData(bundle);
         mHandler.sendMessage(msg);
+    }
+
+    @Override
+    public void onReceivePacket(String senderAddress, Packet packet) {
+        Log.i("Server Service", "Receive Packet: " + packet.getPacketType());
+        switch (packet.getPacketType()) {
+            case CLIENT_CHANGE_ITEM:
+                PacketClientChangeItem packetChangeItem = (PacketClientChangeItem) packet;
+
+
+                final int slot = fa.getGame().getGamePlayerIndex(senderAddress);
+                GamePlayer player = fa.getGame().getGamePlayer(slot);
+                ItemType it = ItemType.fromInt(packetChangeItem.getItemID());
+                player.setDefaultItemType(it);
+                if (fa.playerSettingsFragment != null && fa.playerSettingsFragment.isVisible()) {
+                    fa.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            fa.playerSettingsFragment.updatePlayerSettings(slot);
+                        }
+                    });
+                }
+                sendMessageToAll(new PacketServerUpdatePlayerSettings(slot, player));
+                //sendPlayerSettingsUpdate(slot); //send the change to all clients
+
+                break;
+            case CLIENT_PLAYER_NAME:
+                PacketClientPlayerName packetPlayerName = (PacketClientPlayerName) packet;
+
+                int slot2 = fa.getGame().getGamePlayerIndex(senderAddress);
+                if (slot2 == -1) {
+                    slot2 = fa.bindNewPlayer(senderAddress, "Test");
+                }
+                player = fa.getGame().getGamePlayer(slot2);
+                player.setGuestName(packetPlayerName.getPlayerName());
+                if (fa.playerSettingsFragment != null && fa.playerSettingsFragment.isVisible()) {
+                    final int slot2t = slot2;
+                    fa.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            fa.playerSettingsFragment.updatePlayerSettings(slot2t);
+                        }
+                    });
+                }
+                sendMessageToAll(new PacketServerUpdatePlayerSettings(slot2, fa.getGame().getGamePlayer(slot2)));
+                break;
+            case CLIENT_SPIN_WHEEL:
+                final PacketClientSpinWheel packetSpinWheel = (PacketClientSpinWheel) packet;
+                fa.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        fa.wheelOfFortuneHandler.startSpinning(packetSpinWheel.getViewStartRotation(), packetSpinWheel.getAnimationRot(), false);
+                    }
+                });
+                sendMessageToAllBut(new PacketServerSpinWheel(packetSpinWheel.getViewStartRotation(), packetSpinWheel.getAnimationRot()), senderAddress);
+                //sendWheelOfFortuneSpinToClients(viewRot, animRot, senderAddress);
+                break;
+            case CLIENT_WHEEL_NEXT_PLAYER:
+                PacketClientWheelNextPlayer packetWheelNextPlayer = (PacketClientWheelNextPlayer) packet;
+                fa.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        fa.wheelOfFortuneHandler.updateCurrentPlayer(fa.wheelOfFortuneHandler.getCurrentPosition());
+                    }
+                });
+                sendMessageToAll(new PacketServerUpdateWheelSpinner(fa.wheelOfFortuneHandler.getCurrentPosition()));
+
+                //wheelOfFortuneHandler.updateCurrentPlayer(wheelOfFortuneHandler.getCurrentPosition());
+                //sendWheelOfFortuneSpinnerToClients(wheelOfFortuneHandler.getCurrentPosition());
+                break;
+        }
     }
 
 
