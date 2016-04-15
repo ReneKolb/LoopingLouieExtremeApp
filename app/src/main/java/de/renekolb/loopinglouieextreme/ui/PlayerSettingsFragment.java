@@ -5,6 +5,7 @@ import android.animation.AnimatorInflater;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.ClipData;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -56,6 +58,8 @@ public class PlayerSettingsFragment extends Fragment {
     private boolean changeingPosition;
     private int changePositionIndex;
 
+    private InputMethodManager inputMethodManager;
+
     public static PlayerSettingsFragment newInstance() {
         return new PlayerSettingsFragment();
     }
@@ -80,6 +84,7 @@ public class PlayerSettingsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         chipCountRefreshTimer = new Handler();
+        inputMethodManager = (InputMethodManager) fa.getSystemService(Context.INPUT_METHOD_SERVICE);
 
         if (savedInstanceState == null) {
             this.playerSettingsListAdapter = new PlayerSettingsListAdapter(fa, fa.getGame());
@@ -87,7 +92,7 @@ public class PlayerSettingsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         //TODO: show player -> #chips,
@@ -138,6 +143,21 @@ public class PlayerSettingsFragment extends Fragment {
                     fa.getGame().getGamePlayer(mSelectedItem).setGuestName(s.toString());
                     playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
                     fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
+                }
+            }
+        });
+
+        etPlayerName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    /*if (mSelectedItem != -1) {
+                        fa.getGame().getGamePlayer(mSelectedItem).setGuestName(etPlayerName.getText().toString());
+                        playerSettingsListAdapter.update(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem));
+                        fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
+                    }*/
+
+                    inputMethodManager.hideSoftInputFromWindow(etPlayerName.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
                 }
             }
         });

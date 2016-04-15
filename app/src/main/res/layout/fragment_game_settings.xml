@@ -12,176 +12,181 @@
         android:text="@string/game_settings_title" />
 
     <LinearLayout
-        android:id="@+id/ll_game_settings_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_horz"
-        android:layout_marginRight="@dimen/margin_horz"
-        android:orientation="vertical"
         android:layout_below="@id/tv_game_settings_title"
-        android:layout_marginTop="@dimen/margin_vert">
-
-
-        <TextView
-            android:layout_marginBottom="10dp"
-            style="@style/tv_sub_header"
-            android:text="Spielmodus:" />
-
-        <ScrollView
-            android:id="@+id/sv_game_settings_game_modes"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:background="#33000000"
-            android:scrollbars="none">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/btn_game_settings_classic"
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="1"
-                    android:text="@string/game_settings_classic"
-                    android:layout_marginBottom="5dp"
-                    style="@style/btnSelect"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/btn_game_settings_action"
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/game_settings_action"
-                    style="@style/btnSelect"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="1"
-                    android:layout_marginBottom="5dp"
-                    android:text="Test new Mode"
-                    style="@style/btnSelect"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/btn_game_settings_custom"
-                    android:layout_width="match_parent"
-                    android:layout_height="0px"
-                    android:layout_weight="1"
-                    android:text="@string/game_settings_custom"
-                    style="@style/btnSelect"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-                <ImageButton
-                    android:id="@+id/btn_game_settings_custom_settings"
-                    android:layout_width="35dp"
-                    android:layout_height="0px"
-                    android:layout_weight="1"
-                    android:layout_marginTop="5dp"
-                    android:layout_gravity="end"
-                    android:src="@drawable/ic_settings_black"
-                    android:scaleType="fitCenter"
-                    style="@style/btnSelect"
-                    android:padding="4dp" />
-            </LinearLayout>
-
-        </ScrollView>
-
-
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/tv_game_settings_rounds"
-        style="@style/tv_sub_header"
-        android:layout_below="@id/ll_game_settings_buttons"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="@dimen/margin_horz"
-        android:layout_marginStart="@dimen/margin_horz"
-        android:layout_marginBottom="10dp"
-        android:text="@string/game_settings_rounds" />
-
-    <LinearLayout
-        android:id="@+id/ll_game_settings_dummy_number_picker"
-        android:orientation="horizontal"
+        android:layout_above="@+id/btn_game_settings_player_settings"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_game_settings_rounds"
-        android:layout_marginLeft="@dimen/margin_horz"
-        android:layout_marginRight="@dimen/margin_horz"
-        android:layout_centerHorizontal="true">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_vert"
+        android:layout_marginBottom="30dp"
+        android:orientation="vertical">
 
+        <LinearLayout
+            android:id="@+id/ll_game_settings_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/margin_horz"
+            android:layout_marginRight="@dimen/margin_horz"
+            android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/btn_game_settings_number_picker_button_down"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_remove"
-            style="@style/customNumberPickerButtonDown" />
+            <TextView
+                android:layout_marginBottom="10dp"
+                style="@style/tv_sub_header"
+                android:text="Spielmodus:" />
 
+            <ScrollView
+                android:id="@+id/sv_game_settings_game_modes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:background="#ccccb8"
+                android:fadingEdgeLength="15dp"
+                android:requiresFadingEdge="vertical"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btn_game_settings_classic"
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/game_settings_classic"
+                        android:layout_marginBottom="5dp"
+                        style="@style/btnSelect"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btn_game_settings_action"
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/game_settings_action"
+                        style="@style/btnSelect"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="5dp"
+                        android:text="Test new Mode"
+                        style="@style/btnSelect"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btn_game_settings_custom"
+                        android:layout_width="match_parent"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/game_settings_custom"
+                        style="@style/btnSelect"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <ImageButton
+                        android:id="@+id/btn_game_settings_custom_settings"
+                        android:layout_width="35dp"
+                        android:layout_height="0px"
+                        android:layout_weight="1"
+                        android:layout_marginBottom="8dp"
+                        android:layout_gravity="end"
+                        android:src="@drawable/ic_settings_black"
+                        android:scaleType="fitCenter"
+                        style="@style/btnSelect"
+                        android:padding="4dp" />
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_game_settings_number_picker_value"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            style="@style/customNumberPickerValue"
-            android:gravity="center"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:layout_marginRight="10dp"
-            android:textSize="20sp"
-            tools:text="3" />
+            android:id="@+id/tv_game_settings_rounds"
+            style="@style/tv_sub_header"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="@dimen/margin_horz"
+            android:layout_marginStart="@dimen/margin_horz"
+            android:layout_marginBottom="10dp"
+            android:text="@string/game_settings_rounds" />
 
-        <ImageButton
-            android:id="@+id/btn_game_settings_number_picker_button_up"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@drawable/ic_add"
-            style="@style/customNumberPickerButtonUp" />
+        <LinearLayout
+            android:id="@+id/ll_game_settings_dummy_number_picker"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_horz"
+            android:layout_marginRight="@dimen/margin_horz">
+
+
+            <ImageButton
+                android:id="@+id/btn_game_settings_number_picker_button_down"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_remove"
+                style="@style/customNumberPickerButtonDown" />
+
+
+            <TextView
+                android:id="@+id/tv_game_settings_number_picker_value"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                style="@style/customNumberPickerValue"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"
+                android:textSize="20sp"
+                tools:text="3" />
+
+            <ImageButton
+                android:id="@+id/btn_game_settings_number_picker_button_up"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_add"
+                style="@style/customNumberPickerButtonUp" />
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/cb_game_settings_enable_wheel_of_fortune"
+            style="@style/custom_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="@dimen/margin_horz"
+            android:layout_marginRight="@dimen/margin_horz"
+            android:text="@string/game_settings_enable_wof" />
+
+        <CheckBox
+            android:id="@+id/cb_game_settings_enable_loser_wheel"
+            style="@style/custom_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_horz"
+            android:layout_marginRight="@dimen/margin_horz"
+            android:layout_marginTop="5dp"
+            android:text="@string/game_settings_enable_loser_wheel" />
 
     </LinearLayout>
-
-    <CheckBox
-        android:id="@+id/cb_game_settings_enable_wheel_of_fortune"
-        style="@style/custom_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_game_settings_dummy_number_picker"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="@dimen/margin_horz"
-        android:layout_marginRight="@dimen/margin_horz"
-        android:text="@string/game_settings_enable_wof" />
-
-    <CheckBox
-        android:id="@+id/cb_game_settings_enable_loser_wheel"
-        style="@style/custom_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/margin_horz"
-        android:layout_marginRight="@dimen/margin_horz"
-        android:layout_marginTop="5dp"
-        android:layout_below="@id/cb_game_settings_enable_wheel_of_fortune"
-        android:text="@string/game_settings_enable_loser_wheel" />
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_game_settings_player_settings"
-        android:id="@+id/btn_game_settings_player_settings"
+        android:id="@id/btn_game_settings_player_settings"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/margin_vert"

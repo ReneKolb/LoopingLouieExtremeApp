@@ -14,7 +14,7 @@
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">20</item>
-        <item name="android:elevation">3dp</item>
+        <item name="android:elevation">4dp</item>
         <item name="android:gravity">center</item>
         <item name="android:paddingBottom">@dimen/header_padding_bottom</item>
         <item name="android:paddingTop">@dimen/header_padding_top</item>

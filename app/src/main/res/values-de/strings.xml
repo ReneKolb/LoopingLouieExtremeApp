@@ -111,6 +111,6 @@
     <string name="custom_game_settings_speed_min_delay">Minimale Geschwindigkeitsänderungsverzögerung</string>
     <string name="custom_game_settings_speed_min_step_size">Minimale Geschwindigkeitsänderungsschrittweite</string>
     <string name="dialog_user_name_hint">Geben Sie einen Namen für Ihr neues Spielerprofil ein</string>
-    <string name="toast_close_attempt">Bitte erneut auf ZURÜCK klicken um zu Beenden</string>
+    <string name="toast_close_attempt">Nochmaliges Tippen beendet den Spaß</string>
 
 </resources>
