@@ -17,6 +17,10 @@
         android:text="@string/main_menu_logged_in_as"
         android:textSize="14sp"
         android:textStyle="bold"
+        android:shadowColor="#FFFFFF"
+        android:shadowDx="1.5"
+        android:shadowDy="1.5"
+        android:shadowRadius="1"
         android:textColor="#000000" />
 
     <TextView
@@ -27,8 +31,12 @@
         android:layout_below="@id/tv_main_menu_profile_text"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
-        android:textStyle="italic"
+        android:textStyle="bold|italic"
         android:textColor="#262626"
+        android:shadowColor="#FFFFFF"
+        android:shadowDx="1.5"
+        android:shadowDy="1.5"
+        android:shadowRadius="1"
         tools:text="Profile Name" />
 
     <LinearLayout
