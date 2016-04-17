@@ -176,7 +176,9 @@ public class PlayerSettingsFragment extends Fragment {
                     GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
                     if (player.getConnectionState() == ConnectionState.CONNECTED) {
                         //Disconnect current Player
-                        fa.btServer.disconnectClient(player.getRemoteAddress(), true);
+                        //fa.btServer.disconnectClient(player.getRemoteAddress(), true);
+                        //UPDATE: don't do anything!
+                        return;
                     }
                     player.setConnectionState(ConnectionState.OPEN);
                     playerSettingsListAdapter.update(mSelectedItem, player);

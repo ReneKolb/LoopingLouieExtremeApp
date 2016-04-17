@@ -9,24 +9,24 @@
 
 
     <TextView
-        android:id="@+id/tv_game_round"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/game_round"
-        android:textColor="#000000"
-        android:textSize="25sp"
-        android:layout_above="@+id/tv_game_seconds"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp" />
-
-    <TextView
-        android:id="@id/tv_game_seconds"
+        android:id="@+id/tv_game_seconds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:textSize="70sp"
         android:textColor="#555555"
         android:textStyle="bold"
-        tools:text="08:13" />
+        android:text="00:01" />
+
+    <TextView
+        android:id="@+id/tv_game_round"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/game_round"
+        android:textColor="#000000"
+        android:textSize="25sp"
+        android:layout_above="@id/tv_game_seconds"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp" />
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>
