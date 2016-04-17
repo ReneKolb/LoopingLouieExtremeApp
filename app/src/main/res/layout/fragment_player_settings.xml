@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="de.renekolb.loopinglouieextreme.ui.PlayerSettingsFragment"
-    android:background="@drawable/background_1"
+    android:background="@drawable/cubes"
     android:clickable="true">
 
     <TextView
