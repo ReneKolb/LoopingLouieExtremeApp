@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fragment_background"
+    android:background="@drawable/background_1"
     android:clickable="true"
     tools:context="de.renekolb.loopinglouieextreme.ui.HostGameFragment">
 
@@ -139,10 +139,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:shadowColor="#FFFFFF"
-            android:shadowDx="1.5"
-            android:shadowDy="1.5"
-            android:shadowRadius="1"
+
             android:layout_weight="1"
             android:text="@string/btn_host_game_scan" />
 
