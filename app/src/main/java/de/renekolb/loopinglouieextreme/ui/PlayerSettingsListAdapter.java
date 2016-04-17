@@ -20,6 +20,9 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
     private final ArrayList<PlayerSettingsListItem> list;
     private final LayoutInflater layoutInflater;
 
+    private final int chipColorOK;
+    private final int chipColorNOK;
+
     public PlayerSettingsListAdapter(Context context, Game game) {
         layoutInflater = LayoutInflater.from(context);
 
@@ -27,6 +30,9 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
         for (int i = 0; i < 4; i++) {
             list.add(new PlayerSettingsListItem(game.getGamePlayer(i)));
         }
+
+        chipColorOK = context.getResources().getColor(R.color.chips_count_ok);
+        chipColorNOK = context.getResources().getColor(R.color.chips_count_nok);
     }
 
     public void update(int index, GamePlayer player) {
@@ -89,7 +95,12 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                     holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
                     holder.chips.setText("-");
                 } else {
-                    holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
+//                    holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
+                    if(data.getChipAmount() == 3) {
+                        holder.chips.setTextColor(chipColorOK);
+                    }else{
+                        holder.chips.setTextColor(chipColorNOK);
+                    }
                     holder.chips.setText(String.valueOf(data.getChipAmount()));
                 }
                 holder.chips.setVisibility(View.VISIBLE);
@@ -104,7 +115,12 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                     holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
                     holder.chips.setText("-");
                 } else {
-                    holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
+                    //holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
+                    if(data.getChipAmount() == 3) {
+                        holder.chips.setTextColor(chipColorOK);
+                    }else{
+                        holder.chips.setTextColor(chipColorNOK);
+                    }
                     holder.chips.setText(String.valueOf(data.getChipAmount()));
                 }
                 holder.chips.setVisibility(View.VISIBLE);
@@ -124,7 +140,12 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                     holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
                     holder.chips.setText("-");
                 } else {
-                    holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
+                    //holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
+                    if(data.getChipAmount() == 3) {
+                        holder.chips.setTextColor(chipColorOK);
+                    }else{
+                        holder.chips.setTextColor(chipColorNOK);
+                    }
                     holder.chips.setText(String.valueOf(data.getChipAmount()));
                 }
                 holder.chips.setVisibility(View.VISIBLE);

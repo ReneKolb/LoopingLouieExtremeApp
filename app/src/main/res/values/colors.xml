@@ -11,4 +11,7 @@
     <color name="header_settings_background">#00ccff</color>
     <color name="header_settings_text">#FFFFFF</color>
 
+    <color name="chips_count_ok">#227d02</color>
+    <color name="chips_count_nok">#e72a10</color>
+
 </resources>
