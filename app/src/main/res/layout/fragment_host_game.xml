@@ -19,7 +19,6 @@
         android:layout_marginTop="@dimen/margin_vert"
         android:layout_marginLeft="@dimen/margin_horz"
         android:layout_marginRight="@dimen/margin_horz"
-        android:background="@drawable/blue_layout_background"
         android:orientation="vertical">
 
 
@@ -32,7 +31,7 @@
                 android:id="@+id/tv_host_game_board_connection"
                 style="@style/tv_sub_header"
                 android:layout_centerInParent="true"
-                android:gravity="center"
+                android:gravity="left"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:text="@string/host_game_board_connection" />
@@ -56,9 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="20dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginRight="20dp"
             android:background="@drawable/blue_list_background"
             android:elevation="3dp"
             android:divider="#00000000" />
@@ -76,7 +73,6 @@
         android:layout_marginLeft="@dimen/margin_horz"
         android:layout_marginRight="@dimen/margin_horz"
         android:layout_marginTop="20dp"
-        android:background="@drawable/blue_layout_background"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -88,7 +84,7 @@
                 android:id="@+id/tv_host_game_connected_devices"
                 style="@style/tv_sub_header"
                 android:layout_centerInParent="true"
-                android:gravity="center"
+                android:gravity="left"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:text="@string/host_game_connected_players" />
@@ -100,8 +96,6 @@
                 android:layout_height="36dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginEnd="10dp"
-                android:layout_marginRight="10dp"
                 android:padding="3dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_visibility" />
@@ -112,11 +106,10 @@
             android:id="@+id/lv_host_game_clients"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/blue_list_background"
+            android:elevation="3dp"
             android:divider="#000000" />
 
     </LinearLayout>
@@ -139,7 +132,7 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-
+            android:textStyle="bold"
             android:layout_weight="1"
             android:text="@string/btn_host_game_scan" />
 
