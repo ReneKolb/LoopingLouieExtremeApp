@@ -1,5 +1,6 @@
 package de.renekolb.loopinglouieextreme;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import de.renekolb.loopinglouieextreme.PlayerProfiles.PlayerProfile;
@@ -142,6 +143,10 @@ public class GamePlayer {
 
     public String getRemoteAddress() {
         return this.remoteAddress;
+    }
+
+    public Bitmap getAvatar(){
+        return null;
     }
 
 }

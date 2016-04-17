@@ -159,6 +159,7 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_player_settings_booster"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -168,7 +169,6 @@
         android:layout_marginRight="@dimen/margin_horz"
         android:layout_marginEnd="@dimen/margin_horz"
         android:layout_below="@id/ll_player_settings_select_connection_state">
-
 
         <TextView
             android:layout_width="match_parent"
@@ -242,7 +242,7 @@
         android:id="@+id/ll_player_settings_set_player_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ll_player_settings_select_item"
+        android:layout_below="@id/ll_player_settings_booster"
         android:layout_marginLeft="@dimen/margin_horz"
         android:layout_marginRight="@dimen/margin_horz"
         android:layout_marginTop="10dp">
@@ -253,6 +253,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:textColor="#000000"
+            android:textSize="16sp"
             android:text="@string/player_settings_player_name" />
 
         <EditText
@@ -260,6 +261,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
             android:inputType="text" />
 
     </LinearLayout>

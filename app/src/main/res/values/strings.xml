@@ -63,7 +63,7 @@
     <string name="achievements_title">Achievements</string>
     <string name="main_menu_logged_in_as">User:</string>
     <string name="statistics_title">Statistics</string>
-    <string name="game_round">Round: %1$d / %2$d</string>
+    <string name="game_round">Round %1$d / %2$d</string>
     <string name="player_results_time">Game Time: %1$02d:%2$02d</string>
     <string name="game_settings_rounds">Rounds:</string>
     <string name="settings_enable_debug">Enable Debug Mode</string>

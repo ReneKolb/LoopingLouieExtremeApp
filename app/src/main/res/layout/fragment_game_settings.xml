@@ -180,11 +180,11 @@
 
 
     <Button
+        android:id="@id/btn_game_settings_player_settings"
+        style="@style/btnSelect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/btnSelect"
         android:text="@string/btn_game_settings_player_settings"
-        android:id="@id/btn_game_settings_player_settings"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/margin_vert"

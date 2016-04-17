@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -102,31 +103,37 @@ public class PlayerSettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_player_settings, container, false);
 
+        final LinearLayout llConState = (LinearLayout) view.findViewById(R.id.ll_player_settings_select_connection_state);
         final Button btnOpen = (Button) view.findViewById(R.id.btn_player_settings_open);
         final Button btnLocal = (Button) view.findViewById(R.id.btn_player_settings_local);
         final Button btnClose = (Button) view.findViewById(R.id.btn_player_settings_close);
 
+        final LinearLayout llBooster = (LinearLayout) view.findViewById(R.id.ll_player_settings_booster);
         final Button btnTurbo = (Button) view.findViewById(R.id.btn_player_settings_turbo);
         final Button btnSlow = (Button) view.findViewById(R.id.btn_player_settings_slow);
         final Button btnReverse = (Button) view.findViewById(R.id.btn_player_settings_reverse);
         final Button btnBlackout = (Button) view.findViewById(R.id.btn_player_settings_blackout);
 
+        final LinearLayout llPlayerName = (LinearLayout) view.findViewById(R.id.ll_player_settings_set_player_name);
         final TextView tvPlayerName = (TextView) view.findViewById(R.id.tv_player_settings_player_name_title);
         final EditText etPlayerName = (EditText) view.findViewById(R.id.et_player_settings_player_name_edit);
 
         if (fa.deviceRole == DeviceRole.SERVER) {
-            btnTurbo.setVisibility(View.INVISIBLE);
+            llBooster.setVisibility(View.INVISIBLE);
+            /*btnTurbo.setVisibility(View.INVISIBLE);
             btnSlow.setVisibility(View.INVISIBLE);
             btnReverse.setVisibility(View.INVISIBLE);
-            btnBlackout.setVisibility(View.INVISIBLE);
+            btnBlackout.setVisibility(View.INVISIBLE);*/
         }
 
-        btnOpen.setVisibility(View.GONE);
+        llConState.setVisibility(View.GONE);
+        /*btnOpen.setVisibility(View.GONE);
         btnLocal.setVisibility(View.GONE);
-        btnClose.setVisibility(View.GONE);
+        btnClose.setVisibility(View.GONE);*/
 
-        tvPlayerName.setVisibility(View.GONE);
-        etPlayerName.setVisibility(View.GONE);
+        llPlayerName.setVisibility(View.GONE);
+        /*tvPlayerName.setVisibility(View.GONE);
+        etPlayerName.setVisibility(View.GONE);*/
 
         etPlayerName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -176,13 +183,15 @@ public class PlayerSettingsFragment extends Fragment {
                     //fa.sendPlayerSettingsUpdate(mSelectedItem);
                     fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
 
-                    btnTurbo.setVisibility(View.INVISIBLE);
+                    llBooster.setVisibility(View.INVISIBLE);
+                    /*btnTurbo.setVisibility(View.INVISIBLE);
                     btnSlow.setVisibility(View.INVISIBLE);
                     btnReverse.setVisibility(View.INVISIBLE);
-                    btnBlackout.setVisibility(View.INVISIBLE);
+                    btnBlackout.setVisibility(View.INVISIBLE);*/
 
-                    tvPlayerName.setVisibility(View.INVISIBLE);
-                    etPlayerName.setVisibility(View.INVISIBLE);
+                    llPlayerName.setVisibility(View.INVISIBLE);
+                    /*tvPlayerName.setVisibility(View.INVISIBLE);
+                    etPlayerName.setVisibility(View.INVISIBLE);*/
 
                     btnOpen.setEnabled(false);
                     btnLocal.setEnabled(true);
@@ -205,14 +214,16 @@ public class PlayerSettingsFragment extends Fragment {
                     //fa.sendPlayerSettingsUpdate(mSelectedItem);
                     fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
 
-                    btnTurbo.setVisibility(View.VISIBLE);
+                    llBooster.setVisibility(View.VISIBLE);
+                    /*btnTurbo.setVisibility(View.VISIBLE);
                     btnSlow.setVisibility(View.VISIBLE);
                     btnReverse.setVisibility(View.VISIBLE);
-                    btnBlackout.setVisibility(View.VISIBLE);
+                    btnBlackout.setVisibility(View.VISIBLE);*/
 
                     if (player.isGuest()) {
-                        tvPlayerName.setVisibility(View.VISIBLE);
-                        etPlayerName.setVisibility(View.VISIBLE);
+                        llPlayerName.setVisibility(View.VISIBLE);
+                        /*tvPlayerName.setVisibility(View.VISIBLE);
+                        etPlayerName.setVisibility(View.VISIBLE);*/
 
                         etPlayerName.setText(player.getDisplayName());
                     }
@@ -239,13 +250,15 @@ public class PlayerSettingsFragment extends Fragment {
                     //fa.sendPlayerSettingsUpdate(mSelectedItem);
                     fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
 
-                    btnTurbo.setVisibility(View.INVISIBLE);
+                    llBooster.setVisibility(View.INVISIBLE);
+                    /*btnTurbo.setVisibility(View.INVISIBLE);
                     btnSlow.setVisibility(View.INVISIBLE);
                     btnReverse.setVisibility(View.INVISIBLE);
-                    btnBlackout.setVisibility(View.INVISIBLE);
+                    btnBlackout.setVisibility(View.INVISIBLE);*/
 
-                    tvPlayerName.setVisibility(View.INVISIBLE);
-                    etPlayerName.setVisibility(View.INVISIBLE);
+                    llPlayerName.setVisibility(View.INVISIBLE);
+                    /*tvPlayerName.setVisibility(View.INVISIBLE);
+                    etPlayerName.setVisibility(View.INVISIBLE);*/
 
                     btnOpen.setEnabled(true);
                     btnLocal.setEnabled(true);
@@ -386,43 +399,51 @@ public class PlayerSettingsFragment extends Fragment {
                             GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
 
                             if (player.getConnectionState().equals(ConnectionState.LOCAL)) {
-                                btnTurbo.setVisibility(View.VISIBLE);
+                                llBooster.setVisibility(View.VISIBLE);
+                                /*btnTurbo.setVisibility(View.VISIBLE);
                                 btnSlow.setVisibility(View.VISIBLE);
                                 btnReverse.setVisibility(View.VISIBLE);
-                                btnBlackout.setVisibility(View.VISIBLE);
+                                btnBlackout.setVisibility(View.VISIBLE);*/
 
                                 if (player.isGuest()) {
-                                    tvPlayerName.setVisibility(View.VISIBLE);
-                                    etPlayerName.setVisibility(View.VISIBLE);
+                                    llPlayerName.setVisibility(View.VISIBLE);
+                                    /*tvPlayerName.setVisibility(View.VISIBLE);
+                                    etPlayerName.setVisibility(View.VISIBLE);*/
                                 } else {
-                                    tvPlayerName.setVisibility(View.INVISIBLE);
-                                    etPlayerName.setVisibility(View.INVISIBLE);
+                                    llPlayerName.setVisibility(View.INVISIBLE);
+                                    /*tvPlayerName.setVisibility(View.INVISIBLE);
+                                    etPlayerName.setVisibility(View.INVISIBLE);*/
                                 }
                             } else {
-                                btnTurbo.setVisibility(View.INVISIBLE);
+                                llBooster.setVisibility(View.INVISIBLE);
+                                /*btnTurbo.setVisibility(View.INVISIBLE);
                                 btnSlow.setVisibility(View.INVISIBLE);
                                 btnReverse.setVisibility(View.INVISIBLE);
-                                btnBlackout.setVisibility(View.INVISIBLE);
+                                btnBlackout.setVisibility(View.INVISIBLE);*/
 
-                                tvPlayerName.setVisibility(View.INVISIBLE);
-                                etPlayerName.setVisibility(View.INVISIBLE);
+                                llPlayerName.setVisibility(View.INVISIBLE);
+                                /*tvPlayerName.setVisibility(View.INVISIBLE);
+                                etPlayerName.setVisibility(View.INVISIBLE);*/
                             }
 
                             if (mPlayerNameEdible) {
                                 if (player.getConnectionState().equals(ConnectionState.LOCAL) && player.isGuest()) {
-                                    tvPlayerName.setVisibility(View.VISIBLE);
-                                    etPlayerName.setVisibility(View.VISIBLE);
+                                    llPlayerName.setVisibility(View.VISIBLE);
+                                    /*tvPlayerName.setVisibility(View.VISIBLE);
+                                    etPlayerName.setVisibility(View.VISIBLE);*/
 
                                     etPlayerName.setText(player.getDisplayName());
                                     etPlayerName.setSelection(etPlayerName.getText().length());
                                 }
 
-                                btnOpen.setVisibility(View.VISIBLE);
+                                llConState.setVisibility(View.VISIBLE);
+                                /*btnOpen.setVisibility(View.VISIBLE);
                                 btnLocal.setVisibility(View.VISIBLE);
-                                btnClose.setVisibility(View.VISIBLE);
+                                btnClose.setVisibility(View.VISIBLE);*/
                             } else {
-                                tvPlayerName.setVisibility(View.INVISIBLE);
-                                etPlayerName.setVisibility(View.INVISIBLE);
+                                llPlayerName.setVisibility(View.INVISIBLE);
+                                /*tvPlayerName.setVisibility(View.INVISIBLE);
+                                etPlayerName.setVisibility(View.INVISIBLE);*/
                             }
 
                             btnOpen.setEnabled(!ConnectionState.OPEN.equals(p.getItem(position).getConnectionState()));

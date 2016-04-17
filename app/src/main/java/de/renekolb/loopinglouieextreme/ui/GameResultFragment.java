@@ -4,17 +4,22 @@ import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import de.renekolb.loopinglouieextreme.DeviceRole;
 import de.renekolb.loopinglouieextreme.FragmentUtils;
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
+import de.renekolb.loopinglouieextreme.GamePlayer;
+import de.renekolb.loopinglouieextreme.PlayerColor;
 import de.renekolb.loopinglouieextreme.R;
 
 
@@ -107,27 +112,71 @@ public class GameResultFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_game_result, container, false);
 
-        final TextView tvFirst = (TextView) view.findViewById(R.id.tv_game_results_first_player);
-        final TextView tvSecond = (TextView) view.findViewById(R.id.tv_game_results_second_player);
-        final TextView tvThird = (TextView) view.findViewById(R.id.tv_game_results_third_player);
-        final TextView tvFourth = (TextView) view.findViewById(R.id.tv_game_results_fourth_player);
+        final TableRow trFirst = (TableRow) view.findViewById(R.id.tr_game_results_first);
+        final TextView tvFirstName = (TextView) view.findViewById(R.id.tv_game_results_player_first);
+        final TextView tvFirstPoints = (TextView) view.findViewById(R.id.tv_game_results_points_first);
+
+        final TableRow trSecond = (TableRow) view.findViewById(R.id.tr_game_results_second);
+        final TextView tvSecondName = (TextView) view.findViewById(R.id.tv_game_results_player_second);
+        final TextView tvSecondPoints = (TextView) view.findViewById(R.id.tv_game_results_points_second);
+
+        final TableRow trThird = (TableRow) view.findViewById(R.id.tr_game_results_third);
+        final TextView tvThirdName = (TextView) view.findViewById(R.id.tv_game_results_player_third);
+        final TextView tvThirdPoints = (TextView) view.findViewById(R.id.tv_game_results_points_third);
+
+        final TableRow trFourth = (TableRow) view.findViewById(R.id.tr_game_results_fourth);
+        final TextView tvFourthName = (TextView) view.findViewById(R.id.tv_game_results_player_fourth);
+        final TextView tvFourthPoints = (TextView) view.findViewById(R.id.tv_game_results_points_fourth);
+
+        final ImageView ivFirst = (ImageView) view.findViewById(R.id.iv_game_results_first);
+        final ImageView ivSecond = (ImageView) view.findViewById(R.id.iv_game_results_second);
+        final ImageView ivThird = (ImageView) view.findViewById(R.id.iv_game_results_third);
 
 
-        tvFirst.setText("1. " + fa.getGame().getGamePlayer(mFirstPlayer).getDisplayName() + "  +4 (" + fa.getGame().getGamePlayer(mFirstPlayer).getPoints() + ")");
-        tvFirst.setBackgroundColor(fa.getGame().getGamePlayer(mFirstPlayer).getPlayerColor().getColor());
-        tvSecond.setText("2. " + fa.getGame().getGamePlayer(mSecondPlayer).getDisplayName() + "  +3 (" + fa.getGame().getGamePlayer(mSecondPlayer).getPoints() + ")");
-        tvSecond.setBackgroundColor(fa.getGame().getGamePlayer(mSecondPlayer).getPlayerColor().getColor());
-        if (mThirdPlayer != -1) {
-            tvThird.setText("3. " + fa.getGame().getGamePlayer(mThirdPlayer).getDisplayName() + "  +2 (" + fa.getGame().getGamePlayer(mThirdPlayer).getPoints() + ")");
-            tvThird.setBackgroundColor(fa.getGame().getGamePlayer(mThirdPlayer).getPlayerColor().getColor());
-        } else {
-            tvThird.setVisibility(View.GONE);
+        GamePlayer first = fa.getGame().getGamePlayer(mFirstPlayer);
+        tvFirstName.setText(first.getDisplayName());
+        tvFirstName.setBackgroundColor(first.getPlayerColor().getColor());
+        tvFirstPoints.setText(String.valueOf(4)); //winner receives 4 points
+        if(first.getAvatar() != null){
+            ivFirst.setImageBitmap(first.getAvatar());
+        }else{
+            ivFirst.setImageResource(getBallFromSlot(first.getPlayerColor()));
         }
-        if (mFourthPlayer != -1) {
-            tvFourth.setText("4. " + fa.getGame().getGamePlayer(mFourthPlayer).getDisplayName() + "  +1 (" + fa.getGame().getGamePlayer(mFourthPlayer).getPoints() + ")");
-            tvFourth.setBackgroundColor(fa.getGame().getGamePlayer(mFourthPlayer).getPlayerColor().getColor());
-        } else {
-            tvFourth.setVisibility(View.GONE);
+
+        GamePlayer second = fa.getGame().getGamePlayer(mSecondPlayer);
+        tvSecondName.setText(second.getDisplayName());
+        tvSecondName.setBackgroundColor(second.getPlayerColor().getColor());
+        tvSecondPoints.setText(String.valueOf(3));
+        if(second.getAvatar() != null){
+            ivSecond.setImageBitmap(second.getAvatar());
+        }else{
+            ivSecond.setImageResource(getBallFromSlot(second.getPlayerColor()));
+        }
+
+        if(mThirdPlayer != -1){
+            trThird.setVisibility(View.VISIBLE);
+            GamePlayer third = fa.getGame().getGamePlayer(mThirdPlayer);
+            tvThirdName.setText(third.getDisplayName());
+            tvThirdName.setBackgroundColor(third.getPlayerColor().getColor());
+            tvThirdPoints.setText(String.valueOf(2));
+            if(third.getAvatar() != null){
+                ivThird.setImageBitmap(third.getAvatar());
+            }else{
+                ivThird.setImageResource(getBallFromSlot(third.getPlayerColor()));
+            }
+        }else{
+            trThird.setVisibility(View.INVISIBLE);
+            ivThird.setVisibility(View.INVISIBLE);
+        }
+
+        if(mFourthPlayer != -1){
+            trFourth.setVisibility(View.VISIBLE);
+            GamePlayer fourth = fa.getGame().getGamePlayer(mFourthPlayer);
+            tvFourthName.setText(fourth.getDisplayName());
+            tvFourthName.setBackgroundColor(fourth.getPlayerColor().getColor());
+            tvFourthPoints.setText(String.valueOf(1));
+        }else{
+            trFourth.setVisibility(View.INVISIBLE);
         }
 
         Button btnWheelOfFortune = (Button) view.findViewById(R.id.btn_game_results_wheel_of_fortune);
@@ -190,6 +239,20 @@ public class GameResultFragment extends Fragment {
             default:
                 return "UNKNOWN";
         }
+    }
+
+    private int getBallFromSlot(PlayerColor playerColor){
+        switch(playerColor){
+            case RED:
+                return R.drawable.ball_red;
+            case PURPLE:
+                return R.drawable.ball_purple;
+            case YELLOW:
+                return R.drawable.ball_yellow;
+            case GREEN:
+                return R.drawable.ball_green;
+        }
+        return -1;
     }
 
 }

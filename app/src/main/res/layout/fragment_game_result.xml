@@ -12,79 +12,259 @@
         style="@style/tv_header"
         android:text="@string/player_results_title" />
 
+    <TableLayout
+        android:id="@+id/tl_game_results"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_game_results_title"
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginRight="@dimen/margin_horz"
+        android:layout_marginTop="@dimen/margin_vert">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_column="0"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="Rang"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="3.5"
+                android:layout_column="1"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:text="Spieler"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_column="2"
+                android:textColor="#000000"
+                android:gravity="end"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="Punkte"/>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tr_game_results_first"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_column="0"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:text="1."/>
+
+            <TextView
+                android:id="@+id/tv_game_results_player_first"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="6"
+                android:layout_column="1"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:text="Günther"/>
+
+            <TextView
+                android:id="@+id/tv_game_results_points_first"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_column="2"
+                android:textColor="#000000"
+                android:gravity="end"
+                android:textSize="18sp"
+                android:text="4"/>
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tr_game_results_second">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_column="0"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:text="2."/>
+
+            <TextView
+                android:id="@+id/tv_game_results_player_second"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="6"
+                android:layout_column="1"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:text="Günther2"/>
+
+            <TextView
+                android:id="@+id/tv_game_results_points_second"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_column="2"
+                android:textColor="#000000"
+                android:gravity="end"
+                android:textSize="18sp"
+                android:text="3"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tr_game_results_third">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_column="0"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:text="3."/>
+
+            <TextView
+                android:id="@+id/tv_game_results_player_third"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="6"
+                android:layout_column="1"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:text="Günther4"/>
+
+            <TextView
+                android:id="@+id/tv_game_results_points_third"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_column="2"
+                android:textColor="#000000"
+                android:gravity="end"
+                android:textSize="18sp"
+                android:text="2"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tr_game_results_fourth">
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_column="0"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:text="4."/>
+
+            <TextView
+                android:id="@+id/tv_game_results_player_fourth"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="6"
+                android:layout_column="1"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:text="Günther33"/>
+
+            <TextView
+                android:id="@+id/tv_game_results_points_fourth"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_column="2"
+                android:textColor="#000000"
+                android:gravity="end"
+                android:textSize="18sp"
+                android:text="1"/>
+        </TableRow>
+
+    </TableLayout>
+
+
     <TextView
         android:id="@+id/tv_game_results_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/player_results_time"
-        android:layout_below="@+id/tv_game_results_title"
-        android:layout_marginTop="@dimen/margin_vert"
+        android:layout_below="@+id/tl_game_results"
+        android:layout_marginTop="30dp"
         android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginStart="@dimen/margin_horz"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:textColor="#000000"
         android:textSize="20sp" />
 
-    <TextView
+    <AbsoluteLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="1. Günther  +4 (47)"
-        tools:background="#FF0000"
-        android:id="@+id/tv_game_results_first_player"
-        android:layout_below="@+id/tv_game_results_time"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="@dimen/margin_horz"
-        android:textColor="#000000"
-        android:textSize="35sp" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/btn_game_results_wheel_of_fortune">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="2. Gudrun  +3 (20)"
-        tools:background="#00FF00"
-        android:id="@+id/tv_game_results_second_player"
-        android:layout_below="@+id/tv_game_results_first_player"
-        android:layout_alignLeft="@id/tv_game_results_first_player"
-        android:layout_alignStart="@id/tv_game_results_first_player"
-        android:textColor="#000000"
-        android:textSize="25sp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp" />
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:layout_y="55dp"
+            android:src="@drawable/siegertreppchen"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="3. Seppel  +2 (10)"
-        tools:background="#880088"
-        android:id="@+id/tv_game_results_third_player"
-        android:layout_below="@+id/tv_game_results_second_player"
-        android:layout_alignLeft="@+id/tv_game_results_second_player"
-        android:layout_alignStart="@+id/tv_game_results_second_player"
-        android:textColor="#000000"
-        android:layout_marginLeft="25dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp" />
+        <ImageView
+            android:id="@+id/iv_game_results_second"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_x="20dp"
+            android:layout_y="23dp"
+            android:src="@drawable/ball_green"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="4. Antje  +1 (5)"
-        tools:background="#DDDD00"
-        android:id="@+id/tv_game_results_fourth_player"
-        android:layout_below="@+id/tv_game_results_third_player"
-        android:layout_alignLeft="@+id/tv_game_results_third_player"
-        android:layout_alignStart="@+id/tv_game_results_third_player"
-        android:textColor="#000000"
-        android:layout_marginTop="20dp" />
+        <ImageView
+            android:id="@+id/iv_game_results_first"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_x="118dp"
+            android:src="@drawable/ball_red"/>
+
+        <ImageView
+            android:id="@+id/iv_game_results_third"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_x="212dp"
+            android:layout_y="33dp"
+            android:src="@drawable/ball_purple"/>
+
+    </AbsoluteLayout>
+
+
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_game_results_wof"
-        android:id="@+id/btn_game_results_wheel_of_fortune"
+        style="@style/btnSelect"
+        android:id="@id/btn_game_results_wheel_of_fortune"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/margin_vert"/>

@@ -91,7 +91,7 @@
 
             <ImageButton
                 android:id="@+id/btn_host_game_make_visible"
-                style="@style/btnDefault"
+                style="@style/btnSelect"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:layout_alignParentEnd="true"

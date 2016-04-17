@@ -40,6 +40,7 @@
 
     <Button
         android:id="@+id/btn_settings_test_wheel"
+        style="@style/btnSelect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/cb_settings_disable_bt"
@@ -48,6 +49,7 @@
 
     <Button
         android:id="@+id/btn_settings_wipe_files"
+        style="@style/btnSelect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_settings_test_wheel"
