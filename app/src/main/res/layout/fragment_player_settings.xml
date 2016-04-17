@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="de.renekolb.loopinglouieextreme.ui.PlayerSettingsFragment"
-    android:background="@color/fragment_background"
+    android:background="@drawable/background_1"
     android:clickable="true">
 
     <TextView
@@ -11,148 +11,232 @@
         style="@style/tv_header"
         android:text="@string/tv_player_settings_title" />
 
-    <TextView
-        android:id="@+id/tv_player_settings_players_title"
-        android:layout_width="wrap_content"
+
+
+    <RelativeLayout
+        android:id="@+id/ll_player_settings_players"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_player_settings_title"
+        android:elevation="3dp"
+        android:background="@drawable/blue_list_background"
+        android:layout_marginTop="@dimen/margin_vert"
         android:layout_marginLeft="@dimen/margin_horz"
         android:layout_marginStart="@dimen/margin_horz"
-        android:layout_marginTop="@dimen/margin_vert"
-        android:textColor="#000000"
-        android:textSize="19sp"
-        android:textStyle="bold"
-        android:text="@string/player_settings_players" />
+        android:layout_marginRight="@dimen/margin_horz"
+        android:layout_marginEnd="@dimen/margin_horz"
+        android:layout_below="@id/tv_player_settings_title"
+        android:layout_centerHorizontal="true">
 
-    <ListView
-        android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll_player_settings_players_header"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="10"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="Spielername:" />
+
+            <TextView
+                android:id="@+id/tv_listitem_player_settings_player_item"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_weight="10"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="Booster:" />
+
+            <TextView
+                android:id="@+id/tv_listitem_player_settings_player_chips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginRight="5dp"
+                android:textColor="#000000"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="#" />
+        </LinearLayout>
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv_player_settings_players"
+            android:layout_below="@id/ll_player_settings_players_header"
+            android:choiceMode="singleChoice"
+            android:layout_centerHorizontal="true"
+            android:listSelector="#AAAAAA"
+
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10.0sp"
+
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"/>
+
+    </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/ll_player_settings_select_connection_state"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lv_player_settings_players"
-        android:choiceMode="singleChoice"
-        android:listSelector="#AAAAAA"
+        android:layout_marginLeft="@dimen/margin_horz"
+        android:layout_marginRight="@dimen/margin_horz"
+        android:layout_marginTop="25dp"
+        android:layout_below="@id/ll_player_settings_players">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            android:text="Slot Einstellungen"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_player_settings_open"
+                android:layout_width="0px"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                style="@style/btnSelect"
+                android:text="@string/player_settings_slot_open"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_player_settings_local"
+                android:layout_width="0px"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                style="@style/btnSelect"
+                android:text="@string/player_settings_slot_local"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_player_settings_close"
+                android:layout_width="0px"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                style="@style/btnSelect"
+                android:text="@string/player_settings_slot_close"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="@dimen/margin_horz"
         android:layout_marginStart="@dimen/margin_horz"
         android:layout_marginRight="@dimen/margin_horz"
         android:layout_marginEnd="@dimen/margin_horz"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"
-        android:background="@drawable/blue_list_background"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:layout_below="@id/tv_player_settings_players_title"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@id/ll_player_settings_select_connection_state">
 
-    <LinearLayout
-        android:id="@+id/ll_player_settings_select_connection_state"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/lv_player_settings_players"
-        android:layout_marginTop="25dp"
-        android:layout_marginLeft="@dimen/margin_horz"
-        android:layout_marginStart="@dimen/margin_horz"
-        android:layout_marginRight="@dimen/margin_horz"
-        android:layout_marginEnd="@dimen/margin_horz">
 
-        <Button
-            android:id="@+id/btn_player_settings_open"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            style="@style/btnSelect"
-            android:text="@string/player_settings_slot_open"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:textSize="19sp"
             android:textStyle="bold"
-            android:layout_weight="1" />
+            android:text="Booster"/>
 
-        <Button
-            android:id="@+id/btn_player_settings_local"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            style="@style/btnSelect"
-            android:text="@string/player_settings_slot_local"
-            android:textStyle="bold"
-            android:layout_weight="1" />
+        <LinearLayout
+            android:id="@+id/ll_player_settings_select_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_player_settings_close"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            style="@style/btnSelect"
-            android:text="@string/player_settings_slot_close"
-            android:textStyle="bold"
-            android:layout_weight="1" />
+            <Button
+                android:id="@+id/btn_player_settings_turbo"
+                android:layout_width="0px"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                style="@style/btnSelect"
+                android:text="@string/player_settings_item_turbo"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_player_settings_slow"
+                android:layout_width="0px"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                style="@style/btnSelect"
+                android:text="@string/player_settings_item_slow"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_player_settings_reverse"
+                android:layout_width="0px"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                style="@style/btnSelect"
+                android:text="@string/player_settings_item_reverse"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/btn_player_settings_blackout"
+                android:layout_width="0px"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                style="@style/btnSelect"
+                android:text="@string/player_settings_item_black"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_player_settings_select_item"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@id/ll_player_settings_select_connection_state"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="@dimen/margin_horz"
-        android:layout_marginStart="@dimen/margin_horz"
-        android:layout_marginRight="@dimen/margin_horz"
-        android:layout_marginEnd="@dimen/margin_horz">
 
-        <Button
-            android:id="@+id/btn_player_settings_turbo"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            style="@style/btnSelect"
-            android:text="@string/player_settings_item_turbo"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btn_player_settings_slow"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            style="@style/btnSelect"
-            android:text="@string/player_settings_item_slow"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btn_player_settings_reverse"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            style="@style/btnSelect"
-            android:text="@string/player_settings_item_reverse"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btn_player_settings_blackout"
-            android:layout_width="0px"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="2dip"
-            android:layout_marginRight="2dip"
-            style="@style/btnSelect"
-            android:text="@string/player_settings_item_black"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:layout_weight="1" />
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_player_settings_set_player_name"
@@ -181,10 +265,11 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btn_player_settings_start"
+        style="@style/btnSelect"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btn_player_settings_start"
-        android:id="@+id/btn_player_settings_start"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/margin_vert" />
