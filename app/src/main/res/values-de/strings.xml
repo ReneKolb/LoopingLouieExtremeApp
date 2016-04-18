@@ -112,5 +112,9 @@
     <string name="custom_game_settings_speed_min_step_size">Minimale Geschwindigkeitsänderungsschrittweite</string>
     <string name="dialog_user_name_hint">Geben Sie einen Namen für Ihr neues Spielerprofil ein</string>
     <string name="toast_close_attempt">Nochmaliges Tippen beendet den Spaß</string>
+    <string name="dialog_request_kick">Wollen Sie den Spieler wirklich rausschmeißen?</string>
+    <string name="dialog_yes">Ja</string>
+    <string name="dialog_cancel">Abbrechen</string>
+    <string name="dialog_ok">OK</string>
 
 </resources>

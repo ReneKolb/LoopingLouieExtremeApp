@@ -27,7 +27,7 @@ public class ProfileManager {
     private int defaultID;
     private HashMap<Integer, PlayerProfile> storedProfiles;
 
-    public ProfileManager(FullscreenActivity context, Handler mHandler) {
+    public ProfileManager(Context context, Handler mHandler) {
         this.context = context;
         this.mHandler = mHandler;
         this.defaultID = -1;
@@ -72,6 +72,10 @@ public class ProfileManager {
                 //error closing file
             }
         }
+    }
+
+    public void setContext(Context context){
+        this.context = context;
     }
 
     private void saveProfilesList() {

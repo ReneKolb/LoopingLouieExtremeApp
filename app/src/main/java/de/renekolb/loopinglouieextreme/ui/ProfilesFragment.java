@@ -92,13 +92,13 @@ public class ProfilesFragment extends Fragment {
                 final EditText input = (EditText) dialogView.findViewById(R.id.et_dialog_user_name_input);
 
                 dialogBuilder.setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 addPlayer(input.getText().toString());
                             }
                         })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 //do nothing
@@ -131,13 +131,13 @@ public class ProfilesFragment extends Fragment {
                     input.setText(profile.getPlayerName());
 
                     dialogBuilder.setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(R.string.dialog_ok, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     editPlayerName(profile, input.getText().toString());
                                 }
                             })
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            .setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     //do nothing
@@ -179,6 +179,13 @@ public class ProfilesFragment extends Fragment {
                     listAdapter.setSelectedIndex(mSelectedItem);
                     fa.getProfileManager().setDefaultProfileID(profile.getProfileID());
                     fa.setCurrentPlayerProfile(profile);
+
+                    fa.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            fa.getFragmentManager().popBackStack();
+                        }
+                    });
                 } else {
                     Log.w("BLUB", "No profile selected to delete");
                 }

@@ -3,9 +3,13 @@ package de.renekolb.loopinglouieextreme.ui;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -15,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -241,30 +246,51 @@ public class PlayerSettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (mSelectedItem != -1) {
-                    GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
+                    final GamePlayer player = fa.getGame().getGamePlayer(mSelectedItem);
+
                     if (player.getConnectionState() == ConnectionState.CONNECTED) {
                         //Disconnect current Player
-                        fa.btServer.disconnectClient(player.getRemoteAddress(), true);
+                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(fa);
+                        dialogBuilder.setCancelable(false).setMessage(R.string.dialog_request_kick).setPositiveButton(R.string.dialog_yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                fa.btServer.disconnectClient(player.getRemoteAddress(), true);
+
+                                player.setConnectionState(ConnectionState.CLOSED);
+                                player.setGuestName(null);
+                                playerSettingsListAdapter.update(mSelectedItem, player);
+
+                                fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
+
+                                llBooster.setVisibility(View.INVISIBLE);
+                                llPlayerName.setVisibility(View.INVISIBLE);
+
+                                btnOpen.setEnabled(true);
+                                btnLocal.setEnabled(true);
+                                btnClose.setEnabled(false);
+                            }
+                        }).setNegativeButton(R.string.dialog_cancel, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                //do nothing
+                            }
+                        });
+                        dialogBuilder.create().show();
+
+                    }else{
+                        player.setConnectionState(ConnectionState.CLOSED);
+                        player.setGuestName(null);
+                        playerSettingsListAdapter.update(mSelectedItem, player);
+                        fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
+
+                        llBooster.setVisibility(View.INVISIBLE);
+                        llPlayerName.setVisibility(View.INVISIBLE);
+
+                        btnOpen.setEnabled(true);
+                        btnLocal.setEnabled(true);
+                        btnClose.setEnabled(false);
                     }
-                    player.setConnectionState(ConnectionState.CLOSED);
-                    player.setGuestName(null);
-                    playerSettingsListAdapter.update(mSelectedItem, player);
-                    //fa.sendPlayerSettingsUpdate(mSelectedItem);
-                    fa.btServer.sendMessageToAll(new PacketServerUpdatePlayerSettings(mSelectedItem, fa.getGame().getGamePlayer(mSelectedItem)));
 
-                    llBooster.setVisibility(View.INVISIBLE);
-                    /*btnTurbo.setVisibility(View.INVISIBLE);
-                    btnSlow.setVisibility(View.INVISIBLE);
-                    btnReverse.setVisibility(View.INVISIBLE);
-                    btnBlackout.setVisibility(View.INVISIBLE);*/
-
-                    llPlayerName.setVisibility(View.INVISIBLE);
-                    /*tvPlayerName.setVisibility(View.INVISIBLE);
-                    etPlayerName.setVisibility(View.INVISIBLE);*/
-
-                    btnOpen.setEnabled(true);
-                    btnLocal.setEnabled(true);
-                    btnClose.setEnabled(false);
                 }
             }
         });
@@ -360,6 +386,8 @@ public class PlayerSettingsFragment extends Fragment {
         lvPlayers.setAdapter(this.playerSettingsListAdapter);
 
         if (fa.deviceRole == DeviceRole.SERVER) {
+            lvPlayers.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+            lvPlayers.setSelector(new ColorDrawable(Color.argb(255,170,170,170)));
             lvPlayers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -474,6 +502,9 @@ public class PlayerSettingsFragment extends Fragment {
                     }
                 }
             });
+        }else{
+            lvPlayers.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
+            lvPlayers.setSelector(new ColorDrawable(Color.argb(0,0,0,0)));
         }
 
         Button btnStart = (Button) view.findViewById(R.id.btn_player_settings_start);

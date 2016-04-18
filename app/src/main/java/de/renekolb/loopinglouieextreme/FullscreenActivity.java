@@ -1,11 +1,13 @@
 package de.renekolb.loopinglouieextreme;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -18,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,55 +60,65 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
 
     public static boolean BLE_SUPPORT;
 
-    public BTServerService btServer;
-    public BTClientService btClient;
+    public  BTServerService btServer;
+    public  BTClientService btClient;
 
     public BluetoothLEService btLEService;
 
-    public MainMenuFragment mainMenuFragment;
+    public  MainMenuFragment mainMenuFragment;
     private SettingsFragment settingsFragment;
     private ProfilesFragment profilesFragment;
     private StatisticsFragment statisticsFragment;
     private AchievementsFragment achievementsFragment;
-    private HostGameFragment hostGameFragment;
+    private  HostGameFragment hostGameFragment;
     private ConnectFragment connectFragment;
     private GameSettingsFragment gameSettingsFragment;
     private CustomGameSettingsFragment customGameSettingsFragment;
-    public PlayerSettingsFragment playerSettingsFragment;
+    public  PlayerSettingsFragment playerSettingsFragment;
     public GameFragment gameFragment;
-    public GameResultFragment gameResultsFragment;
+    public  GameResultFragment gameResultsFragment;
     public WheelOfFortuneFragment wheelOfFortuneFragment;
 
     private PlayerProfile currentPlayerProfile;
 
     public WheelOfFortuneHandler wheelOfFortuneHandler;
 
-    private Game game;
+    private static Game game;
 
-    public DeviceRole deviceRole;
+    private static FullscreenActivity fa;
 
-    public ProfileManager profileManager;
+    public  DeviceRole deviceRole;
+
+    public static ProfileManager profileManager;
 
     private Handler closeAttemptDelayHandler;
     private boolean closeAttempt;
 
     public AppSettings appSettings;
 
+    public static boolean firstRun = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        fa = this;
+
         this.closeAttemptDelayHandler = new Handler();
 
-        this.profileManager = new ProfileManager(this, ServiceMessageHandler);
+        profileManager.setContext(this);
+
         this.wheelOfFortuneHandler = new WheelOfFortuneHandler(this);
 
         //Load default PlayerProfile
         int defaultProfileID = profileManager.getDefaultProfileID();
         if (defaultProfileID == -1) {
             Log.i("Loading", "No default Player: Creating new Player");
-            this.currentPlayerProfile = profileManager.createNewPlayerProfile("Default Player");
-            profileManager.setDefaultProfileID(this.currentPlayerProfile.getProfileID());
+            firstRun = true;
+
+            //TODO: inputfiuled
+//            this.currentPlayerProfile = profileManager.createNewPlayerProfile("Default Player");
+//            profileManager.setDefaultProfileID(this.currentPlayerProfile.getProfileID());
             Log.w("Loading", "No default PlayerProfile found. Creating one");
         } else {
             Log.i("Loading", "Found default Player");
@@ -167,6 +180,11 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         if (appSettings.getDisableBTonExit()) {
             BluetoothAdapter.getDefaultAdapter().disable();
         }
+    }
+
+    public void firstRunPlayerName(String playerName){
+        this.currentPlayerProfile = profileManager.createNewPlayerProfile(playerName);
+        profileManager.setDefaultProfileID(this.currentPlayerProfile.getProfileID());
     }
 
     @Override
@@ -559,7 +577,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
         }
     };*/
 
-    public final Handler ServiceMessageHandler = new Handler() {
+    public static final Handler ServiceMessageHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -592,127 +610,127 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         break;
                     }
 
-                    if (deviceRole == DeviceRole.SERVER) {
-                        if (hostGameFragment != null && hostGameFragment.isVisible()) {
-                            if (hostGameFragment.connectedPlayerAdapter.getItem(0).getAddress() == null) {
-                                hostGameFragment.connectedPlayerAdapter.remove(hostGameFragment.connectedPlayerAdapter.getItem(0));
+                    if (fa.deviceRole == DeviceRole.SERVER) {
+                        if (fa.hostGameFragment != null && fa.hostGameFragment.isVisible()) {
+                            if (fa.hostGameFragment.connectedPlayerAdapter.getItem(0).getAddress() == null) {
+                                fa.hostGameFragment.connectedPlayerAdapter.remove(fa.hostGameFragment.connectedPlayerAdapter.getItem(0));
                             }
-                            hostGameFragment.connectedPlayerAdapter.add(new ConnectedPlayerListItem(devAddr, devName));
+                            fa.hostGameFragment.connectedPlayerAdapter.add(new ConnectedPlayerListItem(devAddr, devName));
                         }
 
-                        bindNewPlayer(devAddr, devName.replaceAll("\\.", "_").replaceAll(":", "_"));
-                        btServer.sendMessage(devAddr, new PacketServerGameSettings(getGame().getMaxRounds(), getGame().getWheelOfFortuneEnabled(), getGame().getLoserWheelEnabled()));
+                        fa.bindNewPlayer(devAddr, devName.replaceAll("\\.", "_").replaceAll(":", "_"));
+                        fa.btServer.sendMessage(devAddr, new PacketServerGameSettings(fa.getGame().getMaxRounds(), fa.getGame().getWheelOfFortuneEnabled(), fa.getGame().getLoserWheelEnabled()));
                         //sendGameSettingsToClient(devAddr);
-                    } else if (deviceRole == DeviceRole.CLIENT) {
+                    } else if (fa.deviceRole == DeviceRole.CLIENT) {
                         FragmentUtils.disableAnimations=true;
-                        getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        fa.getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         FragmentUtils.disableAnimations=false;
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        if (playerSettingsFragment == null) {
-                            playerSettingsFragment = PlayerSettingsFragment.newInstance();
+                        FragmentTransaction ft = fa.getFragmentManager().beginTransaction();
+                        if (fa.playerSettingsFragment == null) {
+                            fa.playerSettingsFragment = PlayerSettingsFragment.newInstance();
                         }
-                        playerSettingsFragment.setPlayerNameEdible(true);
+                        fa.playerSettingsFragment.setPlayerNameEdible(true);
                         ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                         ft.addToBackStack(null);
-                        ft.replace(R.id.main_fragment, playerSettingsFragment);
+                        ft.replace(R.id.main_fragment, fa.playerSettingsFragment);
                         ft.commit();
 
                         //sendPlayerNameToServer(currentPlayerProfile.getPlayerName());
-                        btClient.sendPacket(new PacketClientPlayerName(currentPlayerProfile.getPlayerName()));
+                        fa. btClient.sendPacket(new PacketClientPlayerName(fa.currentPlayerProfile.getPlayerName()));
                     }
                     break;
                 case Constants.messages.BT_CONNECTION_FAILED:
-                    Toast.makeText(FullscreenActivity.this, "Connection Failed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(fa, "Connection Failed!", Toast.LENGTH_SHORT).show();
                     break;
                 case Constants.messages.BT_CONNECTION_LOST:
                     String addr = msg.getData().getString(Constants.KEY_DEVICE_ADDRESS);
-                    Toast.makeText(FullscreenActivity.this, "BT Connection Lost", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(fa, "BT Connection Lost", Toast.LENGTH_SHORT).show();
                     //only relevant when hosting a game
-                    if (deviceRole == DeviceRole.SERVER) {
-                        if (btServer != null) {
+                    if (fa.deviceRole == DeviceRole.SERVER) {
+                        if (fa.btServer != null) {
 
                             int pindex = game.getGamePlayerIndex(addr);
                             if (pindex != -1) {
                                 game.getGamePlayer(pindex).setConnectionState(ConnectionState.OPEN);
-                                if (playerSettingsFragment != null && playerSettingsFragment.isVisible()) {
-                                    playerSettingsFragment.updatePlayerSettings(pindex);
+                                if (fa.playerSettingsFragment != null && fa.playerSettingsFragment.isVisible()) {
+                                    fa.playerSettingsFragment.updatePlayerSettings(pindex);
                                 }
                             }
 
-                            btServer.disconnectClient(addr, true); //cleanup internal connectedThread List
+                            fa.btServer.disconnectClient(addr, true); //cleanup internal connectedThread List
                             ConnectedPlayerListItem item = null;
-                            for (int i = 0; i < hostGameFragment.connectedPlayerAdapter.getCount(); i++) {
-                                if (hostGameFragment.connectedPlayerAdapter.getItem(i).getAddress() != null && hostGameFragment.connectedPlayerAdapter.getItem(i).getAddress().equals(addr)) {
-                                    item = hostGameFragment.connectedPlayerAdapter.getItem(i);
+                            for (int i = 0; i < fa.hostGameFragment.connectedPlayerAdapter.getCount(); i++) {
+                                if (fa.hostGameFragment.connectedPlayerAdapter.getItem(i).getAddress() != null && fa.hostGameFragment.connectedPlayerAdapter.getItem(i).getAddress().equals(addr)) {
+                                    item = fa.hostGameFragment.connectedPlayerAdapter.getItem(i);
                                     break;
                                 }
                             }
                             if (item != null) {
-                                hostGameFragment.connectedPlayerAdapter.remove(item);
-                                if (hostGameFragment.connectedPlayerAdapter.getCount() == 0) {
-                                    hostGameFragment.connectedPlayerAdapter.add(new ConnectedPlayerListItem(null, "no connected players"));
+                                fa.hostGameFragment.connectedPlayerAdapter.remove(item);
+                                if (fa.hostGameFragment.connectedPlayerAdapter.getCount() == 0) {
+                                    fa.hostGameFragment.connectedPlayerAdapter.add(new ConnectedPlayerListItem(null, "no connected players"));
                                 }
                             } else {
                                 //ERROR
-                                Toast.makeText(FullscreenActivity.this, "ERROR unknown address", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(fa, "ERROR unknown address", Toast.LENGTH_SHORT).show();
                             }
                         }
-                    } else if (deviceRole == DeviceRole.CLIENT) {
+                    } else if (fa.deviceRole == DeviceRole.CLIENT) {
                         //TODO: Go back to connect Fragment
                         FragmentUtils.disableAnimations=true;
-                        getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        fa.getFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                         FragmentUtils.disableAnimations=false;
-                        FragmentTransaction ft = getFragmentManager().beginTransaction();
-                        if (mainMenuFragment == null) {
-                            mainMenuFragment = MainMenuFragment.newInstance();
+                        FragmentTransaction ft = fa.getFragmentManager().beginTransaction();
+                        if (fa.mainMenuFragment == null) {
+                            fa.mainMenuFragment = MainMenuFragment.newInstance();
                         }
                         ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
-                        ft.replace(R.id.main_fragment, mainMenuFragment);
+                        ft.replace(R.id.main_fragment, fa.mainMenuFragment);
                         ft.commit();
                         game.setGameStarted(false);
                     }
                     break;
 
                 case Constants.messages.BLE_START_DISCOVERING:
-                    hostGameFragment.scanningBoardProgress.setVisibility(View.VISIBLE);
+                    fa.hostGameFragment.scanningBoardProgress.setVisibility(View.VISIBLE);
                     break;
                 case Constants.messages.BLE_STOP_DISCOVERING:
-                    hostGameFragment.scanningBoardProgress.setVisibility(View.INVISIBLE);
+                    fa.hostGameFragment.scanningBoardProgress.setVisibility(View.INVISIBLE);
                     break;
                 case Constants.messages.BLE_DISCOVERED_DEVICE:
                     String bleAddr = msg.getData().getString(Constants.KEY_DEVICE_ADDRESS);
                     String bleName = msg.getData().getString(Constants.KEY_DEVICE_NAME);
-                    if (hostGameFragment != null) {
+                    if (fa.hostGameFragment != null) {
                         //remove dummy-entry
-                        if (hostGameFragment.availableBoardAdapter.getItem(0).getAddress() == null) {
-                            hostGameFragment.availableBoardAdapter.remove(hostGameFragment.availableBoardAdapter.getItem(0));
+                        if (fa.hostGameFragment.availableBoardAdapter.getItem(0).getAddress() == null) {
+                            fa.hostGameFragment.availableBoardAdapter.remove(fa.hostGameFragment.availableBoardAdapter.getItem(0));
                         }
 
                         boolean contains = false;
-                        for (int i = 0; i < hostGameFragment.availableBoardAdapter.getCount(); i++) {
-                            if (hostGameFragment.availableBoardAdapter.getItem(i).getAddress().equals(bleAddr)) {
+                        for (int i = 0; i < fa.hostGameFragment.availableBoardAdapter.getCount(); i++) {
+                            if (fa.hostGameFragment.availableBoardAdapter.getItem(i).getAddress().equals(bleAddr)) {
                                 contains = true;
                                 break;
                             }
                         }
                         if (!contains) {
-                            hostGameFragment.availableBoardAdapter.add(new ConnectedPlayerListItem(bleAddr, bleName));
+                            fa.hostGameFragment.availableBoardAdapter.add(new ConnectedPlayerListItem(bleAddr, bleName));
                         }
                     }
 
                     break;
                 case Constants.messages.BLE_CONNECTION_STATE_CHANGED:
                     boolean connected = msg.getData().getBoolean(Constants.messages.KEY_CONNECTED_TO_BOARD);
-                    hostGameFragment.boardConnectionChanged(connected);
+                    fa.hostGameFragment.boardConnectionChanged(connected);
                     if (connected) {
-                        Toast.makeText(FullscreenActivity.this, "BLE connected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(fa, "BLE connected", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(FullscreenActivity.this, "BLE disconnected", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(fa, "BLE disconnected", Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case Constants.messages.GAME_TOO_FEW_PLAYERS_CHIPS:
                     int amount = msg.getData().getInt(Constants.messages.KEY_PLAYER_AMOUNT);
-                    Toast.makeText(FullscreenActivity.this, "Too few players with chips (" + amount + ")", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(fa, "Too few players with chips (" + amount + ")", Toast.LENGTH_SHORT).show();
                     break;
                 case Constants.messages.BLE_GAME_RESULTS:
                     game.setRunning(false);
@@ -721,7 +739,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     int third = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_THIRD);
                     int fourth = msg.getData().getInt(Constants.messages.KEY_GAME_RESULTS_FOURTH);
 
-                    btServer.sendMessageToAll(new PacketServerGameResults(first,second,third,fourth));
+                    fa.btServer.sendMessageToAll(new PacketServerGameResults(first,second,third,fourth));
                     //sendGameResults(first, second, third, fourth);
 
                     //TODO: only temporary
@@ -740,15 +758,15 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                         game.getGamePlayer(first).addPoints(1);
 
 
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    if (gameResultsFragment == null) {
-                        gameResultsFragment = GameResultFragment.newInstance(first, second, third, fourth);
+                    FragmentTransaction ft = fa.getFragmentManager().beginTransaction();
+                    if (fa.gameResultsFragment == null) {
+                        fa.gameResultsFragment = GameResultFragment.newInstance(first, second, third, fourth);
                     } else {
-                        gameResultsFragment.setPlayers(first, second, third, fourth);
+                        fa.gameResultsFragment.setPlayers(first, second, third, fourth);
                     }
                     ft.setCustomAnimations(R.animator.enter, R.animator.exit, R.animator.pop_enter, R.animator.pop_exit);
                     //ft.addToBackStack(null);
-                    ft.replace(R.id.main_fragment, gameResultsFragment); // DEFAULT VALUES
+                    ft.replace(R.id.main_fragment, fa.gameResultsFragment); // DEFAULT VALUES
                     ft.commit();
                     break;
 
@@ -756,8 +774,8 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     int achievementID = msg.getData().getInt(Constants.messages.KEY_ACHIEVEMENT_ID);
                     Achievement ach = Achievements.getAchievement(achievementID);
 
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View view = inflater.inflate(R.layout.toast_achievement, (ViewGroup) findViewById(R.id.rl_toast_achievement_root));
+                    LayoutInflater inflater = (LayoutInflater) fa.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    View view = inflater.inflate(R.layout.toast_achievement, (ViewGroup) fa.findViewById(R.id.rl_toast_achievement_root));
                     TextView tvTitle = (TextView) view.findViewById(R.id.tv_toast_achievement_title);
                     TextView tvDescription = (TextView) view.findViewById(R.id.tv_toast_achievement_description);
                     ImageView ivIcon = (ImageView) view.findViewById(R.id.iv_toast_achievement);
@@ -766,7 +784,7 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     tvDescription.setText(ach.getUnlockedDescription());
                     ivIcon.setImageResource(ach.getDrawableID());
 
-                    Toast toast = new Toast(getApplicationContext());
+                    Toast toast = new Toast(fa.getApplicationContext());
                     toast.setGravity(Gravity.TOP, 0, 150);
                     toast.setDuration(Toast.LENGTH_LONG);
                     toast.setView(view);
