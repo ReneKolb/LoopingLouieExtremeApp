@@ -148,7 +148,7 @@ public class ConnectFragment extends Fragment {
                             .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
                     // Get the BluetoothDevice object
                     BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
-                    Toast.makeText(getActivity(), "Selected a Device to connect!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), "Selected a Device to connect!", Toast.LENGTH_SHORT).show();
 
                     //TODO: Check if bound
                     if (device.getBondState() == BluetoothDevice.BOND_NONE) {

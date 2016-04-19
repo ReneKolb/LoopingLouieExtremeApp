@@ -181,6 +181,7 @@ public class GameResultFragment extends Fragment {
 
         Button btnWheelOfFortune = (Button) view.findViewById(R.id.btn_game_results_wheel_of_fortune);
         if (fa.deviceRole == DeviceRole.SERVER) {
+            btnWheelOfFortune.setVisibility(View.VISIBLE);
             btnWheelOfFortune.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -188,7 +189,7 @@ public class GameResultFragment extends Fragment {
                 }
             });
         } else if (fa.deviceRole == DeviceRole.CLIENT) {
-            btnWheelOfFortune.setVisibility(View.GONE);
+            btnWheelOfFortune.setVisibility(View.INVISIBLE);
         }
 
         TextView tvTime = (TextView) view.findViewById(R.id.tv_game_results_time);
