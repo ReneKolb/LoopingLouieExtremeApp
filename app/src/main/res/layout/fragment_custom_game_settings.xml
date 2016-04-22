@@ -105,7 +105,7 @@
                     android:layout_weight="3"
                     android:text="@string/custom_game_settings_random_speed"
                     android:textColor="#000000"
-                    android:textSize="15sp"
+                    android:textSize="14sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
                     android:layout_column="0" />
@@ -136,6 +136,94 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/tr_custom_game_settings_speed_min"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_custom_game_settings_speed_min"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="@string/custom_game_settings_speed_min"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:layout_column="0" />
+
+                <SeekBar
+                    android:id="@+id/sb_custom_game_settings_speed_min"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:layout_column="1"
+                    android:progress="50"
+                    android:progressDrawable="@drawable/custom_seekbar_progressbar"
+                    android:thumb="@drawable/custom_seekbar_thumb"
+                    android:thumbOffset="-1dp"
+                    android:saveEnabled="false" />
+
+                <TextView
+                    android:id="@+id/tv_custom_game_settings_speed_min_cnt"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="end"
+                    android:textColor="#000000"
+                    tools:text="30" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tr_custom_game_settings_speed_max"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/tv_custom_game_settings_speed_max"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="@string/custom_game_settings_speed_max"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="start"
+                    android:layout_column="0" />
+
+                <SeekBar
+                    android:id="@+id/sb_custom_game_settings_speed_max"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="2"
+                    android:layout_column="1"
+                    android:progress="50"
+                    android:progressDrawable="@drawable/custom_seekbar_progressbar"
+                    android:thumb="@drawable/custom_seekbar_thumb"
+                    android:thumbOffset="-1dp"
+                    android:saveEnabled="false" />
+
+                <TextView
+                    android:id="@+id/tv_custom_game_settings_speed_max_cnt"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_weight="1"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="end"
+                    android:textColor="#000000"
+                    tools:text="30" />
+
+            </TableRow>
+
+            <TableRow
                 android:id="@+id/tr_custom_game_settings_speed_min_delay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -148,7 +236,7 @@
                     android:layout_weight="3"
                     android:text="@string/custom_game_settings_speed_min_delay"
                     android:textColor="#000000"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
                     android:layout_column="0" />
@@ -161,6 +249,9 @@
                     android:layout_weight="2"
                     android:layout_column="1"
                     android:progress="50"
+                    android:progressDrawable="@drawable/custom_seekbar_progressbar"
+                    android:thumb="@drawable/custom_seekbar_thumb"
+                    android:thumbOffset="-1dp"
                     android:saveEnabled="false" />
 
                 <TextView
@@ -188,7 +279,7 @@
                     android:layout_weight="3"
                     android:text="@string/custom_game_settings_speed_max_delay"
                     android:textColor="#000000"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
                     android:layout_column="0" />
@@ -201,6 +292,9 @@
                     android:layout_weight="2"
                     android:layout_column="1"
                     android:progress="50"
+                    android:progressDrawable="@drawable/custom_seekbar_progressbar"
+                    android:thumb="@drawable/custom_seekbar_thumb"
+                    android:thumbOffset="-1dp"
                     android:saveEnabled="false" />
 
                 <TextView
@@ -228,7 +322,7 @@
                     android:layout_weight="3"
                     android:text="@string/custom_game_settings_speed_min_step_size"
                     android:textColor="#000000"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
                     android:layout_column="0" />
@@ -241,6 +335,9 @@
                     android:layout_weight="2"
                     android:layout_column="1"
                     android:progress="50"
+                    android:progressDrawable="@drawable/custom_seekbar_progressbar"
+                    android:thumb="@drawable/custom_seekbar_thumb"
+                    android:thumbOffset="-1dp"
                     android:saveEnabled="false" />
 
                 <TextView
@@ -269,7 +366,7 @@
                     android:layout_weight="3"
                     android:text="@string/custom_game_settings_speed_max_step_size"
                     android:textColor="#000000"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
                     android:layout_column="0" />
@@ -282,6 +379,9 @@
                     android:layout_weight="2"
                     android:layout_column="1"
                     android:progress="50"
+                    android:progressDrawable="@drawable/custom_seekbar_progressbar"
+                    android:thumb="@drawable/custom_seekbar_thumb"
+                    android:thumbOffset="-1dp"
                     android:saveEnabled="false" />
 
                 <TextView
@@ -310,7 +410,7 @@
                     android:layout_weight="3"
                     android:text="@string/custom_game_settings_enable_reverse"
                     android:textColor="#000000"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:layout_gravity="center_vertical"
                     android:gravity="start"
                     android:layout_column="0" />
@@ -322,8 +422,13 @@
                     android:layout_weight="2"
                     android:gravity="end"
                     android:id="@+id/sw_custom_game_settings_enable_reverse"
-                    android:textOff="OFF"
-                    android:textOn="ON"
+                    android:thumbTextPadding="10dp"
+                    android:track="@drawable/custom_switch_track"
+                    android:thumb="@drawable/custom_switch_thumb"
+                    android:switchTextAppearance="@style/customSwitchStyle"
+                    android:textSize="18sp"
+                    android:textOff="@string/switch_text_off"
+                    android:textOn="@string/switch_text_on"
                     android:checked="true"
                     android:layout_column="1"
                     android:saveEnabled="false" />
@@ -347,7 +452,7 @@
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:layout_weight="2"
                     android:text="@string/custom_game_settings_chef_mode"
@@ -362,8 +467,13 @@
                     android:layout_weight="1"
                     android:layout_gravity="center_vertical"
                     android:id="@+id/sw_custom_game_settings_chef_mode"
-                    android:textOff="OFF"
-                    android:textOn="ON"
+                    android:thumbTextPadding="10dp"
+                    android:track="@drawable/custom_switch_track"
+                    android:thumb="@drawable/custom_switch_thumb"
+                    android:switchTextAppearance="@style/customSwitchStyle"
+                    android:textSize="18sp"
+                    android:textOff="@string/switch_text_off"
+                    android:textOn="@string/switch_text_on"
                     android:checked="true"
                     android:layout_column="1"
                     android:saveEnabled="false" />
@@ -382,7 +492,7 @@
                     android:layout_weight="3"
                     android:text="@string/custom_game_settings_chef_roulette"
                     android:textColor="#000000"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:layout_gravity="center_vertical"
                     android:layout_column="0" />
 
@@ -393,8 +503,13 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:id="@+id/sw_custom_game_settings_chef_roulette"
-                    android:textOff="OFF"
-                    android:textOn="ON"
+                    android:thumbTextPadding="10dp"
+                    android:track="@drawable/custom_switch_track"
+                    android:thumb="@drawable/custom_switch_thumb"
+                    android:switchTextAppearance="@style/customSwitchStyle"
+                    android:textSize="18sp"
+                    android:textOff="@string/switch_text_off"
+                    android:textOn="@string/switch_text_on"
                     android:checked="true"
                     android:layout_column="1"
                     android:saveEnabled="false" />
@@ -422,7 +537,7 @@
                     android:layout_weight="3"
                     android:text="@string/custom_game_settings_change_chef_delay"
                     android:textColor="#000000"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:layout_column="0" />
 
                 <SeekBar
@@ -433,6 +548,9 @@
                     android:layout_weight="2"
                     android:layout_column="1"
                     android:progress="50"
+                    android:progressDrawable="@drawable/custom_seekbar_progressbar"
+                    android:thumb="@drawable/custom_seekbar_thumb"
+                    android:thumbOffset="-1dp"
                     android:saveEnabled="false" />
 
                 <TextView
@@ -461,7 +579,7 @@
                     android:layout_weight="3"
                     android:text="@string/custom_game_settings_chef_shorter_cooldown"
                     android:textColor="#000000"
-                    android:textSize="17sp"
+                    android:textSize="14sp"
                     android:layout_gravity="center_vertical"
                     android:layout_column="0" />
 
@@ -472,8 +590,13 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="2"
                     android:id="@+id/sw_custom_game_settings_chef_cooldown"
-                    android:textOff="OFF"
-                    android:textOn="ON"
+                    android:thumbTextPadding="10dp"
+                    android:track="@drawable/custom_switch_track"
+                    android:thumb="@drawable/custom_switch_thumb"
+                    android:switchTextAppearance="@style/customSwitchStyle"
+                    android:textSize="18sp"
+                    android:textOff="@string/switch_text_off"
+                    android:textOn="@string/switch_text_on"
                     android:checked="true"
                     android:layout_column="1"
                     android:saveEnabled="false" />
@@ -496,7 +619,7 @@
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:layout_weight="2"
                     android:text="@string/custom_game_settings_enable_items"
@@ -510,8 +633,13 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:id="@+id/sw_custom_game_settings_enable_items"
-                    android:textOff="OFF"
-                    android:textOn="ON"
+                    android:thumbTextPadding="10dp"
+                    android:track="@drawable/custom_switch_track"
+                    android:thumb="@drawable/custom_switch_thumb"
+                    android:switchTextAppearance="@style/customSwitchStyle"
+                    android:textSize="18sp"
+                    android:textOff="@string/switch_text_off"
+                    android:textOn="@string/switch_text_on"
                     android:checked="true"
                     android:layout_column="1"
                     android:saveEnabled="false" />
@@ -527,7 +655,7 @@
                     android:layout_width="0px"
                     android:layout_height="wrap_content"
                     android:textColor="#000000"
-                    android:textSize="18sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:layout_weight="2"
                     android:text="@string/custom_game_settings_enable_events"
@@ -541,8 +669,13 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
                     android:id="@+id/sw_custom_game_settings_enable_events"
-                    android:textOff="OFF"
-                    android:textOn="ON"
+                    android:thumbTextPadding="10dp"
+                    android:track="@drawable/custom_switch_track"
+                    android:thumb="@drawable/custom_switch_thumb"
+                    android:switchTextAppearance="@style/customSwitchStyle"
+                    android:textSize="18sp"
+                    android:textOff="@string/switch_text_off"
+                    android:textOn="@string/switch_text_on"
                     android:checked="true"
                     android:layout_column="1"
                     android:saveEnabled="false" />
@@ -554,7 +687,7 @@
     <Button
         android:id="@+id/btn_custom_game_settings_ok"
         style="@style/btnSelect"
-        android:layout_width="wrap_content"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"

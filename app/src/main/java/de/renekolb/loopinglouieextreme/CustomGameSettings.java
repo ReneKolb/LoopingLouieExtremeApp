@@ -8,8 +8,13 @@ public class CustomGameSettings {
     //-----------------
     //           10Byte
 
+    public static final byte MIN_MOTOR_SPEED = 49;
+    public static final byte MAX_MOTOR_SPEED = 120;
+
     private boolean randomSpeed;
     private byte startSpeed;
+    private byte minSpeed;
+    private byte maxSpeed;
     private short speedMinDelay;
     private short speedMaxDelay;
     private byte speedMinStepSize;
@@ -31,6 +36,8 @@ public class CustomGameSettings {
     private void loadDefaults() {
         this.randomSpeed = true;
         this.startSpeed = 64;
+        this.minSpeed = MIN_MOTOR_SPEED;
+        this.maxSpeed = MAX_MOTOR_SPEED;
         this.speedMinDelay = 5000;
         this.speedMaxDelay = 12000;
         this.speedMinStepSize = 5;
@@ -61,6 +68,8 @@ public class CustomGameSettings {
     public void loadAction() {
         this.randomSpeed = true;
         this.startSpeed = 64;
+        this.minSpeed = MIN_MOTOR_SPEED;
+        this.maxSpeed = MAX_MOTOR_SPEED;
         this.speedMinDelay = 5000;
         this.speedMaxDelay = 12000;
         this.speedMinStepSize = 5;
@@ -91,6 +100,30 @@ public class CustomGameSettings {
 
     public byte getStartSpeed() {
         return this.startSpeed;
+    }
+
+    public byte setMinSpeed(byte minSpeed){
+        this.minSpeed = (byte)Math.max(minSpeed,MIN_MOTOR_SPEED);
+        if(this.minSpeed > this.maxSpeed){
+            this.minSpeed = this.maxSpeed;
+        }
+        return this.minSpeed;
+    }
+
+    public byte getMinSpeed(){
+        return this.minSpeed;
+    }
+
+    public byte setMaxSpeed(byte maxSpeed){
+        this.maxSpeed = (byte)Math.min(maxSpeed,MAX_MOTOR_SPEED);
+        if(this.maxSpeed < this.minSpeed){
+            this.maxSpeed = this.minSpeed;
+        }
+        return this.maxSpeed;
+    }
+
+    public byte getMaxSpeed(){
+        return this.maxSpeed;
     }
 
     public void setSpeedMinDelay(short speedMinDelay) {

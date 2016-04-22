@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
+import de.renekolb.loopinglouieextreme.CustomGameSettings;
 import de.renekolb.loopinglouieextreme.FragmentUtils;
 import de.renekolb.loopinglouieextreme.FullscreenActivity;
 import de.renekolb.loopinglouieextreme.R;
@@ -39,12 +40,18 @@ public class CustomGameSettingsFragment extends Fragment {
 
     private TextView tvStartSpeedCnt;
     private SeekBar sbStartSpeed;
+    private TableRow trMinSpeed;
+    private TableRow trMaxSpeed;
     private TableRow trSpeedMinDelay;
     private TableRow trSpeedMaxDelay;
     private TableRow trSpeedMinStepSize;
     private TableRow trSpeedMaxStepSize;
     private TableRow trEnableReverse;
     private Switch swRandomSpeed;
+    private SeekBar sbMinSpeed;
+    private TextView tvMinSpeed;
+    private SeekBar sbMaxSpeed;
+    private TextView tvMaxSpeed;
     private TextView tvSpeedMinDelayCnt;
     private SeekBar sbSpeedMinDelay;
     private TextView tvSpeedMaxDelay;
@@ -125,6 +132,8 @@ public class CustomGameSettingsFragment extends Fragment {
             }
         });
 
+        trMinSpeed = (TableRow) view.findViewById(R.id.tr_custom_game_settings_speed_min);
+        trMaxSpeed = (TableRow) view.findViewById(R.id.tr_custom_game_settings_speed_max);
         trSpeedMinDelay = (TableRow) view.findViewById(R.id.tr_custom_game_settings_speed_min_delay);
         trSpeedMaxDelay = (TableRow) view.findViewById(R.id.tr_custom_game_settings_speed_max_delay);
         trSpeedMinStepSize = (TableRow) view.findViewById(R.id.tr_custom_game_settings_speed_min_step_size);
@@ -134,12 +143,16 @@ public class CustomGameSettingsFragment extends Fragment {
         swRandomSpeed = (Switch) view.findViewById(R.id.sw_custom_game_settings_random_speed);
         swRandomSpeed.setChecked(fa.getGame().getGameSettings().getRandomSpeed());
         if (swRandomSpeed.isChecked()) {
+            trMinSpeed.setVisibility(View.VISIBLE);
+            trMaxSpeed.setVisibility(View.VISIBLE);
             trSpeedMinDelay.setVisibility(View.VISIBLE);
             trSpeedMaxDelay.setVisibility(View.VISIBLE);
             trSpeedMinStepSize.setVisibility(View.VISIBLE);
             trSpeedMaxStepSize.setVisibility(View.VISIBLE);
             trEnableReverse.setVisibility(View.VISIBLE);
         } else {
+            trMinSpeed.setVisibility(View.GONE);
+            trMaxSpeed.setVisibility(View.GONE);
             trSpeedMinDelay.setVisibility(View.GONE);
             trSpeedMaxDelay.setVisibility(View.GONE);
             trSpeedMinStepSize.setVisibility(View.GONE);
@@ -151,12 +164,16 @@ public class CustomGameSettingsFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 fa.getGame().getGameSettings().setRandomSpeed(isChecked);
                 if (isChecked) {
+                    trMinSpeed.setVisibility(View.VISIBLE);
+                    trMaxSpeed.setVisibility(View.VISIBLE);
                     trSpeedMinDelay.setVisibility(View.VISIBLE);
                     trSpeedMaxDelay.setVisibility(View.VISIBLE);
                     trSpeedMinStepSize.setVisibility(View.VISIBLE);
                     trSpeedMaxStepSize.setVisibility(View.VISIBLE);
                     trEnableReverse.setVisibility(View.VISIBLE);
                 } else {
+                    trMinSpeed.setVisibility(View.GONE);
+                    trMaxSpeed.setVisibility(View.GONE);
                     trSpeedMinDelay.setVisibility(View.GONE);
                     trSpeedMaxDelay.setVisibility(View.GONE);
                     trSpeedMinStepSize.setVisibility(View.GONE);
@@ -164,6 +181,46 @@ public class CustomGameSettingsFragment extends Fragment {
                     trEnableReverse.setVisibility(View.GONE);
                 }
             }
+        });
+
+        tvMinSpeed = (TextView) view.findViewById(R.id.tv_custom_game_settings_speed_min_cnt);
+        tvMinSpeed.setText(String.valueOf(fa.getGame().getGameSettings().getMinSpeed() - CustomGameSettings.MIN_MOTOR_SPEED));
+
+        sbMinSpeed = (SeekBar) view.findViewById(R.id.sb_custom_game_settings_speed_min);
+        sbMinSpeed.setMax(CustomGameSettings.MAX_MOTOR_SPEED - CustomGameSettings.MIN_MOTOR_SPEED + 1);
+        sbMinSpeed.setProgress(fa.getGame().getGameSettings().getMinSpeed() - CustomGameSettings.MIN_MOTOR_SPEED);
+        sbMinSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                fa.getGame().getGameSettings().setMinSpeed((byte)(progress + CustomGameSettings.MIN_MOTOR_SPEED));
+                tvMinSpeed.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+        tvMaxSpeed = (TextView) view.findViewById(R.id.tv_custom_game_settings_speed_max_cnt);
+        tvMaxSpeed.setText(String.valueOf(fa.getGame().getGameSettings().getMaxSpeed() - CustomGameSettings.MIN_MOTOR_SPEED));
+
+        sbMaxSpeed = (SeekBar) view.findViewById(R.id.sb_custom_game_settings_speed_max);
+        sbMaxSpeed.setMax(CustomGameSettings.MAX_MOTOR_SPEED - CustomGameSettings.MIN_MOTOR_SPEED + 1);
+        sbMaxSpeed.setProgress(fa.getGame().getGameSettings().getMaxSpeed() - CustomGameSettings.MIN_MOTOR_SPEED);
+        sbMaxSpeed.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                fa.getGame().getGameSettings().setMaxSpeed((byte)(progress + CustomGameSettings.MIN_MOTOR_SPEED));
+                tvMaxSpeed.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
         tvSpeedMinDelayCnt = (TextView) view.findViewById(R.id.tv_custom_game_settings_speed_min_delay_cnt);

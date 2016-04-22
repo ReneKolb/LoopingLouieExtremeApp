@@ -239,6 +239,8 @@ public class BluetoothLEService {
 
         addSendMessage((BTCommands.SET_RANDOM_SPEED + boolToString(game.getGameSettings().getRandomSpeed()) + ".").getBytes());
         addSendMessage((BTCommands.SET_START_SPEED + String.valueOf(game.getGameSettings().getStartSpeed()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_MIN_SPEED + String.valueOf(game.getGameSettings().getMinSpeed()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_MAX_SPEED + String.valueOf(game.getGameSettings().getMaxSpeed()) + ".").getBytes());
         addSendMessage((BTCommands.SET_SPEED_MIN_DELAY + String.valueOf(game.getGameSettings().getSpeedMinDelay()) + ".").getBytes());
         addSendMessage((BTCommands.SET_SPEED_MAX_DELAY + String.valueOf(game.getGameSettings().getSpeedMaxDelay()) + ".").getBytes());
         addSendMessage((BTCommands.SET_SPEED_MIN_STEP_SIZE + String.valueOf(game.getGameSettings().getSpeedMinStepSize()) + ".").getBytes());

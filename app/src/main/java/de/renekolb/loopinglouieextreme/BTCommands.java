@@ -5,6 +5,8 @@ public class BTCommands {
     //AppSettings commands send to the Board
     public static final char SET_RANDOM_SPEED = 'a';
     public static final char SET_START_SPEED = 'b';
+    public static final char SET_MIN_SPEED = 'u';
+    public static final char SET_MAX_SPEED = 'v';
     public static final char SET_SPEED_MIN_DELAY = 'c';
     public static final char SET_SPEED_MAX_DELAY = 'd';
     public static final char SET_SPEED_MIN_STEP_SIZE = 'e';

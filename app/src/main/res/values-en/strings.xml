@@ -116,5 +116,7 @@
     <string name="dialog_yes">Yes</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="dialog_ok">OK</string>
+    <string name="custom_game_settings_speed_max">Max Speed</string>
+    <string name="custom_game_settings_speed_min">Min Speed</string>
 
 </resources>
