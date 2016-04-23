@@ -1,5 +1,6 @@
 package de.renekolb.loopinglouieextreme;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
@@ -10,10 +11,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -199,7 +203,9 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                 if (!BluetoothAdapter.getDefaultAdapter().isEnabled()) {
                     Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                     startActivityForResult(enableIntent, Constants.REQUEST_ENABLE_BT);
-                } else {
+                } else if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.ACCESS_COARSE_LOCATION},47);
+                }else {
                     ft = getFragmentManager().beginTransaction();
                     if (hostGameFragment == null) {
                         hostGameFragment = HostGameFragment.newInstance(ServiceMessageHandler);
@@ -692,10 +698,12 @@ public class FullscreenActivity extends Activity implements OnFragmentInteractio
                     break;
 
                 case Constants.messages.BLE_START_DISCOVERING:
-                    fa.hostGameFragment.scanningBoardProgress.setVisibility(View.VISIBLE);
+                    if(fa.hostGameFragment != null)
+                        fa.hostGameFragment.scanningBoardProgress.setVisibility(View.VISIBLE);
                     break;
                 case Constants.messages.BLE_STOP_DISCOVERING:
-                    fa.hostGameFragment.scanningBoardProgress.setVisibility(View.INVISIBLE);
+                    if(fa.hostGameFragment != null)
+                        fa.hostGameFragment.scanningBoardProgress.setVisibility(View.INVISIBLE);
                     break;
                 case Constants.messages.BLE_DISCOVERED_DEVICE:
                     String bleAddr = msg.getData().getString(Constants.KEY_DEVICE_ADDRESS);
