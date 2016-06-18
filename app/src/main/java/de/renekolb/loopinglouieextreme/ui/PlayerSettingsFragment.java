@@ -233,6 +233,10 @@ public class PlayerSettingsFragment extends Fragment {
                         etPlayerName.setVisibility(View.VISIBLE);*/
 
                         etPlayerName.setText(player.getDisplayName());
+                        etPlayerName.requestFocus();
+                        etPlayerName.selectAll();
+                        inputMethodManager.showSoftInput(etPlayerName, InputMethodManager.SHOW_IMPLICIT);
+
                     }
 
                     btnOpen.setEnabled(true);
