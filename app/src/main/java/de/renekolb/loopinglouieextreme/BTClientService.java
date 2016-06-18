@@ -270,6 +270,9 @@ public class BTClientService implements BTService {
                 ItemType itemType = ItemType.fromInt(packetUpdatePlayerSettings.getItemTypeID());
 
                 GamePlayer gp = fa.getGame().getGamePlayer(packetUpdatePlayerSettings.getSlot());
+                if(gp == null){
+                    return;
+                }
 
                 gp.setConnectionState(state); // first update connection State, because it overrides displayName with null!!
                 gp.setGuestName(packetUpdatePlayerSettings.getDisplayName());

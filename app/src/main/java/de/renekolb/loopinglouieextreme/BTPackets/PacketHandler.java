@@ -37,7 +37,7 @@ public class PacketHandler {
                 packet.readPacket(inStream);
                 service.onReceivePacket(senderAddress,packet);
             }else{
-                Log.e("PacketHandler","Error while determining Packet Type");
+                Log.e("PacketHandler","Error while determining Packet Type. PacketTypeChar: "+packetType, new Exception());
             }
         }else{
             Log.w("PacketHandler","invalid packet / PacketType");
