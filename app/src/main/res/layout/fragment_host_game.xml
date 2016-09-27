@@ -57,6 +57,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/blue_list_background"
+            android:listSelector="@drawable/blue_list_selector"
             android:elevation="3dp"
             android:divider="#00000000" />
 
@@ -109,6 +110,7 @@
             android:layout_marginBottom="20dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/blue_list_background"
+            android:listSelector="@drawable/blue_list_selector"
             android:elevation="3dp"
             android:divider="#000000" />
 
