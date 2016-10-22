@@ -117,13 +117,13 @@ public class PlayerAchievementsListAdapter extends BaseAdapter {
             holder.icon.clearColorFilter();
         } else {
             //grayscale
-            holder.title.setTextColor(Color.parseColor("#CCCCCC"));
+            holder.title.setTextColor(Color.parseColor("#999999"));
 
             long maxAmount = ach.getUnlockAmount();
             long amount = profile.getPlayerStatistics().getAmount(ach.getStatType());
 
-            holder.description.setText(String.format(fa.getResources().getString(R.string.listitem_player_achievements_progress), amount, maxAmount, ach.getUnlockDescription()));
-            holder.description.setTextColor(Color.parseColor("#CCCCCC"));
+            holder.description.setText(String.format(fa.getResources().getString(R.string.listitem_player_achievements_progress), amount, maxAmount, fa.getResources().getString(ach.getUnlockDescription())));
+            holder.description.setTextColor(Color.parseColor("#999999"));
 
             //if(amount > 0){
             holder.progress.setVisibility(View.VISIBLE);

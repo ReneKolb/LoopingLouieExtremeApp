@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.AchievementsFragment"
-    android:background="@drawable/cubes"
+    android:background="@drawable/pentagon_background"
     android:clickable="true">
 
     <TextView
@@ -17,11 +17,13 @@
         android:layout_above="@+id/btn_achievements_statistics"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="5dp"
         android:layout_marginTop="@dimen/margin_vert"
         android:layout_marginLeft="@dimen/margin_horz"
         android:layout_marginRight="@dimen/margin_horz"
         android:layout_marginBottom="15dp"
-        android:choiceMode="none" />
+        android:choiceMode="none"
+        android:background="@drawable/black_list_background"/>
 
     <Button
         android:id="@id/btn_achievements_statistics"

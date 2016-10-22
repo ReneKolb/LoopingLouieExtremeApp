@@ -118,5 +118,31 @@
     <string name="dialog_ok">OK</string>
     <string name="custom_game_settings_speed_max">Maximale Geschwindigkeit</string>
     <string name="custom_game_settings_speed_min">Minimale Geschwindigkeit</string>
+    <string name="tv_player_name">Spielername:</string>
+    <string name="tv_booster">Booster:</string>
+    <string name="ach_finish_1_round_title">Und die Sucht beginnt</string>
+    <string name="ach_finish_1_round_descr_unlock">Runden beendet</string>
+    <string name="ach_finish_1_round_descr_unlocked">Du hast eine Runde beendet</string>
+    <string name="ach_finish_5_rounds_title">Spiele 5 Runden</string>
+    <string name="ach_finish_5_rounds_descr_unlocked">Du hast 5 Runden beendet</string>
+    <string name="ach_finish_5_rounds_descr_unlock">Runden beendet</string>
+    <string name="ach_finish_1_game_title">Spiele ein Spiel</string>
+    <string name="ach_finish_1_game_descr_unlocked">Du hast ein komplettes Spiel beendet</string>
+    <string name="ach_finish_1_game_desr_unlock">Spiele beendet</string>
+    <string name="ach_finish_5_games_title">Spiele 5 Spiele</string>
+    <string name="ach_finish_5_games_descr_unlocked">Du hast 5 Spiele beendet</string>
+    <string name="ach_finish_5_games_descr_unlock">Spiele beendet</string>
+    <string name="ach_win_1_round_title">Gewinne ein Spiel</string>
+    <string name="ach_win_1_round_descr_unlocked">Du hast eine Runde gewonnen</string>
+    <string name="ach_win_1_round_descr_unlock">Runden gewonnen</string>
+    <string name="ach_win_5_rounds_title">Gewinne 5 Runden</string>
+    <string name="ach_win_5_rounds_descr_unlocked">Du hast 5 Runden gewonnen</string>
+    <string name="ach_win_5_rounds_descr_unlock">Runden gewonnen</string>
+    <string name="ach_win_1_game_title">Gewinne ein Spiel</string>
+    <string name="ach_win_1_game_descr_unlocked">Du hast ein komplettes Spiel gewonnen</string>
+    <string name="ach_win_1_game_descr_unlock">Spiele gewonnen</string>
+    <string name="ach_win_5_games_title">Gewinne 5 Spiele</string>
+    <string name="ach_win_5_games_descr_unlocked">Du hast 5 Spiele gewonnen</string>
+    <string name="ach_win_5_games_descr_unlock">Spiele gewonnen</string>
 
 </resources>

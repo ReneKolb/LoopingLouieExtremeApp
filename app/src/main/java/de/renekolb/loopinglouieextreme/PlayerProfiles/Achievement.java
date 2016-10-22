@@ -1,16 +1,19 @@
 package de.renekolb.loopinglouieextreme.PlayerProfiles;
 
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
+
 public class Achievement {
 
-    private String title;
-    private String unlockedDescription;
-    private String unlockDescription;
+    private int title;
+    private int unlockedDescription;
+    private int unlockDescription;
     private int drawableID;
     //UnlockConditions
     private StatisticType statType;
     private long unlockAmount;
 
-    Achievement(String title, String unlockedDescription, String unlockDescription, int drawableID/*, UnlockCondition*/, StatisticType statType, long unlockAmount) {
+    Achievement(@StringRes int title, @StringRes int unlockedDescription, @StringRes int unlockDescription, @DrawableRes int drawableID/*, UnlockCondition*/, StatisticType statType, long unlockAmount) {
         this.title = title;
         this.unlockDescription = unlockDescription;
         this.unlockedDescription = unlockedDescription;
@@ -19,17 +22,15 @@ public class Achievement {
         this.unlockAmount = unlockAmount;
     }
 
-    public String getTitle() {
+    public int getTitle() {
         return this.title;
     }
 
-    @Deprecated
-    public String getUnlockDescription() {
-        //replace with resource IDs
+    public int getUnlockDescription() {
         return this.unlockDescription;
     }
 
-    public String getUnlockedDescription() {
+    public int getUnlockedDescription() {
         return this.unlockedDescription;
     }
 

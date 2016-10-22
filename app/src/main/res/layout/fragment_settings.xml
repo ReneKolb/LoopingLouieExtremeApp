@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="de.renekolb.loopinglouieextreme.ui.SettingsFragment"
-    android:background="@drawable/cubes"
+    android:background="@drawable/pentagon_background"
     android:clickable="true">
 
     <TextView
@@ -56,6 +56,17 @@
         android:layout_centerHorizontal="true"
         android:textColor="#CC0000"
         android:text="@string/btn_settings_wipe_files" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_settings_wipe_files"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginStart="40dp"
+        android:textColor="#000000"
+        android:text="\u002D 002d\n\u02D7 02D7\n\u207B 207B\n\u208B 208B\n\u2212 2212\n\u2796 2796\n\uFF0D FF0D"/>
 
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

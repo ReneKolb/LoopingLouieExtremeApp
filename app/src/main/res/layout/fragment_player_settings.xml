@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="de.renekolb.loopinglouieextreme.ui.PlayerSettingsFragment"
-    android:background="@drawable/cubes"
+    android:background="@drawable/pentagon_background"
     android:clickable="true">
 
     <TextView
@@ -32,6 +32,7 @@
             android:id="@+id/ll_player_settings_players_header"
             android:orientation="horizontal"
             android:padding="5dp"
+            android:background="@drawable/black_top_line"
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -47,7 +48,7 @@
                 android:textColor="#000000"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:text="Spielername:" />
+                android:text="@string/tv_player_name" />
 
             <TextView
                 android:id="@+id/tv_listitem_player_settings_player_item"
@@ -60,7 +61,7 @@
                 android:textColor="#000000"
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:text="Booster:" />
+                android:text="@string/tv_booster" />
 
             <TextView
                 android:id="@+id/tv_listitem_player_settings_player_chips"
@@ -69,7 +70,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginRight="5dp"
+                android:paddingRight="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="#000000"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -83,13 +85,14 @@
             android:layout_below="@id/ll_player_settings_players_header"
             android:choiceMode="singleChoice"
             android:layout_centerHorizontal="true"
-            android:listSelector="#AAAAAA"
+
+
 
             android:divider="@android:color/transparent"
-            android:dividerHeight="10.0sp"
+            android:dividerHeight="7.0sp"
 
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"/>
 

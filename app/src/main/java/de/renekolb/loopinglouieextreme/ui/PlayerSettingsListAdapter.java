@@ -17,6 +17,8 @@ import de.renekolb.loopinglouieextreme.R;
 
 public class PlayerSettingsListAdapter extends BaseAdapter {
 
+    public static final String NO_CHIP_AMOUNT = "\uFF0D";//"\u2796";
+
     private final ArrayList<PlayerSettingsListItem> list;
     private final LayoutInflater layoutInflater;
 
@@ -92,8 +94,8 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                 holder.booster.setText("");
                 holder.booster.setVisibility(View.GONE);
                 if (data.getChipAmount() < 0) {
-                    holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
-                    holder.chips.setText("-");
+                    holder.chips.setTextColor(Color.argb(255, 80, 80, 80));
+                    holder.chips.setText(NO_CHIP_AMOUNT);
                 } else {
 //                    holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                     if(data.getChipAmount() == 3) {
@@ -112,8 +114,8 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                 holder.booster.setText(data.getBooster() == null ? "none" : data.getBooster().getDisplayName());
                 holder.booster.setVisibility(View.VISIBLE);
                 if (data.getChipAmount() < 0) {
-                    holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
-                    holder.chips.setText("-");
+                    holder.chips.setTextColor(Color.argb(255, 80, 80, 80));
+                    holder.chips.setText(NO_CHIP_AMOUNT);
                 } else {
                     //holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                     if(data.getChipAmount() == 3) {
@@ -137,8 +139,8 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                 holder.booster.setText(data.getBooster() == null ? "none" : data.getBooster().getDisplayName());
                 holder.booster.setVisibility(View.VISIBLE);
                 if (data.getChipAmount() < 0) {
-                    holder.chips.setTextColor(Color.argb(255, 130, 130, 130));
-                    holder.chips.setText("-");
+                    holder.chips.setTextColor(Color.argb(255, 80, 80, 80));
+                    holder.chips.setText(NO_CHIP_AMOUNT);
                 } else {
                     //holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                     if(data.getChipAmount() == 3) {

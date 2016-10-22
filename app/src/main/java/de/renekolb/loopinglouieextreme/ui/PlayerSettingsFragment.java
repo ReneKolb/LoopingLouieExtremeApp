@@ -391,7 +391,8 @@ public class PlayerSettingsFragment extends Fragment {
 
         if (fa.deviceRole == DeviceRole.SERVER) {
             lvPlayers.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-            lvPlayers.setSelector(new ColorDrawable(Color.argb(255,170,170,170)));
+            //lvPlayers.setSelector(new ColorDrawable(Color.argb(255,170,170,170)));
+            lvPlayers.setSelector(R.drawable.list_item_selected);
             lvPlayers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {

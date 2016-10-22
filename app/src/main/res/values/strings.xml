@@ -128,5 +128,31 @@
     <string name="dialog_ok">OK</string>
     <string name="custom_game_settings_speed_max">Max Speed</string>
     <string name="custom_game_settings_speed_min">Min Speed</string>
+    <string name="tv_player_name">Player name:</string>
+    <string name="tv_booster">Booster:</string>
+    <string name="ach_finish_1_round_title">And the addiction begins</string>
+    <string name="ach_finish_1_round_descr_unlock">rounds finished</string>
+    <string name="ach_finish_1_round_descr_unlocked">You have finished a round</string>
+    <string name="ach_finish_5_rounds_title">Play 5 rounds</string>
+    <string name="ach_finish_5_rounds_descr_unlocked">You have finished 5 rounds</string>
+    <string name="ach_finish_5_rounds_descr_unlock">rounds finished</string>
+    <string name="ach_finish_1_game_title">Play a game</string>
+    <string name="ach_finish_1_game_descr_unlocked">You have finished a whole game</string>
+    <string name="ach_finish_1_game_desr_unlock">games finished</string>
+    <string name="ach_finish_5_games_title">Play 5 games</string>
+    <string name="ach_finish_5_games_descr_unlocked">You have finished 5 games</string>
+    <string name="ach_finish_5_games_descr_unlock">games finished</string>
+    <string name="ach_win_1_round_title">Win a round</string>
+    <string name="ach_win_1_round_descr_unlocked">You have won a round</string>
+    <string name="ach_win_1_round_descr_unlock">rounds won</string>
+    <string name="ach_win_5_rounds_title">Win 5 rounds</string>
+    <string name="ach_win_5_rounds_descr_unlocked">You have won 5 rounds</string>
+    <string name="ach_win_5_rounds_descr_unlock">rounds won</string>
+    <string name="ach_win_1_game_title">Win a game</string>
+    <string name="ach_win_1_game_descr_unlocked">You have won a whole game</string>
+    <string name="ach_win_1_game_descr_unlock">games won</string>
+    <string name="ach_win_5_games_title">Win 5 games</string>
+    <string name="ach_win_5_games_descr_unlocked">You have won 5 games</string>
+    <string name="ach_win_5_games_descr_unlock">games won</string>
 
 </resources>

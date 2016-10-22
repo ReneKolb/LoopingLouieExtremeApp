@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/cubes"
+    android:background="@drawable/pentagon_background"
     android:clickable="true"
     tools:context="de.renekolb.loopinglouieextreme.ui.GameSettingsFragment">
 
