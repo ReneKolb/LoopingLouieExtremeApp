@@ -2,6 +2,7 @@ package de.renekolb.loopinglouieextreme.ui;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,12 +97,15 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                 if (data.getChipAmount() < 0) {
                     holder.chips.setTextColor(Color.argb(255, 80, 80, 80));
                     holder.chips.setText(NO_CHIP_AMOUNT);
+                    holder.chips.setTypeface(Typeface.DEFAULT);
                 } else {
 //                    holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                     if(data.getChipAmount() == 3) {
                         holder.chips.setTextColor(chipColorOK);
+                        holder.chips.setTypeface(Typeface.DEFAULT_BOLD);
                     }else{
                         holder.chips.setTextColor(chipColorNOK);
+                        holder.chips.setTypeface(Typeface.DEFAULT);
                     }
                     holder.chips.setText(String.valueOf(data.getChipAmount()));
                 }
@@ -116,12 +120,15 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                 if (data.getChipAmount() < 0) {
                     holder.chips.setTextColor(Color.argb(255, 80, 80, 80));
                     holder.chips.setText(NO_CHIP_AMOUNT);
+                    holder.chips.setTypeface(Typeface.DEFAULT);
                 } else {
                     //holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                     if(data.getChipAmount() == 3) {
                         holder.chips.setTextColor(chipColorOK);
+                        holder.chips.setTypeface(Typeface.DEFAULT_BOLD);
                     }else{
                         holder.chips.setTextColor(chipColorNOK);
+                        holder.chips.setTypeface(Typeface.DEFAULT);
                     }
                     holder.chips.setText(String.valueOf(data.getChipAmount()));
                 }
@@ -141,12 +148,15 @@ public class PlayerSettingsListAdapter extends BaseAdapter {
                 if (data.getChipAmount() < 0) {
                     holder.chips.setTextColor(Color.argb(255, 80, 80, 80));
                     holder.chips.setText(NO_CHIP_AMOUNT);
+                    holder.chips.setTypeface(Typeface.DEFAULT);
                 } else {
                     //holder.chips.setTextColor(Color.argb(255, 0, 180, 0));
                     if(data.getChipAmount() == 3) {
                         holder.chips.setTextColor(chipColorOK);
+                        holder.chips.setTypeface(Typeface.DEFAULT_BOLD);
                     }else{
                         holder.chips.setTextColor(chipColorNOK);
+                        holder.chips.setTypeface(Typeface.DEFAULT);
                     }
                     holder.chips.setText(String.valueOf(data.getChipAmount()));
                 }

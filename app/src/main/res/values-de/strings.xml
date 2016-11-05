@@ -144,5 +144,7 @@
     <string name="ach_win_5_games_title">Gewinne 5 Spiele</string>
     <string name="ach_win_5_games_descr_unlocked">Du hast 5 Spiele gewonnen</string>
     <string name="ach_win_5_games_descr_unlock">Spiele gewonnen</string>
+    <string name="host_game_no_players">keine verbundenen Spieler</string>
+    <string name="host_game_no_boards">keine Boards gefunden</string>
 
 </resources>
