@@ -22,6 +22,7 @@ public class BTCommands {
     //public static final char SET_ITEM_AUTO_REFILL_DELAY = 'o';
     //public static final char SET_ITEM_COOLDOWN_DELAY = 'p';
     //public static final char SET_ALTERNATE_COOLDOWN = 'q';
+    public static final char SET_NO_ANIMATIONS = 'w';
 
     public static final char REQUEST_CHIPS_COUNT = 'r';
 

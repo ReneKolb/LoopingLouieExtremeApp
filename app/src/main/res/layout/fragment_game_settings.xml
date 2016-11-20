@@ -11,14 +11,29 @@
         style="@style/tv_header"
         android:text="@string/game_settings_title" />
 
+    <Button
+        android:id="@+id/btn_game_settings_player_settings"
+        style="@style/btnSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_game_settings_player_settings"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_vert"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
     <LinearLayout
-        android:layout_below="@id/tv_game_settings_title"
-        android:layout_above="@+id/btn_game_settings_player_settings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/margin_vert"
-        android:layout_marginBottom="30dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_below="@id/tv_game_settings_title"
+        android:layout_above="@id/btn_game_settings_player_settings"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:id="@+id/ll_game_settings_buttons"
@@ -32,7 +47,7 @@
             <TextView
                 android:layout_marginBottom="10dp"
                 style="@style/tv_sub_header"
-                android:text="Spielmodus:" />
+                android:text="@string/game_settings_game_mode" />
 
             <ScrollView
                 android:id="@+id/sv_game_settings_game_modes"
@@ -131,6 +146,7 @@
                 android:layout_width="45dp"
                 android:layout_height="45dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:src="@drawable/ic_remove"
                 style="@style/customNumberPickerButtonDown" />
 
@@ -144,6 +160,7 @@
                 android:textColor="#000000"
                 android:textStyle="bold"
                 android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:textSize="20sp"
                 tools:text="3" />
 
@@ -153,6 +170,30 @@
                 android:layout_height="45dp"
                 android:src="@drawable/ic_add"
                 style="@style/customNumberPickerButtonUp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/game_settings_effetcs"/>
+
+                <CheckBox
+                    android:id="@+id/cb_game_settings_effects"
+                    style="@style/custom_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text=""/>
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -177,20 +218,6 @@
             android:text="@string/game_settings_enable_loser_wheel" />
 
     </LinearLayout>
-
-
-    <Button
-        android:id="@id/btn_game_settings_player_settings"
-        style="@style/btnSelect"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/btn_game_settings_player_settings"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/margin_vert"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold" />
 
 
 </de.renekolb.loopinglouieextreme.CustomViews.RelativeLayoutAnimate>

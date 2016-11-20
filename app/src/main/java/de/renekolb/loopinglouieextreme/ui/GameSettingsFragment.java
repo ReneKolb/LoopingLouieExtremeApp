@@ -129,6 +129,7 @@ public class GameSettingsFragment extends Fragment {
 
         final CheckBox cbEnableWheel = (CheckBox) view.findViewById(R.id.cb_game_settings_enable_wheel_of_fortune);
         final CheckBox cbEnableLoserWheel = (CheckBox) view.findViewById(R.id.cb_game_settings_enable_loser_wheel);
+        final CheckBox cbEffects = (CheckBox) view.findViewById(R.id.cb_game_settings_effects);
 
         if (fa.getGame().getWheelOfFortuneEnabled()) {
             cbEnableWheel.setChecked(true);
@@ -139,6 +140,8 @@ public class GameSettingsFragment extends Fragment {
         }
 
         cbEnableLoserWheel.setChecked(fa.getGame().getLoserWheelEnabled());
+
+        cbEffects.setChecked(!fa.getGame().getGameSettings().getNoAnimations());
 
         cbEnableWheel.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -156,6 +159,13 @@ public class GameSettingsFragment extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 fa.getGame().setLoserWheelEnabled(isChecked);
+            }
+        });
+
+        cbEffects.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                fa.getGame().getGameSettings().setNoAnimations(!isChecked);
             }
         });
 

@@ -156,5 +156,7 @@
     <string name="ach_win_5_games_descr_unlock">games won</string>
     <string name="host_game_no_players">no connected players</string>
     <string name="host_game_no_boards">no boards found</string>
+    <string name="game_settings_effetcs">Effects:</string>
+    <string name="game_settings_game_mode">Gamemode:</string>
 
 </resources>

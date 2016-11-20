@@ -26,6 +26,8 @@ public class CustomGameSettings {
     private short chefChangeDelay;
     private boolean chefHasShorterCooldown;
 
+    private boolean noAnimations;
+
     private boolean enableItems;
     private boolean enableEvents;
 
@@ -50,6 +52,8 @@ public class CustomGameSettings {
         this.chefChangeDelay = 7000;
         this.chefHasShorterCooldown = true;
 
+        this.noAnimations = false;
+
         this.enableItems = true;
         this.enableEvents = true;
     }
@@ -59,6 +63,8 @@ public class CustomGameSettings {
         this.randomSpeed = false;
 
         this.chefMode = false;
+
+        //this.noAnimations = false;
 
         this.enableItems = false;
         this.enableEvents = false;
@@ -81,6 +87,8 @@ public class CustomGameSettings {
         this.chefRoulette = true;
         this.chefChangeDelay = 7000;
         this.chefHasShorterCooldown = true;
+
+        //this.noAnimations = false;
 
         this.enableItems = true;
         this.enableEvents = true;
@@ -214,6 +222,13 @@ public class CustomGameSettings {
         return this.enableEvents;
     }
 
+    public void setNoAnimations(boolean noAnimations){
+        this.noAnimations = noAnimations;
+    }
+
+    public boolean getNoAnimations(){
+        return this.noAnimations;
+    }
 
     public byte[] getSendArray() {
         byte[] result = new byte[20];

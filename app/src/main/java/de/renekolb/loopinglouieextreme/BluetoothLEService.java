@@ -252,6 +252,7 @@ public class BluetoothLEService {
         addSendMessage((BTCommands.SET_CHEF_HAS_SHORTER_COOLDOWN + boolToString(game.getGameSettings().getChefHasShorterCooldown()) + ".").getBytes());
         addSendMessage((BTCommands.SET_ENABLE_ITEMS + boolToString(game.getGameSettings().getEnableItems()) + ".").getBytes());
         addSendMessage((BTCommands.SET_ENABLE_EVENTS + boolToString(game.getGameSettings().getEnableEvents()) + ".").getBytes());
+        addSendMessage((BTCommands.SET_NO_ANIMATIONS + boolToString(game.getGameSettings().getNoAnimations()) + ".").getBytes());
 
         addSendMessage((BTCommands.SET_ENABLED_PLAYERS + game.getEnabledPlayersSendData() + ".").getBytes());
         addSendMessage((BTCommands.SET_ITEM_TYPES + game.getDefaultItemsSendData() + ".").getBytes());
